@@ -1,4 +1,4 @@
-package com.thecode.infotify
+package com.thecode.infotify.activities
 
 import android.animation.Animator
 import android.content.Intent
@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
+import com.thecode.infotify.R
 import kotlinx.android.synthetic.main.activity_splash.*
 
 

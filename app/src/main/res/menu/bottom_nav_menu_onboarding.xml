@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home_variant_gray_24dp"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/bookmark"
+        android:icon="@drawable/ic_newspaper"
+        android:title="Newsfeed" />
+
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search_gray_24dp"
+        android:title="Search" />
+</menu>
