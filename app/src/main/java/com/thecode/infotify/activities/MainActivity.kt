@@ -33,8 +33,6 @@ class MainActivity : AppCompatActivity(),
         setContentView(R.layout.activity_main)
 
         val bnv = bottom_navigation
-        //bncw.setTypeface(Typeface.createFromAsset(getAssets(), "rubik.ttf"));
-
         val fragList = ArrayList<Fragment>()
         fragList.add(HomeFragment())
         fragList.add(BookmarksFragment())
@@ -44,7 +42,6 @@ class MainActivity : AppCompatActivity(),
         viewPager.adapter = pagerAdapter
 
         bnv.setOnNavigationItemSelectedListener(this)
-
 
     }
 
