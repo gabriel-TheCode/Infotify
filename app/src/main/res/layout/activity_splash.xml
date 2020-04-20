@@ -41,6 +41,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/app_name_text_view"
         android:layout_centerHorizontal="true"
-        android:layout_margin="5dp"
+        android:layout_marginTop="30dp"
         app:indicatorName="BallSpinFadeLoaderIndicator" />
 </RelativeLayout>

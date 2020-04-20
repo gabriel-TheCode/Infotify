@@ -8,6 +8,11 @@
     <color name="blue_active">#0a767F</color>
     <color name="blue_inactive">#64b5f6</color>
 
+
+    <color name="transparent_white">#1FFFFFFF</color>
+    <color name="transparent_dark">#80000000</color>
+
+
     <!-- google's material design colors from
      http://www.google.com/design/spec/style/color.html#color-ui-color-palette -->
 

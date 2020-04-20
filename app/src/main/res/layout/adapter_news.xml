@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="190dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/md_white_1000"
+            android:focusable="true"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <RelativeLayout
+                android:id="@+id/layout_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_toStartOf="@id/image_news">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/icon_info"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/bbc_logo"
+                    android:layout_marginEnd="10dp"
+                    app:civ_border_color="@color/md_red_400"
+                    app:civ_border_width="1dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BBC News"
+                    android:layout_toEndOf="@id/icon_info"
+                    android:layout_centerVertical="true"/>
+
+
+            </RelativeLayout>
+
+
+
+            <ImageView
+                android:id="@+id/image_news"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/sample_image"
+                android:scaleType="centerCrop"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"/>
+
+
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lorem_ipsum"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_below="@id/layout_info"
+                android:layout_toStartOf="@id/image_news"
+                android:ellipsize="end"
+                android:maxLines="2"
+                fontPath="fonts/SF-Medium.otf"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:id="@+id/text_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lorem_ipsum"
+                android:textSize="12sp"
+                android:layout_below="@id/text_title"
+                android:layout_toStartOf="@id/image_news"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:layout_marginStart="10dp"/>
+
+
+
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_height="40dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="8dp"
+        android:layout_marginTop="-20dp"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Technology"
+                    android:textSize="8sp"
+                    app:chipBackgroundColor="#d4DBE9"
+                    android:textColor="#afb5CA"/>
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tending"
+                    android:textSize="8sp"
+                    app:chipBackgroundColor="#d4DBE9"
+                    android:textColor="#afb5CA"/>
+
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end">
+
+
+                <com.sackcentury.shinebuttonlib.ShineButton
+                    android:layout_height="20dp"
+                    android:layout_width="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="20dp"
+                    app:siShape="@drawable/ic_bookmark_gray_24dp"
+                    app:btn_fill_color="@color/colorPrimaryDark"
+                    app:btn_color="@android:color/darker_gray" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_share_gray_24dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"/>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
