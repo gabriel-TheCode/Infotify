@@ -19,4 +19,14 @@
         <item name="actionModeBackground">@color/md_grey_300</item>
     </style>
 
+    <style name="myCustomAppBarTheme" parent="Theme.AppCompat.Light">
+        <item name="android:actionBarStyle">@style/AppTheme.ActionBar</item>
+        <item name="actionBarStyle">@style/AppTheme.ActionBar</item>
+    </style>
+
+    <style name="AppTheme.ActionBar" parent="Widget.AppCompat.Light.ActionBar">
+    <item name="android:titleTextStyle">@style/AppTheme</item>
+    <item name="android:height">100dp</item>
+    </style>
+
 </resources>

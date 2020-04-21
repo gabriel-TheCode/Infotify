@@ -9,6 +9,7 @@
     android:background="#F5F7FB">
 
 
+
     <com.thecode.infotify.utils.NonSwipeableViewPager
         android:id="@+id/view_pager"
         android:layout_width="0dp"
