@@ -8,6 +8,8 @@
     <color name="blue_active">#0a767F</color>
     <color name="blue_inactive">#64b5f6</color>
 
+    <color name="darker_gray">#C0C0C0</color>
+
 
     <color name="transparent_white">#1FFFFFFF</color>
     <color name="transparent_dark">#80000000</color>

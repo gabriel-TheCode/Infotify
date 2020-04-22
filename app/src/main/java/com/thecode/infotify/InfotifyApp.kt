@@ -15,7 +15,7 @@ import io.github.inflationx.viewpump.ViewPump
 
 class InfotifyApp : MultiDexApplication() {
     override fun onCreate() {
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true) // Allow to load drawable dynamiccaly to solve RessourceNotFoundException with drawable vectors
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true) // Allow to load drawable dynamically to solve RessourceNotFoundException with drawable vectors
         super.onCreate()
         instance = this
         ViewPump.init(
@@ -53,10 +53,8 @@ class InfotifyApp : MultiDexApplication() {
         get() {
             val connectivityManager =
                 getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            var activeNetworkInfo: NetworkInfo? = null
-            if (connectivityManager != null) {
-                activeNetworkInfo = connectivityManager.activeNetworkInfo
-            }
+            val activeNetworkInfo: NetworkInfo?
+            activeNetworkInfo = connectivityManager.activeNetworkInfo
             return activeNetworkInfo != null && activeNetworkInfo.isConnected
         }
 

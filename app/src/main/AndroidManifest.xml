@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.thecode.infotify">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name=".InfotifyApp"
         android:allowBackup="true"
@@ -11,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activities.MainActivity2"></activity>
+        <activity android:name=".activities.NewsDetailsActivity"></activity>
+        <activity android:name=".activities.MainActivity2" />
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.SplashActivity">
             <intent-filter>

@@ -6,18 +6,15 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
-
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.thecode.infotify.R
 import com.thecode.infotify.adapters.BottomNavPagerAdapter
 import com.thecode.infotify.fragments.BookmarksFragment
 import com.thecode.infotify.fragments.HomeFragment
 import com.thecode.infotify.fragments.SearchFragment
-
-import java.util.ArrayList
-
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class MainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener {
@@ -39,6 +36,7 @@ class MainActivity : AppCompatActivity(),
         fragList.add(SearchFragment())
         val pagerAdapter = BottomNavPagerAdapter(fragList, supportFragmentManager)
         viewPager = findViewById(R.id.view_pager)
+        viewPager.offscreenPageLimit = 3
         viewPager.adapter = pagerAdapter
 
         bnv.setOnNavigationItemSelectedListener(this)

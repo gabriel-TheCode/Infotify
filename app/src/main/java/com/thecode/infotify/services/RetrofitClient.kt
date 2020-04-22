@@ -3,7 +3,7 @@ package com.thecode.infotify.services
 import android.content.Context
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.thecode.infotify.InfotifyApp.Companion.instance
-import com.thecode.infotify.interfaces.AppInterface
+import com.thecode.infotify.interfaces.ApiInterface
 import com.thecode.infotify.interfaces.NetworkConnectionInterceptor
 import com.thecode.infotify.utils.NetworkChangeReceiver.Companion.connectivityReceiverListener
 import okhttp3.OkHttpClient
@@ -55,9 +55,9 @@ object RetrofitClient {
     fun getApiService(
         mContext: Context,
         coreServiceUrl: String
-    ): AppInterface {
+    ): ApiInterface {
         return getRetrofitInstance(mContext, coreServiceUrl).create(
-            AppInterface::class.java
+            ApiInterface::class.java
         )
     }
 }

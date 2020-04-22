@@ -7,4 +7,5 @@ class NewsObjectResponse {
     var totalResults: String? = null
     lateinit var articles: Array<Article>
 
+
 }

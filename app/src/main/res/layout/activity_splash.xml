@@ -31,8 +31,9 @@
         android:layout_margin="5dp"
         android:fontFamily="sans-serif"
         android:text="@string/app_name"
+        fontPath="fonts/OleoScript-Bold.ttf"
         android:textColor="@android:color/white"
-        android:textSize="18sp"
+        android:textSize="22sp"
         android:textStyle="bold" />
 
     <com.wang.avi.AVLoadingIndicatorView
