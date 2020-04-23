@@ -9,16 +9,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
 import com.thecode.infotify.entities.Article
 import com.thecode.infotify.interfaces.ApiInterface
 import com.thecode.infotify.responses.NewsObjectResponse
 import com.thecode.infotify.utils.AppConstants
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.json.JSONException
 import retrofit2.Call
@@ -28,7 +29,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-
 /**
  * A simple [Fragment] subclass.
  */
@@ -36,6 +36,7 @@ class HomeFragment : Fragment() {
 
     lateinit var recyclerView: RecyclerView
     lateinit var recyclerAdapter: NewsRecyclerViewAdapter
+    lateinit var refreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,14 +44,24 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        fetchApiNews()
 
+        refreshLayout = view.refresh_layout
         recyclerView = view.recycler_view_news
         recyclerAdapter = NewsRecyclerViewAdapter(context!!)
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = recyclerAdapter
+        //recyclerView.adapter = recyclerAdapter
+        recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
 
+        refreshLayout.setColorSchemeResources(android.R.color.holo_orange_light,
+            android.R.color.holo_red_light,
+            android.R.color.holo_green_light,
+            android.R.color.holo_blue_bright)
+        refreshLayout.setOnRefreshListener{
+            fetchApiNews()
+        }
 
+        fetchApiNews()
+        recyclerView.scheduleLayoutAnimation()
 
         return view
 
@@ -58,6 +69,7 @@ class HomeFragment : Fragment() {
 
 
     private fun fetchApiNews() {
+        refreshLayout.isRefreshing = true
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(AppConstants.NEWSAPI_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -70,9 +82,10 @@ class HomeFragment : Fragment() {
                 call: Call<NewsObjectResponse?>?,
                 response: Response<NewsObjectResponse?>
             ) {
+                refreshLayout.isRefreshing = false
                 Log.i("Responsestring", response.body()!!.status + " " + response.body()!!.totalResults)
                 //Toast.makeText()
-                if (response.isSuccessful()) {
+                if (response.isSuccessful) {
                     if (response.body() != null) {
                         Log.i("onSuccess", response.body().toString())
                         displayNews(response.body()!!.articles)
@@ -81,17 +94,20 @@ class HomeFragment : Fragment() {
                             "onEmptyResponse",
                             "Returned empty response"
                         )
-                        //Toast.makeText(context,"Nothing returned",Toast.LENGTH_LONG).show()
-                        AestheticDialog.showToaster(
+                        Toast.makeText(context,"Nothing returned",Toast.LENGTH_LONG).show()
+                        /*AestheticDialog.showToaster(
                             context as Activity,
                             "Error",
                             "Nothing returned",
-                            AestheticDialog.ERROR)
+                            AestheticDialog.ERROR)*/
                     }
                 }
             }
 
-            override fun onFailure(call: Call<NewsObjectResponse?>?, t: Throwable?) {}
+            override fun onFailure(call: Call<NewsObjectResponse?>?, t: Throwable?) {
+                refreshLayout.isRefreshing = false
+                Toast.makeText(context,"Connection error",Toast.LENGTH_SHORTc).show()
+            }
         })
     }
 
@@ -107,13 +123,16 @@ class HomeFragment : Fragment() {
 
                 recyclerAdapter.setArticleListItems(articleArrayList)
             }
-                AestheticDialog.showToaster(
+
+            recyclerView.scheduleLayoutAnimation()
+
+                /*AestheticDialog.showToaster(
                     context as Activity,
                     "Success",
                     "News returned successfully",
-                    AestheticDialog.SUCCESS)
+                    AestheticDialog.SUCCESS)*/
 
-            //Toast.makeText(context,"News returned successfully",Toast.LENGTH_LONG).show()
+            Toast.makeText(context,"News returned successfully", Toast.LENGTH_LONG).show()
         } catch (e: JSONException) {
             e.printStackTrace()
         }

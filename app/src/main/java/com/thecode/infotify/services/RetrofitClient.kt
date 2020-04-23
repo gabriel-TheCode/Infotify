@@ -2,16 +2,19 @@ package com.thecode.infotify.services
 
 import android.content.Context
 import com.facebook.stetho.okhttp3.StethoInterceptor
-import com.thecode.infotify.InfotifyApp.Companion.instance
+import com.thecode.infotify.InfotifyApp
 import com.thecode.infotify.interfaces.ApiInterface
 import com.thecode.infotify.interfaces.NetworkConnectionInterceptor
-import com.thecode.infotify.utils.NetworkChangeReceiver.Companion.connectivityReceiverListener
+import com.thecode.infotify.utils.NetworkChangeReceiver
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+/**
+ * Created by TEKOMBO Gabriel <tekombo.gabriel@gmail.com/>
+ */
 object RetrofitClient {
     var mContext: Context? = null
     var mCoreServiceUrl: String? = null
@@ -29,13 +32,12 @@ object RetrofitClient {
             .build()
         httpClient.addInterceptor(logging)
             .addInterceptor(object : NetworkConnectionInterceptor() {
-                override fun isInternetAvailable(): Boolean {
-                    return instance!!.isInternetAvailable
-                }
+                override val isInternetAvailable: Boolean
+                    get() = InfotifyApp.instance!!.isInternetAvailable
 
                 override fun onInternetUnavailable() {
-                    if (connectivityReceiverListener != null) {
-                        connectivityReceiverListener!!.onInternetUnavailable()
+                    if (NetworkChangeReceiver.connectivityReceiverListener != null) {
+                        NetworkChangeReceiver.connectivityReceiverListener!!.onInternetUnavailable()
                     }
                 }
             })
@@ -56,8 +58,7 @@ object RetrofitClient {
         mContext: Context,
         coreServiceUrl: String
     ): ApiInterface {
-        return getRetrofitInstance(mContext, coreServiceUrl).create(
-            ApiInterface::class.java
-        )
+        return getRetrofitInstance(mContext, coreServiceUrl)
+            .create(ApiInterface::class.java)
     }
 }

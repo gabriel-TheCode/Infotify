@@ -30,11 +30,12 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/icon_info"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/bbc_logo"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/icon_info"
+                    app:civ_circle_background_color="#5F7D95"
                     android:layout_marginEnd="10dp"
-                    app:civ_border_color="@color/md_red_400"
+                    app:civ_border_color="@color/colorPrimary"
                     app:civ_border_width="1dp"
                     />
 

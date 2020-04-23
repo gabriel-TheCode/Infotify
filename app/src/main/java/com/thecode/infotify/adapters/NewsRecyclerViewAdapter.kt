@@ -30,11 +30,17 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-
         holder.tvNewsTitle.text = newsList[position].title
         holder.tvNewsdescription.text = newsList[position].description
-        holder.tvPublisherName.text = newsList[position].author
+        if(newsList[position].author.equals(null)){
+            holder.tvPublisherName.text = "Infotify News"
+        }else{
+            holder.tvPublisherName.text = newsList[position].author
+        }
+
         Glide.with(context).load(newsList[position].urlToImage)
+            .placeholder(R.drawable.placeholder)
+            .error(R.drawable.placeholder)
             .apply(RequestOptions().centerCrop())
             .into(holder.image)
         holder.btnShare.setOnClickListener {
