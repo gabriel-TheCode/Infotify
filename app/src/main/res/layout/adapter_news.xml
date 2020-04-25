@@ -6,6 +6,7 @@
     android:layout_height="190dp">
 
     <FrameLayout
+        android:id="@+id/frame_news"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusable="true"
@@ -14,12 +15,9 @@
         android:foreground="?android:attr/selectableItemBackground">
 
         <RelativeLayout
+            android:id="@+id/news_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/md_white_1000"
-            android:focusable="true"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:id="@+id/layout_info"

@@ -106,7 +106,7 @@ class HomeFragment : Fragment() {
 
             override fun onFailure(call: Call<NewsObjectResponse?>?, t: Throwable?) {
                 refreshLayout.isRefreshing = false
-                Toast.makeText(context,"Connection error",Toast.LENGTH_SHORTc).show()
+                Toast.makeText(context,"Connection error",Toast.LENGTH_SHORT).show()
             }
         })
     }
