@@ -1,8 +1,9 @@
 package com.thecode.infotify.activities
 
 import android.os.Bundle
-import android.webkit.WebChromeClient
-import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -11,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_news_details.*
 
 
 class NewsDetailsActivity : AppCompatActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,13 +30,15 @@ class NewsDetailsActivity : AppCompatActivity() {
         val date = i.extras!!.getString("date")
         val url = i.extras!!.getString("url")
 
+        Toast.makeText(this, title, Toast.LENGTH_SHORT).show()
 
+
+        val formattedDate =  date!!.split("T")[0]
         //REFERENCE VIEWS FROM XML
         val img = image_news
         val txtSource = text_source
         val txtContent = text_content
         val txtDate = text_date
-        val webview = webview
 
 
         //ASSIGN DATA TO THOSE VIEWS
@@ -44,21 +48,13 @@ class NewsDetailsActivity : AppCompatActivity() {
             .apply(RequestOptions().centerCrop())
             .into(img)
         txtSource.text = source
-        txtContent.text = content
-        txtDate.text = date
-
-
-
-        webview.settings.loadWithOverviewMode = true
-
-        webview.settings.javaScriptEnabled = true
-        webview.isClickable = false
-        webview.isEnabled = false
-        webview.isHorizontalScrollBarEnabled = true
-        webview.webChromeClient = WebChromeClient()
-
-        val webSettings: WebSettings = webview.settings
-        webview.loadUrl(url)
+        txtContent.text = "$description\n\n $content"
+        txtDate.text = formattedDate
+        setTitle(title)
 
     }
+
+
+
+
 }

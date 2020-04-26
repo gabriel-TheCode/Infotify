@@ -68,7 +68,6 @@
         android:orientation="vertical"
         android:clickable="true"
         android:focusable="true"
-
         android:background="@drawable/layout_rounded_top_bg"
         android:focusableInTouchMode="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -124,13 +123,8 @@
             android:id="@+id/text_content"
             android:text="@string/lorem_ipsum"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="20dp"/>
-
-        <WebView
-            android:id="@+id/webview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
 
     </LinearLayout>
 

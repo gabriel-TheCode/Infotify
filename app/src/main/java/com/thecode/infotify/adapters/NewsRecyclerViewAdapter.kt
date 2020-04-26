@@ -1,16 +1,24 @@
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.github.ybq.android.spinkit.sprite.Sprite
+import com.github.ybq.android.spinkit.style.DoubleBounce
 import com.thecode.infotify.R
-import com.thecode.infotify.activities.NewsDetailsActivity
 import com.thecode.infotify.entities.Article
 import kotlinx.android.synthetic.main.adapter_news.view.*
 
@@ -59,7 +67,7 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
         //WHEN ITEM IS CLICKED
         holder.container.setOnClickListener{
             //INTENT OBJ
-            val i = Intent(context, NewsDetailsActivity::class.java)
+            /*val i = Intent(context, NewsDetailsActivity::class.java)
 
             //ADD DATA TO OUR INTENT
             i.putExtra("title", newsList[position].title)
@@ -68,16 +76,16 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
             i.putExtra("source", newsList[position].source!!.name)
             i.putExtra("date", newsList[position].publishedAt)
             i.putExtra("content", newsList[position].content)
+            i.putExtra("url", newsList[position].url)
 
             //START DETAIL ACTIVITY
-            context.startActivity(i)
+            context.startActivity(i)*/
+
+            //show article content inside a dialog
 
 
             //show article content inside a dialog
-
-
-            //show article content inside a dialog
-           /* val newsView = WebView(context)
+            val newsView = WebView(context)
 
             newsView.settings.loadWithOverviewMode = true
 
@@ -87,17 +95,43 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
 
             newsView.settings.javaScriptEnabled = false
             newsView.isHorizontalScrollBarEnabled = false
-            newsView.webChromeClient = WebChromeClient()
+            newsView.webViewClient = object : WebViewClient() {
+                val progressBar = ProgressBar(context)
+
+                override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+                    return true
+                }
+
+                override fun onReceivedError(
+                    view: WebView?,
+                    request: WebResourceRequest?,
+                    error: WebResourceError?
+                ) {
+                    super.onReceivedError(view, request, error)
+                }
+
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    
+                    val alertDialog: AlertDialog = AlertDialog.Builder(context).create()
+                    alertDialog.setTitle(title)
+                    alertDialog.setView(newsView)
+                    alertDialog.setButton(
+                        AlertDialog.BUTTON_NEUTRAL, "OK"
+                    ) { dialog, _ -> dialog.dismiss() }
+                    alertDialog.show()
+                }
+
+                override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+
+                    val sprite = DoubleBounce()
+                    progressBar.indeterminateDrawable = sprite
+                }
+            }
             newsView.loadUrl(url)
             newsView.isClickable = false
             newsView.isEnabled = false
 
-            val alertDialog: AlertDialog = AlertDialog.Builder(context).create()
-            alertDialog.setTitle(title)
-            alertDialog.setView(newsView)
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK"
-            ) { dialog, _ -> dialog.dismiss() }
-            alertDialog.show()*/
+
 
 
 
