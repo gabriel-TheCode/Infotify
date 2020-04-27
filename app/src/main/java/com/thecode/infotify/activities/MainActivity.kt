@@ -32,8 +32,8 @@ class MainActivity : AppCompatActivity(),
         val bnv = bottom_navigation
         val fragList = ArrayList<Fragment>()
         fragList.add(HomeFragment())
-        fragList.add(BookmarksFragment())
         fragList.add(SearchFragment())
+        fragList.add(BookmarksFragment())
         val pagerAdapter = BottomNavPagerAdapter(fragList, supportFragmentManager)
         viewPager = findViewById(R.id.view_pager)
         viewPager.offscreenPageLimit = 3

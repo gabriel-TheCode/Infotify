@@ -18,7 +18,6 @@
             android:id="@+id/image_news"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:src="@drawable/sample_image"
             android:scaleType="centerCrop"/>
 
         <RelativeLayout
@@ -86,7 +85,7 @@
         android:layout_marginEnd="30dp"
         android:layout_height="40dp"
         app:cardCornerRadius="10dp"
-        app:cardElevation="8dp"
+        app:cardElevation="4dp"
         android:layout_marginTop="-20dp"
         android:layout_gravity="center">
 
@@ -103,17 +102,21 @@
                 android:layout_marginEnd="10dp">
 
                 <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Technology"
+                    android:text="General"
                     android:textSize="8sp"
                     app:chipBackgroundColor="#d4DBE9"
-                    android:textColor="#afb5CA"/>
+                    android:textColor="#afb5CA"
+                    android:visibility="gone"/>
+
 
                 <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tending"
+                    android:text="20.05.2020"
                     android:textSize="8sp"
                     app:chipBackgroundColor="#d4DBE9"
                     android:textColor="#afb5CA"/>
@@ -128,17 +131,22 @@
 
 
                 <com.sackcentury.shinebuttonlib.ShineButton
-                    android:layout_height="20dp"
-                    android:layout_width="20dp"
+                    android:id="@+id/btnBookmark"
+                    android:layout_height="26dp"
+                    android:layout_width="26dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="20dp"
                     app:siShape="@drawable/ic_bookmark_gray_24dp"
-                    app:btn_fill_color="@color/colorPrimaryDark"
-                    app:btn_color="@android:color/darker_gray" />
+                    app:btn_fill_color="@color/colorPrimary"
+                    app:btn_color="@color/darker_gray"
+                    app:small_shine_color="@color/md_red_400"/>
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/btnShare"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:src="@drawable/ic_share_gray_24dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="10dp"/>

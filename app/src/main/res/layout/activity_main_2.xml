@@ -43,18 +43,6 @@
             app:bt_shape="@drawable/rounded_rect_bg_nav"/>
 
         <com.gauravk.bubblenavigation.BubbleToggleView
-            android:id="@+id/bookmark"
-            app:bt_title="Bookmarks"
-            app:bt_titleSize="10sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:bt_colorActive="@color/colorPrimary"
-            app:bt_colorInactive="@color/md_grey_400"
-            app:bt_icon="@drawable/ic_newspaper"
-            app:bt_shape="@drawable/rounded_rect_bg_nav"/>
-
-        <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/search"
             app:bt_title="Search"
             app:bt_titleSize="10sp"
@@ -66,6 +54,18 @@
             app:bt_icon="@drawable/ic_search_gray_24dp"
             app:bt_shape="@drawable/rounded_rect_bg_nav"/>
 
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/bookmark"
+            app:bt_title="Bookmarks"
+            app:bt_titleSize="10sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:bt_colorActive="@color/colorPrimary"
+            app:bt_colorInactive="@color/md_grey_400"
+            app:bt_icon="@drawable/ic_newspaper"
+            app:bt_shape="@drawable/rounded_rect_bg_nav"/>
     </com.gauravk.bubblenavigation.BubbleNavigationLinearView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

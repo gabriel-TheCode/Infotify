@@ -12,6 +12,11 @@ import com.thecode.infotify.utils.NetworkChangeReceiver
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
+import io.realm.Realm
+import io.realm.RealmConfiguration
+
+
+
 
 class InfotifyApp : MultiDexApplication() {
     override fun onCreate() {
@@ -30,6 +35,12 @@ class InfotifyApp : MultiDexApplication() {
                 )
                 .build()
         )
+
+        Realm.init(applicationContext)
+        val config = RealmConfiguration.Builder()
+            .deleteRealmIfMigrationNeeded()
+            .name("infotity.realm").build()
+        Realm.setDefaultConfiguration(config)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

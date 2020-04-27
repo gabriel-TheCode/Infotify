@@ -1,8 +1,7 @@
 package com.thecode.infotify.fragments
 
 
-import NewsRecyclerViewAdapter
-import android.app.Activity
+import com.thecode.infotify.adapters.NewsRecyclerViewAdapter
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
 import com.thecode.infotify.entities.Article
 import com.thecode.infotify.interfaces.ApiInterface

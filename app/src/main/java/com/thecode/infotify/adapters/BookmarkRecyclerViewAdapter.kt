@@ -22,13 +22,13 @@ import com.google.android.material.chip.Chip
 import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
 import com.thecode.infotify.entities.Article
-import com.thecode.infotify.entities.Source
 import com.thecode.infotify.utils.CustomProgressBar
 import io.realm.Realm
+import io.realm.RealmObject
 import kotlinx.android.synthetic.main.adapter_news.view.*
 
 
-class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder>() {
+class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<BookmarkRecyclerViewAdapter.NewsViewHolder>() {
 
     var newsList : List<Article> = listOf()
     private val progressBar: CustomProgressBar = CustomProgressBar()
@@ -71,27 +71,6 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
         }
 
         holder.btnBookmark.setOnClickListener{
-            val realm: Realm = Realm.getDefaultInstance()
-
-            realm.use { realm ->
-                realm.executeTransaction {
-
-                    val articleBookmark : Article = realm.createObject(Article::class.java)
-
-                    val sourceArticle : Source = realm.createObject(Source::class.java)
-
-                    articleBookmark.urlToImage = newsList[position].urlToImage
-                    articleBookmark.url = newsList[position].url
-                    articleBookmark.author = newsList[position].author
-                    articleBookmark.content = newsList[position].content
-                    articleBookmark.description = newsList[position].description
-                    articleBookmark.publishedAt = newsList[position].publishedAt
-                    articleBookmark.title = newsList[position].title
-                    sourceArticle.name = newsList[position].source!!.name
-                    articleBookmark.source = sourceArticle
-
-                }
-            }
 
 
         }
@@ -152,13 +131,13 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
                 override fun onPageFinished(view: WebView?, url: String?) {
                     if (!failedLoading) {
                         progressBar.dialog!!.dismiss()
-                        val alertDialog: AlertDialog = AlertDialog.Builder(context).create()
-                        alertDialog.setTitle(title)
-                        alertDialog.setView(newsView)
-                        alertDialog.setButton(
-                            AlertDialog.BUTTON_NEUTRAL, "OK"
-                        ) { dialog, _ -> dialog.dismiss() }
-                        alertDialog.show()
+                    val alertDialog: AlertDialog = AlertDialog.Builder(context).create()
+                    alertDialog.setTitle(title)
+                    alertDialog.setView(newsView)
+                    alertDialog.setButton(
+                        AlertDialog.BUTTON_NEUTRAL, "OK"
+                    ) { dialog, _ -> dialog.dismiss() }
+                    alertDialog.show()
                     }else{
                         progressBar.dialog!!.dismiss()
                     }
@@ -171,6 +150,10 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
             newsView.loadUrl(url)
             newsView.isClickable = false
             newsView.isEnabled = false
+
+
+
+
 
         }
     }

@@ -56,7 +56,7 @@
                 android:id="@+id/image_news"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:src="@drawable/sample_image"
+                android:src="@drawable/placeholder"
                 android:scaleType="centerCrop"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="10dp"/>
@@ -114,23 +114,26 @@
 
             <com.google.android.material.chip.ChipGroup
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp">
 
                 <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="General"
                     android:textSize="8sp"
                     app:chipBackgroundColor="#d4DBE9"
-                    android:textColor="#afb5CA"/>
+                    android:textColor="#afb5CA"
+                    android:visibility="gone"/>
 
                 <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Trending"
+                    android:text="20.05.2020"
                     android:textSize="8sp"
                     app:chipBackgroundColor="#d4DBE9"
                     android:textColor="#afb5CA"/>
