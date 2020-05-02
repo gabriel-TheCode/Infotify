@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +33,7 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
 
     var newsList : List<Article> = listOf()
     private val progressBar: CustomProgressBar = CustomProgressBar()
+    val realm: Realm = Realm.getDefaultInstance()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
 
@@ -70,31 +72,16 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
             context.startActivity(sendIntent)
         }
 
-        holder.btnBookmark.setOnClickListener{
-            val realm: Realm = Realm.getDefaultInstance()
-
-            realm.use { realm ->
-                realm.executeTransaction {
-
-                    val articleBookmark : Article = realm.createObject(Article::class.java)
-
-                    val sourceArticle : Source = realm.createObject(Source::class.java)
-
-                    articleBookmark.urlToImage = newsList[position].urlToImage
-                    articleBookmark.url = newsList[position].url
-                    articleBookmark.author = newsList[position].author
-                    articleBookmark.content = newsList[position].content
-                    articleBookmark.description = newsList[position].description
-                    articleBookmark.publishedAt = newsList[position].publishedAt
-                    articleBookmark.title = newsList[position].title
-                    sourceArticle.name = newsList[position].source!!.name
-                    articleBookmark.source = sourceArticle
-
-                }
-            }
-
+        holder.btnBookmark.setOnClickListener {
+            saveIntoDatabase(newsList[position])
 
         }
+
+
+
+
+
+
 
         //WHEN ITEM IS CLICKED
 
@@ -191,4 +178,44 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
         val btnBookmark: ImageView = itemView!!.btnBookmark
         val chipDate : Chip = itemView!!.chip_date
     }
+
+
+    private fun saveIntoDatabase(article: Article) {
+
+        realm.executeTransactionAsync({ realm ->
+            val articleBookmark: Article = realm.createObject(Article::class.java)
+            val sourceArticle: Source = realm.createObject(Source::class.java)
+
+            articleBookmark.urlToImage = article.urlToImage
+            articleBookmark.url = article.url
+            articleBookmark.author = article.author
+            articleBookmark.content = article.content
+            articleBookmark.description = article.description
+            articleBookmark.publishedAt = article.publishedAt
+            articleBookmark.title = article.title
+            sourceArticle.name = article.source!!.name
+            articleBookmark.source = sourceArticle
+        }, {
+            // Transaction was a success.
+            Log.v("database", "Stored ok")
+            AestheticDialog.showToaster(
+                context as Activity?,
+                "Success",
+                "Bookmark saved",
+                AestheticDialog.SUCCESS
+            )
+
+        }, {
+            // Transaction failed and was automatically canceled.
+            AestheticDialog.showToaster(
+                context as Activity?,
+                "Error",
+                "Something went wrong",
+                AestheticDialog.ERROR
+            )
+
+        })
+    }
+
+
 }

@@ -6,12 +6,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <FrameLayout
+        android:id="@+id/frame_news"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusable="true"
         android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:background="@drawable/transparent_shape">
+        android:foreground="?android:attr/selectableItemBackground">
 
 
         <ImageView
@@ -19,6 +19,11 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:scaleType="centerCrop"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/transparent_shape"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -43,6 +48,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/text_name_publisher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="BBC News"
@@ -137,8 +143,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="20dp"
                     app:siShape="@drawable/ic_bookmark_gray_24dp"
-                    app:btn_fill_color="@color/colorPrimary"
-                    app:btn_color="@color/darker_gray"
+                    app:btn_fill_color="@color/darker_gray"
+                    app:btn_color="@color/colorPrimary"
                     app:small_shine_color="@color/md_red_400"/>
 
                 <ImageView

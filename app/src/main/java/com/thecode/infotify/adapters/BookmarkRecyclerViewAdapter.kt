@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -24,18 +26,18 @@ import com.thecode.infotify.R
 import com.thecode.infotify.entities.Article
 import com.thecode.infotify.utils.CustomProgressBar
 import io.realm.Realm
-import io.realm.RealmObject
 import kotlinx.android.synthetic.main.adapter_news.view.*
 
 
 class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<BookmarkRecyclerViewAdapter.NewsViewHolder>() {
 
-    var newsList : List<Article> = listOf()
+    private var newsList : MutableList<Article> =  mutableListOf()
     private val progressBar: CustomProgressBar = CustomProgressBar()
+    val realm: Realm = Realm.getDefaultInstance()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
 
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.adapter_news,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.adapter_news_landscape,parent,false)
         return NewsViewHolder(view)
     }
 
@@ -44,17 +46,23 @@ class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<B
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        holder.tvNewsTitle.text = newsList[position].title
-        holder.tvNewsdescription.text = newsList[position].description
-        holder.chipDate.text = newsList[position].publishedAt!!.split("T")[0]
+        val article : Article = newsList[position]
+        val title: String = article.title!!
+        val url: String = article.url!!
+        val publishAt = article.publishedAt
+        val urlToImage = article.urlToImage
+        val sourceName = article.source!!.name
 
-        if(newsList[position].source!!.name.equals(null)){
+        holder.tvNewsTitle.text = title
+        holder.chipDate.text = publishAt!!.split("T")[0]
+
+        if(sourceName.equals(null)){
             holder.tvPublisherName.text = "Infotify News"
         }else{
-            holder.tvPublisherName.text = newsList[position].source!!.name
+            holder.tvPublisherName.text = sourceName
         }
 
-        Glide.with(context).load(newsList[position].urlToImage)
+        Glide.with(context).load(article.urlToImage)
             .placeholder(R.drawable.placeholder)
             .error(R.drawable.placeholder)
             .apply(RequestOptions().centerCrop())
@@ -64,53 +72,26 @@ class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<B
             sendIntent.action = Intent.ACTION_SEND
             sendIntent.putExtra(
                 Intent.EXTRA_TEXT,
-                newsList[position].title + " - via Infotify News App\n" + newsList[position].url
+                "$title - via Infotify News App\n$url"
             )
             sendIntent.type = "text/plain"
             context.startActivity(sendIntent)
         }
 
+        //WHEN ITEM IS CLICKED
         holder.btnBookmark.setOnClickListener{
-
-
+            deleteFromDatabase(position, title)
         }
 
         //WHEN ITEM IS CLICKED
-
-        //WHEN ITEM IS CLICKED
         holder.container.setOnClickListener{
-            //INTENT OBJ
-            /*val i = Intent(context, NewsDetailsActivity::class.java)
 
-            //ADD DATA TO OUR INTENT
-            i.putExtra("title", newsList[position].title)
-            i.putExtra("description", newsList[position].description)
-            i.putExtra("imageUrl", newsList[position].urlToImage)
-            i.putExtra("source", newsList[position].source!!.name)
-            i.putExtra("date", newsList[position].publishedAt)
-            i.putExtra("content", newsList[position].content)
-            i.putExtra("url", newsList[position].url)
-
-            //START DETAIL ACTIVITY
-            context.startActivity(i)*/
-
-            //show article content inside a dialog
-
-
-            //show article content inside a dialog
             val newsView = WebView(context)
             var failedLoading = false
             newsView.settings.loadWithOverviewMode = true
-
-            val title: String = newsList[position].title.toString()
-            val content: String = newsList[position].content.toString()
-            val url: String = newsList[position].url.toString()
-
             newsView.settings.javaScriptEnabled = false
             newsView.isHorizontalScrollBarEnabled = false
             newsView.webViewClient = object : WebViewClient() {
-
-
 
                 override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                     return true
@@ -151,14 +132,10 @@ class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<B
             newsView.isClickable = false
             newsView.isEnabled = false
 
-
-
-
-
         }
     }
 
-    fun setArticleListItems(newsList: List<Article>){
+    fun setArticleListItems(newsList: MutableList<Article>){
         this.newsList = newsList
         notifyDataSetChanged()
     }
@@ -167,11 +144,35 @@ class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<B
 
         val container: FrameLayout = itemView!!.frame_news
         val tvNewsTitle: TextView = itemView!!.text_title
-        val tvNewsdescription: TextView = itemView!!.text_description
+        //val tvNewsdescription: TextView = itemView!!.text_description
         val tvPublisherName: TextView = itemView!!.text_name_publisher
         val image: ImageView = itemView!!.image_news
         val btnShare: ImageView = itemView!!.btnShare
         val btnBookmark: ImageView = itemView!!.btnBookmark
         val chipDate : Chip = itemView!!.chip_date
     }
+
+
+    private fun deleteFromDatabase(position: Int, itemName: String) {
+        realm.executeTransactionAsync({ realm ->
+            val item: Article = realm.where(Article::class.java).equalTo("title", itemName).findFirst()!!
+            item.deleteFromRealm()
+        }, { // Transaction was a success.
+            remove(position)
+            Log.v("database", "Delete ok")
+            Toast.makeText(context,"Delete successfully", Toast.LENGTH_LONG).show()
+
+        }, { error -> // Transaction failed and was automatically canceled.
+            Log.e("database", error.message)
+            Toast.makeText(context,"An error occured", Toast.LENGTH_LONG).show()
+        })
+    }
+
+    private fun remove(position: Int) {
+        if (itemCount > 1) {
+            newsList.removeAt(position)
+            notifyItemRemoved(position)
+        }
+    }
+
 }
