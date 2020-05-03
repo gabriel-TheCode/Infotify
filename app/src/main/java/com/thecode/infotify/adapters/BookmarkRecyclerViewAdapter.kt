@@ -80,7 +80,7 @@ class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<B
 
         //WHEN ITEM IS CLICKED
         holder.btnBookmark.setOnClickListener{
-            deleteFromDatabase(position, title)
+            deleteFromDatabase(holder.adapterPosition, title)
         }
 
         //WHEN ITEM IS CLICKED
@@ -137,14 +137,12 @@ class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<B
 
     fun setArticleListItems(newsList: MutableList<Article>){
         this.newsList = newsList
-        notifyDataSetChanged()
     }
 
     class NewsViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
 
         val container: FrameLayout = itemView!!.frame_news
         val tvNewsTitle: TextView = itemView!!.text_title
-        //val tvNewsdescription: TextView = itemView!!.text_description
         val tvPublisherName: TextView = itemView!!.text_name_publisher
         val image: ImageView = itemView!!.image_news
         val btnShare: ImageView = itemView!!.btnShare

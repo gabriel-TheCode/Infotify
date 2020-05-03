@@ -28,7 +28,7 @@
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/searchview"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
@@ -38,8 +38,9 @@
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:textSize="12sp"
+                    app:iconifiedByDefault="false"
+                    app:queryHint="@string/search_hint"
                     android:layout_gravity="center_vertical"
-                    android:drawablePadding="20dp"
                     android:background="@drawable/default_background_rounded_rect"/>
 
                 <ImageView

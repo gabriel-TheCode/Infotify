@@ -78,11 +78,6 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
         }
 
 
-
-
-
-
-
         //WHEN ITEM IS CLICKED
 
         //WHEN ITEM IS CLICKED
@@ -163,9 +158,12 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
     }
 
     fun setArticleListItems(newsList: List<Article>){
+        this.newsList = emptyList()
         this.newsList = newsList
         notifyDataSetChanged()
     }
+
+
 
     class NewsViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
 

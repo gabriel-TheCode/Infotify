@@ -50,10 +50,10 @@ class HomeFragment : Fragment() {
         //recyclerView.adapter = recyclerAdapter
         recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
 
-        refreshLayout.setColorSchemeResources(android.R.color.holo_orange_light,
-            android.R.color.holo_red_light,
-            android.R.color.holo_green_light,
-            android.R.color.holo_blue_bright)
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary,
+            R.color.colorPrimary,
+            R.color.colorPrimaryDark,
+            R.color.colorPrimaryDark)
         refreshLayout.setOnRefreshListener{
             fetchApiNews()
         }
@@ -74,7 +74,7 @@ class HomeFragment : Fragment() {
             .build()
         val api: ApiInterface =
             retrofit.create(ApiInterface::class.java)
-        val call: Call<NewsObjectResponse> = api.getTopHeadlinesByCountry("fr", AppConstants.NEWSAPI_TOKEN)
+        val call: Call<NewsObjectResponse> = api.getTopHeadlinesByLanguage("fr", AppConstants.NEWSAPI_TOKEN)
         call.enqueue(object : Callback<NewsObjectResponse?> {
             override fun onResponse(
                 call: Call<NewsObjectResponse?>?,
@@ -120,17 +120,10 @@ class HomeFragment : Fragment() {
                     articleArrayList.add(article)
 
                 recyclerAdapter.setArticleListItems(articleArrayList)
+                recyclerView.scheduleLayoutAnimation()
             }
 
-            recyclerView.scheduleLayoutAnimation()
 
-                /*AestheticDialog.showToaster(
-                    context as Activity,
-                    "Success",
-                    "News returned successfully",
-                    AestheticDialog.SUCCESS)*/
-
-            Toast.makeText(context,"News returned successfully", Toast.LENGTH_LONG).show()
         } catch (e: JSONException) {
             e.printStackTrace()
         }

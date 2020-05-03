@@ -7,13 +7,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:background="@color/transparent_orange">
 
         <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/app_name_text_view"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_centerHorizontal="true"
             app:indicatorName="BallSpinFadeLoaderIndicator"
             android:layout_marginBottom="20dp"/>
@@ -23,6 +23,7 @@
             android:layout_below="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="16sp"
             android:text="@string/please_wait"
             android:textColor="@color/md_white_1000"
             android:layout_centerHorizontal="true" />

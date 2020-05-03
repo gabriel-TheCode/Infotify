@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -31,6 +30,7 @@ class BookmarksFragment : Fragment() {
     lateinit var recyclerAdapter: BookmarkRecyclerViewAdapter
     lateinit var refreshLayout: SwipeRefreshLayout
     private lateinit var listArticles: ArrayList<Article>
+    val realm: Realm = Realm.getDefaultInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,26 +45,29 @@ class BookmarksFragment : Fragment() {
         //recyclerView.adapter = recyclerAdapter
         recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
 
-        refreshLayout.setColorSchemeResources(android.R.color.holo_orange_light,
-            android.R.color.holo_orange_light,
-            android.R.color.holo_orange_light,
-            android.R.color.holo_orange_light)
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary,
+            R.color.colorPrimary,
+            R.color.colorPrimaryDark,
+            R.color.colorPrimaryDark)
         refreshLayout.setOnRefreshListener{
             displayBookmarks(listArticles)
         }
-        val realm: Realm = Realm.getDefaultInstance()
+
+        realm.refresh()
+
 
         listArticles = ArrayList()
         val query: RealmQuery<Article> = realm.where(Article::class.java)
         val results: RealmResults<Article> = query.findAll()
         var i: Int
-        if (results != null) {
+        if (results.isNotEmpty()){
             i = 0
             while (i < results.size) {
                 assert(results[i] != null)
                 listArticles.add(i, results[i]!!)
-                i++
-            }
+                i++ }
+        }else{
+            Toast.makeText(context,"No bookmark saved", Toast.LENGTH_LONG).show()
         }
 
         displayBookmarks(listArticles)
@@ -79,19 +82,10 @@ class BookmarksFragment : Fragment() {
             for (i in articles.indices) {
                 val article = articles[i]
                 articleArrayList.add(article)
-
                 recyclerAdapter.setArticleListItems(articleArrayList)
             }
-
-            recyclerView.scheduleLayoutAnimation()
-
-            /*AestheticDialog.showToaster(
-                context as Activity,
-                "Success",
-                "News returned successfully",
-                AestheticDialog.SUCCESS)*/
             refreshLayout.isRefreshing = false
-            Toast.makeText(context,"News returned successfully", Toast.LENGTH_LONG).show()
+            recyclerView.scheduleLayoutAnimation()
         } catch (e: JSONException) {
             e.printStackTrace()
         }

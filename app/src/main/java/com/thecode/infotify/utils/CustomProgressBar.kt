@@ -15,7 +15,7 @@ class CustomProgressBar {
     fun show(
         context: Context,
         title: CharSequence? = null,
-        cancelable: Boolean = false,
+        cancelable: Boolean = true,
         cancelListener: DialogInterface.OnCancelListener? = null
     ): Dialog {
         val inflator = context

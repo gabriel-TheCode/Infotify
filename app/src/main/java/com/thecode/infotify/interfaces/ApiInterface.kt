@@ -14,6 +14,12 @@ interface ApiInterface {
     ): Call<NewsObjectResponse>
 
     @GET("v2/top-headlines")
+    fun getTopHeadlinesByLanguage(
+        @Query("language") language: String,
+        @Query("apiKey") apiKey: String
+    ): Call<NewsObjectResponse>
+
+    @GET("v2/top-headlines")
     fun getTopHeadlinesByQuery(
         @Query("q") query: String,
         @Query("apiKey") apiKey: String
@@ -38,21 +44,18 @@ interface ApiInterface {
         @Query("apiKey") apiKey: String
     ): Call<NewsObjectResponse>
 
+
     @GET("v2/everything")
-    fun getEverythingByDomains(
-        @Query("domains") query: String,
+    fun getEverything(
+        @Query("q") query: String,
+        @Query("language") language: String,
+        @Query("sortBy") sortBy: String,
         @Query("apiKey") apiKey: String
     ): Call<NewsObjectResponse>
 
     //Sources
     @GET("v2/sources")
     fun getSources(@Query("apiKey") apiKey: String): Call<NewsObjectResponse>
-
-    @GET("v2/sources")
-    fun getSourcesByCountry(
-        @Query("country") country: String,
-        @Query("apiKey") apiKey: String?
-    ): Call<NewsObjectResponse>
 
     @GET("v2/sources")
     fun getSourcesByLang(
