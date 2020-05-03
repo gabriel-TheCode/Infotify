@@ -33,7 +33,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:textColor="@color/md_black_1000"
-                    fontPath="fonts/Poppins-Medium.ttf"
+                    fontPath="fonts/SF-Medium.otf"
                     app:searchIcon="@drawable/ic_search_orange_24dp"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"

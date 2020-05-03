@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,6 +30,7 @@ class BookmarksFragment : Fragment() {
     lateinit var recyclerView: RecyclerView
     lateinit var recyclerAdapter: BookmarkRecyclerViewAdapter
     lateinit var refreshLayout: SwipeRefreshLayout
+    lateinit var layoutEmptyState: LinearLayout
     private lateinit var listArticles: ArrayList<Article>
     val realm: Realm = Realm.getDefaultInstance()
 
@@ -40,6 +42,7 @@ class BookmarksFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_bookmarks, container, false)
         refreshLayout = view.refresh_layout
         recyclerView = view.recycler_view_news_bookmark
+        layoutEmptyState = view.layout_bookmark_empty
         recyclerAdapter = BookmarkRecyclerViewAdapter(context!!)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         //recyclerView.adapter = recyclerAdapter
@@ -61,13 +64,14 @@ class BookmarksFragment : Fragment() {
         val results: RealmResults<Article> = query.findAll()
         var i: Int
         if (results.isNotEmpty()){
+            layoutEmptyState.visibility = View.GONE
             i = 0
             while (i < results.size) {
                 assert(results[i] != null)
                 listArticles.add(i, results[i]!!)
                 i++ }
         }else{
-            Toast.makeText(context,"No bookmark saved", Toast.LENGTH_LONG).show()
+            layoutEmptyState.visibility = View.VISIBLE
         }
 
         displayBookmarks(listArticles)

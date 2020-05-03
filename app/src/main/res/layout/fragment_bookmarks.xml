@@ -46,17 +46,45 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <LinearLayout
+            android:id="@+id/layout_bookmark_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
 
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                android:src="@drawable/list_is_empty" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No bookmarks"
+                android:textSize="20dp"
+                fontPath="fonts/SF-Medium.otf"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save a bookmark and it will show up here"
+                android:textSize="16dp"/>
+
+        </LinearLayout>
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_news_bookmark"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layoutAnimation="@anim/layout_animation_fall_down"/>
+
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

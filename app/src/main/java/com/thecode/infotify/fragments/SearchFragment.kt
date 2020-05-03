@@ -76,7 +76,6 @@ class SearchFragment : Fragment() {
         // perform set on query text listener event
 
         // perform set on query text listener event
-        searchView.isSubmitButtonEnabled = true
         searchView.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -230,6 +229,7 @@ class SearchFragment : Fragment() {
         textClose.setOnClickListener { dialog.dismiss() }
         btnValidateSignature.setOnClickListener {
             dialog.dismiss()
+            fetchApiNews(q,l,s)
         }
     }
 
