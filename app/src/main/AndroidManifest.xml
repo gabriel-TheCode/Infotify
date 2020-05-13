@@ -17,6 +17,7 @@
         <activity android:name=".activities.NewsDetailsActivity" />
         <activity android:name=".activities.MainActivity2" />
         <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.OnboardingActivity"/>
         <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

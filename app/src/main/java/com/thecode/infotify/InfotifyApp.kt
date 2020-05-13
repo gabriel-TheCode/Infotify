@@ -9,6 +9,7 @@ import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.facebook.stetho.Stetho
 import com.thecode.infotify.utils.NetworkChangeReceiver
+import com.thecode.infotify.utils.SharedPreferenceUtils
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
@@ -36,6 +37,7 @@ class InfotifyApp : MultiDexApplication() {
                 .build()
         )
 
+        SharedPreferenceUtils.init(baseContext)
         Realm.init(applicationContext)
         val config = RealmConfiguration.Builder()
             .deleteRealmIfMigrationNeeded()

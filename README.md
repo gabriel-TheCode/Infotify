@@ -1,9 +1,9 @@
 # Infotify News
 [![platform](https://img.shields.io/badge/platform-Android-yellow.svg)](https://www.android.com)
 [![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=plastic)](https://android-arsenal.com/api?level=21)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT)
 
- Infotity is an newsfeed app that allows you to read, and share the information you need to stay ahead of the trends in the entire world.
+ Infotify is a newsfeed app that allows you to read, and share the information you need to stay ahead of the trends in the entire world.
 
  My first Android App made 100% in Kotlin 😁😁😁
 
@@ -46,16 +46,16 @@
 <a name="specifications"></a>
 ## Specifications
 
-- [x] Splashcreen with custom animation.
+- [x] Splashcreen with custom animation
 - [x] Retrieve news, headline topics and sources from [News API](https://newsapi.org/).
-- [x] Realtime search and sorting speed.
+- [x] Realtime search and sorting speed
 - [x] Clean design
-- [x] Descriptive git history.
+- [x] Descriptive Git history
+- [x] Intro Slider
 - [ ] Unit tests.
 - [ ] Monitor connectivity status
 - [ ] Follow a specific design pattern
 - [ ] About Page
-- [ ] Intro Slider
 - [ ] Dark Theme
 
 <a name="tools"></a>
@@ -77,8 +77,6 @@
  * [Stetho](https://github.com/facebook/stetho)
  * [Logging Interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor)
  
- 
- 
 <a name="requirements"></a>
 ## Requirements
 - min SDK 21
@@ -96,11 +94,13 @@
 
 <a name="contribute"></a>
 ## Contribute
+
 Let's develop with collaborations. We would love to have contributions by raising issues and opening PRs. Filing an issue before PR is must.
 See [Contributing Guidelines](CONTRIBUTING.md).
 
 <a name="license"></a>
 ## License
+
 MIT License
 ```
 Copyright (c) [2020] [TEKOMBO Gabriel]

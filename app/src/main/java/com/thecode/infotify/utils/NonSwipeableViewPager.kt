@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019. Variance technologies. All rights reserved.
+ * Copyright (c) 2020. All rights reserved.
  * Created By TEKOMBO Gabriel <tekombo.gabriel@gmail.com> on 07/10/19 13:42.
  */
 package com.thecode.infotify.utils
