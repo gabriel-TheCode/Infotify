@@ -7,7 +7,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +22,8 @@ import com.thecode.infotify.responses.NewsObjectResponse
 import com.thecode.infotify.utils.AppConstants
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.android.synthetic.main.fragment_home.view.refresh_layout
+import kotlinx.android.synthetic.main.layout_bad_state.view.*
 import org.json.JSONException
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,6 +40,10 @@ class HomeFragment : Fragment() {
     lateinit var recyclerView: RecyclerView
     lateinit var recyclerAdapter: NewsRecyclerViewAdapter
     lateinit var refreshLayout: SwipeRefreshLayout
+    lateinit var btnRetry: AppCompatButton
+    lateinit var layoutBadState: View
+    lateinit var textState: TextView
+    lateinit var imgState: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +54,10 @@ class HomeFragment : Fragment() {
 
         refreshLayout = view.refresh_layout
         recyclerView = view.recycler_view_news
+        btnRetry = view.btn_retry
+        layoutBadState = view.layout_bad_state
+        imgState = view.img_state
+        textState = view.text_state
         recyclerAdapter = NewsRecyclerViewAdapter(context!!)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         //recyclerView.adapter = recyclerAdapter
@@ -55,6 +68,10 @@ class HomeFragment : Fragment() {
             R.color.colorPrimaryDark,
             R.color.colorPrimaryDark)
         refreshLayout.setOnRefreshListener{
+            fetchApiNews()
+        }
+
+        btnRetry.setOnClickListener{
             fetchApiNews()
         }
 
@@ -85,6 +102,7 @@ class HomeFragment : Fragment() {
                 //Toast.makeText()
                 if (response.isSuccessful) {
                     if (response.body() != null) {
+                        hideBadStateLayout()
                         Log.i("onSuccess", response.body().toString())
                         displayNews(response.body()!!.articles)
                     } else {
@@ -92,19 +110,15 @@ class HomeFragment : Fragment() {
                             "onEmptyResponse",
                             "Returned empty response"
                         )
-                        Toast.makeText(context,"Nothing returned",Toast.LENGTH_LONG).show()
-                        /*AestheticDialog.showToaster(
-                            context as Activity,
-                            "Error",
-                            "Nothing returned",
-                            AestheticDialog.ERROR)*/
+                        showNoResultErrorLayout()
                     }
                 }
             }
 
             override fun onFailure(call: Call<NewsObjectResponse?>?, t: Throwable?) {
                 refreshLayout.isRefreshing = false
-                Toast.makeText(context,"Connection error",Toast.LENGTH_SHORT).show()
+                showInternetConnectionErrorLayout()
+                Toast.makeText(context,getString(R.string.internet_connection_error),Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -127,6 +141,24 @@ class HomeFragment : Fragment() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
+    }
+
+    fun showInternetConnectionErrorLayout(){
+        layoutBadState.visibility = View.VISIBLE
+        textState.text = getString(R.string.internet_connection_error)
+        btnRetry.visibility = View.VISIBLE
+
+    }
+
+    fun showNoResultErrorLayout(){
+        layoutBadState.visibility = View.VISIBLE
+        textState.text = getString(R.string.no_result_found)
+        btnRetry.visibility = View.GONE
+    }
+
+    fun hideBadStateLayout(){
+        if(layoutBadState.visibility == View.VISIBLE)
+            layoutBadState.visibility = View.GONE
     }
 
 }

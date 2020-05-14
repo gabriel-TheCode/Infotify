@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +26,7 @@ import com.thecode.infotify.utils.AppConstants
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 import kotlinx.android.synthetic.main.bottom_sheet_search.view.*
 import kotlinx.android.synthetic.main.fragment_search.view.*
+import kotlinx.android.synthetic.main.layout_bad_state.view.*
 import org.json.JSONException
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,7 +43,11 @@ class SearchFragment : Fragment() {
         lateinit var recyclerView: RecyclerView
         lateinit var recyclerAdapter: NewsRecyclerViewAdapter
         lateinit var refreshLayout: SwipeRefreshLayout
-        lateinit var searchView: SearchView
+        private lateinit var searchView: SearchView
+        lateinit var btnRetry: AppCompatButton
+        lateinit var layoutBadState: View
+        lateinit var textState: TextView
+        lateinit var imgState: ImageView
         private lateinit var imgSearchOptions: ImageView
         lateinit var q: String
         lateinit var s: String
@@ -57,6 +63,10 @@ class SearchFragment : Fragment() {
         s = "PublishedAt"
         l = "en"
         searchView = view.searchview
+        btnRetry = view.btn_retry
+        layoutBadState = view.layout_bad_state
+        imgState = view.img_state
+        textState = view.text_state
         imgSearchOptions = view.image_settings
         refreshLayout = view.refresh_layout
         recyclerView = view.recycler_view_news_everything
@@ -93,6 +103,11 @@ class SearchFragment : Fragment() {
         imgSearchOptions.setOnClickListener{
             showBottomSheetSearch()
         }
+
+        btnRetry.setOnClickListener{
+            fetchApiNews(q,l,s)
+        }
+
         fetchApiNews(q,l,s)
 
 
@@ -120,7 +135,9 @@ class SearchFragment : Fragment() {
                     if (response.body() != null) {
                         if(response.body()!!.status.equals("error")){
                             AestheticDialog.showToaster(context as Activity?, "Error", "The remote service is unavalaible", AestheticDialog.ERROR)
+                            showInternetConnectionErrorLayout()
                         }else{
+                            hideBadStateLayout()
                             Log.i("onSuccess", response.body().toString())
                             displayNews(response.body()!!.articles)
                         }
@@ -130,7 +147,7 @@ class SearchFragment : Fragment() {
                             "onEmptyResponse",
                             "Returned empty response"
                         )
-                        Toast.makeText(context,"Nothing found", Toast.LENGTH_LONG).show()
+                        showNoResultErrorLayout()
 
                     }
                 }
@@ -138,7 +155,8 @@ class SearchFragment : Fragment() {
 
             override fun onFailure(call: Call<NewsObjectResponse?>?, t: Throwable?) {
                 refreshLayout.isRefreshing = false
-                Toast.makeText(context,"Connection error", Toast.LENGTH_SHORT).show()
+                showInternetConnectionErrorLayout()
+                Toast.makeText(context,getString(R.string.internet_connection_error),Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -231,6 +249,24 @@ class SearchFragment : Fragment() {
             dialog.dismiss()
             fetchApiNews(q,l,s)
         }
+    }
+
+    fun showInternetConnectionErrorLayout(){
+        layoutBadState.visibility = View.VISIBLE
+        textState.text = getString(R.string.internet_connection_error)
+        btnRetry.visibility = View.VISIBLE
+
+    }
+
+    fun showNoResultErrorLayout(){
+        layoutBadState.visibility = View.VISIBLE
+        textState.text = getString(R.string.no_result_found)
+        btnRetry.visibility = View.GONE
+    }
+
+    fun hideBadStateLayout(){
+        if(layoutBadState.visibility == View.VISIBLE)
+            layoutBadState.visibility = View.GONE
     }
 
 }

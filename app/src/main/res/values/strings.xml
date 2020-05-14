@@ -1,10 +1,8 @@
 <resources>
     <string name="app_name">Infotify</string>
-
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
     <string name="please_wait">Loading…</string>
     <string name="selected_language">Langue choisie</string>
-    <string name="selected_sort">Tri choisi</string>
     <string name="search_filter">Search filter</string>
     <string name="language">Language</string>
     <string name="sort_by">Sort By</string>
@@ -15,11 +13,13 @@
     <string name="finish">finish</string>
     <string name="title_onboarding_1">Welcome to Infotify News App !</string>
     <string name="description_onboarding_1">A newsfeed app that allows you to read, and share the information you need to stay ahead of the trends in the entire world.</string>
-    <string name="title_onboarding_2">Try AirBnB Lottie</string>
-    <string name="description_onboarding_2">We use Lottie Animations on our Intro to make it interactive &amp; pleasant. Did you already tried it ? If no, let\'s start now. It\'s just awesome</string>
-    <string name="title_onboarding_3">Code beautiful apps</string>
-    <string name="description_onboarding_3">Our mission is to make useful &amp; subtle apps. We love help people to save time with open-source stuffs, but we also make life easier by creating new things. Good Coding!</string>
-
+    <string name="title_onboarding_2">Fast, simple and intuitive</string>
+    <string name="description_onboarding_2">Information and news in several languages, in real time and according to your criteria. Nothing more. Start use it now!</string>
+    <string name="title_onboarding_3">Better than a newspaper</string>
+    <string name="description_onboarding_3">Receive articles from all the major newspapers around the world with a single click and save your favorites news as bookmarks. Let\'s Go!</string>
+    <string name="retry">retry</string>
+    <string name="internet_connection_error">This content is not available without internet connection</string>
+    <string name="no_result_found">No result found</string>
 
 
     <string-array name="languages">
@@ -41,8 +41,6 @@
         <item>nl</item>
         <item>ru</item>
     </string-array>
-
-
 
     <string-array name="options">
         <item>Pubished At</item>

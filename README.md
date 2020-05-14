@@ -52,8 +52,8 @@
 - [x] Clean design
 - [x] Descriptive Git history
 - [x] Intro Slider
-- [ ] Unit tests.
 - [ ] Monitor connectivity status
+- [ ] Unit tests.
 - [ ] Follow a specific design pattern
 - [ ] About Page
 - [ ] Dark Theme

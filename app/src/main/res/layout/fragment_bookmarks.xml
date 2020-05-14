@@ -10,6 +10,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_gradient_appbar"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -63,21 +64,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="No bookmarks"
-                android:textSize="20dp"
+                android:textSize="18sp"
                 fontPath="fonts/SF-Medium.otf"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Save a bookmark and it will show up here"
-                android:textSize="16dp"/>
+                android:textSize="16sp"/>
 
         </LinearLayout>
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_news_bookmark"
@@ -88,9 +88,6 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-
     </FrameLayout>
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

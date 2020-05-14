@@ -16,6 +16,9 @@
     <color name="transparent_white">#1FFFFFFF</color>
     <color name="transparent_dark">#80000000</color>
 
+    <color name="colorPrimaryTransparent">#20FB8C00</color>
+    <color name="colorPrimaryDarkTransparent">#20E65100</color>
+
 
     <!-- google's material design colors from
      http://www.google.com/design/spec/style/color.html#color-ui-color-palette -->
