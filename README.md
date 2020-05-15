@@ -5,12 +5,13 @@
 
  Infotify is a newsfeed app that allows you to read, and share the information you need to stay ahead of the trends in the entire world.
 
- My first Android App made 100% in Kotlin 😁😁😁
+ My first Android App made 100% in Kotlin 😁
 
 <a name="description"></a>
 ## Challenge description
 - Load news headlines from [NewsAPI](https://newsapi.org/).
 - Ability to search news by keyword, language, sorted by popularity, date of publication or relevance.
+- Visualize news headlines organized in several categories : Popular, General, Science, Technology, Sports, Entertainment.
 - 7 languages supported (DE, EN, ES, FR, IT, NL, RU).
 - Show news with the following details :
     - News Title.

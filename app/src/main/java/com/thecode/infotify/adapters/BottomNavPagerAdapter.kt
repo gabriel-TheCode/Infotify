@@ -2,6 +2,7 @@ package com.thecode.infotify.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 
 /**
@@ -10,9 +11,9 @@ import androidx.fragment.app.FragmentStatePagerAdapter
  */
 class BottomNavPagerAdapter(
     private val fragmentList: List<Fragment>,
-    fm: FragmentManager?
+    manager: FragmentManager
 ) :
-    FragmentStatePagerAdapter(fm!!) {
+    FragmentStatePagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     override fun getItem(position: Int): Fragment {
         return if (position >= 0 && position < fragmentList.size) {
             fragmentList[position]

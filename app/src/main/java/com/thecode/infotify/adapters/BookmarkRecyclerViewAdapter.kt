@@ -106,7 +106,7 @@ class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<B
                     if(progressBar.dialog!!.isShowing){
                         progressBar.dialog!!.dismiss()
                     }
-                    AestheticDialog.showToaster(context as Activity?, "Error", "Something went wrong", AestheticDialog.ERROR)
+                    AestheticDialog.showRainbow(context as Activity?, "ERROR", "Sorry, the link of the article is not reachable", AestheticDialog.ERROR)
                 }
 
                 override fun onPageFinished(view: WebView?, url: String?) {

@@ -61,7 +61,7 @@ class SearchFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
         q = "news"
         s = "PublishedAt"
-        l = "en"
+        l = AppConstants.DEFAULT_LANG
         searchView = view.searchview
         btnRetry = view.btn_retry
         layoutBadState = view.layout_bad_state
@@ -134,7 +134,7 @@ class SearchFragment : Fragment() {
                 if (response.isSuccessful) {
                     if (response.body() != null) {
                         if(response.body()!!.status.equals("error")){
-                            AestheticDialog.showToaster(context as Activity?, "Error", "The remote service is unavalaible", AestheticDialog.ERROR)
+                            AestheticDialog.showToaster(context as Activity?, "ERROR", "The remote service is unavalaible", AestheticDialog.ERROR)
                             showInternetConnectionErrorLayout()
                         }else{
                             hideBadStateLayout()
@@ -251,17 +251,27 @@ class SearchFragment : Fragment() {
         }
     }
 
+
     fun showInternetConnectionErrorLayout(){
-        layoutBadState.visibility = View.VISIBLE
-        textState.text = getString(R.string.internet_connection_error)
-        btnRetry.visibility = View.VISIBLE
+        if(recyclerAdapter.itemCount > 0){
+            AestheticDialog.showRainbow(activity, "ERROR", "Please check your internet connection", AestheticDialog.ERROR)
+        }else{
+            layoutBadState.visibility = View.VISIBLE
+            textState.text = getString(R.string.internet_connection_error)
+            btnRetry.visibility = View.VISIBLE
+        }
+
 
     }
 
     fun showNoResultErrorLayout(){
-        layoutBadState.visibility = View.VISIBLE
-        textState.text = getString(R.string.no_result_found)
-        btnRetry.visibility = View.GONE
+        if(recyclerAdapter.itemCount > 0){
+            AestheticDialog.showToaster(activity, "ERROR", "The remote service is unavailable. Retry later", AestheticDialog.ERROR)
+        }else {
+            layoutBadState.visibility = View.VISIBLE
+            textState.text = getString(R.string.no_result_found)
+            btnRetry.visibility = View.GONE
+        }
     }
 
     fun hideBadStateLayout(){

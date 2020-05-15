@@ -128,7 +128,7 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
                     if(progressBar.dialog!!.isShowing){
                         progressBar.dialog!!.dismiss()
                     }
-                    AestheticDialog.showToaster(context as Activity?, "Error", "Something went wrong", AestheticDialog.ERROR)
+                    AestheticDialog.showRainbow(context as Activity?, "ERROR", "Sorry, the link of the article is not reachable", AestheticDialog.ERROR)
                 }
 
                 override fun onPageFinished(view: WebView?, url: String?) {
@@ -196,7 +196,7 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
         }, {
             // Transaction was a success.
             Log.v("database", "Stored ok")
-            AestheticDialog.showToaster(
+            AestheticDialog.showRainbow(
                 context as Activity?,
                 "Success",
                 "Bookmark saved",
