@@ -22,6 +22,7 @@ import com.thecode.infotify.entities.Article
 import com.thecode.infotify.interfaces.ApiInterface
 import com.thecode.infotify.responses.NewsObjectResponse
 import com.thecode.infotify.utils.AppConstants
+import com.thecode.infotify.utils.AppConstants.ARG_CATEGORY
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 import kotlinx.android.synthetic.main.fragment_headline.view.*
 import kotlinx.android.synthetic.main.layout_bad_state.view.*
@@ -32,11 +33,11 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val ARG_CATEGORY = "category"
+
 
 class HeadlineFragment : Fragment() {
 
-    private var category: String? = null
+    private lateinit var category: String
 
     lateinit var recyclerView: RecyclerView
     lateinit var recyclerAdapter: NewsRecyclerViewAdapter
@@ -49,7 +50,7 @@ class HeadlineFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            category = arguments!!.getString(ARG_CATEGORY)
+            category = arguments!!.getString(ARG_CATEGORY)!!
         }
     }
 
@@ -98,10 +99,10 @@ class HeadlineFragment : Fragment() {
         val api: ApiInterface =
             retrofit.create(ApiInterface::class.java)
         val call: Call<NewsObjectResponse>
-        call = if(category.equals("popular")){
+        call = if(category == "popular"){
             api.getTopHeadlinesByLanguage(AppConstants.DEFAULT_LANG, AppConstants.NEWSAPI_TOKEN)
         }else{
-            api.getTopHeadlinesByLanguageAndCategory(AppConstants.DEFAULT_LANG, category!!, AppConstants.NEWSAPI_TOKEN)
+            api.getTopHeadlinesByLanguageAndCategory(AppConstants.DEFAULT_LANG, category, AppConstants.NEWSAPI_TOKEN)
         }
        call.enqueue(object : Callback<NewsObjectResponse?> {
             override fun onResponse(
@@ -155,7 +156,7 @@ class HeadlineFragment : Fragment() {
 
     fun showInternetConnectionErrorLayout(){
         if(recyclerAdapter.itemCount > 0){
-            AestheticDialog.showRainbow(activity, "ERROR", "Please check your internet connection", AestheticDialog.ERROR)
+            AestheticDialog.showRainbow(activity, getString(R.string.error), getString(R.string.check_internet), AestheticDialog.ERROR)
         }else{
             layoutBadState.visibility = View.VISIBLE
             textState.text = getString(R.string.internet_connection_error)
@@ -167,7 +168,7 @@ class HeadlineFragment : Fragment() {
 
     fun showNoResultErrorLayout(){
         if(recyclerAdapter.itemCount > 0){
-            AestheticDialog.showRainbow(activity, "ERROR", "The remote service is unavailable. Retry later", AestheticDialog.ERROR)
+            AestheticDialog.showRainbow(activity, getString(R.string.error), getString(R.string.service_unavailable), AestheticDialog.ERROR)
         }else {
             layoutBadState.visibility = View.VISIBLE
             textState.text = getString(R.string.no_result_found)

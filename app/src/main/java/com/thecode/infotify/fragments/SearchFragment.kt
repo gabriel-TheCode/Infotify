@@ -134,7 +134,7 @@ class SearchFragment : Fragment() {
                 if (response.isSuccessful) {
                     if (response.body() != null) {
                         if(response.body()!!.status.equals("error")){
-                            AestheticDialog.showToaster(context as Activity?, "ERROR", "The remote service is unavalaible", AestheticDialog.ERROR)
+                            AestheticDialog.showToaster(context as Activity?, getString(R.string.error), getString(R.string.service_unavailable), AestheticDialog.ERROR)
                             showInternetConnectionErrorLayout()
                         }else{
                             hideBadStateLayout()
@@ -254,7 +254,7 @@ class SearchFragment : Fragment() {
 
     fun showInternetConnectionErrorLayout(){
         if(recyclerAdapter.itemCount > 0){
-            AestheticDialog.showRainbow(activity, "ERROR", "Please check your internet connection", AestheticDialog.ERROR)
+            AestheticDialog.showRainbow(activity, getString(R.string.error), getString(R.string.check_internet), AestheticDialog.ERROR)
         }else{
             layoutBadState.visibility = View.VISIBLE
             textState.text = getString(R.string.internet_connection_error)
@@ -266,7 +266,7 @@ class SearchFragment : Fragment() {
 
     fun showNoResultErrorLayout(){
         if(recyclerAdapter.itemCount > 0){
-            AestheticDialog.showToaster(activity, "ERROR", "The remote service is unavailable. Retry later", AestheticDialog.ERROR)
+            AestheticDialog.showToaster(activity, getString(R.string.error), getString(R.string.service_unavailable), AestheticDialog.ERROR)
         }else {
             layoutBadState.visibility = View.VISIBLE
             textState.text = getString(R.string.no_result_found)

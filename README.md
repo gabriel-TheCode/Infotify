@@ -72,9 +72,8 @@
  * [Lottie](https://github.com/airbnb/lottie-android)
  * [Shine Button](https://github.com/ChadCSong/ShineButton)
  * [Aesthetic Dialogs](https://github.com/gabriel-TheCode/AestheticDialogs)
- * [Circle Image View](https://github.com/hdodenhof/CircleImageView)
  * [RecyclerView Animators](https://github.com/wasabeef/recyclerview-animators)
- * [Calligraphy](https://github.com/nhaarman/mockito-kotlin)
+ * [Calligraphy 3](https://github.com/inflationx/calligraphy3)
  * [Stetho](https://github.com/facebook/stetho)
  * [Logging Interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor)
  

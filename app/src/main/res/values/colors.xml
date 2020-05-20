@@ -1,8 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Light Color-->
     <color name="colorPrimary">@color/md_orange_600</color>
     <color name="colorPrimaryDark">@color/md_orange_900</color>
     <color name="colorAccent">@color/md_blue_A200</color>
+    <color name="primaryTitleColor">#D9000000</color>
+    <color name="primaryDescriptionColor">#8C000000</color>
+    <color name="primaryDateColor">#8C000000</color>
+    <color name="primaryBackgroundColor">#F5F7FB</color>
+    <color name="primaryCardBackgroundColor">@color/md_white_1000</color>
+
+
+    <!--Night Color-->
+    <color name="colorPrimaryNight">#212121</color>
+    <color name="colorPrimaryDarkNight">#000000</color>
+    <color name="colorAccentNight">#f44336</color>
+    <color name="primaryTitleColorNight">#FFFFFF</color>
+    <color name="primaryDescriptionColorNight">#B3FFFFFF</color>
+    <color name="primaryDateColorNight">#B3FFFFFF</color>
+    <color name="primaryBackgroundColorNight">#303030</color>
+    <color name="primaryCardBackgroundColorNight">#424242</color>
+
 
     <color name="default_inactive">#78909c</color>
     <color name="blue_active">#0a767F</color>

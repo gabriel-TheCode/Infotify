@@ -7,6 +7,7 @@ object SharedPreferenceUtils {
 
 
     const val IS_ONBOARDING_COMPLETED = "IS_ONBOARDING_COMPLETED"
+    const val NIGHT_MODE = "NIGHT_MODE"
 
 
     private lateinit var sp: SharedPreferences
@@ -35,6 +36,15 @@ object SharedPreferenceUtils {
 
     fun getIsOnboardingCompleted(): Boolean {
         return sp.getBoolean(IS_ONBOARDING_COMPLETED, false)
+    }
+
+    fun isNightModeEnabled(): Boolean {
+        return sp.getBoolean(NIGHT_MODE, false)
+    }
+
+    fun setIsNightModeEnabled(state: Boolean) {
+        editor.putBoolean(NIGHT_MODE, state)
+        editor.commit()
     }
 
 }

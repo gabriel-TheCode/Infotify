@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activities.MainActivity"
-    android:background="#F5F7FB">
+    android:background="@color/primaryBackgroundColor">
 
 
     <com.thecode.infotify.utils.NonSwipeableViewPager
@@ -23,7 +23,7 @@
         android:id="@+id/bottom_navigation_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/md_white_1000"
+        android:background="@color/primaryCardBackgroundColor"
         android:elevation="8dp"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"

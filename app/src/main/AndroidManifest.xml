@@ -12,8 +12,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activities.WebViewActivity"></activity>
+        android:theme="@style/AppTheme.Base.Light">
+        <activity android:name=".activities.WebViewActivity"/>
         <activity android:name=".activities.NewsDetailsActivity" />
         <activity android:name=".activities.MainActivity2" />
         <activity android:name=".activities.MainActivity" />

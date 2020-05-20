@@ -81,17 +81,15 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/icon_info"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:src="@drawable/icon_info"
-                app:civ_circle_background_color="#5F7D95"
                 android:layout_marginEnd="10dp"
-                app:civ_border_color="@color/colorPrimary"
-                app:civ_border_width="1dp"
                 android:layout_centerVertical="true"
-                />
+                android:padding="1dp"
+                android:background="@drawable/circle_image_background"/>
 
             <TextView
                 android:id="@+id/text_source"

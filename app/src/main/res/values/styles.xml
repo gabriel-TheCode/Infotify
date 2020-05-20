@@ -1,27 +1,37 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light"> <!-- Material Components ? -->
+    <!-- Light application theme. -->
+    <style name="AppTheme.Base.Light" parent="Theme.AppCompat.Light.NoActionBar"> <!-- Material Components ? -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="primaryTitleColor">@color/primaryTitleColor</item>
+        <item name="primaryDescriptionColor">@color/primaryDescriptionColor</item>
+        <item name="primaryDateColor">@color/primaryDateColor</item>
+        <item name="primaryBackgroundColor">@color/primaryBackgroundColor</item>
+        <item name="primaryCardBackgroundColor">@color/primaryCardBackgroundColor</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <!-- Night application theme. -->
+    <style name="AppTheme.Base.Night" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryNight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkNight</item>
+        <item name="colorAccent">@color/colorAccentNight</item>
+        <item name="primaryTitleColor">@color/primaryTitleColorNight</item>
+        <item name="primaryDescriptionColor">@color/primaryDescriptionColorNight</item>
+        <item name="primaryDateColor">@color/primaryDateColorNight</item>
+        <item name="primaryBackgroundColor">@color/primaryBackgroundColorNight</item>
+        <item name="primaryCardBackgroundColor">@color/primaryCardBackgroundColorNight</item>
+    </style>
+
+
+    <style name="AppTheme.Base.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
 
-    <style name="myCustomAppBarTheme" parent="Theme.AppCompat.Light">
-        <item name="android:actionBarStyle">@style/AppTheme.ActionBar</item>
-        <item name="actionBarStyle">@style/AppTheme.ActionBar</item>
-    </style>
 
-    <style name="AppTheme.ActionBar" parent="Widget.AppCompat.Light.ActionBar">
-    <item name="android:titleTextStyle">@style/AppTheme</item>
-    <item name="android:height">100dp</item>
-    </style>
     <style name="NewDialog" parent="Theme.AppCompat.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowBackground">@color/transparent_orange</item>
@@ -33,6 +43,10 @@
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

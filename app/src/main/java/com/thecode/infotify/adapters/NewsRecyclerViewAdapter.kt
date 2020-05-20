@@ -19,7 +19,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.material.chip.Chip
 import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
 import com.thecode.infotify.entities.Article
@@ -48,7 +47,7 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         holder.tvNewsTitle.text = newsList[position].title
         holder.tvNewsdescription.text = newsList[position].description
-        holder.chipDate.text = newsList[position].publishedAt!!.split("T")[0]
+        holder.tvNewsDate.text = newsList[position].publishedAt!!.split("T")[0]
 
         if(newsList[position].source!!.name.equals(null)){
             holder.tvPublisherName.text = "Infotify News"
@@ -174,7 +173,7 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
         val image: ImageView = itemView!!.image_news
         val btnShare: ImageView = itemView!!.btnShare
         val btnBookmark: ImageView = itemView!!.btnBookmark
-        val chipDate : Chip = itemView!!.chip_date
+        val tvNewsDate : TextView = itemView!!.text_chip_date
     }
 
 

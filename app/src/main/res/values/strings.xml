@@ -20,6 +20,9 @@
     <string name="retry">retry</string>
     <string name="internet_connection_error">This content is not available without internet connection</string>
     <string name="no_result_found">No result found</string>
+    <string name="service_unavailable">The remote service is unavailable. Retry later</string>
+    <string name="check_internet">Please check your internet connection</string>
+    <string name="error">ERROR</string>
 
 
     <string-array name="languages">
@@ -43,7 +46,7 @@
     </string-array>
 
     <string-array name="options">
-        <item>Pubished At</item>
+        <item>Published At</item>
         <item>Popularity</item>
         <item>Relevance</item>
     </string-array>

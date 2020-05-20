@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
-    android:layout_height="180dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/frame_news"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:focusable="true"
         android:clickable="true"
+        android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground">
 
 
@@ -18,17 +18,16 @@
             android:id="@+id/image_news"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/transparent_shape"/>
+            android:background="@drawable/transparent_shape" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
 
 
             <RelativeLayout
@@ -37,47 +36,43 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp">
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:id="@+id/icon_info"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/icon_info"
                     android:layout_marginEnd="10dp"
-                    app:civ_border_color="@color/md_red_400"
-                    app:civ_border_width="1dp"
-                    />
+                    android:background="@drawable/circle_image_background"
+                    android:padding="1dp"
+                    android:src="@drawable/icon_info" />
 
                 <TextView
                     android:id="@+id/text_name_publisher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="BBC News"
-                    android:textColor="@color/md_grey_200"
+                    android:layout_centerVertical="true"
                     android:layout_toEndOf="@id/icon_info"
-                    android:layout_centerVertical="true"/>
+                    android:text="BBC News"
+                    android:textColor="@color/md_grey_200" />
 
 
             </RelativeLayout>
 
 
-
-
-
             <TextView
                 android:id="@+id/text_title"
+                fontPath="fonts/SF-Medium.otf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/lorem_ipsum"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/md_white_1000"
                 android:layout_below="@id/layout_info"
-                android:ellipsize="end"
-                android:maxLines="2"
-                fontPath="fonts/SF-Medium.otf"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="30dp"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginBottom="5dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@string/lorem_ipsum"
+                android:textColor="@color/md_white_1000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
 
         </RelativeLayout>
@@ -87,48 +82,32 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
         android:layout_height="40dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="4dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="-20dp"
-        android:layout_gravity="center">
+        android:layout_marginEnd="30dp"
+        app:cardBackgroundColor="@color/primaryCardBackgroundColor"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
 
-            <com.google.android.material.chip.ChipGroup
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
+            <TextView
+                android:id="@+id/text_chip_date"
+                android:layout_width="90dp"
+                android:layout_height="25dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp">
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_category"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="General"
-                    android:textSize="8sp"
-                    app:chipBackgroundColor="#d4DBE9"
-                    android:textColor="#afb5CA"
-                    android:visibility="gone"/>
-
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="20.05.2020"
-                    android:textSize="8sp"
-                    app:chipBackgroundColor="#d4DBE9"
-                    android:textColor="#afb5CA"/>
-
-
-            </com.google.android.material.chip.ChipGroup>
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/rounded_background_chip"
+                android:gravity="center"
+                android:text="20.05.2020"
+                android:textColor="#afb5CA"
+                android:textSize="12sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -138,27 +117,26 @@
 
                 <com.sackcentury.shinebuttonlib.ShineButton
                     android:id="@+id/btnBookmark"
-                    android:layout_height="26dp"
                     android:layout_width="26dp"
+                    android:layout_height="26dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="20dp"
-                    app:siShape="@drawable/ic_bookmark_gray_24dp"
-                    app:btn_fill_color="@color/darker_gray"
                     app:btn_color="@color/colorPrimary"
-                    app:small_shine_color="@color/md_red_400"/>
+                    app:btn_fill_color="@color/darker_gray"
+                    app:siShape="@drawable/ic_bookmark_gray_24dp"
+                    app:small_shine_color="@color/md_red_400" />
 
                 <ImageView
                     android:id="@+id/btnShare"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:src="@drawable/ic_share_gray_24dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="10dp"/>
+                    android:src="@drawable/ic_share_gray_24dp" />
 
             </LinearLayout>
-
 
 
         </LinearLayout>
