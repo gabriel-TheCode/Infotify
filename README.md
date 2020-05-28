@@ -7,6 +7,12 @@
 
  My first Android App made 100% in Kotlin 😁
 
+ <a href="https://play.google.com/store/apps/details?id=com.thecode.infotify">
+    <img alt="Get it on Google Play"
+        height="80"
+        src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" />
+</a>
+
 <a name="description"></a>
 ## Challenge description
 - Load news headlines from [NewsAPI](https://newsapi.org/).
