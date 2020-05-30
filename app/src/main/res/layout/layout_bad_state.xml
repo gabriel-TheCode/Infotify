@@ -17,6 +17,7 @@
         android:id="@+id/text_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="?attr/primaryDescriptionColor"
         android:text="@string/internet_connection_error"
         android:textSize="18sp"
         android:gravity="center"

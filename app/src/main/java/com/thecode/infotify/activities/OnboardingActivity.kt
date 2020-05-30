@@ -40,7 +40,7 @@ class OnboardingActivity : AppCompatActivity() {
 
         btnNext.setOnClickListener {
             if (getItem(+1) > mViewPager.childCount-1) {
-                val intent = Intent(applicationContext, MainActivity2::class.java)
+                val intent = Intent(applicationContext, MainActivity::class.java)
                 finish()
                 startActivity(intent)
                 SharedPreferenceUtils.setIsOnboardingCompleted()

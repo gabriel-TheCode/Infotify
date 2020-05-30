@@ -3,8 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/md_white_1000">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -32,7 +31,7 @@
                     android:layout_marginStart="16dp"
                     android:text="Bookmarks"
                     fontPath="fonts/OleoScript-Bold.ttf"
-                    android:textColor="@android:color/white"
+                    android:textColor="?attr/primaryBackgroundColor"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 

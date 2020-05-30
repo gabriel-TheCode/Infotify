@@ -1,11 +1,11 @@
 package com.thecode.infotify.fragments
 
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -14,7 +14,6 @@ import com.google.android.material.tabs.TabLayout
 import com.mahfa.dnswitch.DayNightSwitch
 import com.mahfa.dnswitch.DayNightSwitchAnimListener
 import com.thecode.infotify.R
-import com.thecode.infotify.activities.MainActivity2
 import com.thecode.infotify.adapters.HeadlineViewPagerAdapter
 import com.thecode.infotify.utils.SharedPreferenceUtils.isNightModeEnabled
 import com.thecode.infotify.utils.SharedPreferenceUtils.setIsNightModeEnabled
@@ -30,17 +29,14 @@ class HomeFragment : Fragment() {
     private val KEY_DAY_NIGHT_SWITCH_STATE = "day_night_switch_state"
 
     private lateinit var dayNightSwitch: DayNightSwitch
+    private lateinit var mActivity: Activity
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (isNightModeEnabled()) {
-            setAppTheme(R.style.AppTheme_Base_Night)
-        } else {
-            setAppTheme(R.style.AppTheme_Base_Light)
-        }
+
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
@@ -81,20 +77,21 @@ class HomeFragment : Fragment() {
             override fun onAnimValueChanged(value: Float) {
                 if (isNightModeEnabled()) {
                     setIsNightModeEnabled(false)
-                    //==> setAppTheme(R.style.AppTheme_Base_Light)
                 } else {
                     setIsNightModeEnabled(true)
-                    //==>setAppTheme(R.style.AppTheme_Base_Night)
                 }
 
                 // Recreate activity
-                //==>(activity as AppCompatActivity).recreate()
+                mActivity.recreate()
+
             }
         })
 
         if (savedInstanceState != null
             && savedInstanceState.containsKey(KEY_DAY_NIGHT_SWITCH_STATE))
             dayNightSwitch.setIsNight(savedInstanceState.getBoolean(KEY_DAY_NIGHT_SWITCH_STATE))
+
+
 
 
         return view
@@ -128,9 +125,14 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun setAppTheme(@StyleRes style: Int) {
-        (activity as AppCompatActivity).setTheme(style)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is Activity) {
+            mActivity = context
+        }
     }
+
+
 
 
 

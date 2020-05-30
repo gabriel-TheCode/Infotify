@@ -3,8 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/md_white_1000">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -31,14 +30,13 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:textColor="@color/md_black_1000"
                     fontPath="fonts/SF-Medium.otf"
                     app:searchIcon="@drawable/ic_search_orange_24dp"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:textSize="12sp"
-                    app:iconifiedByDefault="false"
                     app:queryHint="@string/search_hint"
+                    app:iconifiedByDefault="false"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/default_background_rounded_rect"/>
 

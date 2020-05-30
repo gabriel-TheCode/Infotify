@@ -31,9 +31,6 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-
-
         setContentView(R.layout.activity_splash)
         Handler().postDelayed({
             //do stuff
@@ -65,7 +62,7 @@ class SplashActivity : AppCompatActivity() {
                         override fun onAnimationEnd(p0: Animator?) {
                             lateinit var intent : Intent
                             if(SharedPreferenceUtils.getIsOnboardingCompleted()){
-                                 intent = Intent(applicationContext, MainActivity2::class.java)
+                                 intent = Intent(applicationContext, MainActivity::class.java)
                             }else{
                                 intent = Intent(applicationContext, OnboardingActivity::class.java)
                             }

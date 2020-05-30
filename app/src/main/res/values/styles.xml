@@ -10,6 +10,11 @@
         <item name="primaryDateColor">@color/primaryDateColor</item>
         <item name="primaryBackgroundColor">@color/primaryBackgroundColor</item>
         <item name="primaryCardBackgroundColor">@color/primaryCardBackgroundColor</item>
+        <item name="primaryChipBackgroundColor">@color/primaryChipBackgroundColor</item>
+        <item name="primarySearchBackgroundColor">@color/primarySearchBackgroundColor</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="autoCompleteTextViewStyle">@style/SearchViewTextTheme</item>
     </style>
 
     <!-- Night application theme. -->
@@ -22,6 +27,27 @@
         <item name="primaryDateColor">@color/primaryDateColorNight</item>
         <item name="primaryBackgroundColor">@color/primaryBackgroundColorNight</item>
         <item name="primaryCardBackgroundColor">@color/primaryCardBackgroundColorNight</item>
+        <item name="primaryChipBackgroundColor">@color/primaryChipBackgroundColorNight</item>
+        <item name="primarySearchBackgroundColor">@color/primarySearchBackgroundColorNight</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="autoCompleteTextViewStyle">@style/SearchViewTextTheme</item>
+    </style>
+
+    <style name="AppBottomSheetDialogTheme"
+        parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_sheet_background</item>
+    </style>
+
+    <style name="SearchViewTextTheme" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:textColor">?attr/primaryTitleColor</item>
+        <item name="android:textColorHint">?attr/primaryDescriptionColor</item>
+        <item name="android:editTextColor">?attr/primaryDescriptionColor</item>
     </style>
 
 

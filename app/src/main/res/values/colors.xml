@@ -6,9 +6,11 @@
     <color name="colorAccent">@color/md_blue_A200</color>
     <color name="primaryTitleColor">#D9000000</color>
     <color name="primaryDescriptionColor">#8C000000</color>
-    <color name="primaryDateColor">#8C000000</color>
+    <color name="primaryDateColor">#afb5CA</color>
     <color name="primaryBackgroundColor">#F5F7FB</color>
     <color name="primaryCardBackgroundColor">@color/md_white_1000</color>
+    <color name="primaryChipBackgroundColor">#eeeeee</color>
+    <color name="primarySearchBackgroundColor">#F5F7FB</color>
 
 
     <!--Night Color-->
@@ -20,6 +22,8 @@
     <color name="primaryDateColorNight">#B3FFFFFF</color>
     <color name="primaryBackgroundColorNight">#303030</color>
     <color name="primaryCardBackgroundColorNight">#424242</color>
+    <color name="primaryChipBackgroundColorNight">@color/md_grey_700</color>
+    <color name="primarySearchBackgroundColorNight">#303030</color>
 
 
     <color name="default_inactive">#78909c</color>

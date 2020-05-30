@@ -9,7 +9,6 @@
         android:id="@+id/frame_news"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:background="@color/primaryCardBackgroundColor"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground">
@@ -17,7 +16,8 @@
         <RelativeLayout
             android:id="@+id/news_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:background="?attr/primaryCardBackgroundColor">
 
             <RelativeLayout
                 android:id="@+id/layout_info"
@@ -43,6 +43,7 @@
                     android:layout_toEndOf="@id/icon_info"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    android:textColor="?attr/primaryDescriptionColor"
                     android:text="BBC News" />
 
 
@@ -72,6 +73,7 @@
                 android:maxLines="2"
                 android:text="@string/lorem_ipsum"
                 android:textSize="14sp"
+                android:textColor="?attr/primaryTitleColor"
                 android:textStyle="bold" />
 
             <TextView
@@ -84,6 +86,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="@string/lorem_ipsum"
+                android:textColor="?attr/primaryDescriptionColor"
                 android:textSize="12sp" />
 
 
@@ -100,7 +103,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="-20dp"
         android:layout_marginEnd="30dp"
-        app:cardBackgroundColor="@color/primaryCardBackgroundColor"
+        app:cardBackgroundColor="?attr/primaryCardBackgroundColor"
         app:cardCornerRadius="10dp"
         app:cardElevation="4dp">
 
@@ -119,7 +122,7 @@
                 android:background="@drawable/rounded_background_chip"
                 android:gravity="center"
                 android:text="20.05.2020"
-                android:textColor="#afb5CA"
+                android:textColor="?attr/primaryDateColor"
                 android:textSize="12sp" />
 
 

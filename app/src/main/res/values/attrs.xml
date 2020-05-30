@@ -9,6 +9,8 @@
     <attr name="primaryDateColor" format="color"/>
     <attr name="primaryBackgroundColor" format="color"/>
     <attr name="primaryCardBackgroundColor" format="color"/>
+    <attr name="primaryChipBackgroundColor" format="color"/>
+    <attr name="primarySearchBackgroundColor" format="color"/>
     <attr name="iconBookmark" format="integer"/>
 
 

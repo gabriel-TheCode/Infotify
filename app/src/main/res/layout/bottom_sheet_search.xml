@@ -44,7 +44,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_gray"
+        android:background="?attr/primaryBackgroundColor"
         android:orientation="vertical">
 
 
@@ -52,6 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Please select options to customize your search"
+            android:textColor="?attr/primaryTitleColor"
             android:layout_margin="20dp"
             android:textSize="14sp"
             android:layout_marginBottom="30dp"/>
@@ -65,7 +66,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         app:cardCornerRadius="15dp"
-        app:cardElevation="6dp">
+        app:cardElevation="6dp"
+        app:cardBackgroundColor="?attr/primaryCardBackgroundColor">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -78,7 +80,8 @@
                     android:text="@string/language"
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
-                    android:layout_marginStart="20dp"/>
+                    android:layout_marginStart="20dp"
+                    android:textColor="?attr/primaryDescriptionColor"/>
 
 
                 <androidx.appcompat.widget.AppCompatSpinner
@@ -87,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="20dp"/>
+                    android:layout_marginStart="20dp" />
             </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
@@ -100,7 +103,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="40dp"
             app:cardCornerRadius="15dp"
-            app:cardElevation="6dp">
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="?attr/primaryCardBackgroundColor">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -113,6 +117,7 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="20dp"
+                    android:textColor="?attr/primaryDescriptionColor"
                     android:text="@string/sort_by"/>
 
 

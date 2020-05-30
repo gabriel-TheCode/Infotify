@@ -1,21 +1,23 @@
 package com.thecode.infotify.fragments
 
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatButton
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.thecode.aestheticdialogs.AestheticDialog
-
 import com.thecode.infotify.R
 import com.thecode.infotify.adapters.NewsRecyclerViewAdapter
 import com.thecode.infotify.entities.Article
@@ -32,7 +34,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
 
 
 class HeadlineFragment : Fragment() {
@@ -74,6 +75,11 @@ class HeadlineFragment : Fragment() {
             R.color.colorPrimary,
             R.color.colorPrimaryDark,
             R.color.colorPrimaryDark)
+        val typedValue = TypedValue()
+        val theme: Resources.Theme = context!!.theme
+        theme.resolveAttribute(R.attr.primaryCardBackgroundColor, typedValue, true)
+        @ColorInt val color = typedValue.data
+        refreshLayout.setProgressBackgroundColorSchemeColor(color)
         refreshLayout.setOnRefreshListener{
             fetchApiNews()
         }
@@ -181,7 +187,6 @@ class HeadlineFragment : Fragment() {
             layoutBadState.visibility = View.GONE
     }
 
-
     companion object {
 
         @JvmStatic
@@ -192,4 +197,6 @@ class HeadlineFragment : Fragment() {
                 }
             }
     }
+
+
 }

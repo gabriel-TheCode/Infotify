@@ -15,7 +15,6 @@ class NewsDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news_details)
 
-
         //RECEIVE OUR DATA
         val i = intent
         val title = i.extras!!.getString("title")

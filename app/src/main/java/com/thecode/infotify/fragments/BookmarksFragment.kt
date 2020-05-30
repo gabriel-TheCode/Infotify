@@ -1,11 +1,14 @@
 package com.thecode.infotify.fragments
 
 
+import android.content.res.Resources
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.annotation.ColorInt
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -51,6 +54,11 @@ class BookmarksFragment : Fragment() {
             R.color.colorPrimary,
             R.color.colorPrimaryDark,
             R.color.colorPrimaryDark)
+        val typedValue = TypedValue()
+        val theme: Resources.Theme = context!!.theme
+        theme.resolveAttribute(R.attr.primaryCardBackgroundColor, typedValue, true)
+        @ColorInt val color = typedValue.data
+        refreshLayout.setProgressBackgroundColorSchemeColor(color)
         refreshLayout.setOnRefreshListener{
             displayBookmarks(listArticles)
         }

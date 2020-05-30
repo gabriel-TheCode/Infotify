@@ -2,12 +2,15 @@ package com.thecode.infotify.fragments
 
 
 import android.app.Activity
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -79,6 +82,11 @@ class SearchFragment : Fragment() {
             R.color.colorPrimary,
             R.color.colorPrimaryDark,
             R.color.colorPrimaryDark)
+        val typedValue = TypedValue()
+        val theme: Resources.Theme = context!!.theme
+        theme.resolveAttribute(R.attr.primaryCardBackgroundColor, typedValue, true)
+        @ColorInt val color = typedValue.data
+        refreshLayout.setProgressBackgroundColorSchemeColor(color)
         refreshLayout.setOnRefreshListener{
             fetchApiNews(q,l,s)
         }
