@@ -31,22 +31,37 @@
 <a name="screenshots"></a>
 ## Screenshots
 
+#### Light Theme
 <table style="width:100%">
   <tr>
     <th>1. Splashscreen</th>
     <th>2. Home</th>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/4.jpg"/></td>
-    <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/1.jpg"/></td>
-  </tr>
-   <tr>
     <th>3. Bookmarks</th>
     <th>4. Search</th>
   </tr>
   <tr>
+    <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/4.jpg"/></td>
+    <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/1.jpg"/></td>
     <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/2.jpg"/></td>
     <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/3.jpg"/></td>
+  </tr>
+   </table>
+
+
+#### Dark Theme
+
+  <table>
+    <tr>
+    <th>5. Search filter</th>
+    <th>6. Home</th>
+    <th>7. Bookmarks</th>
+    <th>8. Search</th>
+  </tr>
+  <tr>
+     <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/9.jpg"/></td>
+      <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/6.jpg"/></td>
+       <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/8.jpg"/></td>
+       <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/7.jpg"/></td>
   </tr>
   </table>
 
@@ -59,11 +74,11 @@
 - [x] Clean design
 - [x] Descriptive Git history
 - [x] Intro Slider
+- [x] Dark Theme
 - [ ] Monitor connectivity status
 - [ ] Unit tests.
 - [ ] Follow a specific design pattern
 - [ ] About Page
-- [ ] Dark Theme
 
 <a name="tools"></a>
 ## Languages, libraries and tools used
