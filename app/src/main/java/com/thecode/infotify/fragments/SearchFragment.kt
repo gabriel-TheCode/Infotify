@@ -261,15 +261,18 @@ class SearchFragment : Fragment() {
 
 
     fun showInternetConnectionErrorLayout(){
-        if(recyclerAdapter.itemCount > 0){
-            AestheticDialog.showRainbow(activity, getString(R.string.error), getString(R.string.check_internet), AestheticDialog.ERROR)
-        }else{
-            layoutBadState.visibility = View.VISIBLE
-            textState.text = getString(R.string.internet_connection_error)
-            btnRetry.visibility = View.VISIBLE
-        }
-
-
+            if (recyclerAdapter.itemCount > 0) {
+                AestheticDialog.showRainbow(
+                    activity,
+                    getString(R.string.error),
+                    getString(R.string.check_internet),
+                    AestheticDialog.ERROR
+                )
+            } else {
+                layoutBadState.visibility = View.VISIBLE
+                textState.text = getString(R.string.internet_connection_error)
+                btnRetry.visibility = View.VISIBLE
+            }
     }
 
     fun showNoResultErrorLayout(){

@@ -3,6 +3,7 @@ package com.thecode.infotify.fragments
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -14,6 +15,7 @@ import com.google.android.material.tabs.TabLayout
 import com.mahfa.dnswitch.DayNightSwitch
 import com.mahfa.dnswitch.DayNightSwitchAnimListener
 import com.thecode.infotify.R
+import com.thecode.infotify.activities.AboutActivity
 import com.thecode.infotify.adapters.HeadlineViewPagerAdapter
 import com.thecode.infotify.utils.SharedPreferenceUtils.isNightModeEnabled
 import com.thecode.infotify.utils.SharedPreferenceUtils.setIsNightModeEnabled
@@ -25,8 +27,7 @@ import kotlinx.android.synthetic.main.fragment_home.view.*
  */
 class HomeFragment : Fragment() {
 
-    val TAG = "HomeFragment"
-    private val KEY_DAY_NIGHT_SWITCH_STATE = "day_night_switch_state"
+    private val TAG = "HomeFragment"
 
     private lateinit var dayNightSwitch: DayNightSwitch
     private lateinit var mActivity: Activity
@@ -60,11 +61,6 @@ class HomeFragment : Fragment() {
 
         dayNightSwitch = view.day_night_switch
         dayNightSwitch.setDuration(450)
-        dayNightSwitch.setListener { is_night ->
-            Log.d(TAG, "onSwitch() called with: is_night = [$is_night]")
-            //if (is_night) layoutHome.alpha = 1f
-        }
-
         dayNightSwitch.setAnimListener(object : DayNightSwitchAnimListener {
             override fun onAnimStart() {
                 Log.d(TAG, "onAnimStart() called")
@@ -72,35 +68,20 @@ class HomeFragment : Fragment() {
 
             override fun onAnimEnd() {
                 Log.d(TAG, "onAnimEnd() called")
-            }
-
-            override fun onAnimValueChanged(value: Float) {
                 if (isNightModeEnabled()) {
                     setIsNightModeEnabled(false)
                 } else {
                     setIsNightModeEnabled(true)
                 }
-
                 // Recreate activity
                 mActivity.recreate()
-
             }
+
+            override fun onAnimValueChanged(value: Float) { }
         })
-
-        if (savedInstanceState != null
-            && savedInstanceState.containsKey(KEY_DAY_NIGHT_SWITCH_STATE))
-            dayNightSwitch.setIsNight(savedInstanceState.getBoolean(KEY_DAY_NIGHT_SWITCH_STATE))
-
-
-
 
         return view
 
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putBoolean(KEY_DAY_NIGHT_SWITCH_STATE, dayNightSwitch.isNight)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -117,9 +98,11 @@ class HomeFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.about ->
-                // Not implemented here
-                return false
+            R.id.about ->{
+                val intent = Intent(activity, AboutActivity::class.java)
+                startActivity(intent)
+            }
+
         }
         return false
     }
@@ -131,10 +114,5 @@ class HomeFragment : Fragment() {
             mActivity = context
         }
     }
-
-
-
-
-
 
 }
