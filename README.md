@@ -75,10 +75,11 @@
 - [x] Descriptive Git history
 - [x] Intro Slider
 - [x] Dark Theme
+- [x] About Page
 - [ ] Monitor connectivity status
-- [ ] Unit tests.
 - [ ] Follow a specific design pattern
-- [ ] About Page
+- [ ] Unit tests.
+
 
 <a name="tools"></a>
 ## Languages, libraries and tools used
@@ -108,10 +109,6 @@
 - Just clone the app and import to Android Studio.
 ``git clone https://github.com/gabriel-TheCode/Infotify.git``
 
-<a name="usage"></a>
-## Usage
-
-- For testing the app there is an APK build [HERE!](https://github.com/gabriel-TheCode/Infotify/MoviesDecade/raw/master/app.apk) or in the repo main page that you can directly download and install.
 
 <a name="contribute"></a>
 ## Contribute
