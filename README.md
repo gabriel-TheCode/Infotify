@@ -84,6 +84,7 @@
 <a name="tools"></a>
 ## Languages, libraries and tools used
 
+ * [UI Inspiration](https://dribbble.com/shots/5495387-News-App-Dark-and-Light-Theme)
  * [Kotlin](https://kotlinlang.org/)
  * [AndroidX libraries](https://developer.android.com/jetpack/androidx)
  * [Android LifeCycle](https://developer.android.com/topic/libraries/architecture)

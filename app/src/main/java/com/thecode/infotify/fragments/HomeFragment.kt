@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
@@ -70,8 +71,10 @@ class HomeFragment : Fragment() {
                 Log.d(TAG, "onAnimEnd() called")
                 if (isNightModeEnabled()) {
                     setIsNightModeEnabled(false)
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 } else {
                     setIsNightModeEnabled(true)
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 }
                 // Recreate activity
                 mActivity.recreate()
