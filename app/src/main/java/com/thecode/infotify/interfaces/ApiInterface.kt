@@ -21,7 +21,7 @@ interface ApiInterface {
 
     @GET("v2/top-headlines")
     fun getTopHeadlinesByLanguageAndCategory(
-        @Query("language") language: String,
+        @Query("country") language: String,
         @Query("category") category: String,
         @Query("apiKey") apiKey: String
     ): Call<NewsObjectResponse>

@@ -88,11 +88,9 @@ class AboutActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/gabriel-TheCode/Infotify"))
             startActivity(intent)
         }
-    }
-
-
-
 
     }
+
+}
 
 

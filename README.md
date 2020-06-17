@@ -76,7 +76,7 @@
 - [x] Intro Slider
 - [x] Dark Theme
 - [x] About Page
-- [ ] Monitor connectivity status
+- [x] Monitor connectivity status
 - [ ] Follow a specific design pattern
 - [ ] Unit tests.
 
@@ -96,6 +96,7 @@
  * [Shine Button](https://github.com/ChadCSong/ShineButton)
  * [Aesthetic Dialogs](https://github.com/gabriel-TheCode/AestheticDialogs)
  * [RecyclerView Animators](https://github.com/wasabeef/recyclerview-animators)
+ * [Day/Night Switch](https://github.com/Mahfa/DayNightSwitch)
  * [Calligraphy 3](https://github.com/inflationx/calligraphy3)
  * [Stetho](https://github.com/facebook/stetho)
  * [Logging Interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor)
