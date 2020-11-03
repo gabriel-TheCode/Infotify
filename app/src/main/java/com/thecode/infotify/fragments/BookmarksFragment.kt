@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.thecode.infotify.BuildConfig
 import com.thecode.infotify.R
 import com.thecode.infotify.adapters.BookmarkRecyclerViewAdapter
 import com.thecode.infotify.entities.Article
@@ -74,9 +75,12 @@ class BookmarksFragment : Fragment() {
             layoutEmptyState.visibility = View.GONE
             i = 0
             while (i < results.size) {
-                assert(results[i] != null)
+                if (BuildConfig.DEBUG && results[i] == null) {
+                    error("Assertion failed")
+                }
                 listArticles.add(i, results[i]!!)
-                i++ }
+                i++
+            }
         }else{
             layoutEmptyState.visibility = View.VISIBLE
         }
