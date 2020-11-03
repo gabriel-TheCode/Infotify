@@ -17,8 +17,6 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 
 
-
-
 class InfotifyApp : MultiDexApplication() {
     override fun onCreate() {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true) // Allow to load drawable dynamically to solve RessourceNotFoundException with drawable vectors

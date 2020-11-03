@@ -92,8 +92,6 @@ class SearchFragment : Fragment() {
         }
 
         // perform set on query text listener event
-
-        // perform set on query text listener event
         searchView.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -103,7 +101,7 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-// do something when text changes
+                // do something when text changes
                 return false
             }
         })
