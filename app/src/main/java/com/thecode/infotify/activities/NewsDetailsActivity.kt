@@ -17,14 +17,14 @@ class NewsDetailsActivity : AppCompatActivity() {
 
         //RECEIVE OUR DATA
         val i = intent
-        val title = i.extras!!.getString("title")
-        val description = i.extras!!.getString("description")
-        val source = i.extras!!.getString("source")
-        val imageUrl = i.extras!!.getString("imageUrl")
-        val content = i.extras!!.getString("content")
-        val date = i.extras!!.getString("date")
-        val url = i.extras!!.getString("url")
-        val formattedDate =  date!!.split("T")[0]
+        val title = i.extras?.getString("title")
+        val description = i.extras?.getString("description")
+        val source = i.extras?.getString("source")
+        val imageUrl = i.extras?.getString("imageUrl")
+        val content = i.extras?.getString("content")
+        val date = i.extras?.getString("date")
+        val url = i.extras?.getString("url")
+        val formattedDate = date?.split("T")?.get(0)
 
         //REFERENCE VIEWS FROM XML
         val img = image_news

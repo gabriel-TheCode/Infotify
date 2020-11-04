@@ -50,8 +50,8 @@ class HeadlineFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            category = arguments!!.getString(ARG_CATEGORY)!!
+        if (arguments!=null) {
+            category = arguments?.getString(ARG_CATEGORY).toString()
         }
     }
 
@@ -66,7 +66,7 @@ class HeadlineFragment : Fragment() {
         layoutBadState = view.layout_bad_state
         imgState = view.img_state
         textState = view.text_state
-        recyclerAdapter = NewsRecyclerViewAdapter(context!!)
+        recyclerAdapter = NewsRecyclerViewAdapter(requireContext())
         recyclerView.layoutManager = LinearLayoutManager(activity)
         //recyclerView.adapter = recyclerAdapter
         recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
@@ -76,7 +76,7 @@ class HeadlineFragment : Fragment() {
             R.color.colorPrimaryDark,
             R.color.colorPrimaryDark)
         val typedValue = TypedValue()
-        val theme: Resources.Theme = context!!.theme
+        val theme: Resources.Theme = requireContext().theme
         theme.resolveAttribute(R.attr.primaryCardBackgroundColor, typedValue, true)
         @ColorInt val color = typedValue.data
         refreshLayout.setProgressBackgroundColorSchemeColor(color)
@@ -110,19 +110,23 @@ class HeadlineFragment : Fragment() {
         }else{
             api.getTopHeadlinesByLanguageAndCategory(AppConstants.DEFAULT_LANG, category, AppConstants.NEWSAPI_TOKEN)
         }
-       call.enqueue(object : Callback<NewsObjectResponse?> {
+       call.enqueue(object : Callback<NewsObjectResponse> {
             override fun onResponse(
-                call: Call<NewsObjectResponse?>?,
-                response: Response<NewsObjectResponse?>
+                call: Call<NewsObjectResponse>,
+                response: Response<NewsObjectResponse>
             ) {
                 refreshLayout.isRefreshing = false
-                Log.i("Responsestring", response.body()!!.status + " " + response.body()!!.totalResults)
+                Log.i("Responsestring", (response.body()?.status ?: "No result") + " " + (response.body()?.totalResults
+                    ?: 0))
                 //Toast.makeText()
                 if (response.isSuccessful) {
                     if (response.body() != null) {
                         hideBadStateLayout()
                         Log.i("onSuccess", response.body().toString())
-                        displayNews(response.body()!!.articles)
+                        val a = response.body()?.articles
+                        if (a != null) {
+                            displayNews(a)
+                        }
                     } else {
                         Log.i(
                             "onEmptyResponse",
@@ -133,7 +137,7 @@ class HeadlineFragment : Fragment() {
                 }
             }
 
-            override fun onFailure(call: Call<NewsObjectResponse?>?, t: Throwable?) {
+            override fun onFailure(call: Call<NewsObjectResponse>, t: Throwable?) {
                 refreshLayout.isRefreshing = false
                 showInternetConnectionErrorLayout()
                 Toast.makeText(context,getString(R.string.internet_connection_error), Toast.LENGTH_SHORT).show()

@@ -8,7 +8,7 @@ import android.widget.TextView
 import com.thecode.infotify.R
 
 class CustomProgressBar {
-    var dialog: Dialog? = null
+        lateinit var dialog: Dialog
         private set
 
     @JvmOverloads
@@ -26,10 +26,10 @@ class CustomProgressBar {
             tv.text = title
         }
         dialog = Dialog(context, R.style.NewDialog)
-        dialog!!.setContentView(view)
-        dialog!!.setCancelable(cancelable)
-        dialog!!.setOnCancelListener(cancelListener)
-        dialog!!.show()
+        dialog.setContentView(view)
+        dialog.setCancelable(cancelable)
+        dialog.setOnCancelListener(cancelListener)
+        dialog.show()
         return dialog as Dialog
     }
 

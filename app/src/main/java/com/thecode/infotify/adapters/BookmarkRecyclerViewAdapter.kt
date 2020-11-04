@@ -46,16 +46,16 @@ class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<B
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val article : Article = newsList[position]
-        val title: String = article.title!!
-        val url: String = article.url!!
+        val title: String? = article.title
+        val url: String = article.url.toString()
         val publishAt = article.publishedAt
         val urlToImage = article.urlToImage
-        val sourceName = article.source!!.name
+        val sourceName = article.source?.name
 
         holder.tvNewsTitle.text = title
-        holder.tvNewsDate.text = publishAt!!.split("T")[0]
+        holder.tvNewsDate.text = publishAt?.split("T")?.get(0) ?: ""
 
-        if(sourceName.equals(null)){
+        if(sourceName.isNullOrEmpty()){
             holder.tvPublisherName.text = "Infotify News"
         }else{
             holder.tvPublisherName.text = sourceName
@@ -79,7 +79,7 @@ class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<B
 
         //WHEN ITEM IS CLICKED
         holder.btnBookmark.setOnClickListener{
-            deleteFromDatabase(holder.adapterPosition, title)
+            deleteFromDatabase(holder.adapterPosition, title.toString())
         }
 
         //WHEN ITEM IS CLICKED
@@ -97,20 +97,20 @@ class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<B
                 }
 
                 override fun onReceivedError(
-                    view: WebView?,
-                    request: WebResourceRequest?,
-                    error: WebResourceError?
+                    view: WebView,
+                    request: WebResourceRequest,
+                    error: WebResourceError
                 ) {
                     failedLoading = true
-                    if(progressBar.dialog!!.isShowing){
-                        progressBar.dialog!!.dismiss()
+                    if(progressBar.dialog.isShowing){
+                        progressBar.dialog.dismiss()
                     }
                     AestheticDialog.showRainbow(context as Activity?, "ERROR", "Sorry, the link of the article is not reachable", AestheticDialog.ERROR)
                 }
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     if (!failedLoading) {
-                        progressBar.dialog!!.dismiss()
+                        progressBar.dialog.dismiss()
                     val alertDialog: AlertDialog = AlertDialog.Builder(context).create()
                     alertDialog.setTitle(title)
                     alertDialog.setView(newsView)
@@ -119,7 +119,7 @@ class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<B
                     ) { dialog, _ -> dialog.dismiss() }
                     alertDialog.show()
                     }else{
-                        progressBar.dialog!!.dismiss()
+                        progressBar.dialog.dismiss()
                     }
                 }
 
@@ -138,15 +138,15 @@ class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<B
         this.newsList = newsList
     }
 
-    class NewsViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
+    class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val container: FrameLayout = itemView!!.frame_news
-        val tvNewsTitle: TextView = itemView!!.text_title
-        val tvPublisherName: TextView = itemView!!.text_name_publisher
-        val image: ImageView = itemView!!.image_news
-        val btnShare: ImageView = itemView!!.btnShare
-        val btnBookmark: ImageView = itemView!!.btnBookmark
-        val tvNewsDate : TextView = itemView!!.text_chip_date
+        val container: FrameLayout = itemView.frame_news
+        val tvNewsTitle: TextView = itemView.text_title
+        val tvPublisherName: TextView = itemView.text_name_publisher
+        val image: ImageView = itemView.image_news
+        val btnShare: ImageView = itemView.btnShare
+        val btnBookmark: ImageView = itemView.btnBookmark
+        val tvNewsDate : TextView = itemView.text_chip_date
     }
 
 
