@@ -179,7 +179,7 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
             articleBookmark.description = article.description
             articleBookmark.publishedAt = article.publishedAt
             articleBookmark.title = article.title
-            sourceArticle.name = article.source!!.name
+            sourceArticle.name = article.source?.name
             articleBookmark.source = sourceArticle
         }, {
             // Transaction was a success.

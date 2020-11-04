@@ -124,9 +124,7 @@ class HeadlineFragment : Fragment() {
                         hideBadStateLayout()
                         Log.i("onSuccess", response.body().toString())
                         val a = response.body()?.articles
-                        if (a != null) {
-                            displayNews(a)
-                        }
+                        if (a != null) displayNews(a) else showNoResultErrorLayout()
                     } else {
                         Log.i(
                             "onEmptyResponse",
