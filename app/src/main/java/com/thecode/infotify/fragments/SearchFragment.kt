@@ -139,13 +139,14 @@ class SearchFragment : Fragment() {
                 refreshLayout.isRefreshing = false
                 if (response.isSuccessful) {
                     if (response.body() != null) {
-                        if(response.body()!!.status.equals("error")){
+                        if(response.body()?.status == "error"){
                             AestheticDialog.showToaster(context as Activity?, getString(R.string.error), getString(R.string.service_unavailable), AestheticDialog.ERROR)
                             showInternetConnectionErrorLayout()
                         }else{
                             hideBadStateLayout()
                             Log.i("onSuccess", response.body().toString())
-                            displayNews(response.body()!!.articles)
+                            val a = response.body()?.articles
+                            if (a != null) displayNews(a) else showNoResultErrorLayout()
                         }
 
                     } else {
