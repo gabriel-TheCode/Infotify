@@ -89,6 +89,9 @@ class AboutActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        img_back.setOnClickListener{
+           finish()
+        }
     }
 
 }

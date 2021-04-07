@@ -17,6 +17,15 @@
             android:layout_height="250dp"
             android:background="@drawable/bg_rounded_bottom_orange">
 
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_baseline_arrow_white_24"
+                android:layout_margin="30dp"
+                android:clickable="true"
+                android:focusable="true"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -24,7 +33,7 @@
                 fontPath="fonts/OleoScript-Bold.ttf"
                 android:textSize="26sp"
                 android:textColor="?attr/primaryBackgroundColor"
-                android:layout_margin="30dp"/>
+                android:layout_marginVertical="30dp"/>
         </LinearLayout>
 
 
@@ -83,7 +92,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_toEndOf="@id/thumbnail"
                             android:textColor="?attr/primaryDescriptionColor"
-                            android:text="Android Engineer"
+                            android:text="Android Developer"
                             android:textSize="14sp"
                             android:maxLines="1"
                             android:ellipsize="end"/>
