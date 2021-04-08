@@ -46,12 +46,13 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        holder.tvNewsTitle.text = newsList[position].title
-        holder.tvNewsdescription.text = newsList[position].description
-        holder.tvNewsDate.text = newsList[position].publishedAt?.split("T")?.get(0) ?: ""
-        holder.tvPublisherName.text = newsList[position].source?.name ?: "Infotify News"
+        val news = newsList[position]
+        holder.tvNewsTitle.text = news.title
+        holder.tvNewsdescription.text = news.description
+        holder.tvNewsDate.text = news.publishedAt?.split("T")?.get(0) ?: ""
+        holder.tvPublisherName.text = news.source?.name ?: "Infotify News"
 
-        Glide.with(context).load(newsList[position].urlToImage)
+        Glide.with(context).load(news.urlToImage)
             .placeholder(R.drawable.placeholder)
             .error(R.drawable.placeholder)
             .apply(RequestOptions().centerCrop())
@@ -61,15 +62,14 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
             sendIntent.action = Intent.ACTION_SEND
             sendIntent.putExtra(
                 Intent.EXTRA_TEXT,
-                newsList[position].title + " - via Infotify News App\n" + newsList[position].url
+                news.title + " - via Infotify News App\n" + news.url
             )
             sendIntent.type = "text/plain"
             context.startActivity(sendIntent)
         }
 
         holder.btnBookmark.setOnClickListener {
-            saveIntoDatabase(newsList[position])
-
+            saveIntoDatabase(news)
         }
 
         //WHEN ITEM IS CLICKED

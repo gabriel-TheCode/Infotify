@@ -66,6 +66,8 @@ class HeadlineFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _bindingHeadline = FragmentHeadlineBinding.inflate(inflater, container, false)
+        _bindingLayoutBadState = LayoutBadStateBinding.inflate(inflater, container, false)
+
         val view = binding.root
         refreshLayout = binding.refreshLayout
         recyclerView = binding.recyclerViewNews

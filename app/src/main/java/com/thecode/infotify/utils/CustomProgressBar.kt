@@ -4,10 +4,11 @@ import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
-import android.widget.TextView
 import com.thecode.infotify.R
+import com.thecode.infotify.databinding.ProgressBarBinding
 
 class CustomProgressBar {
+        lateinit var binding: ProgressBarBinding
         lateinit var dialog: Dialog
         private set
 
@@ -18,19 +19,18 @@ class CustomProgressBar {
         cancelable: Boolean = true,
         cancelListener: DialogInterface.OnCancelListener? = null
     ): Dialog {
-        val inflator = context
-            .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflator.inflate(R.layout.progress_bar, null)
+        val inflator = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        binding = ProgressBarBinding.inflate(inflator)
+        val view = binding.root
         if (title != null) {
-            val tv = view.findViewById<TextView>(R.id.id_title)
-            tv.text = title
+            binding.title.text = title
         }
         dialog = Dialog(context, R.style.NewDialog)
         dialog.setContentView(view)
         dialog.setCancelable(cancelable)
         dialog.setOnCancelListener(cancelListener)
         dialog.show()
-        return dialog as Dialog
+        return dialog
     }
 
 }

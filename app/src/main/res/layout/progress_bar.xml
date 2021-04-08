@@ -19,7 +19,7 @@
             android:layout_marginBottom="20dp"/>
 
         <TextView
-            android:id="@+id/id_title"
+            android:id="@+id/title"
             android:layout_below="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

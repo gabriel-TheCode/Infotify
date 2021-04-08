@@ -18,6 +18,7 @@ import com.thecode.infotify.R
 import com.thecode.infotify.adapters.BookmarkRecyclerViewAdapter
 import com.thecode.infotify.databinding.FragmentBookmarksBinding
 import com.thecode.infotify.databinding.FragmentOnboardingBinding
+import com.thecode.infotify.databinding.LayoutBadStateBinding
 import com.thecode.infotify.entities.Article
 import io.realm.Realm
 import io.realm.RealmQuery
@@ -47,6 +48,7 @@ class BookmarksFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentBookmarksBinding.inflate(inflater, container, false)
+
         val view = binding.root
         refreshLayout = binding.refreshLayout
         recyclerView = binding.recyclerViewNewsBookmark

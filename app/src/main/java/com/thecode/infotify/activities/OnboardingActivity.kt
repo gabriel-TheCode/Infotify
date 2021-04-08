@@ -24,8 +24,6 @@ class OnboardingActivity : AppCompatActivity() {
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
-        setContentView(R.layout.activity_onboarding)
         mViewPager = binding.viewPager
         mViewPager.adapter = OnboardingViewPagerAdapter(supportFragmentManager, this)
         mViewPager.offscreenPageLimit = 1

@@ -68,6 +68,7 @@ class SearchFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        _bindingLayoutBadState = LayoutBadStateBinding.inflate(inflater, container, false)
 
         val view = binding.root
 
