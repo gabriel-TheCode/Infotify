@@ -7,10 +7,12 @@ import android.widget.Button
 import androidx.viewpager.widget.ViewPager
 import com.thecode.infotify.R
 import com.thecode.infotify.adapters.OnboardingViewPagerAdapter
+import com.thecode.infotify.databinding.ActivityOnboardingBinding
 import com.thecode.infotify.utils.SharedPreferenceUtils
-import kotlinx.android.synthetic.main.activity_onboarding.*
 
 class OnboardingActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityOnboardingBinding
 
     private lateinit var mViewPager: ViewPager
     private lateinit var btnBack: Button
@@ -19,12 +21,16 @@ class OnboardingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityOnboardingBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
         setContentView(R.layout.activity_onboarding)
-        mViewPager = viewPager
+        mViewPager = binding.viewPager
         mViewPager.adapter = OnboardingViewPagerAdapter(supportFragmentManager, this)
         mViewPager.offscreenPageLimit = 1
-        btnBack = btn_previous_step
-        btnNext = btn_next_step
+        btnBack = binding.btnPreviousStep
+        btnNext = binding.btnNextStep
         mViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(position: Int) {
                 if(position == 2){

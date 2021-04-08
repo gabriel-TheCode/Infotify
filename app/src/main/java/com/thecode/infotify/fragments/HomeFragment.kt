@@ -18,9 +18,10 @@ import com.mahfa.dnswitch.DayNightSwitchAnimListener
 import com.thecode.infotify.R
 import com.thecode.infotify.activities.AboutActivity
 import com.thecode.infotify.adapters.HeadlineViewPagerAdapter
+import com.thecode.infotify.databinding.FragmentBookmarksBinding
+import com.thecode.infotify.databinding.FragmentHomeBinding
 import com.thecode.infotify.utils.SharedPreferenceUtils.isNightModeEnabled
 import com.thecode.infotify.utils.SharedPreferenceUtils.setIsNightModeEnabled
-import kotlinx.android.synthetic.main.fragment_home.view.*
 
 
 /**
@@ -29,6 +30,8 @@ import kotlinx.android.synthetic.main.fragment_home.view.*
 class HomeFragment : Fragment() {
 
     private val TAG = "HomeFragment"
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var dayNightSwitch: DayNightSwitch
     private lateinit var mActivity: Activity
@@ -41,13 +44,14 @@ class HomeFragment : Fragment() {
 
 
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val view = binding.root
         setHasOptionsMenu(true)
-        val toolbar: Toolbar = view.toolbar
+        val toolbar: Toolbar = binding.toolbar
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
-        val mViewPager: ViewPager = view.viewpager
-        val mViewPagerAdapter = HeadlineViewPagerAdapter(activity!!.supportFragmentManager)
+        val mViewPager: ViewPager = binding.viewpager
+        val mViewPagerAdapter = HeadlineViewPagerAdapter(requireActivity().supportFragmentManager)
         mViewPagerAdapter.addFragment(HeadlineFragment.newInstance("popular"), "Popular")
         mViewPagerAdapter.addFragment(HeadlineFragment.newInstance("general"), "General")
         mViewPagerAdapter.addFragment(HeadlineFragment.newInstance("science"), "Science")
@@ -57,10 +61,10 @@ class HomeFragment : Fragment() {
         mViewPager.adapter = mViewPagerAdapter
         mViewPager.offscreenPageLimit = 6
 
-        val tabLayout: TabLayout = view.tabs
+        val tabLayout: TabLayout = binding.tabs
         tabLayout.setupWithViewPager(mViewPager)
 
-        dayNightSwitch = view.day_night_switch
+        dayNightSwitch = binding.dayNightSwitch
         dayNightSwitch.setDuration(450)
         dayNightSwitch.setAnimListener(object : DayNightSwitchAnimListener {
             override fun onAnimStart() {
@@ -85,6 +89,11 @@ class HomeFragment : Fragment() {
 
         return view
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

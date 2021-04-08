@@ -9,11 +9,13 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.thecode.infotify.R
+import com.thecode.infotify.databinding.ActivityAboutBinding
 import com.thecode.infotify.utils.SharedPreferenceUtils
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
-import kotlinx.android.synthetic.main.activity_about.*
 
 class AboutActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityAboutBinding
 
     private lateinit var layoutGithub : RelativeLayout
     private lateinit var layoutTwitter : RelativeLayout
@@ -27,6 +29,7 @@ class AboutActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityAboutBinding.inflate(layoutInflater)
 
         if (SharedPreferenceUtils.isNightModeEnabled()) {
             setTheme(R.style.AppTheme_Base_Night)
@@ -34,13 +37,14 @@ class AboutActivity : AppCompatActivity() {
             setTheme(R.style.AppTheme_Base_Light)
         }
 
-        setContentView(R.layout.activity_about)
+        val view = binding.root
+        setContentView(view)
 
-        txtVersion = text_version
-        layoutGithub = layout_github
-        layoutTwitter = layout_twitter
-        layoutSourceCode = layout_source_code
-        layoutPlaystore = layout_playstore
+        txtVersion = binding.textVersion
+        layoutGithub = binding.layoutGithub
+        layoutTwitter = binding.layoutTwitter
+        layoutSourceCode = binding.layoutSourceCode
+        layoutPlaystore = binding.layoutPlaystore
 
         val versionName : String = com.thecode.infotify.BuildConfig.VERSION_NAME
         txtVersion.text = versionName
@@ -89,7 +93,7 @@ class AboutActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        img_back.setOnClickListener{
+        binding.imgBack.setOnClickListener{
            finish()
         }
     }

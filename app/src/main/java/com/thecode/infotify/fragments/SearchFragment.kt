@@ -22,14 +22,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
 import com.thecode.infotify.adapters.NewsRecyclerViewAdapter
+import com.thecode.infotify.databinding.BottomSheetSearchBinding
+import com.thecode.infotify.databinding.FragmentSearchBinding
+import com.thecode.infotify.databinding.LayoutBadStateBinding
 import com.thecode.infotify.entities.Article
 import com.thecode.infotify.interfaces.ApiInterface
 import com.thecode.infotify.responses.NewsObjectResponse
 import com.thecode.infotify.utils.AppConstants
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
-import kotlinx.android.synthetic.main.bottom_sheet_search.view.*
-import kotlinx.android.synthetic.main.fragment_search.view.*
-import kotlinx.android.synthetic.main.layout_bad_state.view.*
 import org.json.JSONException
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,8 +42,14 @@ import retrofit2.converter.gson.GsonConverterFactory
  * A simple [Fragment] subclass.
  */
 class SearchFragment : Fragment() {
+    private var _binding: FragmentSearchBinding? = null
+    private var _bindingLayoutBadState: LayoutBadStateBinding? = null
+    // This property is only valid between onCreateView and
+    // onDestroyView.
 
-        lateinit var recyclerView: RecyclerView
+    private val binding get() = _binding!!
+    private val bindingLayoutBadState get() = _bindingLayoutBadState!!
+        private lateinit var recyclerView: RecyclerView
         lateinit var recyclerAdapter: NewsRecyclerViewAdapter
         lateinit var refreshLayout: SwipeRefreshLayout
         private lateinit var searchView: SearchView
@@ -61,19 +67,22 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_search, container, false)
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+
+        val view = binding.root
+
         q = "news"
         s = "PublishedAt"
         l = AppConstants.DEFAULT_LANG
-        searchView = view.searchview
-        btnRetry = view.btn_retry
-        layoutBadState = view.layout_bad_state
-        imgState = view.img_state
-        textState = view.text_state
-        imgSearchOptions = view.image_settings
-        refreshLayout = view.refresh_layout
-        recyclerView = view.recycler_view_news_everything
-        recyclerAdapter = NewsRecyclerViewAdapter(context!!)
+        searchView = binding.searchview
+        btnRetry = bindingLayoutBadState.btnRetry
+        layoutBadState = bindingLayoutBadState.layoutBadState
+        imgState = bindingLayoutBadState.imgState
+        textState = bindingLayoutBadState.textState
+        imgSearchOptions = binding.imageSettings
+        refreshLayout = binding.refreshLayout
+        recyclerView = binding.recyclerViewNewsEverything
+        recyclerAdapter = NewsRecyclerViewAdapter(view.context)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         //recyclerView.adapter = recyclerAdapter
         recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
@@ -83,7 +92,7 @@ class SearchFragment : Fragment() {
             R.color.colorPrimaryDark,
             R.color.colorPrimaryDark)
         val typedValue = TypedValue()
-        val theme: Resources.Theme = context!!.theme
+        val theme: Resources.Theme = view.context.theme
         theme.resolveAttribute(R.attr.primaryCardBackgroundColor, typedValue, true)
         @ColorInt val color = typedValue.data
         refreshLayout.setProgressBackgroundColorSchemeColor(color)
@@ -120,6 +129,10 @@ class SearchFragment : Fragment() {
         return view
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     private fun fetchApiNews(query:String, language:String, sortBy:String) {
         Log.d("Search", "$query - $language - $sortBy")
@@ -187,13 +200,13 @@ class SearchFragment : Fragment() {
     }
 
     private fun showBottomSheetSearch() {
-        val view: View =
-            layoutInflater.inflate(R.layout.bottom_sheet_search, null)
-        val textClose = view.text_close
-        val btnValidateSignature = view.btn_apply
-        val spinnerLang: Spinner = view.spinner_lang
+        val binding: BottomSheetSearchBinding = BottomSheetSearchBinding.inflate(layoutInflater)
+        val view = binding.root
+        val textClose = binding.textClose
+        val btnValidateSignature = binding.btnApply
+        val spinnerLang: Spinner = binding.spinnerLang
         ArrayAdapter.createFromResource(
-            context!!,
+            view.context,
             R.array.languages,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
@@ -216,9 +229,9 @@ class SearchFragment : Fragment() {
             }
         }
 
-        val spinnerSort: Spinner = view.spinner_sortby
+        val spinnerSort: Spinner = binding.spinnerSortby
         ArrayAdapter.createFromResource(
-            context!!,
+            view.context,
             R.array.options_values,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
@@ -241,7 +254,7 @@ class SearchFragment : Fragment() {
             }
         }
 
-        val dialog = BottomSheetDialog(context!!)
+        val dialog = BottomSheetDialog(view.context)
         dialog.setContentView(view)
         val displayMetrics = this.resources.displayMetrics
         val width = displayMetrics.widthPixels

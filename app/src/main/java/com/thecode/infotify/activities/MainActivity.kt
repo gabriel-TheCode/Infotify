@@ -8,16 +8,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.thecode.infotify.R
 import com.thecode.infotify.adapters.BottomNavPagerAdapter
+import com.thecode.infotify.databinding.ActivityMainBinding
 import com.thecode.infotify.fragments.BookmarksFragment
 import com.thecode.infotify.fragments.HomeFragment
 import com.thecode.infotify.fragments.SearchFragment
 import com.thecode.infotify.interfaces.FadePageTransformer
 import com.thecode.infotify.utils.SharedPreferenceUtils
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
-import kotlinx.android.synthetic.main.activity_main_2.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
@@ -26,15 +28,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         if (SharedPreferenceUtils.isNightModeEnabled()) {
             setAppTheme(R.style.AppTheme_Base_Night)
         } else {
             setAppTheme(R.style.AppTheme_Base_Light)
         }
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        setContentView(R.layout.activity_main_2)
-
-        val bnlv = bottom_navigation_bar
+        val bnlv = binding.bottomNavigationBar
         bnlv.setTypeface(Typeface.createFromAsset(assets, "fonts/SF-Medium.otf"))
         //bnlv.setBadgeValue(0, "9+")
 
@@ -43,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         fragList.add(SearchFragment())
         fragList.add(BookmarksFragment())
         val pagerAdapter = BottomNavPagerAdapter(fragList, supportFragmentManager)
-        val viewPager = view_pager
+        val viewPager = binding.viewPager
         viewPager.offscreenPageLimit = 3
         viewPager.adapter = pagerAdapter
         viewPager.setPageTransformer(false, FadePageTransformer())

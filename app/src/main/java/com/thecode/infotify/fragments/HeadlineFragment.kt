@@ -20,14 +20,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
 import com.thecode.infotify.adapters.NewsRecyclerViewAdapter
+import com.thecode.infotify.databinding.FragmentHeadlineBinding
+import com.thecode.infotify.databinding.LayoutBadStateBinding
 import com.thecode.infotify.entities.Article
 import com.thecode.infotify.interfaces.ApiInterface
 import com.thecode.infotify.responses.NewsObjectResponse
 import com.thecode.infotify.utils.AppConstants
 import com.thecode.infotify.utils.AppConstants.ARG_CATEGORY
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
-import kotlinx.android.synthetic.main.fragment_headline.view.*
-import kotlinx.android.synthetic.main.layout_bad_state.view.*
 import org.json.JSONException
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,6 +37,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 class HeadlineFragment : Fragment() {
+
+    private var _bindingHeadline: FragmentHeadlineBinding? = null
+    private var _bindingLayoutBadState: LayoutBadStateBinding? = null
+
+    private val binding get() = _bindingHeadline!!
+    private val bindingLayoutBadState get() = _bindingLayoutBadState!!
 
     private lateinit var category: String
 
@@ -59,13 +65,14 @@ class HeadlineFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_headline, container, false)
-        refreshLayout = view.refresh_layout
-        recyclerView = view.recycler_view_news
-        btnRetry = view.btn_retry
-        layoutBadState = view.layout_bad_state
-        imgState = view.img_state
-        textState = view.text_state
+        _bindingHeadline = FragmentHeadlineBinding.inflate(inflater, container, false)
+        val view = binding.root
+        refreshLayout = binding.refreshLayout
+        recyclerView = binding.recyclerViewNews
+        btnRetry = bindingLayoutBadState.btnRetry
+        layoutBadState = bindingLayoutBadState.layoutBadState
+        imgState = bindingLayoutBadState.imgState
+        textState = bindingLayoutBadState.textState
         recyclerAdapter = NewsRecyclerViewAdapter(requireContext())
         recyclerView.layoutManager = LinearLayoutManager(activity)
         //recyclerView.adapter = recyclerAdapter
@@ -93,6 +100,12 @@ class HeadlineFragment : Fragment() {
 
         return view
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _bindingHeadline = null
+        _bindingLayoutBadState = null
     }
 
 
@@ -202,6 +215,5 @@ class HeadlineFragment : Fragment() {
                 }
             }
     }
-
 
 }

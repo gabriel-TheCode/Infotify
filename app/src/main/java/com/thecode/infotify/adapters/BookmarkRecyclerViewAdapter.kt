@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
@@ -22,22 +21,22 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
+import com.thecode.infotify.databinding.AdapterNewsLandscapeBinding
 import com.thecode.infotify.entities.Article
 import com.thecode.infotify.utils.CustomProgressBar
 import io.realm.Realm
-import kotlinx.android.synthetic.main.adapter_news.view.*
 
 
 class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<BookmarkRecyclerViewAdapter.NewsViewHolder>() {
 
+    private lateinit var binding: AdapterNewsLandscapeBinding
     private var newsList : MutableList<Article> =  mutableListOf()
     private val progressBar: CustomProgressBar = CustomProgressBar()
     val realm: Realm = Realm.getDefaultInstance()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.adapter_news_landscape,parent,false)
-        return NewsViewHolder(view)
+        binding = AdapterNewsLandscapeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return NewsViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
@@ -138,15 +137,15 @@ class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<B
         this.newsList = newsList
     }
 
-    class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class NewsViewHolder(binding: AdapterNewsLandscapeBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        val container: FrameLayout = itemView.frame_news
-        val tvNewsTitle: TextView = itemView.text_title
-        val tvPublisherName: TextView = itemView.text_name_publisher
-        val image: ImageView = itemView.image_news
-        val btnShare: ImageView = itemView.btnShare
-        val btnBookmark: ImageView = itemView.btnBookmark
-        val tvNewsDate : TextView = itemView.text_chip_date
+        val container: FrameLayout = binding.frameNews
+        val tvNewsTitle: TextView = binding.textTitle
+        val tvPublisherName: TextView = binding.textNamePublisher
+        val image: ImageView = binding.imageNews
+        val btnShare: ImageView = binding.btnShare
+        val btnBookmark: ImageView = binding.btnBookmark
+        val tvNewsDate : TextView = binding.textChipDate
     }
 
 

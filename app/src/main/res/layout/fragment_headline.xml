@@ -22,6 +22,7 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include
+        android:id="@+id/layout_bad_state"
         layout="@layout/layout_bad_state"/>
 
 

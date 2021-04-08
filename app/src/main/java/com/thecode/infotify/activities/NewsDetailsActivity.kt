@@ -5,16 +5,19 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.thecode.infotify.R
-import kotlinx.android.synthetic.main.activity_news_details.*
+import com.thecode.infotify.databinding.ActivityNewsDetailsBinding
 
 
 class NewsDetailsActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityNewsDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_news_details)
 
+        binding = ActivityNewsDetailsBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         //RECEIVE OUR DATA
         val i = intent
         val title = i.extras?.getString("title")
@@ -27,10 +30,10 @@ class NewsDetailsActivity : AppCompatActivity() {
         val formattedDate = date?.split("T")?.get(0)
 
         //REFERENCE VIEWS FROM XML
-        val img = image_news
-        val txtSource = text_source
-        val txtContent = text_content
-        val txtDate = text_date
+        val img = binding.imageNews
+        val txtSource = binding.textSource
+        val txtContent = binding.textContent
+        val txtDate = binding.textDate
 
         //ASSIGN DATA TO THOSE VIEWS
         Glide.with(this).load(imageUrl)

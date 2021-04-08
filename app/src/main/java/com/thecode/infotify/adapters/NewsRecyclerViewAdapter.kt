@@ -21,23 +21,24 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
+import com.thecode.infotify.databinding.AdapterNewsBinding
+import com.thecode.infotify.databinding.AdapterNewsLandscapeBinding
 import com.thecode.infotify.entities.Article
 import com.thecode.infotify.entities.Source
 import com.thecode.infotify.utils.CustomProgressBar
 import io.realm.Realm
-import kotlinx.android.synthetic.main.adapter_news.view.*
 
 
 class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder>() {
 
+    private lateinit var binding: AdapterNewsBinding
     var newsList : List<Article> = listOf()
     private val progressBar: CustomProgressBar = CustomProgressBar()
     val realm: Realm = Realm.getDefaultInstance()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.adapter_news,parent,false)
-        return NewsViewHolder(view)
+        binding = AdapterNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return NewsViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
@@ -153,16 +154,16 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
 
 
 
-    class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class NewsViewHolder(binding: AdapterNewsBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        val container: FrameLayout = itemView.frame_news
-        val tvNewsTitle: TextView = itemView.text_title
-        val tvNewsdescription: TextView = itemView.text_description
-        val tvPublisherName: TextView = itemView.text_name_publisher
-        val image: ImageView = itemView.image_news
-        val btnShare: ImageView = itemView.btnShare
-        val btnBookmark: ImageView = itemView.btnBookmark
-        val tvNewsDate : TextView = itemView.text_chip_date
+        val container: FrameLayout = binding.frameNews
+        val tvNewsTitle: TextView = binding.textTitle
+        val tvNewsdescription: TextView = binding.textDescription
+        val tvPublisherName: TextView = binding.textNamePublisher
+        val image: ImageView = binding.imageNews
+        val btnShare: ImageView = binding.btnShare
+        val btnBookmark: ImageView = binding.btnBookmark
+        val tvNewsDate : TextView = binding.textChipDate
     }
 
 
