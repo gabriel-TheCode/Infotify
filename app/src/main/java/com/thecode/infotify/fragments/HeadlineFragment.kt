@@ -56,7 +56,7 @@ class HeadlineFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments!=null) {
+        if (arguments != null) {
             category = arguments?.getString(ARG_CATEGORY).toString()
         }
     }
@@ -80,20 +80,22 @@ class HeadlineFragment : Fragment() {
         //recyclerView.adapter = recyclerAdapter
         recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
 
-        refreshLayout.setColorSchemeResources(R.color.colorPrimary,
+        refreshLayout.setColorSchemeResources(
+            R.color.colorPrimary,
             R.color.colorPrimary,
             R.color.colorPrimaryDark,
-            R.color.colorPrimaryDark)
+            R.color.colorPrimaryDark
+        )
         val typedValue = TypedValue()
         val theme: Resources.Theme = requireContext().theme
         theme.resolveAttribute(R.attr.primaryCardBackgroundColor, typedValue, true)
         @ColorInt val color = typedValue.data
         refreshLayout.setProgressBackgroundColorSchemeColor(color)
-        refreshLayout.setOnRefreshListener{
+        refreshLayout.setOnRefreshListener {
             fetchApiNews()
         }
 
-        btnRetry.setOnClickListener{
+        btnRetry.setOnClickListener {
             fetchApiNews()
         }
 
@@ -120,19 +122,26 @@ class HeadlineFragment : Fragment() {
         val api: ApiInterface =
             retrofit.create(ApiInterface::class.java)
         val call: Call<NewsObjectResponse>
-        call = if(category == "popular"){
+        call = if (category == "popular") {
             api.getTopHeadlinesByLanguage(AppConstants.DEFAULT_LANG, AppConstants.NEWSAPI_TOKEN)
-        }else{
-            api.getTopHeadlinesByLanguageAndCategory(AppConstants.DEFAULT_LANG, category, AppConstants.NEWSAPI_TOKEN)
+        } else {
+            api.getTopHeadlinesByLanguageAndCategory(
+                AppConstants.DEFAULT_LANG,
+                category,
+                AppConstants.NEWSAPI_TOKEN
+            )
         }
-       call.enqueue(object : Callback<NewsObjectResponse> {
+        call.enqueue(object : Callback<NewsObjectResponse> {
             override fun onResponse(
                 call: Call<NewsObjectResponse>,
                 response: Response<NewsObjectResponse>
             ) {
                 refreshLayout.isRefreshing = false
-                Log.i("Responsestring", (response.body()?.status ?: "No result") + " " + (response.body()?.totalResults
-                    ?: 0))
+                Log.i(
+                    "Responsestring",
+                    (response.body()?.status ?: "No result") + " " + (response.body()?.totalResults
+                        ?: 0)
+                )
                 //Toast.makeText()
                 if (response.isSuccessful) {
                     if (response.body() != null) {
@@ -153,7 +162,11 @@ class HeadlineFragment : Fragment() {
             override fun onFailure(call: Call<NewsObjectResponse>, t: Throwable?) {
                 refreshLayout.isRefreshing = false
                 showInternetConnectionErrorLayout()
-                Toast.makeText(context,getString(R.string.internet_connection_error), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    getString(R.string.internet_connection_error),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
     }
@@ -177,33 +190,38 @@ class HeadlineFragment : Fragment() {
         }
     }
 
-    fun showInternetConnectionErrorLayout(){
-            if (recyclerAdapter.itemCount > 0) {
-                AestheticDialog.showRainbow(
-                    activity,
-                    getString(R.string.error),
-                    getString(R.string.check_internet),
-                    AestheticDialog.ERROR
-                )
-            } else {
-                layoutBadState.visibility = View.VISIBLE
-                textState.text = getString(R.string.internet_connection_error)
-                btnRetry.visibility = View.VISIBLE
-            }
+    fun showInternetConnectionErrorLayout() {
+        if (recyclerAdapter.itemCount > 0) {
+            AestheticDialog.showRainbow(
+                activity,
+                getString(R.string.error),
+                getString(R.string.check_internet),
+                AestheticDialog.ERROR
+            )
+        } else {
+            layoutBadState.visibility = View.VISIBLE
+            textState.text = getString(R.string.internet_connection_error)
+            btnRetry.visibility = View.VISIBLE
+        }
     }
 
-    fun showNoResultErrorLayout(){
-        if(recyclerAdapter.itemCount > 0){
-            AestheticDialog.showRainbow(activity, getString(R.string.error), getString(R.string.service_unavailable), AestheticDialog.ERROR)
-        }else {
+    fun showNoResultErrorLayout() {
+        if (recyclerAdapter.itemCount > 0) {
+            AestheticDialog.showRainbow(
+                activity,
+                getString(R.string.error),
+                getString(R.string.service_unavailable),
+                AestheticDialog.ERROR
+            )
+        } else {
             layoutBadState.visibility = View.VISIBLE
             textState.text = getString(R.string.no_result_found)
             btnRetry.visibility = View.GONE
         }
     }
 
-    fun hideBadStateLayout(){
-        if(layoutBadState.visibility == View.VISIBLE)
+    fun hideBadStateLayout() {
+        if (layoutBadState.visibility == View.VISIBLE)
             layoutBadState.visibility = View.GONE
     }
 

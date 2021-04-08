@@ -17,8 +17,6 @@ import com.thecode.infotify.BuildConfig
 import com.thecode.infotify.R
 import com.thecode.infotify.adapters.BookmarkRecyclerViewAdapter
 import com.thecode.infotify.databinding.FragmentBookmarksBinding
-import com.thecode.infotify.databinding.FragmentOnboardingBinding
-import com.thecode.infotify.databinding.LayoutBadStateBinding
 import com.thecode.infotify.entities.Article
 import io.realm.Realm
 import io.realm.RealmQuery
@@ -58,16 +56,18 @@ class BookmarksFragment : Fragment() {
         //recyclerView.adapter = recyclerAdapter
         recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
 
-        refreshLayout.setColorSchemeResources(R.color.colorPrimary,
+        refreshLayout.setColorSchemeResources(
+            R.color.colorPrimary,
             R.color.colorPrimary,
             R.color.colorPrimaryDark,
-            R.color.colorPrimaryDark)
+            R.color.colorPrimaryDark
+        )
         val typedValue = TypedValue()
         val theme: Resources.Theme = view.context.theme
         theme.resolveAttribute(R.attr.primaryCardBackgroundColor, typedValue, true)
         @ColorInt val color = typedValue.data
         refreshLayout.setProgressBackgroundColorSchemeColor(color)
-        refreshLayout.setOnRefreshListener{
+        refreshLayout.setOnRefreshListener {
             displayBookmarks(listArticles)
         }
 
@@ -78,7 +78,7 @@ class BookmarksFragment : Fragment() {
         val query: RealmQuery<Article> = realm.where(Article::class.java)
         val results: RealmResults<Article> = query.findAll()
         var i: Int
-        if (results.isNotEmpty()){
+        if (results.isNotEmpty()) {
             layoutEmptyState.visibility = View.GONE
             i = 0
             while (i < results.size) {
@@ -88,7 +88,7 @@ class BookmarksFragment : Fragment() {
                 listArticles.add(i, results[i]!!)
                 i++
             }
-        }else{
+        } else {
             layoutEmptyState.visibility = View.VISIBLE
         }
 

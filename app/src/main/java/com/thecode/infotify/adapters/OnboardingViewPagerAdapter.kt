@@ -7,8 +7,10 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.thecode.infotify.R
 import com.thecode.infotify.fragments.OnboardingFragment
 
-class OnboardingViewPagerAdapter(manager: FragmentManager,
-                                 private val context : Context) :
+class OnboardingViewPagerAdapter(
+    manager: FragmentManager,
+    private val context: Context
+) :
     FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     // Returns total number of pages

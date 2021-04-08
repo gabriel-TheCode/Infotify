@@ -2,7 +2,7 @@ package com.thecode.infotify.entities
 
 import io.realm.RealmObject
 
-open class Article (
+open class Article(
     var source: Source? = null,
     var author: String? = null,
     var title: String? = null,
@@ -12,4 +12,4 @@ open class Article (
     var publishedAt: String? = null,
     var content: String? = null
 
-    ): RealmObject()
+) : RealmObject()

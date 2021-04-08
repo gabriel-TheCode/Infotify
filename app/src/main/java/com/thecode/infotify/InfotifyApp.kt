@@ -47,10 +47,6 @@ class InfotifyApp : MultiDexApplication() {
         super.onConfigurationChanged(newConfig)
     }
 
-    override fun onTerminate() {
-        super.onTerminate()
-    }
-
     fun initStetho() {
         Stetho.initializeWithDefaults(this)
     }

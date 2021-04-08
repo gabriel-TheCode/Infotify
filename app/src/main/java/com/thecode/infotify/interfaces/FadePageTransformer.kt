@@ -1,4 +1,5 @@
 package com.thecode.infotify.interfaces
+
 import android.view.View
 import androidx.viewpager.widget.ViewPager
 

@@ -1,9 +1,9 @@
 package com.thecode.infotify.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.thecode.infotify.R
 import com.thecode.infotify.adapters.OnboardingViewPagerAdapter
@@ -31,9 +31,9 @@ class OnboardingActivity : AppCompatActivity() {
         btnNext = binding.btnNextStep
         mViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(position: Int) {
-                if(position == 2){
+                if (position == 2) {
                     btnNext.text = getText(R.string.finish)
-                }else{
+                } else {
                     btnNext.text = getText(R.string.next)
                 }
             }
@@ -43,7 +43,7 @@ class OnboardingActivity : AppCompatActivity() {
         })
 
         btnNext.setOnClickListener {
-            if (getItem(+1) > mViewPager.childCount-1) {
+            if (getItem(+1) > mViewPager.childCount - 1) {
                 val intent = Intent(applicationContext, MainActivity::class.java)
                 finish()
                 startActivity(intent)
@@ -53,7 +53,7 @@ class OnboardingActivity : AppCompatActivity() {
             }
         }
 
-            btnBack.setOnClickListener {
+        btnBack.setOnClickListener {
             if (getItem(+1) == 1) {
                 finish()
             } else {

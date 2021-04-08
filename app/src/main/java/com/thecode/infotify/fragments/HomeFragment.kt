@@ -18,7 +18,6 @@ import com.mahfa.dnswitch.DayNightSwitchAnimListener
 import com.thecode.infotify.R
 import com.thecode.infotify.activities.AboutActivity
 import com.thecode.infotify.adapters.HeadlineViewPagerAdapter
-import com.thecode.infotify.databinding.FragmentBookmarksBinding
 import com.thecode.infotify.databinding.FragmentHomeBinding
 import com.thecode.infotify.utils.SharedPreferenceUtils.isNightModeEnabled
 import com.thecode.infotify.utils.SharedPreferenceUtils.setIsNightModeEnabled
@@ -57,7 +56,10 @@ class HomeFragment : Fragment() {
         mViewPagerAdapter.addFragment(HeadlineFragment.newInstance("science"), "Science")
         mViewPagerAdapter.addFragment(HeadlineFragment.newInstance("sports"), "Sports")
         mViewPagerAdapter.addFragment(HeadlineFragment.newInstance("technology"), "Technology")
-        mViewPagerAdapter.addFragment(HeadlineFragment.newInstance("entertainment"), "Entertainment")
+        mViewPagerAdapter.addFragment(
+            HeadlineFragment.newInstance("entertainment"),
+            "Entertainment"
+        )
         mViewPager.adapter = mViewPagerAdapter
         mViewPager.offscreenPageLimit = 6
 
@@ -84,7 +86,7 @@ class HomeFragment : Fragment() {
                 mActivity.recreate()
             }
 
-            override fun onAnimValueChanged(value: Float) { }
+            override fun onAnimValueChanged(value: Float) {}
         })
 
         return view
@@ -110,7 +112,7 @@ class HomeFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.about ->{
+            R.id.about -> {
                 val intent = Intent(activity, AboutActivity::class.java)
                 startActivity(intent)
             }

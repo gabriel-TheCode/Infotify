@@ -27,15 +27,17 @@ import com.thecode.infotify.utils.CustomProgressBar
 import io.realm.Realm
 
 
-class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<BookmarkRecyclerViewAdapter.NewsViewHolder>() {
+class BookmarkRecyclerViewAdapter(val context: Context) :
+    RecyclerView.Adapter<BookmarkRecyclerViewAdapter.NewsViewHolder>() {
 
     private lateinit var binding: AdapterNewsLandscapeBinding
-    private var newsList : MutableList<Article> =  mutableListOf()
+    private var newsList: MutableList<Article> = mutableListOf()
     private val progressBar: CustomProgressBar = CustomProgressBar()
     val realm: Realm = Realm.getDefaultInstance()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-        binding = AdapterNewsLandscapeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding =
+            AdapterNewsLandscapeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NewsViewHolder(binding)
     }
 
@@ -44,7 +46,7 @@ class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<B
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        val article : Article = newsList[position]
+        val article: Article = newsList[position]
         val title: String? = article.title
         val url: String = article.url.toString()
         val publishAt = article.publishedAt
@@ -54,9 +56,9 @@ class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<B
         holder.tvNewsTitle.text = title
         holder.tvNewsDate.text = publishAt?.split("T")?.get(0) ?: ""
 
-        if(sourceName.isNullOrEmpty()){
+        if (sourceName.isNullOrEmpty()) {
             holder.tvPublisherName.text = "Infotify News"
-        }else{
+        } else {
             holder.tvPublisherName.text = sourceName
         }
 
@@ -77,12 +79,12 @@ class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<B
         }
 
         //WHEN ITEM IS CLICKED
-        holder.btnBookmark.setOnClickListener{
+        holder.btnBookmark.setOnClickListener {
             deleteFromDatabase(holder.adapterPosition, title.toString())
         }
 
         //WHEN ITEM IS CLICKED
-        holder.container.setOnClickListener{
+        holder.container.setOnClickListener {
 
             val newsView = WebView(context)
             var failedLoading = false
@@ -101,29 +103,34 @@ class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<B
                     error: WebResourceError
                 ) {
                     failedLoading = true
-                    if(progressBar.dialog.isShowing){
+                    if (progressBar.dialog.isShowing) {
                         progressBar.dialog.dismiss()
                     }
-                    AestheticDialog.showRainbow(context as Activity?, "ERROR", "Sorry, the link of the article is not reachable", AestheticDialog.ERROR)
+                    AestheticDialog.showRainbow(
+                        context as Activity?,
+                        "ERROR",
+                        "Sorry, the link of the article is not reachable",
+                        AestheticDialog.ERROR
+                    )
                 }
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     if (!failedLoading) {
                         progressBar.dialog.dismiss()
-                    val alertDialog: AlertDialog = AlertDialog.Builder(context).create()
-                    alertDialog.setTitle(title)
-                    alertDialog.setView(newsView)
-                    alertDialog.setButton(
-                        AlertDialog.BUTTON_NEUTRAL, "OK"
-                    ) { dialog, _ -> dialog.dismiss() }
-                    alertDialog.show()
-                    }else{
+                        val alertDialog: AlertDialog = AlertDialog.Builder(context).create()
+                        alertDialog.setTitle(title)
+                        alertDialog.setView(newsView)
+                        alertDialog.setButton(
+                            AlertDialog.BUTTON_NEUTRAL, "OK"
+                        ) { dialog, _ -> dialog.dismiss() }
+                        alertDialog.show()
+                    } else {
                         progressBar.dialog.dismiss()
                     }
                 }
 
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                    progressBar.show(context,"Loading...")
+                    progressBar.show(context, "Loading...")
                 }
             }
             newsView.loadUrl(url)
@@ -133,11 +140,12 @@ class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<B
         }
     }
 
-    fun setArticleListItems(newsList: MutableList<Article>){
+    fun setArticleListItems(newsList: MutableList<Article>) {
         this.newsList = newsList
     }
 
-    class NewsViewHolder(binding: AdapterNewsLandscapeBinding) : RecyclerView.ViewHolder(binding.root) {
+    class NewsViewHolder(binding: AdapterNewsLandscapeBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         val container: FrameLayout = binding.frameNews
         val tvNewsTitle: TextView = binding.textTitle
@@ -145,22 +153,23 @@ class BookmarkRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<B
         val image: ImageView = binding.imageNews
         val btnShare: ImageView = binding.btnShare
         val btnBookmark: ImageView = binding.btnBookmark
-        val tvNewsDate : TextView = binding.textChipDate
+        val tvNewsDate: TextView = binding.textChipDate
     }
 
 
     private fun deleteFromDatabase(position: Int, itemName: String) {
         realm.executeTransactionAsync({ realm ->
-            val item: Article = realm.where(Article::class.java).equalTo("title", itemName).findFirst()!!
+            val item: Article =
+                realm.where(Article::class.java).equalTo("title", itemName).findFirst()!!
             item.deleteFromRealm()
         }, { // Transaction was a success.
             remove(position)
             Log.v("database", "Delete ok")
-            Toast.makeText(context,"Delete successfully", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Delete successfully", Toast.LENGTH_LONG).show()
 
         }, { error -> // Transaction failed and was automatically canceled.
             Log.e("database", error.message)
-            Toast.makeText(context,"An error occured", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "An error occured", Toast.LENGTH_LONG).show()
         })
     }
 

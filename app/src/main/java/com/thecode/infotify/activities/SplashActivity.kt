@@ -13,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
-import com.thecode.infotify.R
-import com.thecode.infotify.databinding.ActivityOnboardingBinding
 import com.thecode.infotify.databinding.ActivitySplashBinding
 import com.thecode.infotify.utils.SharedPreferenceUtils
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
@@ -66,10 +64,10 @@ class SplashActivity : AppCompatActivity() {
 
                         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
                         override fun onAnimationEnd(p0: Animator?) {
-                            lateinit var intent : Intent
-                            if(SharedPreferenceUtils.getIsOnboardingCompleted()){
-                                 intent = Intent(applicationContext, MainActivity::class.java)
-                            }else{
+                            lateinit var intent: Intent
+                            if (SharedPreferenceUtils.getIsOnboardingCompleted()) {
+                                intent = Intent(applicationContext, MainActivity::class.java)
+                            } else {
                                 intent = Intent(applicationContext, OnboardingActivity::class.java)
                             }
                             finish()
