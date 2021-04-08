@@ -22,14 +22,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
 import com.thecode.infotify.adapters.NewsRecyclerViewAdapter
+import com.thecode.infotify.databinding.BottomSheetSearchBinding
+import com.thecode.infotify.databinding.FragmentSearchBinding
+import com.thecode.infotify.databinding.LayoutBadStateBinding
 import com.thecode.infotify.entities.Article
 import com.thecode.infotify.interfaces.ApiInterface
 import com.thecode.infotify.responses.NewsObjectResponse
 import com.thecode.infotify.utils.AppConstants
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
-import kotlinx.android.synthetic.main.bottom_sheet_search.view.*
-import kotlinx.android.synthetic.main.fragment_search.view.*
-import kotlinx.android.synthetic.main.layout_bad_state.view.*
 import org.json.JSONException
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,53 +42,65 @@ import retrofit2.converter.gson.GsonConverterFactory
  * A simple [Fragment] subclass.
  */
 class SearchFragment : Fragment() {
+    private var _binding: FragmentSearchBinding? = null
+    private var _bindingLayoutBadState: LayoutBadStateBinding? = null
+    // This property is only valid between onCreateView and
+    // onDestroyView.
 
-        lateinit var recyclerView: RecyclerView
-        lateinit var recyclerAdapter: NewsRecyclerViewAdapter
-        lateinit var refreshLayout: SwipeRefreshLayout
-        private lateinit var searchView: SearchView
-        lateinit var btnRetry: AppCompatButton
-        lateinit var layoutBadState: View
-        lateinit var textState: TextView
-        lateinit var imgState: ImageView
-        private lateinit var imgSearchOptions: ImageView
-        lateinit var q: String
-        lateinit var s: String
-        lateinit var l: String
+    private val binding get() = _binding!!
+    private val bindingLayoutBadState get() = _bindingLayoutBadState!!
+    private lateinit var recyclerView: RecyclerView
+    lateinit var recyclerAdapter: NewsRecyclerViewAdapter
+    lateinit var refreshLayout: SwipeRefreshLayout
+    private lateinit var searchView: SearchView
+    lateinit var btnRetry: AppCompatButton
+    lateinit var layoutBadState: View
+    lateinit var textState: TextView
+    lateinit var imgState: ImageView
+    private lateinit var imgSearchOptions: ImageView
+    lateinit var q: String
+    lateinit var s: String
+    lateinit var l: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_search, container, false)
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        _bindingLayoutBadState = LayoutBadStateBinding.inflate(inflater, container, false)
+
+        val view = binding.root
+
         q = "news"
         s = "PublishedAt"
         l = AppConstants.DEFAULT_LANG
-        searchView = view.searchview
-        btnRetry = view.btn_retry
-        layoutBadState = view.layout_bad_state
-        imgState = view.img_state
-        textState = view.text_state
-        imgSearchOptions = view.image_settings
-        refreshLayout = view.refresh_layout
-        recyclerView = view.recycler_view_news_everything
-        recyclerAdapter = NewsRecyclerViewAdapter(context!!)
+        searchView = binding.searchview
+        btnRetry = bindingLayoutBadState.btnRetry
+        layoutBadState = bindingLayoutBadState.layoutBadState
+        imgState = bindingLayoutBadState.imgState
+        textState = bindingLayoutBadState.textState
+        imgSearchOptions = binding.imageSettings
+        refreshLayout = binding.refreshLayout
+        recyclerView = binding.recyclerViewNewsEverything
+        recyclerAdapter = NewsRecyclerViewAdapter(view.context)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         //recyclerView.adapter = recyclerAdapter
         recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
 
-        refreshLayout.setColorSchemeResources(R.color.colorPrimary,
+        refreshLayout.setColorSchemeResources(
+            R.color.colorPrimary,
             R.color.colorPrimary,
             R.color.colorPrimaryDark,
-            R.color.colorPrimaryDark)
+            R.color.colorPrimaryDark
+        )
         val typedValue = TypedValue()
-        val theme: Resources.Theme = context!!.theme
+        val theme: Resources.Theme = view.context.theme
         theme.resolveAttribute(R.attr.primaryCardBackgroundColor, typedValue, true)
         @ColorInt val color = typedValue.data
         refreshLayout.setProgressBackgroundColorSchemeColor(color)
-        refreshLayout.setOnRefreshListener{
-            fetchApiNews(q,l,s)
+        refreshLayout.setOnRefreshListener {
+            fetchApiNews(q, l, s)
         }
 
         // perform set on query text listener event
@@ -96,7 +108,7 @@ class SearchFragment : Fragment() {
             SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 q = query
-                fetchApiNews(q,l,s)
+                fetchApiNews(q, l, s)
                 return false
             }
 
@@ -106,22 +118,26 @@ class SearchFragment : Fragment() {
             }
         })
 
-        imgSearchOptions.setOnClickListener{
+        imgSearchOptions.setOnClickListener {
             showBottomSheetSearch()
         }
 
-        btnRetry.setOnClickListener{
-            fetchApiNews(q,l,s)
+        btnRetry.setOnClickListener {
+            fetchApiNews(q, l, s)
         }
 
-        fetchApiNews(q,l,s)
+        fetchApiNews(q, l, s)
 
 
         return view
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
-    private fun fetchApiNews(query:String, language:String, sortBy:String) {
+    private fun fetchApiNews(query: String, language: String, sortBy: String) {
         Log.d("Search", "$query - $language - $sortBy")
         refreshLayout.isRefreshing = true
         val retrofit: Retrofit = Retrofit.Builder()
@@ -130,7 +146,8 @@ class SearchFragment : Fragment() {
             .build()
         val api: ApiInterface =
             retrofit.create(ApiInterface::class.java)
-        val call: Call<NewsObjectResponse> = api.getEverything(query, language, sortBy, AppConstants.NEWSAPI_TOKEN)
+        val call: Call<NewsObjectResponse> =
+            api.getEverything(query, language, sortBy, AppConstants.NEWSAPI_TOKEN)
         call.enqueue(object : Callback<NewsObjectResponse?> {
             override fun onResponse(
                 call: Call<NewsObjectResponse?>?,
@@ -139,13 +156,19 @@ class SearchFragment : Fragment() {
                 refreshLayout.isRefreshing = false
                 if (response.isSuccessful) {
                     if (response.body() != null) {
-                        if(response.body()!!.status.equals("error")){
-                            AestheticDialog.showToaster(context as Activity?, getString(R.string.error), getString(R.string.service_unavailable), AestheticDialog.ERROR)
+                        if (response.body()?.status == "error") {
+                            AestheticDialog.showToaster(
+                                context as Activity?,
+                                getString(R.string.error),
+                                getString(R.string.service_unavailable),
+                                AestheticDialog.ERROR
+                            )
                             showInternetConnectionErrorLayout()
-                        }else{
+                        } else {
                             hideBadStateLayout()
                             Log.i("onSuccess", response.body().toString())
-                            displayNews(response.body()!!.articles)
+                            val a = response.body()?.articles
+                            if (a != null) displayNews(a) else showNoResultErrorLayout()
                         }
 
                     } else {
@@ -162,7 +185,11 @@ class SearchFragment : Fragment() {
             override fun onFailure(call: Call<NewsObjectResponse?>?, t: Throwable?) {
                 refreshLayout.isRefreshing = false
                 showInternetConnectionErrorLayout()
-                Toast.makeText(context,getString(R.string.internet_connection_error),Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    getString(R.string.internet_connection_error),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
     }
@@ -186,13 +213,13 @@ class SearchFragment : Fragment() {
     }
 
     private fun showBottomSheetSearch() {
-        val view: View =
-            layoutInflater.inflate(R.layout.bottom_sheet_search, null)
-        val textClose = view.text_close
-        val btnValidateSignature = view.btn_apply
-        val spinnerLang: Spinner = view.spinner_lang
+        val binding: BottomSheetSearchBinding = BottomSheetSearchBinding.inflate(layoutInflater)
+        val view = binding.root
+        val textClose = binding.textClose
+        val btnValidateSignature = binding.btnApply
+        val spinnerLang: Spinner = binding.spinnerLang
         ArrayAdapter.createFromResource(
-            context!!,
+            view.context,
             R.array.languages,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
@@ -205,8 +232,10 @@ class SearchFragment : Fragment() {
         val languages = resources.getStringArray(R.array.languages_values)
         spinnerLang.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>,
-                                        view: View, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View, position: Int, id: Long
+            ) {
                 l = languages[position]
             }
 
@@ -215,9 +244,9 @@ class SearchFragment : Fragment() {
             }
         }
 
-        val spinnerSort: Spinner = view.spinner_sortby
+        val spinnerSort: Spinner = binding.spinnerSortby
         ArrayAdapter.createFromResource(
-            context!!,
+            view.context,
             R.array.options_values,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
@@ -230,9 +259,11 @@ class SearchFragment : Fragment() {
         val sorts = resources.getStringArray(R.array.options_values)
         spinnerSort.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>,
-                                        view: View, position: Int, id: Long) {
-               s = sorts[position]
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View, position: Int, id: Long
+            ) {
+                s = sorts[position]
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -240,7 +271,7 @@ class SearchFragment : Fragment() {
             }
         }
 
-        val dialog = BottomSheetDialog(context!!)
+        val dialog = BottomSheetDialog(view.context)
         dialog.setContentView(view)
         val displayMetrics = this.resources.displayMetrics
         val width = displayMetrics.widthPixels
@@ -253,38 +284,43 @@ class SearchFragment : Fragment() {
         textClose.setOnClickListener { dialog.dismiss() }
         btnValidateSignature.setOnClickListener {
             dialog.dismiss()
-            fetchApiNews(q,l,s)
+            fetchApiNews(q, l, s)
         }
     }
 
 
-    fun showInternetConnectionErrorLayout(){
-            if (recyclerAdapter.itemCount > 0) {
-                AestheticDialog.showRainbow(
-                    activity,
-                    getString(R.string.error),
-                    getString(R.string.check_internet),
-                    AestheticDialog.ERROR
-                )
-            } else {
-                layoutBadState.visibility = View.VISIBLE
-                textState.text = getString(R.string.internet_connection_error)
-                btnRetry.visibility = View.VISIBLE
-            }
+    fun showInternetConnectionErrorLayout() {
+        if (recyclerAdapter.itemCount > 0) {
+            AestheticDialog.showRainbow(
+                activity,
+                getString(R.string.error),
+                getString(R.string.check_internet),
+                AestheticDialog.ERROR
+            )
+        } else {
+            layoutBadState.visibility = View.VISIBLE
+            textState.text = getString(R.string.internet_connection_error)
+            btnRetry.visibility = View.VISIBLE
+        }
     }
 
-    fun showNoResultErrorLayout(){
-        if(recyclerAdapter.itemCount > 0){
-            AestheticDialog.showToaster(activity, getString(R.string.error), getString(R.string.service_unavailable), AestheticDialog.ERROR)
-        }else {
+    fun showNoResultErrorLayout() {
+        if (recyclerAdapter.itemCount > 0) {
+            AestheticDialog.showToaster(
+                activity,
+                getString(R.string.error),
+                getString(R.string.service_unavailable),
+                AestheticDialog.ERROR
+            )
+        } else {
             layoutBadState.visibility = View.VISIBLE
             textState.text = getString(R.string.no_result_found)
             btnRetry.visibility = View.GONE
         }
     }
 
-    fun hideBadStateLayout(){
-        if(layoutBadState.visibility == View.VISIBLE)
+    fun hideBadStateLayout() {
+        if (layoutBadState.visibility == View.VISIBLE)
             layoutBadState.visibility = View.GONE
     }
 

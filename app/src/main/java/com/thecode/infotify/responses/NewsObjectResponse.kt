@@ -2,7 +2,7 @@ package com.thecode.infotify.responses
 
 import com.thecode.infotify.entities.Article
 
-data class NewsObjectResponse (
+data class NewsObjectResponse(
     val status: String,
     val totalResults: String,
     val articles: Array<Article>

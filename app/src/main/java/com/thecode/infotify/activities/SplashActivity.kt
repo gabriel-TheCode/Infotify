@@ -13,14 +13,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
-import com.thecode.infotify.R
+import com.thecode.infotify.databinding.ActivitySplashBinding
 import com.thecode.infotify.utils.SharedPreferenceUtils
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
-import kotlinx.android.synthetic.main.activity_splash.*
 
 
 class SplashActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivitySplashBinding
     private lateinit var springForce: SpringForce
 
 
@@ -31,14 +31,18 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_splash)
+        binding = ActivitySplashBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        val splashLayout = binding.splashLayout
         Handler().postDelayed({
             //do stuff
             //Like your Background calls and all
             springForce = SpringForce(0f)
-            relative_layout.pivotX = 0f
-            relative_layout.pivotY = 0f
-            val springAnim = SpringAnimation(relative_layout, DynamicAnimation.ROTATION).apply {
+            splashLayout.pivotX = 0f
+            splashLayout.pivotY = 0f
+            val springAnim = SpringAnimation(splashLayout, DynamicAnimation.ROTATION).apply {
                 springForce.dampingRatio = SpringForce.DAMPING_RATIO_HIGH_BOUNCY
                 springForce.stiffness = SpringForce.STIFFNESS_VERY_LOW
             }
@@ -49,7 +53,7 @@ class SplashActivity : AppCompatActivity() {
                 windowManager.defaultDisplay.getMetrics(displayMetrics)
                 val height = displayMetrics.heightPixels.toFloat()
                 val width = displayMetrics.widthPixels
-                relative_layout.animate()
+                splashLayout.animate()
                     .setStartDelay(1)
                     .translationXBy(width.toFloat() / 2)
                     .translationYBy(height)
@@ -60,10 +64,10 @@ class SplashActivity : AppCompatActivity() {
 
                         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
                         override fun onAnimationEnd(p0: Animator?) {
-                            lateinit var intent : Intent
-                            if(SharedPreferenceUtils.getIsOnboardingCompleted()){
-                                 intent = Intent(applicationContext, MainActivity::class.java)
-                            }else{
+                            lateinit var intent: Intent
+                            if (SharedPreferenceUtils.getIsOnboardingCompleted()) {
+                                intent = Intent(applicationContext, MainActivity::class.java)
+                            } else {
                                 intent = Intent(applicationContext, OnboardingActivity::class.java)
                             }
                             finish()

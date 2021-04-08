@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
@@ -21,23 +20,24 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
+import com.thecode.infotify.databinding.AdapterNewsBinding
 import com.thecode.infotify.entities.Article
 import com.thecode.infotify.entities.Source
 import com.thecode.infotify.utils.CustomProgressBar
 import io.realm.Realm
-import kotlinx.android.synthetic.main.adapter_news.view.*
 
 
-class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder>() {
+class NewsRecyclerViewAdapter(val context: Context) :
+    RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder>() {
 
-    var newsList : List<Article> = listOf()
+    private lateinit var binding: AdapterNewsBinding
+    var newsList: List<Article> = listOf()
     private val progressBar: CustomProgressBar = CustomProgressBar()
     val realm: Realm = Realm.getDefaultInstance()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.adapter_news,parent,false)
-        return NewsViewHolder(view)
+        binding = AdapterNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return NewsViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
@@ -45,12 +45,13 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        holder.tvNewsTitle.text = newsList[position].title
-        holder.tvNewsdescription.text = newsList[position].description
-        holder.tvNewsDate.text = newsList[position].publishedAt?.split("T")?.get(0) ?: ""
-        holder.tvPublisherName.text = newsList[position].source?.name ?: "Infotify News"
+        val news = newsList[position]
+        holder.tvNewsTitle.text = news.title
+        holder.tvNewsdescription.text = news.description
+        holder.tvNewsDate.text = news.publishedAt?.split("T")?.get(0) ?: ""
+        holder.tvPublisherName.text = news.source?.name ?: "Infotify News"
 
-        Glide.with(context).load(newsList[position].urlToImage)
+        Glide.with(context).load(news.urlToImage)
             .placeholder(R.drawable.placeholder)
             .error(R.drawable.placeholder)
             .apply(RequestOptions().centerCrop())
@@ -60,19 +61,18 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
             sendIntent.action = Intent.ACTION_SEND
             sendIntent.putExtra(
                 Intent.EXTRA_TEXT,
-                newsList[position].title + " - via Infotify News App\n" + newsList[position].url
+                news.title + " - via Infotify News App\n" + news.url
             )
             sendIntent.type = "text/plain"
             context.startActivity(sendIntent)
         }
 
         holder.btnBookmark.setOnClickListener {
-            saveIntoDatabase(newsList[position])
-
+            saveIntoDatabase(news)
         }
 
         //WHEN ITEM IS CLICKED
-        holder.container.setOnClickListener{
+        holder.container.setOnClickListener {
             //INTENT OBJ
             /*val i = Intent(context, NewsDetailsActivity::class.java)
 
@@ -102,7 +102,6 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
             newsView.webViewClient = object : WebViewClient() {
 
 
-
                 override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                     return true
                 }
@@ -113,10 +112,15 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
                     error: WebResourceError?
                 ) {
                     failedLoading = true
-                    if(progressBar.dialog.isShowing){
+                    if (progressBar.dialog.isShowing) {
                         progressBar.dialog.dismiss()
                     }
-                    AestheticDialog.showRainbow(context as Activity?, "ERROR", "Sorry, the link of the article is not reachable", AestheticDialog.ERROR)
+                    AestheticDialog.showRainbow(
+                        context as Activity?,
+                        "ERROR",
+                        "Sorry, the link of the article is not reachable",
+                        AestheticDialog.ERROR
+                    )
                 }
 
                 override fun onPageFinished(view: WebView?, url: String?) {
@@ -129,13 +133,13 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
                             AlertDialog.BUTTON_NEUTRAL, "OK"
                         ) { dialog, _ -> dialog.dismiss() }
                         alertDialog.show()
-                    }else{
+                    } else {
                         progressBar.dialog.dismiss()
                     }
                 }
 
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                    progressBar.show(context,"Loading...")
+                    progressBar.show(context, "Loading...")
                 }
             }
             newsView.loadUrl(url)
@@ -145,24 +149,23 @@ class NewsRecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<NewsR
         }
     }
 
-    fun setArticleListItems(newsList: List<Article>){
+    fun setArticleListItems(newsList: List<Article>) {
         this.newsList = emptyList()
         this.newsList = newsList
         notifyDataSetChanged()
     }
 
 
+    class NewsViewHolder(binding: AdapterNewsBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        val container: FrameLayout = itemView.frame_news
-        val tvNewsTitle: TextView = itemView.text_title
-        val tvNewsdescription: TextView = itemView.text_description
-        val tvPublisherName: TextView = itemView.text_name_publisher
-        val image: ImageView = itemView.image_news
-        val btnShare: ImageView = itemView.btnShare
-        val btnBookmark: ImageView = itemView.btnBookmark
-        val tvNewsDate : TextView = itemView.text_chip_date
+        val container: FrameLayout = binding.frameNews
+        val tvNewsTitle: TextView = binding.textTitle
+        val tvNewsdescription: TextView = binding.textDescription
+        val tvPublisherName: TextView = binding.textNamePublisher
+        val image: ImageView = binding.imageNews
+        val btnShare: ImageView = binding.btnShare
+        val btnBookmark: ImageView = binding.btnBookmark
+        val tvNewsDate: TextView = binding.textChipDate
     }
 
 

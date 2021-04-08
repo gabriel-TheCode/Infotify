@@ -1,16 +1,18 @@
 package com.thecode.infotify.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.thecode.infotify.R
 import com.thecode.infotify.adapters.OnboardingViewPagerAdapter
+import com.thecode.infotify.databinding.ActivityOnboardingBinding
 import com.thecode.infotify.utils.SharedPreferenceUtils
-import kotlinx.android.synthetic.main.activity_onboarding.*
 
 class OnboardingActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityOnboardingBinding
 
     private lateinit var mViewPager: ViewPager
     private lateinit var btnBack: Button
@@ -19,17 +21,19 @@ class OnboardingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_onboarding)
-        mViewPager = viewPager
+        binding = ActivityOnboardingBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        mViewPager = binding.viewPager
         mViewPager.adapter = OnboardingViewPagerAdapter(supportFragmentManager, this)
         mViewPager.offscreenPageLimit = 1
-        btnBack = btn_previous_step
-        btnNext = btn_next_step
+        btnBack = binding.btnPreviousStep
+        btnNext = binding.btnNextStep
         mViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(position: Int) {
-                if(position == 2){
+                if (position == 2) {
                     btnNext.text = getText(R.string.finish)
-                }else{
+                } else {
                     btnNext.text = getText(R.string.next)
                 }
             }
@@ -39,7 +43,7 @@ class OnboardingActivity : AppCompatActivity() {
         })
 
         btnNext.setOnClickListener {
-            if (getItem(+1) > mViewPager.childCount-1) {
+            if (getItem(+1) > mViewPager.childCount - 1) {
                 val intent = Intent(applicationContext, MainActivity::class.java)
                 finish()
                 startActivity(intent)
@@ -49,7 +53,7 @@ class OnboardingActivity : AppCompatActivity() {
             }
         }
 
-            btnBack.setOnClickListener {
+        btnBack.setOnClickListener {
             if (getItem(+1) == 1) {
                 finish()
             } else {

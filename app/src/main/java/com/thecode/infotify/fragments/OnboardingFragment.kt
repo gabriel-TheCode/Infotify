@@ -7,10 +7,13 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
-import com.thecode.infotify.R
-import kotlinx.android.synthetic.main.fragment_onboarding.view.*
+import com.thecode.infotify.databinding.FragmentOnboardingBinding
 
 class OnboardingFragment : Fragment() {
+
+    private var _binding: FragmentOnboardingBinding? = null
+    private val binding get() = _binding!!
+
     private var title: String? = null
     private var description: String? = null
     private var imageResource = 0
@@ -20,9 +23,9 @@ class OnboardingFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            title = arguments!!.getString(ARG_PARAM1)
-            description = arguments!!.getString(ARG_PARAM2)
-            imageResource = arguments!!.getInt(ARG_PARAM3)
+            title = requireArguments().getString(ARG_PARAM1)
+            description = requireArguments().getString(ARG_PARAM2)
+            imageResource = requireArguments().getInt(ARG_PARAM3)
         }
     }
 
@@ -31,15 +34,15 @@ class OnboardingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val rootLayout: View =
-            inflater.inflate(R.layout.fragment_onboarding, container, false)
-        tvTitle = rootLayout.text_onboarding_title
-        tvDescription = rootLayout.text_onboarding_description
-        image = rootLayout.image_onboarding
+        _binding = FragmentOnboardingBinding.inflate(inflater, container, false)
+        val view = binding.root
+        tvTitle = binding.textOnboardingTitle
+        tvDescription = binding.textOnboardingDescription
+        image = binding.imageOnboarding
         tvTitle.text = title
         tvDescription.text = description
         image.setAnimation(imageResource)
-        return rootLayout
+        return view
     }
 
     companion object {
@@ -60,5 +63,10 @@ class OnboardingFragment : Fragment() {
             fragment.arguments = args
             return fragment
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
