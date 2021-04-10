@@ -58,6 +58,7 @@ dependencies {
     // DI - Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecycle_version"
+    implementation 'androidx.lifecycle:lifecycle-process:2.2.0'
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
     kapt "androidx.hilt:hilt-compiler:$hilt_lifecycle_version"
 

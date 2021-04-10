@@ -3,7 +3,7 @@ package com.thecode.infotify.utils
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.thecode.infotify.InfotifyApp
+import com.thecode.infotify.application.InfotifyApp
 
 class NetworkChangeReceiver : BroadcastReceiver() {
     var isConnected = false

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_gradient_splash"
-    tools:context="com.thecode.infotify.activities.SplashActivity">
+    tools:context="com.thecode.infotify.presentation.splash.SplashActivity">
 
     <FrameLayout
         android:id="@+id/fragment_main_container"
