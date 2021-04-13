@@ -1,6 +1,6 @@
-package com.thecode.infotify.framework.datasource.api
+package com.thecode.infotify.framework.datasource.network.api
 
-import com.thecode.infotify.framework.datasource.model.NewsObjectResponse
+import com.thecode.infotify.framework.datasource.network.model.NewsObjectResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

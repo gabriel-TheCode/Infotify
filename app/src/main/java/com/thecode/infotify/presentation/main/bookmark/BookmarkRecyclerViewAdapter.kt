@@ -22,7 +22,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
 import com.thecode.infotify.databinding.AdapterNewsLandscapeBinding
-import com.thecode.infotify.entities.Article
 import com.thecode.infotify.utils.CustomProgressBar
 import io.realm.Realm
 

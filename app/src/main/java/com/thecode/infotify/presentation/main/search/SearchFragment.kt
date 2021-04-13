@@ -25,9 +25,8 @@ import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import com.thecode.infotify.databinding.BottomSheetSearchBinding
 import com.thecode.infotify.databinding.FragmentSearchBinding
 import com.thecode.infotify.databinding.LayoutBadStateBinding
-import com.thecode.infotify.entities.Article
 import com.thecode.infotify.http.service.ApiInterface
-import com.thecode.infotify.framework.datasource.model.NewsObjectResponse
+import com.thecode.infotify.framework.datasource.network.model.NewsObjectResponse
 import com.thecode.infotify.utils.AppConstants
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 import org.json.JSONException

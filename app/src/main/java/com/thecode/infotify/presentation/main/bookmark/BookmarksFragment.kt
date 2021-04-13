@@ -16,7 +16,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.thecode.infotify.BuildConfig
 import com.thecode.infotify.R
 import com.thecode.infotify.databinding.FragmentBookmarksBinding
-import com.thecode.infotify.entities.Article
 import io.realm.Realm
 import io.realm.RealmQuery
 import io.realm.RealmResults
