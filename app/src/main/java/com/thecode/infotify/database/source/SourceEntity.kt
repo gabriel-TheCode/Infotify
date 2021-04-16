@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
 data class SourceEntity(
 
     @SerializedName("id")
-    @PrimaryKey var id: String? = null,
+    @PrimaryKey var id: String,
 
     @SerializedName("cnbc")
     var cnbc: String? = null,

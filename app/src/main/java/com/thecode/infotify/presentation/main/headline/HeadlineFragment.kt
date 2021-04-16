@@ -3,7 +3,6 @@ package com.thecode.infotify.presentation.main.headline
 
 import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -14,37 +13,41 @@ import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
+import com.thecode.infotify.core.domain.Article
+import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import com.thecode.infotify.databinding.FragmentHeadlineBinding
 import com.thecode.infotify.databinding.LayoutBadStateBinding
-import com.thecode.infotify.http.service.ApiInterface
-import com.thecode.infotify.framework.datasource.network.model.NewsObjectResponse
 import com.thecode.infotify.utils.AppConstants
 import com.thecode.infotify.utils.AppConstants.ARG_CATEGORY
+import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.json.JSONException
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
+@ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class HeadlineFragment : Fragment() {
 
+    private val viewModel: HeadlineViewModel by viewModels()
+
+    //View Binding
     private var _bindingHeadline: FragmentHeadlineBinding? = null
     private var _bindingLayoutBadState: LayoutBadStateBinding? = null
-
     private val binding get() = _bindingHeadline!!
     private val bindingLayoutBadState get() = _bindingLayoutBadState!!
 
     private lateinit var category: String
 
+    //Views
     lateinit var recyclerView: RecyclerView
     lateinit var recyclerAdapter: NewsRecyclerViewAdapter
     lateinit var refreshLayout: SwipeRefreshLayout
@@ -63,39 +66,18 @@ class HeadlineFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _bindingHeadline = FragmentHeadlineBinding.inflate(inflater, container, false)
         _bindingLayoutBadState = LayoutBadStateBinding.inflate(inflater, container, false)
 
         val view = binding.root
-        refreshLayout = binding.refreshLayout
-        recyclerView = binding.recyclerViewNews
-        btnRetry = bindingLayoutBadState.btnRetry
-        layoutBadState = bindingLayoutBadState.layoutBadState
-        imgState = bindingLayoutBadState.imgState
-        textState = bindingLayoutBadState.textState
-        recyclerAdapter = NewsRecyclerViewAdapter(requireContext())
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        //recyclerView.adapter = recyclerAdapter
-        recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
-
-        refreshLayout.setColorSchemeResources(
-            R.color.colorPrimary,
-            R.color.colorPrimary,
-            R.color.colorPrimaryDark,
-            R.color.colorPrimaryDark
-        )
-        val typedValue = TypedValue()
-        val theme: Resources.Theme = requireContext().theme
-        theme.resolveAttribute(R.attr.primaryCardBackgroundColor, typedValue, true)
-        @ColorInt val color = typedValue.data
-        refreshLayout.setProgressBackgroundColorSchemeColor(color)
-        refreshLayout.setOnRefreshListener {
-            fetchApiNews()
-        }
+        initViews()
+        initRecyclerView()
+        subscribeObserver()
 
         btnRetry.setOnClickListener {
             fetchApiNews()
+            viewModel.getHeadlines(AppConstants.DEFAULT_LANG, "")
         }
 
         fetchApiNews()
@@ -113,126 +95,143 @@ class HeadlineFragment : Fragment() {
 
 
     private fun fetchApiNews() {
-        refreshLayout.isRefreshing = true
-        val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl(AppConstants.NEWSAPI_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val api: ApiInterface =
-            retrofit.create(ApiInterface::class.java)
-        val call: Call<NewsObjectResponse>
-        call = if (category == "popular") {
-            api.getTopHeadlinesByLanguage(AppConstants.DEFAULT_LANG, AppConstants.NEWSAPI_TOKEN)
+        if (category == "popular") {
+            viewModel.getHeadlines(AppConstants.DEFAULT_LANG, "")
         } else {
-            api.getTopHeadlinesByLanguageAndCategory(
+            viewModel.getHeadlines(
                 AppConstants.DEFAULT_LANG,
-                category,
-                AppConstants.NEWSAPI_TOKEN
+                category
             )
         }
-        call.enqueue(object : Callback<NewsObjectResponse> {
-            override fun onResponse(
-                call: Call<NewsObjectResponse>,
-                response: Response<NewsObjectResponse>
-            ) {
-                refreshLayout.isRefreshing = false
-                Log.i(
-                    "Responsestring",
-                    (response.body()?.status ?: "No result") + " " + (response.body()?.totalResults
-                        ?: 0)
+    }
+        private fun showInternetConnectionErrorLayout() {
+            if (recyclerAdapter.itemCount > 0) {
+                AestheticDialog.showRainbow(
+                    activity,
+                    getString(R.string.error),
+                    getString(R.string.check_internet),
+                    AestheticDialog.ERROR
                 )
-                //Toast.makeText()
-                if (response.isSuccessful) {
-                    if (response.body() != null) {
-                        hideBadStateLayout()
-                        Log.i("onSuccess", response.body().toString())
-                        val a = response.body()?.articles
-                        if (a != null) displayNews(a) else showNoResultErrorLayout()
-                    } else {
-                        Log.i(
-                            "onEmptyResponse",
-                            "Returned empty response"
-                        )
-                        showNoResultErrorLayout()
+            } else {
+                layoutBadState.visibility = View.VISIBLE
+                textState.text = getString(R.string.internet_connection_error)
+                btnRetry.visibility = View.VISIBLE
+            }
+        }
+
+        private fun showNoResultErrorLayout() {
+            if (recyclerAdapter.itemCount > 0) {
+                AestheticDialog.showRainbow(
+                    activity,
+                    getString(R.string.error),
+                    getString(R.string.service_unavailable),
+                    AestheticDialog.ERROR
+                )
+            } else {
+                layoutBadState.visibility = View.VISIBLE
+                textState.text = getString(R.string.no_result_found)
+                btnRetry.visibility = View.GONE
+            }
+        }
+
+        private fun hideBadStateLayout() {
+            if (layoutBadState.visibility == View.VISIBLE)
+                layoutBadState.visibility = View.GONE
+        }
+
+        companion object {
+            @JvmStatic
+            fun newInstance(category: String) =
+                HeadlineFragment().apply {
+                    arguments = Bundle().apply {
+                        putString(ARG_CATEGORY, category)
                     }
                 }
-            }
-
-            override fun onFailure(call: Call<NewsObjectResponse>, t: Throwable?) {
-                refreshLayout.isRefreshing = false
-                showInternetConnectionErrorLayout()
-                Toast.makeText(
-                    context,
-                    getString(R.string.internet_connection_error),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
-    }
-
-    private fun displayNews(articles: Array<Article>) {
-        try {
-
-
-            val articleArrayList: ArrayList<Article> = ArrayList()
-            for (i in articles.indices) {
-                val article = articles[i]
-                articleArrayList.add(article)
-
-                recyclerAdapter.setArticleListItems(articleArrayList)
-                recyclerView.scheduleLayoutAnimation()
-            }
-
-
-        } catch (e: JSONException) {
-            e.printStackTrace()
         }
-    }
 
-    fun showInternetConnectionErrorLayout() {
-        if (recyclerAdapter.itemCount > 0) {
-            AestheticDialog.showRainbow(
-                activity,
-                getString(R.string.error),
-                getString(R.string.check_internet),
-                AestheticDialog.ERROR
-            )
-        } else {
-            layoutBadState.visibility = View.VISIBLE
-            textState.text = getString(R.string.internet_connection_error)
-            btnRetry.visibility = View.VISIBLE
-        }
-    }
+        private fun subscribeObserver() {
+            viewModel.headlineState.observe(viewLifecycleOwner, Observer {
+                when (it) {
+                    is DataState.Success -> {
+                        hideBadStateLayout()
+                        hideLoadingProgress()
+                        if (it.data.articles.isEmpty()) {
+                            showNoResultErrorLayout()
+                        } else {
+                            populateRecyclerView(it.data.articles)
+                        }
 
-    fun showNoResultErrorLayout() {
-        if (recyclerAdapter.itemCount > 0) {
-            AestheticDialog.showRainbow(
-                activity,
-                getString(R.string.error),
-                getString(R.string.service_unavailable),
-                AestheticDialog.ERROR
-            )
-        } else {
-            layoutBadState.visibility = View.VISIBLE
-            textState.text = getString(R.string.no_result_found)
-            btnRetry.visibility = View.GONE
-        }
-    }
-
-    fun hideBadStateLayout() {
-        if (layoutBadState.visibility == View.VISIBLE)
-            layoutBadState.visibility = View.GONE
-    }
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance(category: String) =
-            HeadlineFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_CATEGORY, category)
+                    }
+                    is DataState.Loading -> {
+                        showLoadingProgress()
+                    }
+                    is DataState.Error -> {
+                        hideLoadingProgress()
+                        showInternetConnectionErrorLayout()
+                        Toast.makeText(
+                            context,
+                            getString(R.string.internet_connection_error),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
+            })
+        }
+
+        private fun hideLoadingProgress() {
+            refreshLayout.isRefreshing = false
+        }
+
+        private fun showLoadingProgress() {
+            refreshLayout.isRefreshing = true
+        }
+
+        private fun initRecyclerView() {
+            recyclerAdapter = NewsRecyclerViewAdapter(requireContext())
+            recyclerView.layoutManager = LinearLayoutManager(activity)
+            //recyclerView.adapter = recyclerAdapter
+            recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
+        }
+
+        private fun initViews() {
+            refreshLayout = binding.refreshLayout
+            recyclerView = binding.recyclerViewNews
+            btnRetry = bindingLayoutBadState.btnRetry
+            layoutBadState = bindingLayoutBadState.layoutBadState
+            imgState = bindingLayoutBadState.imgState
+            textState = bindingLayoutBadState.textState
+
+            refreshLayout.setColorSchemeResources(
+                R.color.colorPrimary,
+                R.color.colorPrimary,
+                R.color.colorPrimaryDark,
+                R.color.colorPrimaryDark
+            )
+            val typedValue = TypedValue()
+            val theme: Resources.Theme = requireContext().theme
+            theme.resolveAttribute(R.attr.primaryCardBackgroundColor, typedValue, true)
+            @ColorInt val color = typedValue.data
+            refreshLayout.setProgressBackgroundColorSchemeColor(color)
+            refreshLayout.setOnRefreshListener {
+                fetchApiNews()
             }
-    }
+
+        }
+
+        private fun populateRecyclerView(articles: List<Article>) {
+            try {
+                val articleArrayList: ArrayList<Article> = ArrayList()
+                for (i in articles.indices) {
+                    val article = articles[i]
+                    articleArrayList.add(article)
+
+                    recyclerAdapter.setArticleListItems(articleArrayList)
+                    recyclerView.scheduleLayoutAnimation()
+                }
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }
+
 
 }

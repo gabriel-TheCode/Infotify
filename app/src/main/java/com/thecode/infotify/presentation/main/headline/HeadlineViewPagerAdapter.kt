@@ -3,12 +3,15 @@ package com.thecode.infotify.presentation.main.headline
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter
 import java.util.*
+
+
 
 class HeadlineViewPagerAdapter(
     manager: FragmentManager
 ) :
-    FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+    FragmentStatePagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     private val mFragmentList: MutableList<Fragment> =
         ArrayList()
     private val mFragmentTitleList: MutableList<String> =

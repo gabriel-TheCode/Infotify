@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-public interface SourcesDao {
+interface SourcesDao {
 
     @Query("select * from source")
     fun getAllArticles(): List<SourceEntity?>?

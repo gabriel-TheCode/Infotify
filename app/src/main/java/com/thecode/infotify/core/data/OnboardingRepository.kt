@@ -1,4 +1,17 @@
 package com.thecode.infotify.core.data
 
-class OnboardingRepository {
+import com.thecode.infotify.core.local.InfotifyLocalDataSourceImpl
+import javax.inject.Inject
+
+class OnboardingRepository @Inject constructor(
+    private val localDataSource: InfotifyLocalDataSourceImpl
+) {
+
+    fun setOnboardingCompleted(){
+        localDataSource.setOnboardingCompleted()
+    }
+
+    fun isOnboardingCompleted(){
+        localDataSource.isOnboardingCompleted()
+    }
 }

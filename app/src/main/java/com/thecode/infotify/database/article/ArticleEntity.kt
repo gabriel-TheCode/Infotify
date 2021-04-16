@@ -1,5 +1,6 @@
 package com.thecode.infotify.database.article
 
+import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
@@ -21,7 +22,7 @@ data class ArticleEntity(
     var description: String? = null,
 
     @SerializedName("url")
-    @PrimaryKey var url: String? = null,
+    @NonNull @PrimaryKey var url: String,
 
     @SerializedName("urlToImage")
     var urlToImage: String? = null,

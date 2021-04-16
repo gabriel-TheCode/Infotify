@@ -8,12 +8,13 @@ import com.thecode.infotify.utils.AppConstants
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-object InfotifySharedPref {
 
+class InfotifySharedPref {
 
-    const val IS_ONBOARDING_COMPLETED = "IS_ONBOARDING_COMPLETED"
-    const val NIGHT_MODE = "NIGHT_MODE"
-
+    companion object {
+        private const val NIGHT_MODE = "NIGHT_MODE"
+        private const val IS_ONBOARDING_COMPLETED = "IS_ONBOARDING_COMPLETED"
+    }
 
     private lateinit var sp: SharedPreferences
 
@@ -24,33 +25,31 @@ object InfotifySharedPref {
     private lateinit var context: Context
 
 
-    /*@SuppressLint("CommitPrefEdits")
+    @SuppressLint("CommitPrefEdits")
     @Inject
-    fun InfotifySharedPref(@ApplicationContext context: Context) {
-        this.sp = context.getSharedPreferences(
-            AppConstants.SP_APPNAME,
-            Activity.MODE_PRIVATE
-        )
-        this.editor = sp.edit()
-    }*/
+    fun infotifySharedPref(@ApplicationContext mContext: Context) {
+        context = mContext
+        sp = context.getSharedPreferences(AppConstants.SP_APPNAME, Activity.MODE_PRIVATE)
+        editor = sp.edit()
+    }
 
-    fun init(mContext: Context) {
+    /*fun init(mContext: Context) {
         context = mContext
         sp = mContext.getSharedPreferences(AppConstants.SP_APPNAME, Activity.MODE_PRIVATE)
         editor = sp.edit()
-    }
+    }*/
 
     fun clearSession() {
         editor.clear()
         editor.commit()
     }
 
-    fun setIsOnboardingCompleted() {
+    fun setOnboardingCompleted() {
         editor.putBoolean(IS_ONBOARDING_COMPLETED, true)
         editor.commit()
     }
 
-    fun getIsOnboardingCompleted(): Boolean {
+    fun isOnboardingCompleted(): Boolean {
         return sp.getBoolean(IS_ONBOARDING_COMPLETED, false)
     }
 
@@ -58,9 +57,11 @@ object InfotifySharedPref {
         return sp.getBoolean(NIGHT_MODE, false)
     }
 
-    fun setIsNightModeEnabled(state: Boolean) {
+    fun setNightModeEnabled(state: Boolean) {
         editor.putBoolean(NIGHT_MODE, state)
         editor.commit()
     }
+
+
 
 }

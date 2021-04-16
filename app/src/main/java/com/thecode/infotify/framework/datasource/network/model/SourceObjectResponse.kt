@@ -1,9 +1,8 @@
 package com.thecode.infotify.framework.datasource.network.model
 
 import com.google.gson.annotations.SerializedName
-import com.thecode.infotify.core.domain.Source
 
-class SourceObjectResponse(
+data class SourceObjectResponse(
     @SerializedName("status")
     var status: String? = null,
 

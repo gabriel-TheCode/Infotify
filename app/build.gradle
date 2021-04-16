@@ -32,15 +32,16 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions { jvmTarget = "1.8" }
+
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.recyclerview:recyclerview-selection:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'
@@ -58,7 +59,7 @@ dependencies {
     // DI - Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecycle_version"
-    implementation 'androidx.lifecycle:lifecycle-process:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-process:2.3.1'
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
     kapt "androidx.hilt:hilt-compiler:$hilt_lifecycle_version"
 
