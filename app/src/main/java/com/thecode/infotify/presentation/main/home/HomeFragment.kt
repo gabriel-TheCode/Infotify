@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.mahfa.dnswitch.DayNightSwitch
@@ -20,8 +21,6 @@ import com.thecode.infotify.presentation.about.AboutActivity
 import com.thecode.infotify.presentation.main.headline.HeadlineViewPagerAdapter
 import com.thecode.infotify.databinding.FragmentHomeBinding
 import com.thecode.infotify.presentation.main.headline.HeadlineFragment
-import com.thecode.infotify.application.InfotifySharedPref.isNightModeEnabled
-import com.thecode.infotify.application.InfotifySharedPref.setIsNightModeEnabled
 
 
 /**
@@ -29,6 +28,7 @@ import com.thecode.infotify.application.InfotifySharedPref.setIsNightModeEnabled
  */
 class HomeFragment : Fragment() {
 
+    private val viewModel : HomeViewModel by viewModels()
     private val TAG = "HomeFragment"
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -76,11 +76,11 @@ class HomeFragment : Fragment() {
 
             override fun onAnimEnd() {
                 Log.d(TAG, "onAnimEnd() called")
-                if (isNightModeEnabled()) {
-                    setIsNightModeEnabled(false)
+                if (viewModel.isNightModeActivated()) {
+                    viewModel.setNightMode(false)
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 } else {
-                    setIsNightModeEnabled(true)
+                    viewModel.setNightMode(true)
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 }
                 // Recreate activity
@@ -103,7 +103,7 @@ class HomeFragment : Fragment() {
         inflater.inflate(R.menu.home_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
         // Get state from preferences
-        if (isNightModeEnabled()) {
+        if (viewModel.isNightModeActivated()) {
             dayNightSwitch.setIsNight(true)
         } else {
             dayNightSwitch.setIsNight(false)

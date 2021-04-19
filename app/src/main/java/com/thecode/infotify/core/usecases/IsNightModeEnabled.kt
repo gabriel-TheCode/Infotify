@@ -1,12 +1,12 @@
 package com.thecode.infotify.core.usecases
 
-import com.thecode.infotify.core.data.OnboardingRepository
+import com.thecode.infotify.core.data.MainRepository
 import javax.inject.Inject
 
 class IsNightModeEnabled @Inject constructor(
-    private val repository: OnboardingRepository
+    private val repository: MainRepository
 ) {
-    operator fun invoke() {
-        return repository.isOnboardingCompleted()
+    operator fun invoke(): Boolean {
+        return repository.isNightModeEnabled()
     }
 }

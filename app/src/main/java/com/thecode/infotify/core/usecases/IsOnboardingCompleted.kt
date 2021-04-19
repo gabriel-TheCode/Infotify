@@ -6,7 +6,7 @@ import javax.inject.Inject
 class IsOnboardingCompleted @Inject constructor(
     private val repository: OnboardingRepository
 ) {
-    operator fun invoke() {
+    operator fun invoke(): Boolean {
         return repository.isOnboardingCompleted()
     }
 }

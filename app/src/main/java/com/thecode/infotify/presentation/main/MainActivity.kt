@@ -3,6 +3,7 @@ package com.thecode.infotify.presentation.main
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -13,11 +14,13 @@ import com.thecode.infotify.presentation.main.home.HomeFragment
 import com.thecode.infotify.presentation.main.search.SearchFragment
 import com.thecode.infotify.utils.FadePageTransformer
 import com.thecode.infotify.application.InfotifySharedPref
+import com.thecode.infotify.presentation.main.home.HomeViewModel
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+    private val viewModel: HomeViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
 
     override fun attachBaseContext(newBase: Context) {
@@ -28,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
 
-        if (InfotifySharedPref.isNightModeEnabled()) {
+        if (viewModel.isNightModeActivated()) {
             setAppTheme(R.style.AppTheme_Base_Night)
         } else {
             setAppTheme(R.style.AppTheme_Base_Light)

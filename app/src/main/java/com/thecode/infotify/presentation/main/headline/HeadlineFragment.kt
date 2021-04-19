@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
+import com.thecode.infotify.base.BaseFragment
 import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
@@ -35,7 +36,7 @@ import org.json.JSONException
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class HeadlineFragment : Fragment() {
+class HeadlineFragment : BaseFragment() {
 
     private val viewModel: HeadlineViewModel by viewModels()
 
@@ -106,12 +107,8 @@ class HeadlineFragment : Fragment() {
     }
         private fun showInternetConnectionErrorLayout() {
             if (recyclerAdapter.itemCount > 0) {
-                AestheticDialog.showRainbow(
-                    activity,
-                    getString(R.string.error),
-                    getString(R.string.check_internet),
-                    AestheticDialog.ERROR
-                )
+                showErrorDialog(getString(R.string.error),
+                    getString(R.string.check_internet))
             } else {
                 layoutBadState.visibility = View.VISIBLE
                 textState.text = getString(R.string.internet_connection_error)
@@ -121,12 +118,8 @@ class HeadlineFragment : Fragment() {
 
         private fun showNoResultErrorLayout() {
             if (recyclerAdapter.itemCount > 0) {
-                AestheticDialog.showRainbow(
-                    activity,
-                    getString(R.string.error),
-                    getString(R.string.service_unavailable),
-                    AestheticDialog.ERROR
-                )
+                showErrorDialog( getString(R.string.error),
+                    getString(R.string.service_unavailable))
             } else {
                 layoutBadState.visibility = View.VISIBLE
                 textState.text = getString(R.string.no_result_found)

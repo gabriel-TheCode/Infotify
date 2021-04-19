@@ -1,5 +1,12 @@
 package com.thecode.infotify.core.usecases
 
-class SetNightModeEnabled {
-}
+import com.thecode.infotify.core.data.MainRepository
+import javax.inject.Inject
 
+class SetNightModeEnabled @Inject constructor(
+    private val repository: MainRepository
+) {
+        operator fun invoke(state: Boolean) {
+        repository.setNightModeEnabled(state)
+    }
+}

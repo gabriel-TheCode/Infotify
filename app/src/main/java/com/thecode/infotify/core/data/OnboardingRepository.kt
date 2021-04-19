@@ -11,7 +11,7 @@ class OnboardingRepository @Inject constructor(
         localDataSource.setOnboardingCompleted()
     }
 
-    fun isOnboardingCompleted(){
-        localDataSource.isOnboardingCompleted()
+    fun isOnboardingCompleted(): Boolean {
+        return localDataSource.isOnboardingCompleted()
     }
 }

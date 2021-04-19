@@ -10,8 +10,8 @@ class MainRepository @Inject constructor(
         localDataSource.setNightModeEnabled(state)
     }
 
-    fun isNightModeEnabled(){
-        localDataSource.isNightModeEnabled()
+    fun isNightModeEnabled(): Boolean{
+        return localDataSource.isNightModeEnabled()
     }
 
     fun clearAppData(){

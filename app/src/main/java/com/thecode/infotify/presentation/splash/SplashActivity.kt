@@ -8,20 +8,23 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.DisplayMetrics
 import android.view.animation.DecelerateInterpolator
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
+import com.thecode.infotify.base.BaseActivity
 import com.thecode.infotify.databinding.ActivitySplashBinding
 import com.thecode.infotify.presentation.main.MainActivity
 import com.thecode.infotify.presentation.onboarding.OnboardingActivity
-import com.thecode.infotify.application.InfotifySharedPref
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 
+@AndroidEntryPoint
+class SplashActivity : BaseActivity() {
 
-class SplashActivity : AppCompatActivity() {
-
+    private val viewModel: SplashViewModel by viewModels()
     private lateinit var binding: ActivitySplashBinding
     private lateinit var springForce: SpringForce
 
@@ -66,11 +69,10 @@ class SplashActivity : AppCompatActivity() {
 
                         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
                         override fun onAnimationEnd(p0: Animator?) {
-                            lateinit var intent: Intent
-                            if (InfotifySharedPref.getIsOnboardingCompleted()) {
-                                intent = Intent(applicationContext, MainActivity::class.java)
+                            val intent: Intent = if (viewModel.isOnboardingCompleted()) {
+                                Intent(applicationContext, MainActivity::class.java)
                             } else {
-                                intent = Intent(applicationContext, OnboardingActivity::class.java)
+                                Intent(applicationContext, OnboardingActivity::class.java)
                             }
                             finish()
                             startActivity(intent)
