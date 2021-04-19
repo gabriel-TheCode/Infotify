@@ -5,10 +5,8 @@ import android.content.SharedPreferences
 
 object SharedPreferenceUtils {
 
-
     const val IS_ONBOARDING_COMPLETED = "IS_ONBOARDING_COMPLETED"
     const val NIGHT_MODE = "NIGHT_MODE"
-
 
     private lateinit var sp: SharedPreferences
 
@@ -46,5 +44,4 @@ object SharedPreferenceUtils {
         editor.putBoolean(NIGHT_MODE, state)
         editor.commit()
     }
-
 }

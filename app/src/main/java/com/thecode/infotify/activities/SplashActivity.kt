@@ -17,12 +17,10 @@ import com.thecode.infotify.databinding.ActivitySplashBinding
 import com.thecode.infotify.utils.SharedPreferenceUtils
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 
-
 class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding
     private lateinit var springForce: SpringForce
-
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
@@ -37,8 +35,8 @@ class SplashActivity : AppCompatActivity() {
 
         val splashLayout = binding.splashLayout
         Handler().postDelayed({
-            //do stuff
-            //Like your Background calls and all
+            // do stuff
+            // Like your Background calls and all
             springForce = SpringForce(0f)
             splashLayout.pivotX = 0f
             splashLayout.pivotY = 0f
@@ -59,7 +57,6 @@ class SplashActivity : AppCompatActivity() {
                     .translationYBy(height)
                     .setListener(object : Animator.AnimatorListener {
                         override fun onAnimationRepeat(p0: Animator?) {
-
                         }
 
                         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -77,19 +74,15 @@ class SplashActivity : AppCompatActivity() {
                         }
 
                         override fun onAnimationCancel(p0: Animator?) {
-
                         }
 
                         override fun onAnimationStart(p0: Animator?) {
-
                         }
-
                     })
                     .setInterpolator(DecelerateInterpolator(1f))
                     .start()
             }
             springAnim.start()
         }, 4000)
-
     }
 }

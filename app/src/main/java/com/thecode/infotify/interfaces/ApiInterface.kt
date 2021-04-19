@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiInterface {
-    //Top Headlines
+    // Top Headlines
     @GET("v2/top-headlines")
     fun getTopHeadlinesByCountry(
         @Query("country") country: String,
@@ -44,13 +44,12 @@ interface ApiInterface {
         @Query("apiKey") apiKey: String
     ): Call<NewsObjectResponse>
 
-    //Everything
+    // Everything
     @GET("v2/everything")
     fun getEverythingByQuery(
         @Query("q") query: String,
         @Query("apiKey") apiKey: String
     ): Call<NewsObjectResponse>
-
 
     @GET("v2/everything")
     fun getEverything(
@@ -60,7 +59,7 @@ interface ApiInterface {
         @Query("apiKey") apiKey: String
     ): Call<NewsObjectResponse>
 
-    //Sources
+    // Sources
     @GET("v2/sources")
     fun getSources(@Query("apiKey") apiKey: String): Call<NewsObjectResponse>
 

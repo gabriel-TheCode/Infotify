@@ -4,7 +4,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 
-
 class BottomNavPagerAdapter(
     private val fragmentList: List<Fragment>,
     manager: FragmentManager
@@ -19,5 +18,4 @@ class BottomNavPagerAdapter(
     override fun getCount(): Int {
         return fragmentList.size
     }
-
 }

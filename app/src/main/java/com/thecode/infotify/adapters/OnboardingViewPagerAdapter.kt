@@ -48,5 +48,4 @@ class OnboardingViewPagerAdapter(
     companion object {
         private const val NUM_ITEMS = 3
     }
-
 }

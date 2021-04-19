@@ -1,6 +1,5 @@
 package com.thecode.infotify.fragments
 
-
 import android.app.Activity
 import android.content.res.Resources
 import android.os.Bundle
@@ -37,7 +36,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 /**
  * A simple [Fragment] subclass.
  */
@@ -63,7 +61,8 @@ class SearchFragment : Fragment() {
     lateinit var l: String
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
@@ -85,7 +84,7 @@ class SearchFragment : Fragment() {
         recyclerView = binding.recyclerViewNewsEverything
         recyclerAdapter = NewsRecyclerViewAdapter(view.context)
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        //recyclerView.adapter = recyclerAdapter
+        // recyclerView.adapter = recyclerAdapter
         recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
 
         refreshLayout.setColorSchemeResources(
@@ -128,7 +127,6 @@ class SearchFragment : Fragment() {
 
         fetchApiNews(q, l, s)
 
-
         return view
     }
 
@@ -170,14 +168,12 @@ class SearchFragment : Fragment() {
                             val a = response.body()?.articles
                             if (a != null) displayNews(a) else showNoResultErrorLayout()
                         }
-
                     } else {
                         Log.i(
                             "onEmptyResponse",
                             "Returned empty response"
                         )
                         showNoResultErrorLayout()
-
                     }
                 }
             }
@@ -197,7 +193,6 @@ class SearchFragment : Fragment() {
     private fun displayNews(articles: Array<Article>) {
         try {
 
-
             val articleArrayList: ArrayList<Article> = ArrayList()
             for (i in articles.indices) {
                 val article = articles[i]
@@ -206,7 +201,6 @@ class SearchFragment : Fragment() {
             }
 
             recyclerView.scheduleLayoutAnimation()
-
         } catch (e: JSONException) {
             e.printStackTrace()
         }
@@ -234,7 +228,9 @@ class SearchFragment : Fragment() {
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: View, position: Int, id: Long
+                view: View,
+                position: Int,
+                id: Long
             ) {
                 l = languages[position]
             }
@@ -261,7 +257,9 @@ class SearchFragment : Fragment() {
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: View, position: Int, id: Long
+                view: View,
+                position: Int,
+                id: Long
             ) {
                 s = sorts[position]
             }
@@ -287,7 +285,6 @@ class SearchFragment : Fragment() {
             fetchApiNews(q, l, s)
         }
     }
-
 
     fun showInternetConnectionErrorLayout() {
         if (recyclerAdapter.itemCount > 0) {
@@ -323,5 +320,4 @@ class SearchFragment : Fragment() {
         if (layoutBadState.visibility == View.VISIBLE)
             layoutBadState.visibility = View.GONE
     }
-
 }

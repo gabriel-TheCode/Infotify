@@ -26,7 +26,6 @@ import com.thecode.infotify.entities.Article
 import com.thecode.infotify.utils.CustomProgressBar
 import io.realm.Realm
 
-
 class BookmarkRecyclerViewAdapter(val context: Context) :
     RecyclerView.Adapter<BookmarkRecyclerViewAdapter.NewsViewHolder>() {
 
@@ -78,12 +77,12 @@ class BookmarkRecyclerViewAdapter(val context: Context) :
             context.startActivity(sendIntent)
         }
 
-        //WHEN ITEM IS CLICKED
+        // WHEN ITEM IS CLICKED
         holder.btnBookmark.setOnClickListener {
             deleteFromDatabase(holder.adapterPosition, title.toString())
         }
 
-        //WHEN ITEM IS CLICKED
+        // WHEN ITEM IS CLICKED
         holder.container.setOnClickListener {
 
             val newsView = WebView(context)
@@ -136,7 +135,6 @@ class BookmarkRecyclerViewAdapter(val context: Context) :
             newsView.loadUrl(url)
             newsView.isClickable = false
             newsView.isEnabled = false
-
         }
     }
 
@@ -156,7 +154,6 @@ class BookmarkRecyclerViewAdapter(val context: Context) :
         val tvNewsDate: TextView = binding.textChipDate
     }
 
-
     private fun deleteFromDatabase(position: Int, itemName: String) {
         realm.executeTransactionAsync({ realm ->
             val item: Article =
@@ -166,7 +163,6 @@ class BookmarkRecyclerViewAdapter(val context: Context) :
             remove(position)
             Log.v("database", "Delete ok")
             Toast.makeText(context, "Delete successfully", Toast.LENGTH_LONG).show()
-
         }, { error -> // Transaction failed and was automatically canceled.
             Log.e("database", error.message.toString())
             Toast.makeText(context, "An error occured", Toast.LENGTH_LONG).show()
@@ -179,5 +175,4 @@ class BookmarkRecyclerViewAdapter(val context: Context) :
             notifyItemRemoved(position)
         }
     }
-
 }

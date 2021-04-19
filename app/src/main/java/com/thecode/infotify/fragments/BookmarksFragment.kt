@@ -1,6 +1,5 @@
 package com.thecode.infotify.fragments
 
-
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.TypedValue
@@ -24,7 +23,6 @@ import io.realm.RealmResults
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 import org.json.JSONException
 
-
 /**
  * A simple [Fragment] subclass.
  */
@@ -41,7 +39,8 @@ class BookmarksFragment : Fragment() {
     val realm: Realm = Realm.getDefaultInstance()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
@@ -53,7 +52,7 @@ class BookmarksFragment : Fragment() {
         layoutEmptyState = binding.layoutBookmarkEmpty
         recyclerAdapter = BookmarkRecyclerViewAdapter(view.context)
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        //recyclerView.adapter = recyclerAdapter
+        // recyclerView.adapter = recyclerAdapter
         recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
 
         refreshLayout.setColorSchemeResources(
@@ -72,7 +71,6 @@ class BookmarksFragment : Fragment() {
         }
 
         realm.refresh()
-
 
         listArticles = ArrayList()
         val query: RealmQuery<Article> = realm.where(Article::class.java)

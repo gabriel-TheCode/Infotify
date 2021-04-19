@@ -33,7 +33,7 @@ class NonSwipeableViewPager : ViewPager {
         return false
     }
 
-    //down one is added for smooth scrolling
+    // down one is added for smooth scrolling
     private fun setMyScroller() {
         try {
             val viewpager: Class<*> = ViewPager::class.java

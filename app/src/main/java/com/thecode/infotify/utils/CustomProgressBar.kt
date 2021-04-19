@@ -32,5 +32,4 @@ class CustomProgressBar {
         dialog.show()
         return dialog
     }
-
 }

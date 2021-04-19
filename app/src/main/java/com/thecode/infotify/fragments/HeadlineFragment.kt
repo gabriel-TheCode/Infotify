@@ -1,6 +1,5 @@
 package com.thecode.infotify.fragments
 
-
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
@@ -35,7 +34,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 class HeadlineFragment : Fragment() {
 
     private var _bindingHeadline: FragmentHeadlineBinding? = null
@@ -62,7 +60,8 @@ class HeadlineFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _bindingHeadline = FragmentHeadlineBinding.inflate(inflater, container, false)
@@ -77,7 +76,7 @@ class HeadlineFragment : Fragment() {
         textState = bindingLayoutBadState.textState
         recyclerAdapter = NewsRecyclerViewAdapter(requireContext())
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        //recyclerView.adapter = recyclerAdapter
+        // recyclerView.adapter = recyclerAdapter
         recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
 
         refreshLayout.setColorSchemeResources(
@@ -103,7 +102,6 @@ class HeadlineFragment : Fragment() {
         recyclerView.scheduleLayoutAnimation()
 
         return view
-
     }
 
     override fun onDestroyView() {
@@ -111,7 +109,6 @@ class HeadlineFragment : Fragment() {
         _bindingHeadline = null
         _bindingLayoutBadState = null
     }
-
 
     private fun fetchApiNews() {
         refreshLayout.isRefreshing = true
@@ -141,7 +138,7 @@ class HeadlineFragment : Fragment() {
                     (response.body()?.status ?: "No result") + " " + (response.body()?.totalResults
                         ?: 0)
                 )
-                //Toast.makeText()
+                // Toast.makeText()
                 if (response.isSuccessful) {
                     if (response.body() != null) {
                         hideBadStateLayout()
@@ -173,7 +170,6 @@ class HeadlineFragment : Fragment() {
     private fun displayNews(articles: Array<Article>) {
         try {
 
-
             val articleArrayList: ArrayList<Article> = ArrayList()
             for (i in articles.indices) {
                 val article = articles[i]
@@ -182,8 +178,6 @@ class HeadlineFragment : Fragment() {
                 recyclerAdapter.setArticleListItems(articleArrayList)
                 recyclerView.scheduleLayoutAnimation()
             }
-
-
         } catch (e: JSONException) {
             e.printStackTrace()
         }
@@ -234,5 +228,4 @@ class HeadlineFragment : Fragment() {
                 }
             }
     }
-
 }

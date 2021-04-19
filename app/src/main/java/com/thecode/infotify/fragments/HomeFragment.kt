@@ -1,6 +1,5 @@
 package com.thecode.infotify.fragments
 
-
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -22,7 +21,6 @@ import com.thecode.infotify.databinding.FragmentHomeBinding
 import com.thecode.infotify.utils.SharedPreferenceUtils.isNightModeEnabled
 import com.thecode.infotify.utils.SharedPreferenceUtils.setIsNightModeEnabled
 
-
 /**
  * A simple [Fragment] subclass.
  */
@@ -35,12 +33,11 @@ class HomeFragment : Fragment() {
     private lateinit var dayNightSwitch: DayNightSwitch
     private lateinit var mActivity: Activity
 
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
 
         // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -90,7 +87,6 @@ class HomeFragment : Fragment() {
         })
 
         return view
-
     }
 
     override fun onDestroyView() {
@@ -107,7 +103,6 @@ class HomeFragment : Fragment() {
         } else {
             dayNightSwitch.setIsNight(false)
         }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -116,11 +111,9 @@ class HomeFragment : Fragment() {
                 val intent = Intent(activity, AboutActivity::class.java)
                 startActivity(intent)
             }
-
         }
         return false
     }
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -128,5 +121,4 @@ class HomeFragment : Fragment() {
             mActivity = context
         }
     }
-
 }

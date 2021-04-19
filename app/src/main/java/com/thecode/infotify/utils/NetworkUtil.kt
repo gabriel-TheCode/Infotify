@@ -27,10 +27,10 @@ object NetworkUtil {
         val conn = getConnectivityStatus(context)
         var status: String? = null
         if (conn == TYPE_WIFI) {
-            //status = "Wifi enabled";
+            // status = "Wifi enabled";
             status = AppConstants.CONNECT_TO_WIFI
         } else if (conn == TYPE_MOBILE) {
-            //status = "Mobile data enabled";
+            // status = "Mobile data enabled";
             System.out.println(AppConstants.CONNECT_TO_MOBILE)
             status = getNetworkClass(context)
         } else if (conn == TYPE_NOT_CONNECTED) {
@@ -43,7 +43,7 @@ object NetworkUtil {
         val cm =
             (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
         val info = cm.activeNetworkInfo
-        if (info == null || !info.isConnected) return "-" //not connected
+        if (info == null || !info.isConnected) return "-" // not connected
         if (info.type == ConnectivityManager.TYPE_WIFI) return "WIFI"
         if (info.type == ConnectivityManager.TYPE_MOBILE) {
             val networkType = info.subtype

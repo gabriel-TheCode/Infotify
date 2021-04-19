@@ -18,7 +18,6 @@ class OnboardingActivity : AppCompatActivity() {
     private lateinit var btnBack: Button
     private lateinit var btnNext: Button
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOnboardingBinding.inflate(layoutInflater)

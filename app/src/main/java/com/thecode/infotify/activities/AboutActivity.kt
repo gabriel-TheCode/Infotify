@@ -64,7 +64,6 @@ class AboutActivity : AppCompatActivity() {
                     Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/gabriel_thecode"))
             }
             startActivity(intent)
-
         }
 
         layoutPlaystore.setOnClickListener {
@@ -102,7 +101,4 @@ class AboutActivity : AppCompatActivity() {
             finish()
         }
     }
-
 }
-
-
