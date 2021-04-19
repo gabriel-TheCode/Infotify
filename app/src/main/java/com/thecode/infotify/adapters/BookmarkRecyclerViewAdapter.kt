@@ -168,7 +168,7 @@ class BookmarkRecyclerViewAdapter(val context: Context) :
             Toast.makeText(context, "Delete successfully", Toast.LENGTH_LONG).show()
 
         }, { error -> // Transaction failed and was automatically canceled.
-            Log.e("database", error.message)
+            Log.e("database", error.message.toString())
             Toast.makeText(context, "An error occured", Toast.LENGTH_LONG).show()
         })
     }

@@ -2,7 +2,6 @@
     <string name="app_name">Infotify</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
     <string name="please_wait">Loading…</string>
-    <string name="selected_language">Langue choisie</string>
     <string name="search_filter">Search filter</string>
     <string name="language">Language</string>
     <string name="sort_by">Sort By</string>
@@ -43,12 +42,6 @@
         <item>it</item>
         <item>nl</item>
         <item>ru</item>
-    </string-array>
-
-    <string-array name="options">
-        <item>Published At</item>
-        <item>Popularity</item>
-        <item>Relevance</item>
     </string-array>
 
     <string-array name="options_values" translatable="false">

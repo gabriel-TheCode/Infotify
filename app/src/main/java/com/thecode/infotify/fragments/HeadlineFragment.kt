@@ -121,8 +121,7 @@ class HeadlineFragment : Fragment() {
             .build()
         val api: ApiInterface =
             retrofit.create(ApiInterface::class.java)
-        val call: Call<NewsObjectResponse>
-        call = if (category == "popular") {
+        val call: Call<NewsObjectResponse> = if (category == "popular") {
             api.getTopHeadlinesByLanguage(AppConstants.DEFAULT_LANG, AppConstants.NEWSAPI_TOKEN)
         } else {
             api.getTopHeadlinesByLanguageAndCategory(

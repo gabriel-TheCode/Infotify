@@ -1,7 +1,6 @@
 package com.thecode.infotify
 
 import android.content.Context
-import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatDelegate
@@ -41,10 +40,6 @@ class InfotifyApp : MultiDexApplication() {
             .deleteRealmIfMigrationNeeded()
             .name("infotity.realm").build()
         Realm.setDefaultConfiguration(config)
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
     }
 
     fun initStetho() {
