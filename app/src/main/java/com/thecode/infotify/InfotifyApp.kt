@@ -1,13 +1,9 @@
 package com.thecode.infotify
 
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
-import com.facebook.stetho.Stetho
-import com.thecode.infotify.utils.NetworkChangeReceiver
 import com.thecode.infotify.utils.SharedPreferenceUtils
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
@@ -41,29 +37,9 @@ class InfotifyApp : MultiDexApplication() {
         Realm.setDefaultConfiguration(config)
     }
 
-    fun initStetho() {
-        Stetho.initializeWithDefaults(this)
-    }
-
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
         MultiDex.install(this)
-    }
-
-    val isInternetAvailable: Boolean
-        get() {
-            val connectivityManager =
-                getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            val activeNetworkInfo: NetworkInfo?
-            activeNetworkInfo = connectivityManager.activeNetworkInfo
-            return activeNetworkInfo != null && activeNetworkInfo.isConnected
-        }
-
-    val appContext: Context
-        get() = instance!!.applicationContext
-
-    fun setConnectivityListener(listener: NetworkChangeReceiver.ConnectivityReceiverListener?) {
-        NetworkChangeReceiver.connectivityReceiverListener = listener
     }
 
     val context: Context

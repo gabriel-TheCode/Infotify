@@ -1,8 +1,10 @@
 package com.thecode.infotify.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 
+@SuppressLint("StaticFieldLeak")
 object SharedPreferenceUtils {
 
     const val IS_ONBOARDING_COMPLETED = "IS_ONBOARDING_COMPLETED"
