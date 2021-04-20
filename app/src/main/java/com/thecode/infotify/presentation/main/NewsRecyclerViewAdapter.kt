@@ -25,7 +25,6 @@ import com.thecode.infotify.core.domain.Source
 import com.thecode.infotify.utils.CustomProgressBar
 import io.realm.Realm
 
-
 class NewsRecyclerViewAdapter(val context: Context) :
     RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder>() {
 
@@ -70,9 +69,9 @@ class NewsRecyclerViewAdapter(val context: Context) :
             saveIntoDatabase(news)
         }
 
-        //WHEN ITEM IS CLICKED
+        // WHEN ITEM IS CLICKED
         holder.container.setOnClickListener {
-            //INTENT OBJ
+            // INTENT OBJ
             /*val i = Intent(context, NewsDetailsActivity::class.java)
 
             //ADD DATA TO OUR INTENT
@@ -87,7 +86,7 @@ class NewsRecyclerViewAdapter(val context: Context) :
             //START DETAIL ACTIVITY
             context.startActivity(i)*/
 
-            //show article content inside a dialog
+            // show article content inside a dialog
             val newsView = WebView(context)
             var failedLoading = false
             newsView.settings.loadWithOverviewMode = true
@@ -99,7 +98,6 @@ class NewsRecyclerViewAdapter(val context: Context) :
             newsView.settings.javaScriptEnabled = false
             newsView.isHorizontalScrollBarEnabled = false
             newsView.webViewClient = object : WebViewClient() {
-
 
                 override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                     return true
@@ -144,7 +142,6 @@ class NewsRecyclerViewAdapter(val context: Context) :
             newsView.loadUrl(url)
             newsView.isClickable = false
             newsView.isEnabled = false
-
         }
     }
 
@@ -153,7 +150,6 @@ class NewsRecyclerViewAdapter(val context: Context) :
         this.newsList = newsList
         notifyDataSetChanged()
     }
-
 
     class NewsViewHolder(binding: AdapterNewsBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -166,7 +162,6 @@ class NewsRecyclerViewAdapter(val context: Context) :
         val btnBookmark: ImageView = binding.btnBookmark
         val tvNewsDate: TextView = binding.textChipDate
     }
-
 
     private fun saveIntoDatabase(article: Article) {
 
@@ -192,7 +187,6 @@ class NewsRecyclerViewAdapter(val context: Context) :
                 "Bookmark saved",
                 AestheticDialog.SUCCESS
             )
-
         }, {
             // Transaction failed and was automatically canceled.
             AestheticDialog.showToaster(
@@ -201,9 +195,6 @@ class NewsRecyclerViewAdapter(val context: Context) :
                 "Something went wrong",
                 AestheticDialog.ERROR
             )
-
         })
     }
-
-
 }

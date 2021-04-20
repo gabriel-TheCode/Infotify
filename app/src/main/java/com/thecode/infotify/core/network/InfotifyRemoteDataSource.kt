@@ -10,12 +10,11 @@ import javax.inject.Inject
 
 interface InfotifyRemoteDataSource {
 
-    suspend fun fetchNews(query: String, language: String, sortBy: String) : News
+    suspend fun fetchNews(query: String, language: String, sortBy: String): News
 
     suspend fun fetchTopHeadlinesByLanguage(language: String): News
 
     suspend fun fetchTopHeadlinesByLanguageAndCategory(language: String, category: String): News
-
 }
 
 class InfotifyRemoteDataSourceImpl @Inject constructor(
@@ -24,7 +23,7 @@ class InfotifyRemoteDataSourceImpl @Inject constructor(
     private val newsMapper: NewsMapper,
     private val sourceMapper: SourceMapper
 
-    ) : InfotifyRemoteDataSource {
+) : InfotifyRemoteDataSource {
     override suspend fun fetchNews(query: String, language: String, sortBy: String): News {
         return newsMapper.mapToDomain(apiService.getAllNews(query, language, sortBy, AppConstants.NEWSAPI_TOKEN))
     }
@@ -36,5 +35,4 @@ class InfotifyRemoteDataSourceImpl @Inject constructor(
     override suspend fun fetchTopHeadlinesByLanguageAndCategory(language: String, category: String): News {
         return newsMapper.mapToDomain(apiService.getTopHeadlinesByLanguageAndCategory(language, category, AppConstants.NEWSAPI_TOKEN))
     }
-
 }

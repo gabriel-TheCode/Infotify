@@ -11,6 +11,7 @@ import com.thecode.infotify.framework.datasource.network.api.NewsApi
 import com.thecode.infotify.framework.datasource.network.mapper.NewsMapper
 import com.thecode.infotify.framework.datasource.network.mapper.SourceMapper
 import com.thecode.infotify.utils.AppConstants
+import com.thecode.infotify.utils.AppConstants.REQUEST_TIMEOUT
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -76,23 +77,10 @@ object NetworkModule {
     }
 
     private fun getOkHttpService(): OkHttpClient {
-        // TODO this need to be review
-        val REQUEST_TIMEOUT = 60
-
-        var httpClient = OkHttpClient().newBuilder()
-        //try {
-            //val tlsSocketFactory = TLSSocketFactory()
-            //if (tlsSocketFactory.trustManager != null) {
-
-                httpClient = OkHttpClient.Builder()
-                    //.sslSocketFactory(tlsSocketFactory, tlsSocketFactory.trustManager!!)
+        val httpClient: OkHttpClient.Builder = OkHttpClient.Builder()
                     .connectTimeout(REQUEST_TIMEOUT.toLong(), TimeUnit.SECONDS)
                     .readTimeout(REQUEST_TIMEOUT.toLong(), TimeUnit.SECONDS)
                     .writeTimeout(REQUEST_TIMEOUT.toLong(), TimeUnit.SECONDS)
-           /* }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }*/
 
         if (BuildConfig.DEBUG) {
             val interceptor = HttpLoggingInterceptor()

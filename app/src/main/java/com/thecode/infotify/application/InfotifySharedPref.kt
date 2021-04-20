@@ -8,7 +8,6 @@ import com.thecode.infotify.utils.AppConstants
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-
 class InfotifySharedPref {
 
     companion object {
@@ -23,7 +22,6 @@ class InfotifySharedPref {
 
     // Context
     private lateinit var context: Context
-
 
     @SuppressLint("CommitPrefEdits")
     @Inject
@@ -61,7 +59,4 @@ class InfotifySharedPref {
         editor.putBoolean(NIGHT_MODE, state)
         editor.commit()
     }
-
-
-
 }

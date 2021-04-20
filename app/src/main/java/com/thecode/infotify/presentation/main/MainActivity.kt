@@ -13,7 +13,6 @@ import com.thecode.infotify.presentation.main.bookmark.BookmarksFragment
 import com.thecode.infotify.presentation.main.home.HomeFragment
 import com.thecode.infotify.presentation.main.search.SearchFragment
 import com.thecode.infotify.utils.FadePageTransformer
-import com.thecode.infotify.application.InfotifySharedPref
 import com.thecode.infotify.presentation.main.home.HomeViewModel
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import java.util.*
@@ -30,7 +29,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         if (viewModel.isNightModeActivated()) {
             setAppTheme(R.style.AppTheme_Base_Night)
         } else {
@@ -42,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         val bnlv = binding.bottomNavigationBar
         bnlv.setTypeface(Typeface.createFromAsset(assets, "fonts/SF-Medium.otf"))
-        //bnlv.setBadgeValue(0, "9+")
+        // bnlv.setBadgeValue(0, "9+")
 
         val fragList = ArrayList<Fragment>()
         fragList.add(HomeFragment())
@@ -60,11 +58,9 @@ class MainActivity : AppCompatActivity() {
                 true
             )
         }
-
     }
 
     private fun setAppTheme(@StyleRes style: Int) {
         setTheme(style)
     }
-
 }

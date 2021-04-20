@@ -1,6 +1,5 @@
 package com.thecode.infotify.presentation.main.headline
 
-
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.TypedValue
@@ -12,13 +11,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatButton
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
 import com.thecode.infotify.base.BaseFragment
 import com.thecode.infotify.core.domain.Article
@@ -33,14 +30,13 @@ import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.json.JSONException
 
-
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class HeadlineFragment : BaseFragment() {
 
     private val viewModel: HeadlineViewModel by viewModels()
 
-    //View Binding
+    // View Binding
     private var _bindingHeadline: FragmentHeadlineBinding? = null
     private var _bindingLayoutBadState: LayoutBadStateBinding? = null
     private val binding get() = _bindingHeadline!!
@@ -48,7 +44,7 @@ class HeadlineFragment : BaseFragment() {
 
     private lateinit var category: String
 
-    //Views
+    // Views
     lateinit var recyclerView: RecyclerView
     lateinit var recyclerAdapter: NewsRecyclerViewAdapter
     lateinit var refreshLayout: SwipeRefreshLayout
@@ -65,7 +61,8 @@ class HeadlineFragment : BaseFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _bindingHeadline = FragmentHeadlineBinding.inflate(inflater, container, false)
@@ -85,7 +82,6 @@ class HeadlineFragment : BaseFragment() {
         recyclerView.scheduleLayoutAnimation()
 
         return view
-
     }
 
     override fun onDestroyView() {
@@ -93,7 +89,6 @@ class HeadlineFragment : BaseFragment() {
         _bindingHeadline = null
         _bindingLayoutBadState = null
     }
-
 
     private fun fetchApiNews() {
         if (category == "popular") {
@@ -118,7 +113,7 @@ class HeadlineFragment : BaseFragment() {
 
         private fun showNoResultErrorLayout() {
             if (recyclerAdapter.itemCount > 0) {
-                showErrorDialog( getString(R.string.error),
+                showErrorDialog(getString(R.string.error),
                     getString(R.string.service_unavailable))
             } else {
                 layoutBadState.visibility = View.VISIBLE
@@ -153,7 +148,6 @@ class HeadlineFragment : BaseFragment() {
                         } else {
                             populateRecyclerView(it.data.articles)
                         }
-
                     }
                     is DataState.Loading -> {
                         showLoadingProgress()
@@ -182,7 +176,7 @@ class HeadlineFragment : BaseFragment() {
         private fun initRecyclerView() {
             recyclerAdapter = NewsRecyclerViewAdapter(requireContext())
             recyclerView.layoutManager = LinearLayoutManager(activity)
-            //recyclerView.adapter = recyclerAdapter
+            // recyclerView.adapter = recyclerAdapter
             recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
         }
 
@@ -208,7 +202,6 @@ class HeadlineFragment : BaseFragment() {
             refreshLayout.setOnRefreshListener {
                 fetchApiNews()
             }
-
         }
 
         private fun populateRecyclerView(articles: List<Article>) {
@@ -225,6 +218,4 @@ class HeadlineFragment : BaseFragment() {
                 e.printStackTrace()
             }
         }
-
-
 }

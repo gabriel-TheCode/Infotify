@@ -7,7 +7,7 @@ class OnboardingRepository @Inject constructor(
     private val localDataSource: InfotifyLocalDataSourceImpl
 ) {
 
-    fun setOnboardingCompleted(){
+    fun setOnboardingCompleted() {
         localDataSource.setOnboardingCompleted()
     }
 

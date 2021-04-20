@@ -21,10 +21,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
+import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.databinding.AdapterNewsLandscapeBinding
 import com.thecode.infotify.utils.CustomProgressBar
 import io.realm.Realm
-
 
 class BookmarkRecyclerViewAdapter(val context: Context) :
     RecyclerView.Adapter<BookmarkRecyclerViewAdapter.NewsViewHolder>() {
@@ -77,12 +77,12 @@ class BookmarkRecyclerViewAdapter(val context: Context) :
             context.startActivity(sendIntent)
         }
 
-        //WHEN ITEM IS CLICKED
+        // WHEN ITEM IS CLICKED
         holder.btnBookmark.setOnClickListener {
             deleteFromDatabase(holder.adapterPosition, title.toString())
         }
 
-        //WHEN ITEM IS CLICKED
+        // WHEN ITEM IS CLICKED
         holder.container.setOnClickListener {
 
             val newsView = WebView(context)
@@ -135,7 +135,6 @@ class BookmarkRecyclerViewAdapter(val context: Context) :
             newsView.loadUrl(url)
             newsView.isClickable = false
             newsView.isEnabled = false
-
         }
     }
 
@@ -155,21 +154,11 @@ class BookmarkRecyclerViewAdapter(val context: Context) :
         val tvNewsDate: TextView = binding.textChipDate
     }
 
-
-    private fun deleteFromDatabase(position: Int, itemName: String) {
-        realm.executeTransactionAsync({ realm ->
-            val item: Article =
-                realm.where(Article::class.java).equalTo("title", itemName).findFirst()!!
-            item.deleteFromRealm()
-        }, { // Transaction was a success.
+    private fun deleteFromDatabase(position: Int, url: String) {
             remove(position)
             Log.v("database", "Delete ok")
             Toast.makeText(context, "Delete successfully", Toast.LENGTH_LONG).show()
 
-        }, { error -> // Transaction failed and was automatically canceled.
-            Log.e("database", error.message.toString())
-            Toast.makeText(context, "An error occured", Toast.LENGTH_LONG).show()
-        })
     }
 
     private fun remove(position: Int) {
@@ -178,5 +167,4 @@ class BookmarkRecyclerViewAdapter(val context: Context) :
             notifyItemRemoved(position)
         }
     }
-
 }

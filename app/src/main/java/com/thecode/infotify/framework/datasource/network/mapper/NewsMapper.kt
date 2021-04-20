@@ -15,7 +15,6 @@ class NewsMapper @Inject constructor() :
             entity.articles.map {
                 mapFromNewsItems(it.article)
             })
-
     }
 
     private fun mapFromNewsItems(article: NewsObjectResponse.Result.Article): Article {

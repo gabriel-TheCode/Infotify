@@ -4,10 +4,10 @@ import com.thecode.infotify.core.data.NewsRepository
 import com.thecode.infotify.database.article.ArticleEntity
 import javax.inject.Inject
 
-class GetBookmarks @Inject constructor(
+class SaveBookmark @Inject constructor(
     private val repository: NewsRepository
 ) {
-    fun getBookmarks(): List<ArticleEntity> {
-        return repository.getBookmarks()
+    fun saveBookmark(article: ArticleEntity){
+        repository.saveBookmark(article)
     }
 }

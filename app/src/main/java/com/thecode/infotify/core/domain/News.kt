@@ -1,6 +1,5 @@
 package com.thecode.infotify.core.domain
 
-
 data class News(
     val status: String,
     val totalResults: String,
@@ -17,6 +16,3 @@ data class Article(
     var publishedAt: String? = null,
     var content: String? = null
 )
-
-
-

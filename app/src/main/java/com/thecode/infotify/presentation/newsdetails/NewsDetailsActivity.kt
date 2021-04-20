@@ -7,7 +7,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.thecode.infotify.R
 import com.thecode.infotify.databinding.ActivityNewsDetailsBinding
 
-
 class NewsDetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNewsDetailsBinding
@@ -18,7 +17,7 @@ class NewsDetailsActivity : AppCompatActivity() {
         binding = ActivityNewsDetailsBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        //RECEIVE OUR DATA
+        // RECEIVE OUR DATA
         val i = intent
         val title = i.extras?.getString("title")
         val description = i.extras?.getString("description")
@@ -29,13 +28,13 @@ class NewsDetailsActivity : AppCompatActivity() {
         val url = i.extras?.getString("url")
         val formattedDate = date?.split("T")?.get(0)
 
-        //REFERENCE VIEWS FROM XML
+        // REFERENCE VIEWS FROM XML
         val img = binding.imageNews
         val txtSource = binding.textSource
         val txtContent = binding.textContent
         val txtDate = binding.textDate
 
-        //ASSIGN DATA TO THOSE VIEWS
+        // ASSIGN DATA TO THOSE VIEWS
         Glide.with(this).load(imageUrl)
             .placeholder(R.drawable.placeholder)
             .error(R.drawable.placeholder)
@@ -45,7 +44,5 @@ class NewsDetailsActivity : AppCompatActivity() {
         txtContent.text = "$description\n\n $content"
         txtDate.text = formattedDate
         setTitle(title)
-
     }
-
 }

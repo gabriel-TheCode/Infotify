@@ -14,7 +14,6 @@ interface InfotifyLocalDataSource {
     fun setNightModeEnabled(state: Boolean)
 
     fun clearAppData()
-
 }
 
 class InfotifyLocalDataSourceImpl @Inject constructor(

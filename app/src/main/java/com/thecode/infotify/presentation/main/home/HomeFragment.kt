@@ -1,6 +1,5 @@
 package com.thecode.infotify.presentation.main.home
 
-
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -17,18 +16,18 @@ import com.google.android.material.tabs.TabLayout
 import com.mahfa.dnswitch.DayNightSwitch
 import com.mahfa.dnswitch.DayNightSwitchAnimListener
 import com.thecode.infotify.R
+import com.thecode.infotify.base.BaseFragment
 import com.thecode.infotify.presentation.about.AboutActivity
 import com.thecode.infotify.presentation.main.headline.HeadlineViewPagerAdapter
 import com.thecode.infotify.databinding.FragmentHomeBinding
 import com.thecode.infotify.presentation.main.headline.HeadlineFragment
 
-
 /**
  * A simple [Fragment] subclass.
  */
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
 
-    private val viewModel : HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels()
     private val TAG = "HomeFragment"
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -36,12 +35,11 @@ class HomeFragment : Fragment() {
     private lateinit var dayNightSwitch: DayNightSwitch
     private lateinit var mActivity: Activity
 
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
 
         // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -91,7 +89,6 @@ class HomeFragment : Fragment() {
         })
 
         return view
-
     }
 
     override fun onDestroyView() {
@@ -108,7 +105,6 @@ class HomeFragment : Fragment() {
         } else {
             dayNightSwitch.setIsNight(false)
         }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -117,11 +113,9 @@ class HomeFragment : Fragment() {
                 val intent = Intent(activity, AboutActivity::class.java)
                 startActivity(intent)
             }
-
         }
         return false
     }
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -129,5 +123,4 @@ class HomeFragment : Fragment() {
             mActivity = context
         }
     }
-
 }

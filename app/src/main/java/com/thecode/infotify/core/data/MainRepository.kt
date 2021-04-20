@@ -6,15 +6,15 @@ import javax.inject.Inject
 class MainRepository @Inject constructor(
     private val localDataSource: InfotifyLocalDataSourceImpl
 ) {
-    fun setNightModeEnabled(state: Boolean){
+    fun setNightModeEnabled(state: Boolean) {
         localDataSource.setNightModeEnabled(state)
     }
 
-    fun isNightModeEnabled(): Boolean{
+    fun isNightModeEnabled(): Boolean {
         return localDataSource.isNightModeEnabled()
     }
 
-    fun clearAppData(){
+    fun clearAppData() {
         localDataSource.clearAppData()
     }
 }

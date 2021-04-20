@@ -3,6 +3,7 @@ package com.thecode.infotify.presentation.onboarding
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.thecode.infotify.R
@@ -12,12 +13,12 @@ import com.thecode.infotify.application.InfotifySharedPref
 
 class OnboardingActivity : AppCompatActivity() {
 
+    private val viewModel: OnboardingViewModel by viewModels()
     private lateinit var binding: ActivityOnboardingBinding
 
     private lateinit var mViewPager: ViewPager
     private lateinit var btnBack: Button
     private lateinit var btnNext: Button
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +48,7 @@ class OnboardingActivity : AppCompatActivity() {
                 val intent = Intent(applicationContext, MainActivity::class.java)
                 finish()
                 startActivity(intent)
-                InfotifySharedPref.setIsOnboardingCompleted()
+                viewModel.setOnboardingCompleted()
             } else {
                 mViewPager.setCurrentItem(getItem(+1), true)
             }

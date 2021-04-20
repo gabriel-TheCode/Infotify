@@ -1,6 +1,5 @@
 package com.thecode.infotify.database
 
-
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -14,7 +13,6 @@ import com.thecode.infotify.database.source.SourcesDao
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getArticlesDao(): ArticlesDao
     abstract fun getSourcesDao(): SourcesDao
-
 
     companion object {
 

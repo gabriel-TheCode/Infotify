@@ -2,7 +2,6 @@ package com.thecode.infotify.database.article
 
 import androidx.room.*
 
-
 @Dao
 interface ArticlesDao {
 
@@ -38,5 +37,4 @@ interface ArticlesDao {
 
     @Delete
     fun delete(articleEntity: ArticleEntity?): Int
-
 }

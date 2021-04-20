@@ -8,11 +8,11 @@ data class SourceObjectResponse(
 
     @SerializedName("sources")
     var sources: List<Result>
-){
+) {
 
 data class Result(
-            val `source`: Source
-        ) {
+    val `source`: Source
+) {
             data class Source(
                 var id: String? = null,
                 var cnbc: String? = null,
@@ -25,4 +25,3 @@ data class Result(
             )
         }
     }
-

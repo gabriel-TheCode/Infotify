@@ -19,5 +19,4 @@ interface SourcesDao {
 
     @Query("delete from source where id = :primaryId")
     fun deleteByPrimaryId(primaryId: String?): Int
-
 }

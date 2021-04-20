@@ -1,4 +1,3 @@
 package com.thecode.infotify.core.data
 
-class SearchRepository {
-}
+class SearchRepository

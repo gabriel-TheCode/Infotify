@@ -7,14 +7,15 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.thecode.infotify.R
 import com.thecode.infotify.databinding.ActivityAboutBinding
-import com.thecode.infotify.application.InfotifySharedPref
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 
 class AboutActivity : AppCompatActivity() {
 
+    private val viewModel: AboutViewModel by viewModels()
     private lateinit var binding: ActivityAboutBinding
 
     private lateinit var layoutGithub: RelativeLayout
@@ -31,7 +32,7 @@ class AboutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAboutBinding.inflate(layoutInflater)
 
-        if (InfotifySharedPref.isNightModeEnabled()) {
+        if (viewModel.isNightModeActivated()) {
             setTheme(R.style.AppTheme_Base_Night)
         } else {
             setTheme(R.style.AppTheme_Base_Light)
@@ -64,7 +65,6 @@ class AboutActivity : AppCompatActivity() {
                     Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/gabriel_thecode"))
             }
             startActivity(intent)
-
         }
 
         layoutPlaystore.setOnClickListener {
@@ -102,7 +102,4 @@ class AboutActivity : AppCompatActivity() {
             finish()
         }
     }
-
 }
-
-

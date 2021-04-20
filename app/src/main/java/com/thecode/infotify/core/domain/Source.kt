@@ -1,6 +1,5 @@
 package com.thecode.infotify.core.domain
 
-
 class Source(
     var status: String? = null,
     var sources: List<SourceItem>
@@ -16,4 +15,3 @@ data class SourceItem(
     var language: String? = null,
     var country: String? = null
 )
-

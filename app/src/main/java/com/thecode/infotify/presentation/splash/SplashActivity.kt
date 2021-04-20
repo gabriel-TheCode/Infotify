@@ -1,6 +1,7 @@
 package com.thecode.infotify.presentation.splash
 
 import android.animation.Animator
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -8,13 +9,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.DisplayMetrics
 import android.view.animation.DecelerateInterpolator
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
-import com.thecode.infotify.base.BaseActivity
 import com.thecode.infotify.databinding.ActivitySplashBinding
 import com.thecode.infotify.presentation.main.MainActivity
 import com.thecode.infotify.presentation.onboarding.OnboardingActivity
@@ -22,12 +20,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 
 @AndroidEntryPoint
-class SplashActivity : BaseActivity() {
+class SplashActivity : Activity() {
 
     private val viewModel: SplashViewModel by viewModels()
     private lateinit var binding: ActivitySplashBinding
     private lateinit var springForce: SpringForce
-
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
@@ -42,8 +39,8 @@ class SplashActivity : BaseActivity() {
 
         val splashLayout = binding.splashLayout
         Handler().postDelayed({
-            //do stuff
-            //Like your Background calls and all
+            // do stuff
+            // Like your Background calls and all
             springForce = SpringForce(0f)
             splashLayout.pivotX = 0f
             splashLayout.pivotY = 0f
@@ -64,7 +61,6 @@ class SplashActivity : BaseActivity() {
                     .translationYBy(height)
                     .setListener(object : Animator.AnimatorListener {
                         override fun onAnimationRepeat(p0: Animator?) {
-
                         }
 
                         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -81,19 +77,15 @@ class SplashActivity : BaseActivity() {
                         }
 
                         override fun onAnimationCancel(p0: Animator?) {
-
                         }
 
                         override fun onAnimationStart(p0: Animator?) {
-
                         }
-
                     })
                     .setInterpolator(DecelerateInterpolator(1f))
                     .start()
             }
             springAnim.start()
         }, 4000)
-
     }
 }

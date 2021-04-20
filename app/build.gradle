@@ -1,10 +1,8 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-kapt'
-
 apply plugin: 'realm-android'
+apply from: '../ktlint.gradle'
 
 android {
     compileSdkVersion 30

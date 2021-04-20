@@ -3,14 +3,11 @@ package com.thecode.infotify.framework.datasource
 import com.thecode.infotify.framework.datasource.network.api.NewsApi
 import com.thecode.infotify.framework.datasource.network.model.NewsObjectResponse
 import com.thecode.infotify.framework.datasource.network.model.SourceObjectResponse
-import dagger.Provides
 import retrofit2.Response
-import javax.inject.Singleton
-
 
 interface NewsApiRemoteService {
     //region NEWS
-    suspend fun getAllNews( query: String, language: String, sortBy: String, apiKey: String): NewsObjectResponse
+    suspend fun getAllNews(query: String, language: String, sortBy: String, apiKey: String): NewsObjectResponse
 
     suspend fun getTopHeadlinesByLanguage(language: String, apiKey: String): NewsObjectResponse
 

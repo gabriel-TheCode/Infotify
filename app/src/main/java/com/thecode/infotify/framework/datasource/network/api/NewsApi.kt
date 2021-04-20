@@ -2,14 +2,12 @@ package com.thecode.infotify.framework.datasource.network.api
 
 import com.thecode.infotify.framework.datasource.network.model.NewsObjectResponse
 import com.thecode.infotify.framework.datasource.network.model.SourceObjectResponse
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-
 interface NewsApi {
-    //Top Headlines
+    // Top Headlines
     @GET("v2/top-headlines")
     fun getTopHeadlinesByCountry(
         @Query("country") country: String,
@@ -47,13 +45,12 @@ interface NewsApi {
         @Query("apiKey") apiKey: String
     ): Response<NewsObjectResponse>
 
-    //Everything
+    // Everything
     @GET("v2/everything")
     fun getAllNewsByQuery(
         @Query("q") query: String,
         @Query("apiKey") apiKey: String
     ): Response<NewsObjectResponse>
-
 
     @GET("v2/everything")
     fun getAllNews(

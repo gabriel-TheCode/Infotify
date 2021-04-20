@@ -13,7 +13,7 @@ data class NewsObjectResponse(
     @SerializedName("articles")
     val articles: List<Result>
 
-)    {
+) {
 
     data class Result(
         val `article`: Article
@@ -30,4 +30,3 @@ data class NewsObjectResponse(
         )
     }
 }
-

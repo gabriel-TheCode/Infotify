@@ -12,15 +12,11 @@ class HomeViewModel @Inject constructor(
     private val setNightModeEnabled: SetNightModeEnabled
 ) : ViewModel() {
 
-    fun setNightMode(state: Boolean){
+    fun setNightMode(state: Boolean) {
         setNightModeEnabled(state)
     }
 
-
-    fun isNightModeActivated(): Boolean{
+    fun isNightModeActivated(): Boolean {
         return isNightModeEnabled()
     }
-
-
-
 }
