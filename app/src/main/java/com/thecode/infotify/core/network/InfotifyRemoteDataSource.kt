@@ -5,7 +5,6 @@ import com.thecode.infotify.core.domain.News
 import com.thecode.infotify.framework.datasource.NewsApiRemoteService
 import com.thecode.infotify.framework.datasource.network.mapper.NewsMapper
 import com.thecode.infotify.framework.datasource.network.mapper.SourceMapper
-import com.thecode.infotify.utils.AppConstants
 import javax.inject.Inject
 
 interface InfotifyRemoteDataSource {
@@ -25,14 +24,14 @@ class InfotifyRemoteDataSourceImpl @Inject constructor(
 
 ) : InfotifyRemoteDataSource {
     override suspend fun fetchNews(query: String, language: String, sortBy: String): News {
-        return newsMapper.mapToDomain(apiService.getAllNews(query, language, sortBy, AppConstants.NEWSAPI_TOKEN))
+        return newsMapper.mapToDomain(apiService.getAllNews(query, language, sortBy))
     }
 
     override suspend fun fetchTopHeadlinesByLanguage(language: String): News {
-        return newsMapper.mapToDomain(apiService.getTopHeadlinesByLanguage(language, AppConstants.NEWSAPI_TOKEN))
+        return newsMapper.mapToDomain(apiService.getTopHeadlinesByLanguage(language))
     }
 
     override suspend fun fetchTopHeadlinesByLanguageAndCategory(language: String, category: String): News {
-        return newsMapper.mapToDomain(apiService.getTopHeadlinesByLanguageAndCategory(language, category, AppConstants.NEWSAPI_TOKEN))
+        return newsMapper.mapToDomain(apiService.getTopHeadlinesByLanguageAndCategory(language, category))
     }
 }

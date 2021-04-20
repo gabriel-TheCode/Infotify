@@ -16,17 +16,19 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-
 
     @Singleton
     @Provides
@@ -87,8 +89,19 @@ object NetworkModule {
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
             httpClient.addInterceptor(interceptor)
         }
-
+        httpClient.addInterceptor(BasicAuthInterceptor())
         return httpClient.build()
+    }
+
+    class BasicAuthInterceptor : Interceptor {
+        @Throws(IOException::class)
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val request = chain.request()
+            val newUrl = request.url.newBuilder().addQueryParameter("apiKey", BuildConfig.API_KEY).build()
+            val newRequest = request.newBuilder().url(newUrl).build()
+            return chain.proceed(newRequest)
+        }
+
     }
 
 }

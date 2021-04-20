@@ -20,6 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
+import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import com.thecode.infotify.databinding.BottomSheetSearchBinding
 import com.thecode.infotify.databinding.FragmentSearchBinding

@@ -19,3 +19,9 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+#Models
+-dontwarn com.thecode.infotify.responses.**
+-dontwarn com.thecode.infotify.entities.**
+-keep class com.thecode.infotify.responses.** { *; }
+-keep class com.thecode.infotify.entities.** { *; }

@@ -14,7 +14,7 @@ class InfotifyApp : Application(), LifecycleObserver {
     override fun onCreate() {
         super.onCreate()
         mContext = applicationContext
-        val infotifySharedPref = InfotifySharedPref.init(mContext)
+        InfotifySharedPref(mContext)
 
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }

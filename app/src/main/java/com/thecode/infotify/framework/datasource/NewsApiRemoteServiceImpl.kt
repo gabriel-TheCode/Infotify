@@ -7,25 +7,25 @@ import retrofit2.Response
 
 interface NewsApiRemoteService {
     //region NEWS
-    suspend fun getAllNews(query: String, language: String, sortBy: String, apiKey: String): NewsObjectResponse
+    suspend fun getAllNews(query: String, language: String, sortBy: String): NewsObjectResponse
 
-    suspend fun getTopHeadlinesByLanguage(language: String, apiKey: String): NewsObjectResponse
+    suspend fun getTopHeadlinesByLanguage(language: String): NewsObjectResponse
 
-    suspend fun getTopHeadlinesByLanguageAndCategory(language: String, category: String, apiKey: String): NewsObjectResponse
+    suspend fun getTopHeadlinesByLanguageAndCategory(language: String, category: String): NewsObjectResponse
 
-    suspend fun getTopHeadlinesByCountry(country: String, apiKey: String): Response<NewsObjectResponse>
+    suspend fun getTopHeadlinesByCountry(country: String): Response<NewsObjectResponse>
 
-    suspend fun getTopHeadlinesBySources(sources: String, apiKey: String): Response<NewsObjectResponse>
+    suspend fun getTopHeadlinesBySources(sources: String): Response<NewsObjectResponse>
 
-    suspend fun getTopHeadlinesByCategory(category: String, apiKey: String): Response<NewsObjectResponse>
+    suspend fun getTopHeadlinesByCategory(category: String): Response<NewsObjectResponse>
 
-    suspend fun getAllNewsByQuery(query: String, apiKey: String): Response<NewsObjectResponse>
+    suspend fun getAllNewsByQuery(query: String): Response<NewsObjectResponse>
     //endregion
 
     //region SOURCE
-    suspend fun getSources(apiKey: String): Response<SourceObjectResponse>
+    suspend fun getSources(): Response<SourceObjectResponse>
 
-    suspend fun getSourcesByLang(language: String, apiKey: String): Response<SourceObjectResponse>
+    suspend fun getSourcesByLang(language: String): Response<SourceObjectResponse>
     //endregion
 }
 
@@ -34,65 +34,57 @@ class NewsApiRemoteServiceImpl constructor(
 ) : NewsApiRemoteService {
 
     override suspend fun getTopHeadlinesByLanguage(
-        language: String,
-        apiKey: String
+        language: String
     ): NewsObjectResponse {
-        return newsApi.getTopHeadlinesByLanguage(language, apiKey)
+        return newsApi.getTopHeadlinesByLanguage(language)
     }
 
     override suspend fun getTopHeadlinesByLanguageAndCategory(
         language: String,
-        category: String,
-        apiKey: String
+        category: String
     ): NewsObjectResponse {
-        return newsApi.getTopHeadlinesByLanguageAndCategory(language, category, apiKey)
+        return newsApi.getTopHeadlinesByLanguageAndCategory(language, category)
     }
 
     override suspend fun getTopHeadlinesByCountry(
-        country: String,
-        apiKey: String
+        country: String
     ): Response<NewsObjectResponse> {
-        return newsApi.getTopHeadlinesByCountry(country, apiKey)
+        return newsApi.getTopHeadlinesByCountry(country)
     }
 
     override suspend fun getTopHeadlinesBySources(
-        sources: String,
-        apiKey: String
+        sources: String
     ): Response<NewsObjectResponse> {
-        return newsApi.getTopHeadlinesBySources(sources, apiKey)
+        return newsApi.getTopHeadlinesBySources(sources)
     }
 
     override suspend fun getTopHeadlinesByCategory(
-        category: String,
-        apiKey: String
+        category: String
     ): Response<NewsObjectResponse> {
-        return newsApi.getTopHeadlinesByCategory(category, apiKey)
+        return newsApi.getTopHeadlinesByCategory(category)
     }
 
     override suspend fun getAllNewsByQuery(
-        query: String,
-        apiKey: String
+        query: String
     ): Response<NewsObjectResponse> {
-       return newsApi.getAllNewsByQuery(query, apiKey)
+       return newsApi.getAllNewsByQuery(query)
     }
 
-    override suspend fun getSources(apiKey: String): Response<SourceObjectResponse> {
-       return newsApi.getSources(apiKey)
+    override suspend fun getSources(): Response<SourceObjectResponse> {
+       return newsApi.getSources()
     }
 
     override suspend fun getSourcesByLang(
-        language: String,
-        apiKey: String
+        language: String
     ): Response<SourceObjectResponse> {
-       return newsApi.getSourcesByLang(language, apiKey)
+       return newsApi.getSourcesByLang(language)
     }
 
     override suspend fun getAllNews(
         query: String,
         language: String,
-        sortBy: String,
-        apiKey: String
+        sortBy: String
     ): NewsObjectResponse {
-        return newsApi.getAllNews(query, language, sortBy, apiKey)
+        return newsApi.getAllNews(query, language, sortBy)
     }
 }

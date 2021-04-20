@@ -10,64 +10,55 @@ interface NewsApi {
     // Top Headlines
     @GET("v2/top-headlines")
     fun getTopHeadlinesByCountry(
-        @Query("country") country: String,
-        @Query("apiKey") apiKey: String
+        @Query("country") country: String
     ): Response<NewsObjectResponse>
 
     @GET("v2/top-headlines")
     fun getTopHeadlinesByLanguage(
-        @Query("language") language: String,
-        @Query("apiKey") apiKey: String
+        @Query("language") language: String
     ): NewsObjectResponse
 
     @GET("v2/top-headlines")
     fun getTopHeadlinesByLanguageAndCategory(
         @Query("country") language: String,
-        @Query("category") category: String,
-        @Query("apiKey") apiKey: String
+        @Query("category") category: String
     ): NewsObjectResponse
 
     @GET("v2/top-headlines")
     fun getTopHeadlinesByQuery(
-        @Query("q") query: String,
-        @Query("apiKey") apiKey: String
+        @Query("q") query: String
     ): Response<NewsObjectResponse>
 
     @GET("v2/top-headlines")
     fun getTopHeadlinesBySources(
-        @Query("sources") sources: String,
-        @Query("apiKey") apiKey: String
+        @Query("sources") sources: String
     ): Response<NewsObjectResponse>
 
     @GET("v2/top-headlines")
     fun getTopHeadlinesByCategory(
-        @Query("category") category: String,
-        @Query("apiKey") apiKey: String
+        @Query("category") category: String
     ): Response<NewsObjectResponse>
 
     // Everything
     @GET("v2/everything")
     fun getAllNewsByQuery(
-        @Query("q") query: String,
-        @Query("apiKey") apiKey: String
+        @Query("q") query: String
     ): Response<NewsObjectResponse>
 
     @GET("v2/everything")
     fun getAllNews(
         @Query("q") query: String,
         @Query("language") language: String,
-        @Query("sortBy") sortBy: String,
-        @Query("apiKey") apiKey: String
+        @Query("sortBy") sortBy: String
     ): NewsObjectResponse
 
     //region Sources
     @GET("v2/sources")
-    fun getSources(@Query("apiKey") apiKey: String): Response<SourceObjectResponse>
+    fun getSources(): Response<SourceObjectResponse>
 
     @GET("v2/sources")
     fun getSourcesByLang(
-        @Query("language") language: String,
-        @Query("apiKey") apiKey: String
+        @Query("language") language: String
     ): Response<SourceObjectResponse>
 
     //endregion

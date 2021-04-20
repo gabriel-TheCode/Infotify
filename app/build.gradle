@@ -14,6 +14,7 @@ android {
         versionCode 106
         versionName "1.0.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "API_KEY", "\"2756120879db444c9cfe8b8c70fcefe6\"")
     }
     buildTypes {
         release {
