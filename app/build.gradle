@@ -11,13 +11,14 @@ android {
         applicationId "com.thecode.infotify"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 106
-        versionName "1.0.7"
+        versionCode 109
+        versionName "1.0.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled true
+            shrinkResources false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
