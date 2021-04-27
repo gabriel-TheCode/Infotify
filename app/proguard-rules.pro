@@ -21,7 +21,11 @@
 #-renamesourcefileattribute SourceFile
 
 #Models
--dontwarn com.thecode.infotify.responses.**
--dontwarn com.thecode.infotify.entities.**
--keep class com.thecode.infotify.responses.** { *; }
--keep class com.thecode.infotify.entities.** { *; }
+-dontwarn com.thecode.infotify.framework.datasource.network.model.**
+-dontwarn com.thecode.infotify.database.article.**
+-dontwarn com.thecode.infotify.database.source.**
+-dontwarn com.thecode.infotify.core.domain.**
+-keep class com.thecode.infotify.framework.datasource.network.model.** { *; }
+-keep class com.thecode.infotify.database.article.** { *; }
+-keep class com.thecode.infotify.database.source.** { *; }
+-keep class com.thecode.infotify.core.domain.** { *; }

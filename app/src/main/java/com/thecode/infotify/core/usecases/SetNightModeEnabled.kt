@@ -1,6 +1,6 @@
 package com.thecode.infotify.core.usecases
 
-import com.thecode.infotify.core.data.MainRepository
+import com.thecode.infotify.core.repositories.MainRepository
 import javax.inject.Inject
 
 class SetNightModeEnabled @Inject constructor(

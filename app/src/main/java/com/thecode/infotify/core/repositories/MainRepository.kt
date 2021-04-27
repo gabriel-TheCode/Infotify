@@ -1,4 +1,4 @@
-package com.thecode.infotify.core.data
+package com.thecode.infotify.core.repositories
 
 import com.thecode.infotify.core.local.InfotifyLocalDataSourceImpl
 import javax.inject.Inject

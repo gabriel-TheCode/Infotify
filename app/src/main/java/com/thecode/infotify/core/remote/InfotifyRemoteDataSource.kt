@@ -1,4 +1,4 @@
-package com.thecode.infotify.core.network
+package com.thecode.infotify.core.remote
 
 import com.thecode.infotify.application.InfotifySharedPref
 import com.thecode.infotify.core.domain.News

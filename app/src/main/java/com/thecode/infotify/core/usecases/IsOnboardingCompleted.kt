@@ -1,6 +1,6 @@
 package com.thecode.infotify.core.usecases
 
-import com.thecode.infotify.core.data.OnboardingRepository
+import com.thecode.infotify.core.repositories.OnboardingRepository
 import javax.inject.Inject
 
 class IsOnboardingCompleted @Inject constructor(

@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.thecode.infotify.BuildConfig
 import com.thecode.infotify.application.InfotifySharedPref
-import com.thecode.infotify.core.network.InfotifyRemoteDataSourceImpl
+import com.thecode.infotify.core.remote.InfotifyRemoteDataSourceImpl
 import com.thecode.infotify.framework.datasource.NewsApiRemoteService
 import com.thecode.infotify.framework.datasource.NewsApiRemoteServiceImpl
 import com.thecode.infotify.framework.datasource.network.api.NewsApi

@@ -1,7 +1,7 @@
-package com.thecode.infotify.core.data
+package com.thecode.infotify.core.repositories
 
 import com.thecode.infotify.core.domain.News
-import com.thecode.infotify.core.network.InfotifyRemoteDataSourceImpl
+import com.thecode.infotify.core.remote.InfotifyRemoteDataSourceImpl
 import com.thecode.infotify.database.AppDatabase
 import com.thecode.infotify.database.article.ArticleEntity
 import javax.inject.Inject

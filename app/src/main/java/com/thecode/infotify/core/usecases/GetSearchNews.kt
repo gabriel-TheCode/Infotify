@@ -1,6 +1,6 @@
 package com.thecode.infotify.core.usecases
 
-import com.thecode.infotify.core.data.NewsRepository
+import com.thecode.infotify.core.repositories.NewsRepository
 import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.core.domain.News
 import kotlinx.coroutines.flow.Flow
