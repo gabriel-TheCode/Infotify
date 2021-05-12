@@ -21,10 +21,10 @@ import com.thecode.infotify.presentation.about.AboutActivity
 import com.thecode.infotify.presentation.main.headline.HeadlineViewPagerAdapter
 import com.thecode.infotify.databinding.FragmentHomeBinding
 import com.thecode.infotify.presentation.main.headline.HeadlineFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-/**
- * A simple [Fragment] subclass.
- */
+
+@AndroidEntryPoint
 class HomeFragment : BaseFragment() {
 
     private val viewModel: HomeViewModel by viewModels()

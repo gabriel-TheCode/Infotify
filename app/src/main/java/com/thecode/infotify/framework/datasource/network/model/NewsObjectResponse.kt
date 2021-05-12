@@ -16,7 +16,7 @@ data class NewsObjectResponse(
 ) {
 
     data class Result(
-        val `article`: Article
+        val article: Article
     ) {
         data class Article(
             var source: SourceItem? = null,

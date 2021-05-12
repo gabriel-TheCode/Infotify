@@ -21,18 +21,17 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
-import com.thecode.infotify.core.domain.Article
+import com.thecode.infotify.database.article.ArticleEntity
 import com.thecode.infotify.databinding.AdapterNewsLandscapeBinding
 import com.thecode.infotify.utils.CustomProgressBar
-import io.realm.Realm
 
 class BookmarkRecyclerViewAdapter(val context: Context) :
     RecyclerView.Adapter<BookmarkRecyclerViewAdapter.NewsViewHolder>() {
 
     private lateinit var binding: AdapterNewsLandscapeBinding
-    private var newsList: MutableList<Article> = mutableListOf()
+    private var newsList: MutableList<ArticleEntity> = mutableListOf()
     private val progressBar: CustomProgressBar = CustomProgressBar()
-    val realm: Realm = Realm.getDefaultInstance()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         binding =
@@ -45,9 +44,9 @@ class BookmarkRecyclerViewAdapter(val context: Context) :
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        val article: Article = newsList[position]
+        val article: ArticleEntity = newsList[position]
         val title: String? = article.title
-        val url: String = article.url.toString()
+        val url: String = article.url
         val publishAt = article.publishedAt
         val urlToImage = article.urlToImage
         val sourceName = article.source?.name
@@ -138,7 +137,7 @@ class BookmarkRecyclerViewAdapter(val context: Context) :
         }
     }
 
-    fun setArticleListItems(newsList: MutableList<Article>) {
+    fun setArticleListItems(newsList: MutableList<ArticleEntity>) {
         this.newsList = newsList
     }
 
@@ -158,7 +157,6 @@ class BookmarkRecyclerViewAdapter(val context: Context) :
             remove(position)
             Log.v("database", "Delete ok")
             Toast.makeText(context, "Delete successfully", Toast.LENGTH_LONG).show()
-
     }
 
     private fun remove(position: Int) {

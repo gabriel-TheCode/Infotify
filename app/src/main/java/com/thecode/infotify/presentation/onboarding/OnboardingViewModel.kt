@@ -7,7 +7,7 @@ import javax.inject.Inject
 class OnboardingViewModel@Inject constructor(
     private val setOnboardingCompleted: SetOnboardingCompleted
 ) : ViewModel() {
-    fun setOnboardingCompleted(){
+    fun setOnboardingCompleted() {
         setOnboardingCompleted.invoke()
     }
 }

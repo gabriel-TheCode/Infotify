@@ -8,7 +8,7 @@ import com.thecode.infotify.utils.AppConstants
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class InfotifySharedPref @SuppressLint("CommitPrefEdits") @Inject constructor(@ApplicationContext context: Context){
+class InfotifySharedPref @SuppressLint("CommitPrefEdits") @Inject constructor(@ApplicationContext context: Context) {
 
     companion object {
         private const val NIGHT_MODE = "NIGHT_MODE"
@@ -41,4 +41,3 @@ class InfotifySharedPref @SuppressLint("CommitPrefEdits") @Inject constructor(@A
         prefsEditor.commit()
     }
 }
-

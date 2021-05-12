@@ -3,6 +3,8 @@ package com.thecode.infotify.framework.datasource.network.mapper
 import com.thecode.infotify.core.domain.News
 import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.domain.SourceItem
+import com.thecode.infotify.database.article.ArticleEntity
+import com.thecode.infotify.database.source.SourceEntity
 import com.thecode.infotify.framework.datasource.network.model.NewsObjectResponse
 import javax.inject.Inject
 
@@ -16,6 +18,7 @@ class NewsMapper @Inject constructor() :
                 mapFromNewsItems(it.article)
             })
     }
+
 
     private fun mapFromNewsItems(article: NewsObjectResponse.Result.Article): Article {
         return Article(
@@ -34,6 +37,32 @@ class NewsMapper @Inject constructor() :
         return SourceItem(
             article.source?.id,
             article.source?.name
+        )
+    }
+
+    private fun newsItemToEntity(article: Article): ArticleEntity {
+        return ArticleEntity(
+            article.source?.let { sourceItemToEntity(it) },
+            article.author,
+            article.title,
+            article.description,
+            article.url.toString(),
+            article.urlToImage,
+            article.publishedAt,
+            article.content
+        )
+    }
+
+    private fun sourceItemToEntity(source: SourceItem): SourceEntity{
+        return SourceEntity(
+            source.id.toString(),
+            source.cnbc,
+            source.name,
+            source.description,
+            source.url,
+            source.category,
+            source.language,
+            source.country
         )
     }
 

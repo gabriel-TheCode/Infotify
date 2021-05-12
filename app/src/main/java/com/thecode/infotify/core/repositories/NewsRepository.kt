@@ -1,13 +1,18 @@
 package com.thecode.infotify.core.repositories
 
+import androidx.lifecycle.LiveData
+import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.domain.News
 import com.thecode.infotify.core.remote.InfotifyRemoteDataSourceImpl
 import com.thecode.infotify.database.AppDatabase
 import com.thecode.infotify.database.article.ArticleEntity
+import com.thecode.infotify.framework.datasource.network.mapper.ArticleMapper
+import com.thecode.infotify.framework.datasource.network.mapper.NewsMapper
 import javax.inject.Inject
 
 class NewsRepository @Inject constructor(
     private val networkDataSource: InfotifyRemoteDataSourceImpl,
+    private val articleMapper: ArticleMapper,
     private val appDataBase: AppDatabase
 ) {
 
@@ -27,15 +32,15 @@ class NewsRepository @Inject constructor(
         return networkDataSource.fetchTopHeadlinesByLanguageAndCategory(language, category)
     }
 
-    fun getBookmarks(): List<ArticleEntity> {
+    fun getBookmarks(): LiveData<List<ArticleEntity>> {
         return appDataBase.getArticlesDao().getAllArticles()
     }
 
-    fun saveBookmark(articleEntity: ArticleEntity){
-        appDataBase.getArticlesDao().insert(articleEntity)
+    fun saveBookmark(article: Article) {
+        appDataBase.getArticlesDao().insert(articleMapper.mapToEntity(article))
     }
 
-    fun deleteBookmark(url: String){
+    fun deleteBookmark(url: String) {
         appDataBase.getArticlesDao().deleteByPrimaryId(url)
     }
 }

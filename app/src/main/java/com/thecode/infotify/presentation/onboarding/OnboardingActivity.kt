@@ -9,8 +9,9 @@ import androidx.viewpager.widget.ViewPager
 import com.thecode.infotify.R
 import com.thecode.infotify.databinding.ActivityOnboardingBinding
 import com.thecode.infotify.presentation.main.MainActivity
-import com.thecode.infotify.application.InfotifySharedPref
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OnboardingActivity : AppCompatActivity() {
 
     private val viewModel: OnboardingViewModel by viewModels()

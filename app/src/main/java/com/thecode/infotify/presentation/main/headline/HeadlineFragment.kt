@@ -12,14 +12,13 @@ import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.thecode.infotify.R
 import com.thecode.infotify.base.BaseFragment
-import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.domain.DataState
+import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import com.thecode.infotify.databinding.FragmentHeadlineBinding
 import com.thecode.infotify.databinding.LayoutBadStateBinding
@@ -27,10 +26,9 @@ import com.thecode.infotify.utils.AppConstants
 import com.thecode.infotify.utils.AppConstants.ARG_CATEGORY
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.json.JSONException
 
-@ExperimentalCoroutinesApi
+
 @AndroidEntryPoint
 class HeadlineFragment : BaseFragment() {
 
@@ -75,7 +73,6 @@ class HeadlineFragment : BaseFragment() {
 
         btnRetry.setOnClickListener {
             fetchApiNews()
-            viewModel.getHeadlines(AppConstants.DEFAULT_LANG, "")
         }
 
         fetchApiNews()
@@ -138,7 +135,7 @@ class HeadlineFragment : BaseFragment() {
         }
 
         private fun subscribeObserver() {
-            viewModel.headlineState.observe(viewLifecycleOwner, Observer {
+            viewModel.headlineState.observe(viewLifecycleOwner, {
                 when (it) {
                     is DataState.Success -> {
                         hideBadStateLayout()
@@ -174,7 +171,7 @@ class HeadlineFragment : BaseFragment() {
         }
 
         private fun initRecyclerView() {
-            recyclerAdapter = NewsRecyclerViewAdapter(requireContext())
+            recyclerAdapter = NewsRecyclerViewAdapter(requireContext(), viewModel)
             recyclerView.layoutManager = LinearLayoutManager(activity)
             // recyclerView.adapter = recyclerAdapter
             recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
@@ -210,7 +207,6 @@ class HeadlineFragment : BaseFragment() {
                 for (i in articles.indices) {
                     val article = articles[i]
                     articleArrayList.add(article)
-
                     recyclerAdapter.setArticleListItems(articleArrayList)
                     recyclerView.scheduleLayoutAnimation()
                 }

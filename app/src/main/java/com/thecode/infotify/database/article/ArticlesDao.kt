@@ -1,5 +1,6 @@
 package com.thecode.infotify.database.article
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
@@ -12,7 +13,7 @@ interface ArticlesDao {
     fun deleteByPrimaryId(primaryId: String?): Int
 
     @Query("SELECT * FROM article")
-    fun getAllArticles(): List<ArticleEntity>
+    fun getAllArticles(): LiveData<List<ArticleEntity>>
 
     @Query("DELETE FROM article")
     fun clear()

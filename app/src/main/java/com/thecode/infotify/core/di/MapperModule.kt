@@ -19,5 +19,4 @@ object MapperModule {
     fun provideNewsResponseMapper(): EntityMapper<NewsObjectResponse, News> {
         return NewsMapper()
     }
-
 }

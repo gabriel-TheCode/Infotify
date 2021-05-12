@@ -14,9 +14,11 @@ import com.thecode.infotify.presentation.main.home.HomeFragment
 import com.thecode.infotify.presentation.main.search.SearchFragment
 import com.thecode.infotify.utils.FadePageTransformer
 import com.thecode.infotify.presentation.main.home.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import java.util.*
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: HomeViewModel by viewModels()

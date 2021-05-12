@@ -6,7 +6,7 @@ import javax.inject.Inject
 class DeleteBookmark @Inject constructor(
     private val repository: NewsRepository
 ) {
-    fun deleteBookmark(url: String){
+    fun deleteBookmark(url: String) {
         repository.deleteBookmark(url)
     }
 }

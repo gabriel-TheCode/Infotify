@@ -3,12 +3,15 @@ package com.thecode.infotify.database.article
 import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
+import com.thecode.infotify.database.source.SourceConverter
 import com.thecode.infotify.database.source.SourceEntity
 
 @Entity(tableName = "article")
 data class ArticleEntity(
 
+    @TypeConverters(SourceConverter::class)
     @SerializedName("source")
     var source: SourceEntity? = null,
 

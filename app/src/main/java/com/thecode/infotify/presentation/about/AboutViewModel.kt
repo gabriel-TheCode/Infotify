@@ -12,5 +12,4 @@ class AboutViewModel @Inject constructor(
     fun isNightModeActivated(): Boolean {
         return isNightModeEnabled()
     }
-
 }

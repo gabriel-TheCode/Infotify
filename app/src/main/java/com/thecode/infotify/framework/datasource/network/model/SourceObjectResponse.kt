@@ -11,7 +11,7 @@ data class SourceObjectResponse(
 ) {
 
 data class Result(
-    val `source`: Source
+    val source: Source
 ) {
             data class Source(
                 var id: String? = null,

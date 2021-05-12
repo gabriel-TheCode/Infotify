@@ -15,23 +15,24 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
 import com.thecode.infotify.databinding.AdapterNewsBinding
-import com.thecode.infotify.core.domain.Source
+import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.utils.CustomProgressBar
-import io.realm.Realm
 
-class NewsRecyclerViewAdapter(val context: Context) :
+class NewsRecyclerViewAdapter(val context: Context, viewModel: ViewModel) :
     RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder>() {
 
     private lateinit var binding: AdapterNewsBinding
     var newsList: List<Article> = listOf()
     private val progressBar: CustomProgressBar = CustomProgressBar()
-    val realm: Realm = Realm.getDefaultInstance()
+    private val viewModel: MainViewModel = viewModel as MainViewModel
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         binding = AdapterNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -145,7 +146,7 @@ class NewsRecyclerViewAdapter(val context: Context) :
         }
     }
 
-    fun setArticleListItems(newsList: List<Article>) {
+    fun setArticleListItems(newsList: ArrayList<Article>) {
         this.newsList = emptyList()
         this.newsList = newsList
         notifyDataSetChanged()
@@ -164,21 +165,8 @@ class NewsRecyclerViewAdapter(val context: Context) :
     }
 
     private fun saveIntoDatabase(article: Article) {
+            viewModel.saveBookmark(article)
 
-        realm.executeTransactionAsync({ realm ->
-            val articleBookmark: Article = realm.createObject(Article::class.java)
-            val sourceArticle: Source = realm.createObject(Source::class.java)
-
-            articleBookmark.urlToImage = article.urlToImage
-            articleBookmark.url = article.url
-            articleBookmark.author = article.author
-            articleBookmark.content = article.content
-            articleBookmark.description = article.description
-            articleBookmark.publishedAt = article.publishedAt
-            articleBookmark.title = article.title
-            sourceArticle.name = article.source?.name
-            articleBookmark.source = sourceArticle
-        }, {
             // Transaction was a success.
             Log.v("database", "Stored ok")
             AestheticDialog.showRainbow(
@@ -187,14 +175,13 @@ class NewsRecyclerViewAdapter(val context: Context) :
                 "Bookmark saved",
                 AestheticDialog.SUCCESS
             )
-        }, {
+
             // Transaction failed and was automatically canceled.
-            AestheticDialog.showToaster(
+            /*AestheticDialog.showToaster(
                 context as Activity?,
                 "Error",
                 "Something went wrong",
                 AestheticDialog.ERROR
-            )
-        })
+            )*/
+        }
     }
-}
