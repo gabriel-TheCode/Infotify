@@ -31,7 +31,7 @@ class NewsRecyclerViewAdapter(val context: Context, viewModel: ViewModel) :
     private lateinit var binding: AdapterNewsBinding
     var newsList: List<Article> = listOf()
     private val progressBar: CustomProgressBar = CustomProgressBar()
-    private val viewModel: MainViewModel = viewModel as MainViewModel
+    private val viewModel: MainViewModel = viewModel
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
@@ -175,13 +175,5 @@ class NewsRecyclerViewAdapter(val context: Context, viewModel: ViewModel) :
                 "Bookmark saved",
                 AestheticDialog.SUCCESS
             )
-
-            // Transaction failed and was automatically canceled.
-            /*AestheticDialog.showToaster(
-                context as Activity?,
-                "Error",
-                "Something went wrong",
-                AestheticDialog.ERROR
-            )*/
         }
     }

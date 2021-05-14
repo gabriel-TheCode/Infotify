@@ -1,7 +1,7 @@
 package com.thecode.infotify.database.article
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ArticlesDao {
@@ -13,7 +13,7 @@ interface ArticlesDao {
     fun deleteByPrimaryId(primaryId: String?): Int
 
     @Query("SELECT * FROM article")
-    fun getAllArticles(): LiveData<List<ArticleEntity>>
+    fun getAllArticles(): Flow<List<ArticleEntity>>
 
     @Query("DELETE FROM article")
     fun clear()

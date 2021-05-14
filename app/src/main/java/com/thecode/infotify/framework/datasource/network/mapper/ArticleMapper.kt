@@ -6,7 +6,8 @@ import com.thecode.infotify.database.article.ArticleEntity
 import com.thecode.infotify.database.source.SourceEntity
 import javax.inject.Inject
 
-class ArticleMapper @Inject constructor() :
+class
+ArticleMapper @Inject constructor() :
     EntityMapper<ArticleEntity, Article> {
 
     override fun mapToEntity(domainModel: Article): ArticleEntity {
@@ -35,8 +36,8 @@ class ArticleMapper @Inject constructor() :
         )
     }
 
-
     override fun mapToDomain(entity: ArticleEntity): Article {
         TODO("Not yet implemented")
     }
+
 }

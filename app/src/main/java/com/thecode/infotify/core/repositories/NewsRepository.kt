@@ -8,6 +8,7 @@ import com.thecode.infotify.database.AppDatabase
 import com.thecode.infotify.database.article.ArticleEntity
 import com.thecode.infotify.framework.datasource.network.mapper.ArticleMapper
 import com.thecode.infotify.framework.datasource.network.mapper.NewsMapper
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class NewsRepository @Inject constructor(
@@ -32,7 +33,7 @@ class NewsRepository @Inject constructor(
         return networkDataSource.fetchTopHeadlinesByLanguageAndCategory(language, category)
     }
 
-    fun getBookmarks(): LiveData<List<ArticleEntity>> {
+    fun getBookmarks(): Flow<List<ArticleEntity>> {
         return appDataBase.getArticlesDao().getAllArticles()
     }
 

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.thecode.infotify.R
+import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.database.article.ArticleEntity
 import com.thecode.infotify.databinding.FragmentBookmarksBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,14 +44,28 @@ class BookmarksFragment : Fragment() {
         _binding = FragmentBookmarksBinding.inflate(inflater, container, false)
 
         val view = binding.root
-        refreshLayout = binding.refreshLayout
-        recyclerView = binding.recyclerViewNewsBookmark
-        layoutEmptyState = binding.layoutBookmarkEmpty
-        recyclerAdapter = BookmarkRecyclerViewAdapter(view.context)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        // recyclerView.adapter = recyclerAdapter
-        recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
 
+        initViews()
+        initRecyclerView()
+        subscribeObserver()
+
+        viewModel.getBookmarks()
+
+        return view
+    }
+
+
+
+    private fun initRecyclerView() {
+        recyclerView = binding.recyclerViewNewsBookmark
+        recyclerAdapter = BookmarkRecyclerViewAdapter(requireContext(), viewModel)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
+    }
+
+    private fun initViews() {
+        refreshLayout = binding.refreshLayout
+        layoutEmptyState = binding.layoutBookmarkEmpty
         refreshLayout.setColorSchemeResources(
             R.color.colorPrimary,
             R.color.colorPrimary,
@@ -58,34 +73,50 @@ class BookmarksFragment : Fragment() {
             R.color.colorPrimaryDark
         )
         val typedValue = TypedValue()
-        val theme: Resources.Theme = view.context.theme
+        val theme: Resources.Theme = requireContext().theme
         theme.resolveAttribute(R.attr.primaryCardBackgroundColor, typedValue, true)
         @ColorInt val color = typedValue.data
         refreshLayout.setProgressBackgroundColorSchemeColor(color)
         refreshLayout.setOnRefreshListener {
-            displayBookmarks(listArticles)
+            populateRecyclerView(listArticles)
         }
-
-        listArticles = ArrayList()
-        val results: List<ArticleEntity> = viewModel.getBookmarks()
-        var i: Int
-        if (results.isNotEmpty()) {
-            layoutEmptyState.visibility = View.GONE
-            i = 0
-            while (i < results.size) {
-                listArticles.add(i, results[i])
-                i++
-            }
-        } else {
-            layoutEmptyState.visibility = View.VISIBLE
-        }
-
-        displayBookmarks(listArticles)
-
-        return view
     }
 
-    private fun displayBookmarks(articles: ArrayList<ArticleEntity>) {
+    private fun hideEmptyStateLayout() {
+        if (layoutEmptyState.visibility == View.VISIBLE)
+            layoutEmptyState.visibility = View.GONE
+    }
+
+    private fun showEmptyStateLayout(){
+        layoutEmptyState.visibility = View.VISIBLE
+    }
+
+    private fun hideLoadingProgress() {
+        refreshLayout.isRefreshing = false
+    }
+
+    private fun showLoadingProgress() {
+        refreshLayout.isRefreshing = true
+    }
+
+    private fun subscribeObserver() {
+        viewModel.articles.observe(viewLifecycleOwner, {
+            when (it) {
+                is DataState.Success -> {
+                    populateRecyclerView(it.data)
+                }
+                is DataState.Loading -> {
+                    showLoadingProgress()
+                }
+                is DataState.Error -> {
+                    hideLoadingProgress()
+                    showEmptyStateLayout()
+                }
+            }
+        })
+    }
+
+    private fun populateRecyclerView(articles: List<ArticleEntity>) {
         try {
             val articleArrayList: ArrayList<ArticleEntity> = ArrayList()
             for (i in articles.indices) {
@@ -93,6 +124,7 @@ class BookmarksFragment : Fragment() {
                 articleArrayList.add(article)
                 recyclerAdapter.setArticleListItems(articleArrayList)
             }
+            hideEmptyStateLayout()
             refreshLayout.isRefreshing = false
             recyclerView.scheduleLayoutAnimation()
         } catch (e: JSONException) {

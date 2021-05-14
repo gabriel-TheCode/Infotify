@@ -25,7 +25,7 @@ import com.thecode.infotify.database.article.ArticleEntity
 import com.thecode.infotify.databinding.AdapterNewsLandscapeBinding
 import com.thecode.infotify.utils.CustomProgressBar
 
-class BookmarkRecyclerViewAdapter(val context: Context) :
+class BookmarkRecyclerViewAdapter(val context: Context, val viewModel: BookmarkViewModel) :
     RecyclerView.Adapter<BookmarkRecyclerViewAdapter.NewsViewHolder>() {
 
     private lateinit var binding: AdapterNewsLandscapeBinding
@@ -155,6 +155,7 @@ class BookmarkRecyclerViewAdapter(val context: Context) :
 
     private fun deleteFromDatabase(position: Int, url: String) {
             remove(position)
+            viewModel.deleteBookmark(url)
             Log.v("database", "Delete ok")
             Toast.makeText(context, "Delete successfully", Toast.LENGTH_LONG).show()
     }
