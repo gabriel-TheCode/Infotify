@@ -1,7 +1,6 @@
 package com.thecode.infotify.presentation.splash
 
 import android.animation.Animator
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -18,7 +17,6 @@ import com.thecode.infotify.databinding.ActivitySplashBinding
 import com.thecode.infotify.presentation.main.MainActivity
 import com.thecode.infotify.presentation.onboarding.OnboardingActivity
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.inflationx.viewpump.ViewPumpContextWrapper
 
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
@@ -26,10 +24,6 @@ class SplashActivity : AppCompatActivity() {
     private val viewModel: SplashViewModel by viewModels()
     private lateinit var binding: ActivitySplashBinding
     private lateinit var springForce: SpringForce
-
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

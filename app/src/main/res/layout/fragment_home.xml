@@ -56,24 +56,13 @@
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/md_white_1000"
-            app:tabIndicatorColor="@color/md_white_1000"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/sf_medium"
-            android:background="@drawable/bg_gradient_appbar"/>
-
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewpager"
+    <FrameLayout
+        android:id="@+id/child_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

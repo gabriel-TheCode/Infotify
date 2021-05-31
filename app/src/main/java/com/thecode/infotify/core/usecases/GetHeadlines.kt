@@ -23,7 +23,7 @@ class GetHeadlines @Inject constructor(
                     emit(DataState.Success(data))
                 }
             } else {
-                emit(DataState.Error(Exception("Network error")))
+                emit(DataState.Error(Exception("API error")))
             }
         } catch (e: Exception) {
             emit(DataState.Error(Exception(e.message)))

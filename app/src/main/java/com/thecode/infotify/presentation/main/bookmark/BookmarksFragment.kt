@@ -120,17 +120,23 @@ class BookmarksFragment : BaseFragment(), BookmarkOnClickListener {
 
     private fun populateRecyclerView(articles: List<Article>) {
         try {
-            val articleArrayList: ArrayList<Article> = ArrayList()
-            for (i in articles.indices) {
-                val article = articles[i]
-                articleArrayList.add(article)
-                recyclerAdapter.setArticleListItems(articleArrayList)
+            if (articles.isEmpty()){
+                showEmptyStateLayout()
+            }else{
+                val articleArrayList: ArrayList<Article> = ArrayList()
+                for (i in articles.indices) {
+                    val article = articles[i]
+                    articleArrayList.add(article)
+                    recyclerAdapter.setArticleListItems(articleArrayList)
+                }
+                hideEmptyStateLayout()
+                hideLoadingProgress()
+                recyclerView.scheduleLayoutAnimation()
             }
-            hideEmptyStateLayout()
-            hideLoadingProgress()
-            recyclerView.scheduleLayoutAnimation()
+
         } catch (e: JSONException) {
             e.printStackTrace()
+            showEmptyStateLayout()
         }
     }
 

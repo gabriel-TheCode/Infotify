@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.thecode.infotify.R
 import com.thecode.infotify.databinding.ActivityAboutBinding
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.inflationx.viewpump.ViewPumpContextWrapper
 
 @AndroidEntryPoint
 class AboutActivity : AppCompatActivity() {
@@ -25,10 +24,6 @@ class AboutActivity : AppCompatActivity() {
     private lateinit var layoutSourceCode: RelativeLayout
     private lateinit var layoutPlaystore: RelativeLayout
     private lateinit var txtVersion: TextView
-
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

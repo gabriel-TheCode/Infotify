@@ -46,6 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <LinearLayout
             android:id="@+id/layout_bookmark_empty"
             android:layout_width="match_parent"
@@ -59,12 +60,14 @@
                 android:layout_height="250dp"
                 android:layout_gravity="center"
                 android:src="@drawable/list_is_empty" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="No bookmarks"
                 android:textSize="18sp"
                 android:fontFamily="@font/sf_medium"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

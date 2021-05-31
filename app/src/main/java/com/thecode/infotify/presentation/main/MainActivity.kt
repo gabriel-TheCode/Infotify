@@ -1,6 +1,5 @@
 package com.thecode.infotify.presentation.main
 
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.annotation.StyleRes
@@ -14,7 +13,6 @@ import com.thecode.infotify.presentation.main.home.HomeViewModel
 import com.thecode.infotify.presentation.main.search.SearchFragment
 import com.thecode.infotify.utils.FadePageTransformer
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import java.util.*
 
 @AndroidEntryPoint
@@ -22,10 +20,6 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
-
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             setAppTheme(R.style.AppTheme_Base_Light)
         }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)

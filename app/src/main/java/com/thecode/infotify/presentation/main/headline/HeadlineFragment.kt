@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorInt
@@ -47,7 +48,7 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     private val binding get() = _bindingHeadline!!
     private val bindingLayoutBadState get() = _bindingLayoutBadState!!
 
-    private lateinit var category: String
+    private var category: String = "general"
 
     // Views
     lateinit var recyclerView: RecyclerView
@@ -55,16 +56,10 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     lateinit var refreshLayout: SwipeRefreshLayout
     lateinit var btnRetry: AppCompatButton
     lateinit var layoutBadState: View
+    lateinit var supportLayout: LinearLayout
     lateinit var textState: TextView
     lateinit var imgState: ImageView
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            category = arguments?.getString(ARG_CATEGORY).toString()
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,6 +73,7 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
 
         subscribeObserver()
         initViews()
+
         initRecyclerView()
 
         btnRetry.setOnClickListener {
@@ -86,6 +82,7 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
 
         fetchApiNews()
         recyclerView.scheduleLayoutAnimation()
+
 
         return view
     }
@@ -97,14 +94,10 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     }
 
     private fun fetchApiNews() {
-        if (category == "popular") {
-            viewModel.getHeadlines(AppConstants.DEFAULT_LANG, "")
-        } else {
             viewModel.getHeadlines(
                 AppConstants.DEFAULT_LANG,
                 category
             )
-        }
     }
 
     private fun showInternetConnectionErrorLayout() {
@@ -114,37 +107,27 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
                 getString(R.string.check_internet)
             )
         } else {
-            layoutBadState.isVisible = true
+            supportLayout.isVisible = true
             textState.text = getString(R.string.internet_connection_error)
             btnRetry.isVisible = true
         }
     }
 
-    private fun showNoResultErrorLayout() {
+    private fun showBadStateLayout() {
         if (recyclerAdapter.itemCount > 0) {
             showErrorDialog(
                 getString(R.string.error),
                 getString(R.string.service_unavailable)
             )
         } else {
-            layoutBadState.isVisible = true
+            supportLayout.isVisible = true
             textState.text = getString(R.string.no_result_found)
             btnRetry.isVisible = true
         }
     }
 
     private fun hideBadStateLayout() {
-        layoutBadState.isVisible = false
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(category: String) =
-            HeadlineFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_CATEGORY, category)
-                }
-            }
+        supportLayout.isVisible = false
     }
 
     private fun subscribeObserver() {
@@ -195,6 +178,7 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
         layoutBadState = bindingLayoutBadState.layoutBadState
         imgState = bindingLayoutBadState.imgState
         textState = bindingLayoutBadState.textState
+        supportLayout = binding.supportLayout
 
         refreshLayout.setColorSchemeResources(
             R.color.colorPrimary,
@@ -214,13 +198,18 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
 
     private fun populateRecyclerView(articles: List<Article>) {
         try {
-            val articleArrayList: ArrayList<Article> = ArrayList()
-            for (i in articles.indices) {
-                val article = articles[i]
-                articleArrayList.add(article)
-                recyclerAdapter.setArticleListItems(articleArrayList)
-                recyclerView.scheduleLayoutAnimation()
+            if (articles.isEmpty()){
+                showBadStateLayout()
+            }else{
+                val articleArrayList: ArrayList<Article> = ArrayList()
+                for (i in articles.indices) {
+                    val article = articles[i]
+                    articleArrayList.add(article)
+                    recyclerAdapter.setArticleListItems(articleArrayList)
+                    recyclerView.scheduleLayoutAnimation()
+                }
             }
+
         } catch (e: JSONException) {
             e.printStackTrace()
         }

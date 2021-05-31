@@ -74,9 +74,18 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+        <LinearLayout
+            android:id="@+id/support_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+
         <include
-            android:id="@+id/layout_bad_state"
             layout="@layout/layout_bad_state"/>
+
+        </LinearLayout>
+
 
     </FrameLayout>
 

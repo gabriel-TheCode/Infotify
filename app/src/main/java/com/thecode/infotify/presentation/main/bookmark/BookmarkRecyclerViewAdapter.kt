@@ -57,6 +57,7 @@ class BookmarkRecyclerViewAdapter(private val listener: BookmarkOnClickListener)
 
         holder.btnDelete.setOnClickListener {
             listener.deleteBookmark(news)
+            notifyItemRemoved(position)
         }
 
         holder.container.setOnClickListener {
