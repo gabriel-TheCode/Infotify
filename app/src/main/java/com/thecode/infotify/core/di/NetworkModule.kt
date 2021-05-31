@@ -83,13 +83,13 @@ object NetworkModule {
                     .connectTimeout(REQUEST_TIMEOUT.toLong(), TimeUnit.SECONDS)
                     .readTimeout(REQUEST_TIMEOUT.toLong(), TimeUnit.SECONDS)
                     .writeTimeout(REQUEST_TIMEOUT.toLong(), TimeUnit.SECONDS)
-
         if (BuildConfig.DEBUG) {
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
             httpClient.addInterceptor(interceptor)
         }
-        httpClient.addInterceptor(BasicAuthInterceptor())
+            httpClient.addInterceptor(BasicAuthInterceptor())
+
         return httpClient.build()
     }
 
@@ -103,5 +103,6 @@ object NetworkModule {
         }
 
     }
+
 
 }

@@ -14,12 +14,12 @@ interface NewsApi {
     ): Response<NewsObjectResponse>
 
     @GET("v2/top-headlines")
-    fun getTopHeadlinesByLanguage(
+    suspend fun getTopHeadlinesByLanguage(
         @Query("language") language: String
     ): NewsObjectResponse
 
     @GET("v2/top-headlines")
-    fun getTopHeadlinesByLanguageAndCategory(
+    suspend fun getTopHeadlinesByLanguageAndCategory(
         @Query("country") language: String,
         @Query("category") category: String
     ): NewsObjectResponse
@@ -46,7 +46,7 @@ interface NewsApi {
     ): Response<NewsObjectResponse>
 
     @GET("v2/everything")
-    fun getAllNews(
+    suspend fun getAllNews(
         @Query("q") query: String,
         @Query("language") language: String,
         @Query("sortBy") sortBy: String

@@ -12,11 +12,11 @@ ArticleMapper @Inject constructor() :
 
     override fun mapToEntity(domainModel: Article): ArticleEntity {
         return ArticleEntity(
-            domainModel.source?.let { sourceItemToEntity(it) },
+            sourceItemToEntity(domainModel.source),
             domainModel.author,
             domainModel.title,
             domainModel.description,
-            domainModel.url.toString(),
+            domainModel.url,
             domainModel.urlToImage,
             domainModel.publishedAt,
             domainModel.content

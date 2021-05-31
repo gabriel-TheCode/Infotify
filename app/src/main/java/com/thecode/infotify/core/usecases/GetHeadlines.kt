@@ -3,8 +3,10 @@ package com.thecode.infotify.core.usecases
 import com.thecode.infotify.core.repositories.NewsRepository
 import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.core.domain.News
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class GetHeadlines @Inject constructor(
@@ -12,12 +14,20 @@ class GetHeadlines @Inject constructor(
 ) {
     suspend fun getHeadlines(language: String, category: String): Flow<DataState<News>> = flow {
         emit(DataState.Loading)
-        val data = repository.fetchHeadlinesByLangAndCat(language, category)
-        if (data.articles.isEmpty()) {
-            emit(DataState.Error(Exception("Data must not be empty")))
-        } else {
-            emit(DataState.Success(data))
+        try {
+            val data = repository.fetchHeadlinesByLangAndCat(language, category)
+            if(data.status == "ok"){
+                if (data.articles.isEmpty()) {
+                    emit(DataState.Error(Exception("No result found")))
+                } else {
+                    emit(DataState.Success(data))
+                }
+            }else{
+                emit(DataState.Error(Exception("Network error")))
+            }
+        } catch (e: Exception){
+            emit(DataState.Error(Exception(e.message)))
         }
-        emit(DataState.Success(data))
-    }
+
+    }.flowOn(Dispatchers.IO)
 }

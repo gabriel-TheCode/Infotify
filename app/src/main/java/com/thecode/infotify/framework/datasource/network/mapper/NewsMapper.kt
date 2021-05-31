@@ -2,6 +2,7 @@ package com.thecode.infotify.framework.datasource.network.mapper
 
 import com.thecode.infotify.core.domain.News
 import com.thecode.infotify.core.domain.Article
+import com.thecode.infotify.core.domain.Source
 import com.thecode.infotify.core.domain.SourceItem
 import com.thecode.infotify.database.article.ArticleEntity
 import com.thecode.infotify.database.source.SourceEntity
@@ -12,17 +13,20 @@ class NewsMapper @Inject constructor() :
     EntityMapper<NewsObjectResponse, News> {
     override fun mapToDomain(entity: NewsObjectResponse): News {
         return News(
-            entity.status,
-            entity.totalResults,
+            entity.status.toString(),
+            entity.totalResults.toString(),
             entity.articles.map {
-                mapFromNewsItems(it.article)
-            })
+                mapFromNewsItems(it)}
+            )
     }
 
 
-    private fun mapFromNewsItems(article: NewsObjectResponse.Result.Article): Article {
+    private fun mapFromNewsItems(article: NewsObjectResponse.Result): Article {
         return Article(
-            mapFromSource(article),
+            SourceItem(
+                article.source.id,
+                article.source.name
+            ),
             article.author,
             article.title,
             article.description,
@@ -33,25 +37,33 @@ class NewsMapper @Inject constructor() :
         )
     }
 
-    private fun mapFromSource(article: NewsObjectResponse.Result.Article): SourceItem {
-        return SourceItem(
-            article.source?.id,
-            article.source?.name
-        )
-    }
 
     private fun newsItemToEntity(article: Article): ArticleEntity {
         return ArticleEntity(
-            article.source?.let { sourceItemToEntity(it) },
+            sourceItemToEntity(article.source),
             article.author,
             article.title,
             article.description,
-            article.url.toString(),
+            article.url,
             article.urlToImage,
             article.publishedAt,
             article.content
         )
     }
+
+    fun newsEntityToItem(article: ArticleEntity): Article {
+        return Article(
+            SourceItem(article.source?.id, article.source?.name),
+            article.author,
+            article.title,
+            article.description,
+            article.url,
+            article.urlToImage,
+            article.publishedAt,
+            article.content
+        )
+    }
+
 
     private fun sourceItemToEntity(source: SourceItem): SourceEntity{
         return SourceEntity(
@@ -67,6 +79,6 @@ class NewsMapper @Inject constructor() :
     }
 
     override fun mapToEntity(domainModel: News): NewsObjectResponse {
-        TODO("Not yet implemented")
+        throw Exception("Not used")
     }
 }

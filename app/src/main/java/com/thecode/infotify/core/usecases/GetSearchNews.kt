@@ -3,8 +3,10 @@ package com.thecode.infotify.core.usecases
 import com.thecode.infotify.core.repositories.NewsRepository
 import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.core.domain.News
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class GetSearchNews @Inject constructor(
@@ -12,12 +14,15 @@ class GetSearchNews @Inject constructor(
 ) {
     suspend fun getSearchNews(query: String, language: String, sortBy: String): Flow<DataState<News>> = flow {
         emit(DataState.Loading)
-        val data = repository.fetchNews(query, language, sortBy)
-        if (data.articles.isEmpty()) {
-            emit(DataState.Error(Exception("Data must not be empty")))
-        } else {
-            emit(DataState.Success(data))
+        try {
+            val data = repository.fetchNews(query, language, sortBy)
+            if (data.articles.isEmpty()) {
+                emit(DataState.Error(Exception("No result found")))
+            } else {
+                emit(DataState.Success(data))
+            }
+        } catch (e: Exception){
+            emit(DataState.Error(Exception(e.message)))
         }
-        emit(DataState.Success(data))
-    }
+    }.flowOn(Dispatchers.IO)
 }

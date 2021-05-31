@@ -9,7 +9,6 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
@@ -55,10 +54,7 @@ class HomeFragment : BaseFragment() {
         mViewPagerAdapter.addFragment(HeadlineFragment.newInstance("science"), "Science")
         mViewPagerAdapter.addFragment(HeadlineFragment.newInstance("sports"), "Sports")
         mViewPagerAdapter.addFragment(HeadlineFragment.newInstance("technology"), "Technology")
-        mViewPagerAdapter.addFragment(
-            HeadlineFragment.newInstance("entertainment"),
-            "Entertainment"
-        )
+        mViewPagerAdapter.addFragment(HeadlineFragment.newInstance("entertainment"), "Entertainment")
         mViewPager.adapter = mViewPagerAdapter
         mViewPager.offscreenPageLimit = 6
 

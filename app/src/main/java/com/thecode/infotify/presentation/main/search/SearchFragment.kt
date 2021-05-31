@@ -21,21 +21,29 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
+import com.thecode.infotify.base.BaseFragment
 import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.domain.DataState
-import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import com.thecode.infotify.databinding.BottomSheetSearchBinding
 import com.thecode.infotify.databinding.FragmentSearchBinding
 import com.thecode.infotify.databinding.LayoutBadStateBinding
+import com.thecode.infotify.presentation.main.NewsOnClickListener
+import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import com.thecode.infotify.utils.AppConstants
+import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 import org.json.JSONException
 
 /**
  * A simple [Fragment] subclass.
  */
-class SearchFragment : Fragment() {
+
+@AndroidEntryPoint
+class SearchFragment : BaseFragment(), NewsOnClickListener {
     private val viewModel: SearchViewModel by viewModels()
+
+    // Listener
+    private var newsOnClickListener: NewsOnClickListener = this
 
     private var _binding: FragmentSearchBinding? = null
     private var _bindingLayoutBadState: LayoutBadStateBinding? = null
@@ -68,9 +76,9 @@ class SearchFragment : Fragment() {
 
         val view = binding.root
 
+        subscribeObserver()
         initViews()
         initRecyclerView()
-        subscribeObserver()
 
         imgSearchOptions.setOnClickListener {
             showBottomSheetSearch()
@@ -93,22 +101,6 @@ class SearchFragment : Fragment() {
     private fun fetchApiNews(query: String, language: String, sortBy: String) {
         Log.d("Search", "$query - $language - $sortBy")
         viewModel.getSearchNews(query, language, sortBy)
-    }
-
-    private fun displayNews(articles: Array<Article>) {
-        try {
-
-            val articleArrayList: ArrayList<Article> = ArrayList()
-            for (i in articles.indices) {
-                val article = articles[i]
-                articleArrayList.add(article)
-                recyclerAdapter.setArticleListItems(articleArrayList)
-            }
-
-            recyclerView.scheduleLayoutAnimation()
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
     }
 
     private fun showBottomSheetSearch() {
@@ -227,31 +219,27 @@ class SearchFragment : Fragment() {
     }
 
     private fun subscribeObserver() {
-        viewModel.searchState.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is DataState.Success -> {
-                    hideBadStateLayout()
-                    hideLoadingProgress()
-                    if (it.data.articles.isEmpty()) {
-                        showNoResultErrorLayout()
-                    } else {
-                        populateRecyclerView(it.data.articles)
+            viewModel.searchState.observe(viewLifecycleOwner, Observer {
+                when (it) {
+                    is DataState.Success -> {
+                            hideBadStateLayout()
+                            hideLoadingProgress()
+                            populateRecyclerView(it.data.articles)
+                    }
+                    is DataState.Loading -> {
+                        showLoadingProgress()
+                    }
+                    is DataState.Error -> {
+                        hideLoadingProgress()
+                        showInternetConnectionErrorLayout()
+                        Toast.makeText(
+                            context,
+                            getString(R.string.internet_connection_error),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
-                is DataState.Loading -> {
-                    showLoadingProgress()
-                }
-                is DataState.Error -> {
-                    hideLoadingProgress()
-                    showInternetConnectionErrorLayout()
-                    Toast.makeText(
-                        context,
-                        getString(R.string.internet_connection_error),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        })
+            })
     }
 
     private fun populateRecyclerView(articles: List<Article>) {
@@ -323,9 +311,34 @@ class SearchFragment : Fragment() {
     private fun initRecyclerView() {
 
         recyclerView = binding.recyclerViewNewsEverything
-        recyclerAdapter = NewsRecyclerViewAdapter(requireContext(), viewModel)
+        recyclerAdapter = NewsRecyclerViewAdapter(newsOnClickListener)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         // recyclerView.adapter = recyclerAdapter
         recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
+    }
+
+    override fun saveBookmark(article: Article) {
+        viewModel.saveBookmark(article)
+        Toast.makeText(context, "Hey", Toast.LENGTH_SHORT).show()
+        // Transaction was a success.
+        Log.v("database", "Stored ok")
+        AestheticDialog.showRainbow(
+            requireActivity(),
+            "Success",
+            "Bookmark saved",
+            AestheticDialog.SUCCESS
+        )
+    }
+
+    override fun deleteBookmark(article: Article) {
+        TODO("Not yet implemented")
+    }
+
+    override fun openNews(article: Article) {
+        loadWebviewDialog(article)
+    }
+
+    override fun shareNews(article: Article) {
+        openSharingIntent(article)
     }
 }

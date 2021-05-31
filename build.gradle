@@ -11,6 +11,7 @@ buildscript {
     ext.interceptor_version = '4.7.2'
     ext.viewmodel_version = '2.2.0'
     ext.gson_version = '2.8.6'
+    ext.lifecycle_version = "2.3.1"
 
     //DI
     ext.hilt_version = '2.31.2-alpha'

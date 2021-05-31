@@ -1,11 +1,13 @@
 package com.thecode.infotify.presentation.main
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.usecases.IsNightModeEnabled
 import com.thecode.infotify.core.usecases.SaveBookmark
 import com.thecode.infotify.database.article.ArticleEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,6 +21,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun saveBookmark(article: Article){
-        saveBookmark.invoke(article)
+        viewModelScope.launch { saveBookmark.invoke(article) }
+
     }
 }

@@ -9,7 +9,7 @@ import javax.inject.Inject
 class SaveBookmark @Inject constructor(
     private val repository: NewsRepository
 ) {
-     fun invoke (article: Article) {
+     suspend fun invoke (article: Article) {
         repository.saveBookmark(article)
     }
 }

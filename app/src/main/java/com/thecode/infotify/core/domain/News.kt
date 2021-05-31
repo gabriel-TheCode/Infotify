@@ -7,11 +7,11 @@ data class News(
 )
 
 data class Article(
-    var source: SourceItem? = null,
+    var source: SourceItem,
     var author: String? = null,
     var title: String? = null,
     var description: String? = null,
-    var url: String? = null,
+    var url: String,
     var urlToImage: String? = null,
     var publishedAt: String? = null,
     var content: String? = null

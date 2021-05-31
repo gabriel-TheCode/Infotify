@@ -14,6 +14,7 @@ import javax.inject.Inject
 class NewsRepository @Inject constructor(
     private val networkDataSource: InfotifyRemoteDataSourceImpl,
     private val articleMapper: ArticleMapper,
+    private val newsMapper: NewsMapper,
     private val appDataBase: AppDatabase
 ) {
 
@@ -37,11 +38,11 @@ class NewsRepository @Inject constructor(
         return appDataBase.getArticlesDao().getAllArticles()
     }
 
-    fun saveBookmark(article: Article) {
+    suspend fun saveBookmark(article: Article) {
         appDataBase.getArticlesDao().insert(articleMapper.mapToEntity(article))
     }
 
-    fun deleteBookmark(url: String) {
+    suspend fun deleteBookmark(url: String) {
         appDataBase.getArticlesDao().deleteByPrimaryId(url)
     }
 }

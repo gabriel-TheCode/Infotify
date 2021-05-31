@@ -11,8 +11,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.thecode.infotify.R
 import com.thecode.infotify.databinding.ActivityAboutBinding
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 
+@AndroidEntryPoint
 class AboutActivity : AppCompatActivity() {
 
     private val viewModel: AboutViewModel by viewModels()

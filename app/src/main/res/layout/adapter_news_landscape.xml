@@ -115,16 +115,13 @@
                 android:gravity="end">
 
 
-                <com.sackcentury.shinebuttonlib.ShineButton
-                    android:id="@+id/btnBookmark"
+                <ImageView
+                    android:id="@+id/btnDelete"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="20dp"
-                    app:btn_color="@color/colorPrimary"
-                    app:btn_fill_color="@color/darker_gray"
-                    app:siShape="@drawable/ic_bookmark_gray_24dp"
-                    app:small_shine_color="@color/md_red_400" />
+                    android:src="@drawable/ic_baseline_delete_gray_24"/>
 
                 <ImageView
                     android:id="@+id/btnShare"

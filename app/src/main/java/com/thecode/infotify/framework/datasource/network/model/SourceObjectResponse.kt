@@ -4,23 +4,38 @@ import com.google.gson.annotations.SerializedName
 
 data class SourceObjectResponse(
     @SerializedName("status")
-    var status: String? = null,
+    val status: String,
 
     @SerializedName("sources")
-    var sources: List<Result>
+    var sources: List<Result> = listOf()
 ) {
 
 data class Result(
-    val source: Source
+    var source: Source
 ) {
             data class Source(
+                @SerializedName("id")
                 var id: String? = null,
+
+                @SerializedName("cnbc")
                 var cnbc: String? = null,
+
+                @SerializedName("name")
                 var name: String? = null,
+
+                @SerializedName("description")
                 var description: String? = null,
+
+                @SerializedName("url")
                 var url: String? = null,
+
+                @SerializedName("category")
                 var category: String? = null,
+
+                @SerializedName("language")
                 var language: String? = null,
+
+                @SerializedName("country")
                 var country: String? = null
             )
         }

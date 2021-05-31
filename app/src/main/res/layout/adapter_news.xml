@@ -46,7 +46,6 @@
                     android:textColor="?attr/primaryDescriptionColor"
                     android:text="BBC News" />
 
-
             </RelativeLayout>
 
 
@@ -59,10 +58,9 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/placeholder" />
 
-
             <TextView
                 android:id="@+id/text_title"
-                fontPath="fonts/SF-Medium.otf"
+                android:fontFamily="fonts/SF-Medium.otf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/layout_info"
@@ -89,9 +87,7 @@
                 android:textColor="?attr/primaryDescriptionColor"
                 android:textSize="12sp" />
 
-
         </RelativeLayout>
-
 
     </FrameLayout>
 
@@ -111,7 +107,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
             <TextView
                 android:id="@+id/text_chip_date"
                 android:layout_width="90dp"
@@ -125,23 +120,10 @@
                 android:textColor="?attr/primaryDateColor"
                 android:textSize="12sp" />
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="end">
-
-
-                <com.sackcentury.shinebuttonlib.ShineButton
-                    android:id="@+id/btnBookmark"
-                    android:layout_width="26dp"
-                    android:layout_height="26dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="20dp"
-                    app:btn_color="@color/darker_gray"
-                    app:btn_fill_color="@color/colorPrimary"
-                    app:siShape="@drawable/ic_bookmark_gray_24dp"
-                    app:small_shine_color="@color/md_red_400" />
 
                 <ImageView
                     android:id="@+id/btnShare"
@@ -155,8 +137,8 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
 </LinearLayout>

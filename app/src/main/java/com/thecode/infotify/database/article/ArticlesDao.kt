@@ -10,7 +10,7 @@ interface ArticlesDao {
     fun findByPrimaryId(primaryId: String?): ArticleEntity?
 
     @Query("DELETE FROM article WHERE url = :primaryId")
-    fun deleteByPrimaryId(primaryId: String?): Int
+    suspend fun deleteByPrimaryId(primaryId: String?): Int
 
     @Query("SELECT * FROM article")
     fun getAllArticles(): Flow<List<ArticleEntity>>
@@ -19,7 +19,7 @@ interface ArticlesDao {
     fun clear()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(articleEntity: ArticleEntity?): Long
+    suspend fun insert(articleEntity: ArticleEntity?): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg articleEntities: ArticleEntity?): LongArray?

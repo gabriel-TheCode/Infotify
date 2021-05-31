@@ -8,12 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
-import androidx.fragment.app.Fragment
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
+import com.thecode.infotify.base.BaseFragment
+import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.database.article.ArticleEntity
 import com.thecode.infotify.databinding.FragmentBookmarksBinding
@@ -23,17 +26,20 @@ import org.json.JSONException
 
 
 @AndroidEntryPoint
-class BookmarksFragment : Fragment() {
+class BookmarksFragment : BaseFragment(), BookmarkOnClickListener {
 
     private val viewModel: BookmarkViewModel by viewModels()
+
+    // Listener
+    private var newsOnClickListener: BookmarkOnClickListener = this
+
     private var _binding: FragmentBookmarksBinding? = null
     private val binding get() = _binding!!
 
-    lateinit var recyclerView: RecyclerView
-    lateinit var recyclerAdapter: BookmarkRecyclerViewAdapter
-    lateinit var refreshLayout: SwipeRefreshLayout
-    lateinit var layoutEmptyState: LinearLayout
-    private lateinit var listArticles: ArrayList<ArticleEntity>
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerAdapter: BookmarkRecyclerViewAdapter
+    private lateinit var refreshLayout: SwipeRefreshLayout
+    private lateinit var layoutEmptyState: LinearLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,20 +51,18 @@ class BookmarksFragment : Fragment() {
 
         val view = binding.root
 
+        subscribeObserver()
         initViews()
         initRecyclerView()
-        subscribeObserver()
-
         viewModel.getBookmarks()
 
         return view
     }
 
 
-
     private fun initRecyclerView() {
         recyclerView = binding.recyclerViewNewsBookmark
-        recyclerAdapter = BookmarkRecyclerViewAdapter(requireContext(), viewModel)
+        recyclerAdapter = BookmarkRecyclerViewAdapter(newsOnClickListener)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
     }
@@ -78,17 +82,16 @@ class BookmarksFragment : Fragment() {
         @ColorInt val color = typedValue.data
         refreshLayout.setProgressBackgroundColorSchemeColor(color)
         refreshLayout.setOnRefreshListener {
-            populateRecyclerView(listArticles)
+            viewModel.getBookmarks()
         }
     }
 
     private fun hideEmptyStateLayout() {
-        if (layoutEmptyState.visibility == View.VISIBLE)
-            layoutEmptyState.visibility = View.GONE
+            layoutEmptyState.isVisible = false
     }
 
     private fun showEmptyStateLayout(){
-        layoutEmptyState.visibility = View.VISIBLE
+        layoutEmptyState.isVisible = true
     }
 
     private fun hideLoadingProgress() {
@@ -116,19 +119,37 @@ class BookmarksFragment : Fragment() {
         })
     }
 
-    private fun populateRecyclerView(articles: List<ArticleEntity>) {
+    private fun populateRecyclerView(articles: List<Article>) {
         try {
-            val articleArrayList: ArrayList<ArticleEntity> = ArrayList()
+            val articleArrayList: ArrayList<Article> = ArrayList()
             for (i in articles.indices) {
                 val article = articles[i]
                 articleArrayList.add(article)
                 recyclerAdapter.setArticleListItems(articleArrayList)
             }
             hideEmptyStateLayout()
-            refreshLayout.isRefreshing = false
+            hideLoadingProgress()
             recyclerView.scheduleLayoutAnimation()
         } catch (e: JSONException) {
             e.printStackTrace()
         }
+    }
+
+    override fun deleteBookmark(article: Article) {
+        viewModel.deleteBookmark(article.url)
+        AestheticDialog.showRainbow(
+            requireActivity(),
+            "Success",
+            "Bookmark deleted successfully",
+            AestheticDialog.SUCCESS
+        )
+    }
+
+    override fun openNews(article: Article) {
+        loadWebviewDialog(article)
+    }
+
+    override fun shareNews(article: Article) {
+        openSharingIntent(article)
     }
 }

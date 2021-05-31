@@ -6,7 +6,7 @@ import javax.inject.Inject
 class DeleteBookmark @Inject constructor(
     private val repository: NewsRepository
 ) {
-    fun invoke(url: String) {
+    suspend fun invoke(url: String) {
         repository.deleteBookmark(url)
     }
 }

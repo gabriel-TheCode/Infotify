@@ -2,6 +2,7 @@ package com.thecode.infotify.presentation.main.headline
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -11,17 +12,20 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
 import com.thecode.infotify.base.BaseFragment
 import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.core.domain.Article
-import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import com.thecode.infotify.databinding.FragmentHeadlineBinding
 import com.thecode.infotify.databinding.LayoutBadStateBinding
+import com.thecode.infotify.presentation.main.NewsOnClickListener
+import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import com.thecode.infotify.utils.AppConstants
 import com.thecode.infotify.utils.AppConstants.ARG_CATEGORY
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,9 +34,13 @@ import org.json.JSONException
 
 
 @AndroidEntryPoint
-class HeadlineFragment : BaseFragment() {
+class HeadlineFragment : BaseFragment(), NewsOnClickListener {
 
+    // ViewModel
     private val viewModel: HeadlineViewModel by viewModels()
+
+    // Listener
+    private var newsOnClickListener: NewsOnClickListener = this
 
     // View Binding
     private var _bindingHeadline: FragmentHeadlineBinding? = null
@@ -51,6 +59,7 @@ class HeadlineFragment : BaseFragment() {
     lateinit var textState: TextView
     lateinit var imgState: ImageView
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
@@ -67,9 +76,10 @@ class HeadlineFragment : BaseFragment() {
         _bindingLayoutBadState = LayoutBadStateBinding.inflate(inflater, container, false)
 
         val view = binding.root
+
+        subscribeObserver()
         initViews()
         initRecyclerView()
-        subscribeObserver()
 
         btnRetry.setOnClickListener {
             fetchApiNews()
@@ -102,9 +112,9 @@ class HeadlineFragment : BaseFragment() {
                 showErrorDialog(getString(R.string.error),
                     getString(R.string.check_internet))
             } else {
-                layoutBadState.visibility = View.VISIBLE
+                layoutBadState.isVisible = true
                 textState.text = getString(R.string.internet_connection_error)
-                btnRetry.visibility = View.VISIBLE
+                btnRetry.isVisible = true
             }
         }
 
@@ -113,15 +123,14 @@ class HeadlineFragment : BaseFragment() {
                 showErrorDialog(getString(R.string.error),
                     getString(R.string.service_unavailable))
             } else {
-                layoutBadState.visibility = View.VISIBLE
+                layoutBadState.isVisible = true
                 textState.text = getString(R.string.no_result_found)
-                btnRetry.visibility = View.GONE
+                btnRetry.isVisible = true
             }
         }
 
         private fun hideBadStateLayout() {
-            if (layoutBadState.visibility == View.VISIBLE)
-                layoutBadState.visibility = View.GONE
+                layoutBadState.isVisible = false
         }
 
         companion object {
@@ -138,18 +147,15 @@ class HeadlineFragment : BaseFragment() {
             viewModel.headlineState.observe(viewLifecycleOwner, {
                 when (it) {
                     is DataState.Success -> {
-                        hideBadStateLayout()
-                        hideLoadingProgress()
-                        if (it.data.articles.isEmpty()) {
-                            showNoResultErrorLayout()
-                        } else {
-                            populateRecyclerView(it.data.articles)
-                        }
+                                hideBadStateLayout()
+                                hideLoadingProgress()
+                                populateRecyclerView(it.data.articles)
                     }
                     is DataState.Loading -> {
                         showLoadingProgress()
                     }
                     is DataState.Error -> {
+                        Toast.makeText(requireActivity(), it.exception.message, Toast.LENGTH_LONG).show()
                         hideLoadingProgress()
                         showInternetConnectionErrorLayout()
                         Toast.makeText(
@@ -171,7 +177,7 @@ class HeadlineFragment : BaseFragment() {
         }
 
         private fun initRecyclerView() {
-            recyclerAdapter = NewsRecyclerViewAdapter(requireContext(), viewModel)
+            recyclerAdapter = NewsRecyclerViewAdapter(newsOnClickListener)
             recyclerView.layoutManager = LinearLayoutManager(activity)
             // recyclerView.adapter = recyclerAdapter
             recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
@@ -214,4 +220,31 @@ class HeadlineFragment : BaseFragment() {
                 e.printStackTrace()
             }
         }
+
+    override fun saveBookmark(article: Article) {
+        viewModel.saveBookmark(article)
+        Toast.makeText(context, "Hey", Toast.LENGTH_SHORT).show()
+        // Transaction was a success.
+        Log.v("database", "Stored ok")
+        AestheticDialog.showRainbow(
+            requireActivity(),
+            "Success",
+            "Bookmark saved",
+            AestheticDialog.SUCCESS
+        )
+    }
+
+
+    override fun deleteBookmark(article: Article) {
+        TODO("Not yet implemented")
+    }
+
+    override fun openNews(article: Article) {
+       loadWebviewDialog(article)
+
+    }
+
+    override fun shareNews(article: Article) {
+       openSharingIntent(article)
+    }
 }
