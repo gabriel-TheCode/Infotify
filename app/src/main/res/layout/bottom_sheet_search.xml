@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/search_filter"
-            fontPath="fonts/SF-Medium.otf"
+            android:fontFamily="@font/sf_medium"
             android:textColor="@color/colorPrimary"
             android:layout_margin="10dp"
             android:textSize="16sp"
@@ -139,7 +139,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="@string/apply"
-            fontPath="fonts/SF-Medium.otf"
+            android:fontFamily="@font/sf_medium"
             android:textColor="@color/md_white_1000"
             android:layout_margin="20dp"
             android:background="@drawable/btn_default_selector"/>

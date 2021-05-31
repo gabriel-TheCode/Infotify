@@ -30,14 +30,15 @@ class SearchViewModel @Inject constructor(
                 getSearchNews.getSearchNews(query, language, category).onEach {
                     when (it) {
                         is DataState.Success -> _searchState.value = it
-                        else -> {}
+                        else -> {
+                        }
                     }
                 }.launchIn(viewModelScope)
             }
         }
     }
 
-    fun saveBookmark(article: Article){
+    fun saveBookmark(article: Article) {
         viewModelScope.launch {
             saveBookmark.invoke(article)
         }

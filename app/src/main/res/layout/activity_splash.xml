@@ -29,9 +29,8 @@
         android:layout_below="@id/app_image_view"
         android:layout_centerHorizontal="true"
         android:layout_margin="5dp"
-        android:fontFamily="sans-serif"
         android:text="@string/app_name"
-        fontPath="fonts/OleoScript-Bold.ttf"
+        android:fontFamily="@font/oleoscript_bold"
         android:textColor="@android:color/white"
         android:textSize="22sp"
         android:textStyle="bold" />

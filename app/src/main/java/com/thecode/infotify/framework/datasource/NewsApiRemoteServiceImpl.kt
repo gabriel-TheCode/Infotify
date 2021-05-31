@@ -11,7 +11,10 @@ interface NewsApiRemoteService {
 
     suspend fun getTopHeadlinesByLanguage(language: String): NewsObjectResponse
 
-    suspend fun getTopHeadlinesByLanguageAndCategory(language: String, category: String): NewsObjectResponse
+    suspend fun getTopHeadlinesByLanguageAndCategory(
+        language: String,
+        category: String
+    ): NewsObjectResponse
 
     suspend fun getTopHeadlinesByCountry(country: String): Response<NewsObjectResponse>
 
@@ -67,17 +70,17 @@ class NewsApiRemoteServiceImpl constructor(
     override suspend fun getAllNewsByQuery(
         query: String
     ): Response<NewsObjectResponse> {
-       return newsApi.getAllNewsByQuery(query)
+        return newsApi.getAllNewsByQuery(query)
     }
 
     override suspend fun getSources(): Response<SourceObjectResponse> {
-       return newsApi.getSources()
+        return newsApi.getSources()
     }
 
     override suspend fun getSourcesByLang(
         language: String
     ): Response<SourceObjectResponse> {
-       return newsApi.getSourcesByLang(language)
+        return newsApi.getSourcesByLang(language)
     }
 
     override suspend fun getAllNews(

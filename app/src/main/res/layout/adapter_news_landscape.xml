@@ -52,6 +52,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@id/icon_info"
                     android:text="BBC News"
+                    android:fontFamily="@font/sf_regular"
                     android:textColor="@color/md_grey_200" />
 
 
@@ -60,7 +61,7 @@
 
             <TextView
                 android:id="@+id/text_title"
-                fontPath="fonts/SF-Medium.otf"
+                android:fontFamily="@font/sf_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/layout_info"
@@ -106,6 +107,7 @@
                 android:background="@drawable/rounded_background_chip"
                 android:gravity="center"
                 android:text="20.05.2020"
+                android:fontFamily="@font/sf_regular"
                 android:textColor="?attr/primaryDateColor"
                 android:textSize="12sp" />
 

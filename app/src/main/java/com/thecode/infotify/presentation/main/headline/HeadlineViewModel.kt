@@ -1,6 +1,9 @@
 package com.thecode.infotify.presentation.main.headline
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.core.domain.News
@@ -23,7 +26,7 @@ class HeadlineViewModel @Inject constructor(
 
     fun getHeadlines(language: String, category: String) {
 
-            viewModelScope.launch {
+        viewModelScope.launch {
             _headlineState.value.let { _ ->
                 getHeadlines.getHeadlines(language, category).onEach {
                     when (it) {
@@ -34,7 +37,7 @@ class HeadlineViewModel @Inject constructor(
         }
     }
 
-    fun saveBookmark(article: Article){
+    fun saveBookmark(article: Article) {
         viewModelScope.launch {
             saveBookmark.invoke(article)
         }

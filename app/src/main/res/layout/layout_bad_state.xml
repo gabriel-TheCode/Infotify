@@ -23,7 +23,7 @@
         android:textSize="18sp"
         android:gravity="center"
         android:layout_margin="20dp"
-        fontPath="fonts/SF-Medium.otf"/>
+        android:fontFamily="@font/sf_medium"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_retry"

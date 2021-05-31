@@ -32,7 +32,6 @@ class AboutActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAboutBinding.inflate(layoutInflater)
 
         if (viewModel.isNightModeActivated()) {
             setTheme(R.style.AppTheme_Base_Night)
@@ -40,6 +39,7 @@ class AboutActivity : AppCompatActivity() {
             setTheme(R.style.AppTheme_Base_Light)
         }
 
+        binding = ActivityAboutBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
@@ -70,7 +70,7 @@ class AboutActivity : AppCompatActivity() {
         }
 
         layoutPlaystore.setOnClickListener {
-            val appPackageName = packageName // getPackageName() from Context or Activity object
+            val appPackageName = packageName
 
             try {
                 startActivity(

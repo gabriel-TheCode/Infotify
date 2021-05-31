@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="Infotify"
-                    fontPath="fonts/OleoScript-Bold.ttf"
+                    android:fontFamily="@font/oleoscript_bold"
                     android:textColor="?attr/primaryBackgroundColor"
                     android:layout_marginStart="20dp"
                     android:textSize="22sp"
@@ -64,6 +64,7 @@
             app:tabSelectedTextColor="@color/md_white_1000"
             app:tabIndicatorColor="@color/md_white_1000"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/sf_medium"
             android:background="@drawable/bg_gradient_appbar"/>
 
 

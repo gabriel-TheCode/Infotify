@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.thecode.infotify.R
-import com.thecode.infotify.databinding.AdapterNewsBinding
 import com.thecode.infotify.core.domain.Article
+import com.thecode.infotify.databinding.AdapterNewsBinding
 
 interface NewsOnClickListener {
 
@@ -62,6 +62,10 @@ class NewsRecyclerViewAdapter(private val listener: NewsOnClickListener) :
             return@setOnLongClickListener true
         }
 
+        holder.btnBookmark.setOnClickListener {
+            listener.saveBookmark(news)
+        }
+
         holder.container.setOnClickListener {
             listener.openNews(news)
         }
@@ -80,6 +84,7 @@ class NewsRecyclerViewAdapter(private val listener: NewsOnClickListener) :
         val tvNewsdescription: TextView = binding.textDescription
         val tvPublisherName: TextView = binding.textNamePublisher
         val image: ImageView = binding.imageNews
+        val btnBookmark: ImageView = binding.btnBookmark
         val btnShare: ImageView = binding.btnShare
         val tvNewsDate: TextView = binding.textChipDate
     }

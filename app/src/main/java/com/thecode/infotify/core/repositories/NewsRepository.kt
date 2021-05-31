@@ -1,6 +1,5 @@
 package com.thecode.infotify.core.repositories
 
-import androidx.lifecycle.LiveData
 import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.domain.News
 import com.thecode.infotify.core.remote.InfotifyRemoteDataSourceImpl

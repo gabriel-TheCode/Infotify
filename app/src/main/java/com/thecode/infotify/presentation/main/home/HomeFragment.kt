@@ -16,10 +16,10 @@ import com.mahfa.dnswitch.DayNightSwitch
 import com.mahfa.dnswitch.DayNightSwitchAnimListener
 import com.thecode.infotify.R
 import com.thecode.infotify.base.BaseFragment
-import com.thecode.infotify.presentation.about.AboutActivity
-import com.thecode.infotify.presentation.main.headline.HeadlineViewPagerAdapter
 import com.thecode.infotify.databinding.FragmentHomeBinding
+import com.thecode.infotify.presentation.about.AboutActivity
 import com.thecode.infotify.presentation.main.headline.HeadlineFragment
+import com.thecode.infotify.presentation.main.headline.HeadlineViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -54,7 +54,10 @@ class HomeFragment : BaseFragment() {
         mViewPagerAdapter.addFragment(HeadlineFragment.newInstance("science"), "Science")
         mViewPagerAdapter.addFragment(HeadlineFragment.newInstance("sports"), "Sports")
         mViewPagerAdapter.addFragment(HeadlineFragment.newInstance("technology"), "Technology")
-        mViewPagerAdapter.addFragment(HeadlineFragment.newInstance("entertainment"), "Entertainment")
+        mViewPagerAdapter.addFragment(
+            HeadlineFragment.newInstance("entertainment"),
+            "Entertainment"
+        )
         mViewPager.adapter = mViewPagerAdapter
         mViewPager.offscreenPageLimit = 6
 

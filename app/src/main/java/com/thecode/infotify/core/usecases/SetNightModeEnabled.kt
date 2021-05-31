@@ -6,7 +6,7 @@ import javax.inject.Inject
 class SetNightModeEnabled @Inject constructor(
     private val repository: MainRepository
 ) {
-        operator fun invoke(state: Boolean) {
+    operator fun invoke(state: Boolean) {
         repository.setNightModeEnabled(state)
     }
 }

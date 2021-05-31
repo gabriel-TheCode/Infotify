@@ -23,7 +23,7 @@ ArticleMapper @Inject constructor() :
         )
     }
 
-    private fun sourceItemToEntity(source: SourceItem): SourceEntity{
+    private fun sourceItemToEntity(source: SourceItem): SourceEntity {
         return SourceEntity(
             source.id.toString(),
             source.cnbc,

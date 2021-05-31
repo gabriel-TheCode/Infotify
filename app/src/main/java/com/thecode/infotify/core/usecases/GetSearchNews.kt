@@ -1,8 +1,8 @@
 package com.thecode.infotify.core.usecases
 
-import com.thecode.infotify.core.repositories.NewsRepository
 import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.core.domain.News
+import com.thecode.infotify.core.repositories.NewsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -12,7 +12,11 @@ import javax.inject.Inject
 class GetSearchNews @Inject constructor(
     private val repository: NewsRepository
 ) {
-    suspend fun getSearchNews(query: String, language: String, sortBy: String): Flow<DataState<News>> = flow {
+    suspend fun getSearchNews(
+        query: String,
+        language: String,
+        sortBy: String
+    ): Flow<DataState<News>> = flow {
         emit(DataState.Loading)
         try {
             val data = repository.fetchNews(query, language, sortBy)
@@ -21,7 +25,7 @@ class GetSearchNews @Inject constructor(
             } else {
                 emit(DataState.Success(data))
             }
-        } catch (e: Exception){
+        } catch (e: Exception) {
             emit(DataState.Error(Exception(e.message)))
         }
     }.flowOn(Dispatchers.IO)

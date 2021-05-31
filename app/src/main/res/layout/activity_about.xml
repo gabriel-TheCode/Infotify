@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="About"
-                android:fontFamily="@font/OleoScript-Bold.ttf"
+                android:fontFamily="@font/oleoscript_bold"
                 android:textSize="26sp"
                 android:textColor="?attr/primaryBackgroundColor"
                 android:layout_marginVertical="30dp"/>

@@ -31,7 +31,15 @@ class InfotifyRemoteDataSourceImpl @Inject constructor(
         return newsMapper.mapToDomain(apiService.getTopHeadlinesByLanguage(language))
     }
 
-    override suspend fun fetchTopHeadlinesByLanguageAndCategory(language: String, category: String): News {
-        return newsMapper.mapToDomain(apiService.getTopHeadlinesByLanguageAndCategory(language, category))
+    override suspend fun fetchTopHeadlinesByLanguageAndCategory(
+        language: String,
+        category: String
+    ): News {
+        return newsMapper.mapToDomain(
+            apiService.getTopHeadlinesByLanguageAndCategory(
+                language,
+                category
+            )
+        )
     }
 }

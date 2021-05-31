@@ -8,8 +8,6 @@ import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.core.usecases.DeleteBookmark
 import com.thecode.infotify.core.usecases.GetBookmarks
-import com.thecode.infotify.database.article.ArticleEntity
-import com.thecode.infotify.framework.datasource.network.mapper.NewsMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -25,13 +23,12 @@ class BookmarkViewModel @Inject constructor(
     val articles: LiveData<DataState<List<Article>>>
         get() = _articles
 
-    fun getBookmarks(){
+    fun getBookmarks() {
         viewModelScope.launch {
             _articles.value.let { _ ->
                 getBookmarks.getBookmarks().onEach {
                     when (it) {
                         is DataState.Success -> _articles.value = it
-                        else -> {}
                     }
                 }.launchIn(viewModelScope)
             }

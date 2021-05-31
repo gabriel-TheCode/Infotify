@@ -44,7 +44,8 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:textColor="?attr/primaryDescriptionColor"
-                    android:text="BBC News" />
+                    android:text="BBC News"
+                    android:fontFamily="@font/sf_regular"/>
 
             </RelativeLayout>
 
@@ -60,7 +61,7 @@
 
             <TextView
                 android:id="@+id/text_title"
-                android:fontFamily="fonts/SF-Medium.otf"
+                android:fontFamily="@font/sf_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/layout_info"
@@ -84,6 +85,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="@string/lorem_ipsum"
+                android:fontFamily="@font/sf_regular"
                 android:textColor="?attr/primaryDescriptionColor"
                 android:textSize="12sp" />
 
@@ -117,6 +119,7 @@
                 android:background="@drawable/rounded_background_chip"
                 android:gravity="center"
                 android:text="20.05.2020"
+                android:fontFamily="@font/sf_regular"
                 android:textColor="?attr/primaryDateColor"
                 android:textSize="12sp" />
 
@@ -124,6 +127,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="end">
+
+                <ImageView
+                    android:id="@+id/btnBookmark"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="20dp"
+                    android:src="@drawable/ic_baseline_post_add_gray_24"/>
 
                 <ImageView
                     android:id="@+id/btnShare"

@@ -15,7 +15,8 @@ class InfotifySharedPref @SuppressLint("CommitPrefEdits") @Inject constructor(@A
         private const val IS_ONBOARDING_COMPLETED = "IS_ONBOARDING_COMPLETED"
     }
 
-    private var appSharedPrefs: SharedPreferences = context.getSharedPreferences(AppConstants.PREFERENCE_NAME, Activity.MODE_PRIVATE)
+    private var appSharedPrefs: SharedPreferences =
+        context.getSharedPreferences(AppConstants.PREFERENCE_NAME, Activity.MODE_PRIVATE)
     private var prefsEditor: SharedPreferences.Editor = appSharedPrefs.edit()
 
     fun clearSession() {

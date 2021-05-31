@@ -18,7 +18,6 @@ import com.thecode.infotify.R
 import com.thecode.infotify.base.BaseFragment
 import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.domain.DataState
-import com.thecode.infotify.database.article.ArticleEntity
 import com.thecode.infotify.databinding.FragmentBookmarksBinding
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
@@ -87,10 +86,10 @@ class BookmarksFragment : BaseFragment(), BookmarkOnClickListener {
     }
 
     private fun hideEmptyStateLayout() {
-            layoutEmptyState.isVisible = false
+        layoutEmptyState.isVisible = false
     }
 
-    private fun showEmptyStateLayout(){
+    private fun showEmptyStateLayout() {
         layoutEmptyState.isVisible = true
     }
 
@@ -137,12 +136,7 @@ class BookmarksFragment : BaseFragment(), BookmarkOnClickListener {
 
     override fun deleteBookmark(article: Article) {
         viewModel.deleteBookmark(article.url)
-        AestheticDialog.showRainbow(
-            requireActivity(),
-            "Success",
-            "Bookmark deleted successfully",
-            AestheticDialog.SUCCESS
-        )
+        showSuccessDialog("Success", "Bookmark deleted successfully")
     }
 
     override fun openNews(article: Article) {

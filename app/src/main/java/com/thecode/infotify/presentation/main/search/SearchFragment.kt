@@ -219,27 +219,27 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
     }
 
     private fun subscribeObserver() {
-            viewModel.searchState.observe(viewLifecycleOwner, Observer {
-                when (it) {
-                    is DataState.Success -> {
-                            hideBadStateLayout()
-                            hideLoadingProgress()
-                            populateRecyclerView(it.data.articles)
-                    }
-                    is DataState.Loading -> {
-                        showLoadingProgress()
-                    }
-                    is DataState.Error -> {
-                        hideLoadingProgress()
-                        showInternetConnectionErrorLayout()
-                        Toast.makeText(
-                            context,
-                            getString(R.string.internet_connection_error),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+        viewModel.searchState.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is DataState.Success -> {
+                    hideBadStateLayout()
+                    hideLoadingProgress()
+                    populateRecyclerView(it.data.articles)
                 }
-            })
+                is DataState.Loading -> {
+                    showLoadingProgress()
+                }
+                is DataState.Error -> {
+                    hideLoadingProgress()
+                    showInternetConnectionErrorLayout()
+                    Toast.makeText(
+                        context,
+                        getString(R.string.internet_connection_error),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        })
     }
 
     private fun populateRecyclerView(articles: List<Article>) {
@@ -296,7 +296,7 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
         searchView.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(q: String): Boolean {
-                 query = q
+                query = q
                 fetchApiNews(query, language, sortBy)
                 return false
             }
@@ -319,15 +319,7 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
 
     override fun saveBookmark(article: Article) {
         viewModel.saveBookmark(article)
-        Toast.makeText(context, "Hey", Toast.LENGTH_SHORT).show()
-        // Transaction was a success.
-        Log.v("database", "Stored ok")
-        AestheticDialog.showRainbow(
-            requireActivity(),
-            "Success",
-            "Bookmark saved",
-            AestheticDialog.SUCCESS
-        )
+        showSuccessDialog("Success", "Bookmark saved")
     }
 
     override fun deleteBookmark(article: Article) {

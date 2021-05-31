@@ -16,30 +16,30 @@ class NewsObjectResponse {
 
     inner class Result(
 
-            @SerializedName("source")
-            val source: SourceItem,
+        @SerializedName("source")
+        val source: SourceItem,
 
-            @SerializedName("author")
-            var author: String? = null,
+        @SerializedName("author")
+        var author: String? = null,
 
-            @SerializedName("title")
-            var title: String? = null,
+        @SerializedName("title")
+        var title: String? = null,
 
-            @SerializedName("description")
-            var description: String? = null,
+        @SerializedName("description")
+        var description: String? = null,
 
-            @SerializedName("url")
-            var url: String,
+        @SerializedName("url")
+        var url: String,
 
-            @SerializedName("urlToImage")
-            var urlToImage: String? = null,
+        @SerializedName("urlToImage")
+        var urlToImage: String? = null,
 
-            @SerializedName("publishedAt")
-            var publishedAt: String? = null,
+        @SerializedName("publishedAt")
+        var publishedAt: String? = null,
 
-            @SerializedName("content")
-            var content: String? = null
-        )
+        @SerializedName("content")
+        var content: String? = null
+    )
 
 
     inner class SourceItem(

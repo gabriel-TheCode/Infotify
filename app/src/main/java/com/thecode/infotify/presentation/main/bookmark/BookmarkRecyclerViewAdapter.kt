@@ -31,7 +31,8 @@ class BookmarkRecyclerViewAdapter(private val listener: BookmarkOnClickListener)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-        binding = AdapterNewsLandscapeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding =
+            AdapterNewsLandscapeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NewsViewHolder(binding)
     }
 
@@ -63,19 +64,13 @@ class BookmarkRecyclerViewAdapter(private val listener: BookmarkOnClickListener)
         }
     }
 
-    /*private fun remove(position: Int) {
-        if (itemCount > 1) {
-            newsList.removeAt(position)
-            notifyItemRemoved(position)
-        }
-    }*/
-
     fun setArticleListItems(newsList: ArrayList<Article>) {
         this.newsList = newsList
         notifyDataSetChanged()
     }
 
-    class NewsViewHolder(binding: AdapterNewsLandscapeBinding) : RecyclerView.ViewHolder(binding.root) {
+    class NewsViewHolder(binding: AdapterNewsLandscapeBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         val container: FrameLayout = binding.frameNews
         val tvNewsTitle: TextView = binding.textTitle
@@ -86,4 +81,4 @@ class BookmarkRecyclerViewAdapter(private val listener: BookmarkOnClickListener)
         val tvNewsDate: TextView = binding.textChipDate
     }
 
-    }
+}

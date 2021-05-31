@@ -30,7 +30,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
                     android:text="Bookmarks"
-                    fontPath="fonts/OleoScript-Bold.ttf"
+                    android:fontFamily="@font/oleoscript_bold"
                     android:textColor="?attr/primaryBackgroundColor"
                     android:textSize="22sp"
                     android:textStyle="bold" />
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:text="No bookmarks"
                 android:textSize="18sp"
-                fontPath="fonts/SF-Medium.otf"/>
+                android:fontFamily="@font/sf_medium"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

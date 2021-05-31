@@ -1,8 +1,7 @@
 package com.thecode.infotify.framework.datasource.network.mapper
 
-import com.thecode.infotify.core.domain.News
 import com.thecode.infotify.core.domain.Article
-import com.thecode.infotify.core.domain.Source
+import com.thecode.infotify.core.domain.News
 import com.thecode.infotify.core.domain.SourceItem
 import com.thecode.infotify.database.article.ArticleEntity
 import com.thecode.infotify.database.source.SourceEntity
@@ -16,8 +15,9 @@ class NewsMapper @Inject constructor() :
             entity.status.toString(),
             entity.totalResults.toString(),
             entity.articles.map {
-                mapFromNewsItems(it)}
-            )
+                mapFromNewsItems(it)
+            }
+        )
     }
 
 
@@ -65,7 +65,7 @@ class NewsMapper @Inject constructor() :
     }
 
 
-    private fun sourceItemToEntity(source: SourceItem): SourceEntity{
+    private fun sourceItemToEntity(source: SourceItem): SourceEntity {
         return SourceEntity(
             source.id.toString(),
             source.cnbc,

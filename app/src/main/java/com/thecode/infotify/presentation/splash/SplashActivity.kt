@@ -1,7 +1,6 @@
 package com.thecode.infotify.presentation.splash
 
 import android.animation.Animator
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build

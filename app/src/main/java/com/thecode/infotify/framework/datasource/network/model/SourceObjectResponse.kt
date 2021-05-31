@@ -10,33 +10,33 @@ data class SourceObjectResponse(
     var sources: List<Result> = listOf()
 ) {
 
-data class Result(
-    var source: Source
-) {
-            data class Source(
-                @SerializedName("id")
-                var id: String? = null,
+    data class Result(
+        var source: Source
+    ) {
+        data class Source(
+            @SerializedName("id")
+            var id: String? = null,
 
-                @SerializedName("cnbc")
-                var cnbc: String? = null,
+            @SerializedName("cnbc")
+            var cnbc: String? = null,
 
-                @SerializedName("name")
-                var name: String? = null,
+            @SerializedName("name")
+            var name: String? = null,
 
-                @SerializedName("description")
-                var description: String? = null,
+            @SerializedName("description")
+            var description: String? = null,
 
-                @SerializedName("url")
-                var url: String? = null,
+            @SerializedName("url")
+            var url: String? = null,
 
-                @SerializedName("category")
-                var category: String? = null,
+            @SerializedName("category")
+            var category: String? = null,
 
-                @SerializedName("language")
-                var language: String? = null,
+            @SerializedName("language")
+            var language: String? = null,
 
-                @SerializedName("country")
-                var country: String? = null
-            )
-        }
+            @SerializedName("country")
+            var country: String? = null
+        )
     }
+}

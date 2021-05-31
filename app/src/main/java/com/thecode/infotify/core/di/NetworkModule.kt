@@ -80,15 +80,15 @@ object NetworkModule {
 
     private fun getOkHttpService(): OkHttpClient {
         val httpClient: OkHttpClient.Builder = OkHttpClient.Builder()
-                    .connectTimeout(REQUEST_TIMEOUT.toLong(), TimeUnit.SECONDS)
-                    .readTimeout(REQUEST_TIMEOUT.toLong(), TimeUnit.SECONDS)
-                    .writeTimeout(REQUEST_TIMEOUT.toLong(), TimeUnit.SECONDS)
+            .connectTimeout(REQUEST_TIMEOUT.toLong(), TimeUnit.SECONDS)
+            .readTimeout(REQUEST_TIMEOUT.toLong(), TimeUnit.SECONDS)
+            .writeTimeout(REQUEST_TIMEOUT.toLong(), TimeUnit.SECONDS)
         if (BuildConfig.DEBUG) {
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
             httpClient.addInterceptor(interceptor)
         }
-            httpClient.addInterceptor(BasicAuthInterceptor())
+        httpClient.addInterceptor(BasicAuthInterceptor())
 
         return httpClient.build()
     }
@@ -97,7 +97,8 @@ object NetworkModule {
         @Throws(IOException::class)
         override fun intercept(chain: Interceptor.Chain): Response {
             val request = chain.request()
-            val newUrl = request.url.newBuilder().addQueryParameter("apiKey", BuildConfig.API_KEY).build()
+            val newUrl =
+                request.url.newBuilder().addQueryParameter("apiKey", BuildConfig.API_KEY).build()
             val newRequest = request.newBuilder().url(newUrl).build()
             return chain.proceed(newRequest)
         }

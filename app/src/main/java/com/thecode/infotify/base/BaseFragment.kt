@@ -23,7 +23,8 @@ open class BaseFragment : Fragment() {
             activity,
             title,
             description,
-            AestheticDialog.ERROR)
+            AestheticDialog.ERROR
+        )
     }
 
     fun showSuccessDialog(title: String, description: String) {
@@ -31,10 +32,11 @@ open class BaseFragment : Fragment() {
             activity,
             title,
             description,
-            AestheticDialog.SUCCESS)
+            AestheticDialog.SUCCESS
+        )
     }
 
-    fun openSharingIntent(article: Article){
+    fun openSharingIntent(article: Article) {
         val sendIntent = Intent()
         sendIntent.action = Intent.ACTION_SEND
         sendIntent.putExtra(
@@ -45,9 +47,9 @@ open class BaseFragment : Fragment() {
         requireActivity().startActivity(sendIntent)
     }
 
-    fun openDetailsActivity(article: Article){
+    fun openDetailsActivity(article: Article) {
 
-       val i = Intent(context, NewsDetailsActivity::class.java)
+        val i = Intent(context, NewsDetailsActivity::class.java)
 
         //ADD DATA TO OUR INTENT
         i.putExtra("title", article.title)
@@ -63,7 +65,8 @@ open class BaseFragment : Fragment() {
 
 
     }
-    fun loadWebviewDialog(article: Article){
+
+    fun loadWebviewDialog(article: Article) {
         // show article content inside a dialog
         val newsView = WebView(requireActivity())
         var failedLoading = false

@@ -1,7 +1,6 @@
 package com.thecode.infotify.presentation.main
 
 import android.content.Context
-import android.graphics.Typeface
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.annotation.StyleRes
@@ -11,9 +10,9 @@ import com.thecode.infotify.R
 import com.thecode.infotify.databinding.ActivityMainBinding
 import com.thecode.infotify.presentation.main.bookmark.BookmarksFragment
 import com.thecode.infotify.presentation.main.home.HomeFragment
+import com.thecode.infotify.presentation.main.home.HomeViewModel
 import com.thecode.infotify.presentation.main.search.SearchFragment
 import com.thecode.infotify.utils.FadePageTransformer
-import com.thecode.infotify.presentation.main.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import java.util.*
@@ -41,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         val bnlv = binding.bottomNavigationBar
-        bnlv.setTypeface(Typeface.createFromAsset(assets, "fonts/SF-Medium.otf"))
         // bnlv.setBadgeValue(0, "9+")
 
         val fragList = ArrayList<Fragment>()
