@@ -11,6 +11,7 @@ import android.widget.*
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -19,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
 import com.thecode.infotify.base.BaseFragment
 import com.thecode.infotify.core.domain.Article
@@ -39,7 +39,7 @@ import org.json.JSONException
  */
 
 @AndroidEntryPoint
-class SearchFragment : BaseFragment(), NewsOnClickListener {
+class SearchFragment : BaseFragment(), NewsOnClickListener{
     private val viewModel: SearchViewModel by viewModels()
 
     // Listener
@@ -169,7 +169,6 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
         val dialog = BottomSheetDialog(view.context)
         dialog.setContentView(view)
         val displayMetrics = this.resources.displayMetrics
-        val width = displayMetrics.widthPixels
         val height = displayMetrics.heightPixels
         val maxHeight = (height * 0.88).toInt()
         val mBehavior: BottomSheetBehavior<*> =
@@ -185,37 +184,32 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
 
     private fun showInternetConnectionErrorLayout() {
         if (recyclerAdapter.itemCount > 0) {
-            AestheticDialog.showRainbow(
-                activity,
+            showErrorDialog(
                 getString(R.string.error),
-                getString(R.string.check_internet),
-                AestheticDialog.ERROR
+                getString(R.string.check_internet)
             )
         } else {
-            layoutBadState.visibility = View.VISIBLE
+            layoutBadState.isVisible = true
             textState.text = getString(R.string.internet_connection_error)
-            btnRetry.visibility = View.VISIBLE
+            btnRetry.isVisible = true
         }
     }
 
     private fun showNoResultErrorLayout() {
         if (recyclerAdapter.itemCount > 0) {
-            AestheticDialog.showToaster(
-                activity,
+            showErrorDialog(
                 getString(R.string.error),
-                getString(R.string.service_unavailable),
-                AestheticDialog.ERROR
+                getString(R.string.service_unavailable)
             )
         } else {
-            layoutBadState.visibility = View.VISIBLE
+            layoutBadState.isVisible = true
             textState.text = getString(R.string.no_result_found)
-            btnRetry.visibility = View.GONE
+            btnRetry.isVisible = true
         }
     }
 
     private fun hideBadStateLayout() {
-        if (layoutBadState.visibility == View.VISIBLE)
-            layoutBadState.visibility = View.GONE
+            layoutBadState.isVisible = false
     }
 
     private fun subscribeObserver() {
@@ -269,10 +263,10 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
         sortBy = "PublishedAt"
         language = AppConstants.DEFAULT_LANG
         searchView = binding.searchview
-        btnRetry = bindingLayoutBadState.btnRetry
-        layoutBadState = bindingLayoutBadState.layoutBadState
-        imgState = bindingLayoutBadState.imgState
-        textState = bindingLayoutBadState.textState
+        btnRetry = binding.included.btnRetry
+        layoutBadState = binding.included.layoutBadState
+        imgState = binding.included.imgState
+        textState = binding.included.textState
         imgSearchOptions = binding.imageSettings
         refreshLayout = binding.refreshLayout
 
@@ -317,6 +311,8 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
         recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
     }
 
+
+
     override fun saveBookmark(article: Article) {
         viewModel.saveBookmark(article)
         showSuccessDialog("Success", "Bookmark saved")
@@ -333,4 +329,6 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
     override fun shareNews(article: Article) {
         openSharingIntent(article)
     }
+
+
 }

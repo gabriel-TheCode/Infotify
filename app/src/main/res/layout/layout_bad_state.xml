@@ -32,6 +32,6 @@
         android:text="@string/retry"
         android:textColor="@color/colorPrimary"
         android:background="@drawable/rounded_outline_orange"
-        fontPath="fonts/SF-Medium.otf"/>
+        android:fontFamily="@font/sf_medium"/>
 
 </LinearLayout>

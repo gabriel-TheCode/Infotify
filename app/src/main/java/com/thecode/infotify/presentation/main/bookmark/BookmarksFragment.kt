@@ -44,7 +44,7 @@ class BookmarksFragment : BaseFragment(), BookmarkOnClickListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentBookmarksBinding.inflate(inflater, container, false)
 
@@ -151,5 +151,10 @@ class BookmarksFragment : BaseFragment(), BookmarkOnClickListener {
 
     override fun shareNews(article: Article) {
         openSharingIntent(article)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

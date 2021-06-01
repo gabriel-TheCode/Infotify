@@ -27,9 +27,7 @@ class BookmarkViewModel @Inject constructor(
         viewModelScope.launch {
             _articles.value.let { _ ->
                 getBookmarks.getBookmarks().onEach {
-                    when (it) {
-                        is DataState.Success -> _articles.value = it
-                    }
+                    _articles.value = it
                 }.launchIn(viewModelScope)
             }
         }

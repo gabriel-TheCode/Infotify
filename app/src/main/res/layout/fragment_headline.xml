@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,95 +11,8 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
-            android:id="@+id/themedButtonGroup"
-            android:layout_width="match_parent"
-            android:layout_height="155dp"
-            android:layout_marginHorizontal="32dp"
-            android:layout_marginVertical="10dp"
-            app:flexWrap="wrap">
-
-            <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-                android:id="@+id/btnGeneral"
-                android:layout_width="0dp"
-                android:layout_height="145dp"
-                app:layout_flexGrow="1"
-                app:toggle_selectedTextColor="@android:color/white"
-                app:toggle_selectedBackgroundColor="#5e6fed"
-                app:toggle_icon="@drawable/ic_baseline_post_add_gray_24"
-                app:toggle_iconGravity="top|center"
-                app:toggle_iconPaddingTop="15dp"
-                app:toggle_iconPaddingHorizontal="15dp"
-                app:toggle_textPaddingBottom="20dp"
-                app:toggle_text="General"
-                app:toggle_textGravity="bottom|center" />
-
-            <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-                android:id="@+id/btnScience"
-                android:layout_width="0dp"
-                android:layout_height="145dp"
-                app:layout_flexGrow="1"
-                app:toggle_selectedTextColor="@android:color/white"
-                app:toggle_selectedBackgroundColor="#5e6fed"
-                app:toggle_icon="@drawable/ic_check_circle_green_24dp"
-                app:toggle_iconGravity="top|center"
-                app:toggle_iconPaddingTop="15dp"
-                app:toggle_iconPaddingHorizontal="15dp"
-                app:toggle_textPaddingBottom="20dp"
-                app:toggle_text="Science"
-                app:toggle_textGravity="bottom|center" />
-
-            <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-                android:id="@+id/btnSports"
-                android:layout_width="0dp"
-                android:layout_height="145dp"
-                app:layout_flexGrow="1"
-                app:toggle_selectedTextColor="@android:color/white"
-                app:toggle_selectedBackgroundColor="#5e6fed"
-                app:toggle_icon="@drawable/ic_home_variant_gray_24dp"
-                app:toggle_iconGravity="top|center"
-                app:toggle_iconPaddingTop="15dp"
-                app:toggle_iconPaddingHorizontal="15dp"
-                app:toggle_textPaddingBottom="20dp"
-                app:toggle_text="Sports"
-                app:toggle_textGravity="bottom|center" />
-
-            <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-                android:id="@+id/btnTechnology"
-                android:layout_width="0dp"
-                android:layout_height="145dp"
-                app:layout_flexGrow="1"
-                app:toggle_selectedTextColor="@android:color/white"
-                app:toggle_selectedBackgroundColor="#5e6fed"
-                app:toggle_icon="@drawable/ic_check_circle_green_24dp"
-                app:toggle_iconGravity="top|center"
-                app:toggle_iconPaddingTop="15dp"
-                app:toggle_iconPaddingHorizontal="15dp"
-                app:toggle_textPaddingBottom="20dp"
-                app:toggle_text="Technology"
-                app:toggle_textGravity="bottom|center" />
-
-            <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-                android:id="@+id/btnEntertainment"
-                android:layout_width="0dp"
-                android:layout_height="145dp"
-                app:layout_flexGrow="1"
-                app:toggle_selectedTextColor="@android:color/white"
-                app:toggle_selectedBackgroundColor="#5e6fed"
-                app:toggle_icon="@drawable/ic_home_variant_gray_24dp"
-                app:toggle_iconGravity="top|center"
-                app:toggle_iconPaddingTop="15dp"
-                app:toggle_iconPaddingHorizontal="15dp"
-                app:toggle_textPaddingBottom="20dp"
-                app:toggle_text="Entertainment"
-                app:toggle_textGravity="bottom|center" />
-
-
-        </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
-
+        android:layout_height="match_parent"
+        android:layout_below="@id/themedButtonGroup">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_news"
@@ -107,19 +20,78 @@
             android:layout_height="match_parent"
             android:layoutAnimation="@anim/layout_animation_fall_down"/>
 
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <LinearLayout
-        android:id="@+id/support_layout"
+    <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
+        android:id="@+id/themedButtonGroup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center">
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="10dp"
+        app:flexWrap="wrap">
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/btnGeneral"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            app:layout_flexGrow="1"
+            app:toggle_backgroundColor="?attr/primaryCardBackgroundColor"
+            app:toggle_selectedBackgroundColor="#5e6fed"
+            app:toggle_icon="@drawable/ic_baseline_list_alt_gray_24"
+            app:toggle_iconGravity="center"
+            app:toggle_iconPadding="25dp"/>
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/btnScience"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            app:layout_flexGrow="1"
+            app:toggle_backgroundColor="?attr/primaryCardBackgroundColor"
+            app:toggle_selectedBackgroundColor="#5e6fed"
+            app:toggle_icon="@drawable/ic_baseline_science_gray_24"
+            app:toggle_iconGravity="center"
+            app:toggle_iconPadding="25dp"/>
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/btnSports"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            app:layout_flexGrow="1"
+            app:toggle_backgroundColor="?attr/primaryCardBackgroundColor"
+            app:toggle_selectedBackgroundColor="#5e6fed"
+            app:toggle_icon="@drawable/ic_baseline_sports_baseball_gray_24"
+            app:toggle_iconGravity="center"
+            app:toggle_iconPadding="25dp"/>
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/btnTechnology"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            app:layout_flexGrow="1"
+            app:toggle_backgroundColor="?attr/primaryCardBackgroundColor"
+            app:toggle_selectedBackgroundColor="#5e6fed"
+            app:toggle_icon="@drawable/ic_baseline_phonelink_gray_24"
+            app:toggle_iconGravity="center"
+            app:toggle_iconPadding="25dp"/>
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/btnEntertainment"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            app:layout_flexGrow="1"
+            app:toggle_backgroundColor="?attr/primaryCardBackgroundColor"
+            app:toggle_selectedBackgroundColor="#5e6fed"
+            app:toggle_icon="@drawable/ic_baseline_theater_comedy_gray_24"
+            app:toggle_iconGravity="center"
+            app:toggle_iconPadding="25dp"/>
+
+
+    </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
 
     <include
+        android:id="@+id/included"
         layout="@layout/layout_bad_state"/>
 
-    </LinearLayout>
 
-
-</FrameLayout>
+</RelativeLayout>

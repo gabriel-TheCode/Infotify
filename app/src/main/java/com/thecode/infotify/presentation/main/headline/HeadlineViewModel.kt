@@ -29,9 +29,7 @@ class HeadlineViewModel @Inject constructor(
         viewModelScope.launch {
             _headlineState.value.let { _ ->
                 getHeadlines.getHeadlines(language, category).onEach {
-                    when (it) {
-                        is DataState.Success -> _headlineState.value = it
-                    }
+                     _headlineState.value = it
                 }.launchIn(viewModelScope)
             }
         }

@@ -28,11 +28,7 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             _searchState.value.let { _ ->
                 getSearchNews.getSearchNews(query, language, category).onEach {
-                    when (it) {
-                        is DataState.Success -> _searchState.value = it
-                        else -> {
-                        }
-                    }
+                     _searchState.value = it
                 }.launchIn(viewModelScope)
             }
         }

@@ -25,7 +25,6 @@ class NewsDetailsActivity : AppCompatActivity() {
         val imageUrl = i.extras?.getString("imageUrl")
         val content = i.extras?.getString("content")
         val date = i.extras?.getString("date")
-        val url = i.extras?.getString("url")
         val formattedDate = date?.split("T")?.get(0)
 
         // REFERENCE VIEWS FROM XML

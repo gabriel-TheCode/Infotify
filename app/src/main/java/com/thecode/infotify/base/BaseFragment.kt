@@ -1,6 +1,5 @@
 package com.thecode.infotify.base
 
-import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.webkit.WebResourceError
@@ -10,6 +9,8 @@ import android.webkit.WebViewClient
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.thecode.aestheticdialogs.AestheticDialog
+import com.thecode.aestheticdialogs.DialogStyle
+import com.thecode.aestheticdialogs.DialogType
 import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.presentation.newsdetails.NewsDetailsActivity
 import com.thecode.infotify.utils.CustomProgressBar
@@ -19,21 +20,19 @@ open class BaseFragment : Fragment() {
     private val progressBar: CustomProgressBar = CustomProgressBar()
 
     fun showErrorDialog(title: String, description: String) {
-        AestheticDialog.showRainbow(
-            activity,
-            title,
-            description,
-            AestheticDialog.ERROR
-        )
+        AestheticDialog.Builder(requireActivity(), DialogStyle.RAINBOW, DialogType.ERROR)
+            .setTitle(title)
+            .setMessage(description)
+            .setDuration(3000)
+            .show()
     }
 
     fun showSuccessDialog(title: String, description: String) {
-        AestheticDialog.showRainbow(
-            activity,
-            title,
-            description,
-            AestheticDialog.SUCCESS
-        )
+        AestheticDialog.Builder(requireActivity(), DialogStyle.RAINBOW, DialogType.SUCCESS)
+            .setTitle(title)
+            .setMessage(description)
+            .setDuration(3000)
+            .show()
     }
 
     fun openSharingIntent(article: Article) {
@@ -73,7 +72,7 @@ open class BaseFragment : Fragment() {
         newsView.settings.loadWithOverviewMode = true
 
         val title: String = article.title.toString()
-        val url: String = article.url.toString()
+        val url: String = article.url
 
         newsView.settings.javaScriptEnabled = false
         newsView.isHorizontalScrollBarEnabled = false
@@ -92,11 +91,9 @@ open class BaseFragment : Fragment() {
                 if (progressBar.dialog.isShowing) {
                     progressBar.dialog.dismiss()
                 }
-                AestheticDialog.showRainbow(
-                    context as Activity?,
+                showErrorDialog(
                     "ERROR",
-                    "Sorry, the link of the article is not reachable",
-                    AestheticDialog.ERROR
+                    "Sorry, the link of the article is not reachable"
                 )
             }
 

@@ -17,7 +17,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
 import com.thecode.infotify.base.BaseFragment
 import com.thecode.infotify.core.domain.Article
@@ -27,9 +26,10 @@ import com.thecode.infotify.databinding.LayoutBadStateBinding
 import com.thecode.infotify.presentation.main.NewsOnClickListener
 import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import com.thecode.infotify.utils.AppConstants
-import com.thecode.infotify.utils.AppConstants.ARG_CATEGORY
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
+import nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+import nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
 import org.json.JSONException
 
 
@@ -48,7 +48,7 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     private val binding get() = _bindingHeadline!!
     private val bindingLayoutBadState get() = _bindingLayoutBadState!!
 
-    private var category: String = "general"
+    private var category: String = "General"
 
     // Views
     lateinit var recyclerView: RecyclerView
@@ -56,9 +56,14 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     lateinit var refreshLayout: SwipeRefreshLayout
     lateinit var btnRetry: AppCompatButton
     lateinit var layoutBadState: View
-    lateinit var supportLayout: LinearLayout
     lateinit var textState: TextView
     lateinit var imgState: ImageView
+    private lateinit var themedButtonGroup: ThemedToggleButtonGroup
+    private lateinit var btnGeneral: ThemedButton
+    private lateinit var btnScience: ThemedButton
+    private lateinit var btnSport: ThemedButton
+    private lateinit var btnTV: ThemedButton
+    private lateinit var btnTech: ThemedButton
 
 
     override fun onCreateView(
@@ -83,7 +88,6 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
         fetchApiNews()
         recyclerView.scheduleLayoutAnimation()
 
-
         return view
     }
 
@@ -94,20 +98,20 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     }
 
     private fun fetchApiNews() {
-            viewModel.getHeadlines(
-                AppConstants.DEFAULT_LANG,
-                category
-            )
+        viewModel.getHeadlines(
+            AppConstants.DEFAULT_LANG,
+            category
+        )
     }
 
     private fun showInternetConnectionErrorLayout() {
         if (recyclerAdapter.itemCount > 0) {
             showErrorDialog(
-                getString(R.string.error),
+                getString(R.string.network_error),
                 getString(R.string.check_internet)
             )
         } else {
-            supportLayout.isVisible = true
+            layoutBadState.isVisible = true
             textState.text = getString(R.string.internet_connection_error)
             btnRetry.isVisible = true
         }
@@ -120,14 +124,14 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
                 getString(R.string.service_unavailable)
             )
         } else {
-            supportLayout.isVisible = true
+            layoutBadState.isVisible = true
             textState.text = getString(R.string.no_result_found)
             btnRetry.isVisible = true
         }
     }
 
     private fun hideBadStateLayout() {
-        supportLayout.isVisible = false
+        layoutBadState.isVisible = false
     }
 
     private fun subscribeObserver() {
@@ -142,8 +146,6 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
                     showLoadingProgress()
                 }
                 is DataState.Error -> {
-                    Toast.makeText(requireActivity(), it.exception.message, Toast.LENGTH_LONG)
-                        .show()
                     hideLoadingProgress()
                     showInternetConnectionErrorLayout()
                     Toast.makeText(
@@ -174,11 +176,16 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     private fun initViews() {
         refreshLayout = binding.refreshLayout
         recyclerView = binding.recyclerViewNews
-        btnRetry = bindingLayoutBadState.btnRetry
-        layoutBadState = bindingLayoutBadState.layoutBadState
-        imgState = bindingLayoutBadState.imgState
-        textState = bindingLayoutBadState.textState
-        supportLayout = binding.supportLayout
+        btnRetry = binding.included.btnRetry
+        layoutBadState = binding.included.layoutBadState
+        imgState = binding.included.imgState
+        textState = binding.included.textState
+        themedButtonGroup = binding.themedButtonGroup
+        btnGeneral = binding.btnGeneral
+        btnScience = binding.btnScience
+        btnSport = binding.btnSports
+        btnTV = binding.btnEntertainment
+        btnTech = binding.btnTechnology
 
         refreshLayout.setColorSchemeResources(
             R.color.colorPrimary,
@@ -194,13 +201,53 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
         refreshLayout.setOnRefreshListener {
             fetchApiNews()
         }
+
+        themedButtonGroup.selectButton(btnGeneral)
+
+        themedButtonGroup.setOnSelectListener {
+            when (it) {
+                btnGeneral -> {
+                    category = "General"
+                    showToast(category)
+                    fetchApiNews()
+                }
+
+                btnScience -> {
+                    category = "Science"
+                    showToast(category)
+                    fetchApiNews()
+                }
+
+                btnTV -> {
+                    category = "Entertainment"
+                    showToast(category)
+                    fetchApiNews()
+                }
+
+                btnTech -> {
+                    category = "Technology"
+                    showToast(category)
+                    fetchApiNews()
+                }
+
+                btnSport -> {
+                    category = "Sports"
+                    showToast(category)
+                    fetchApiNews()
+                }
+            }
+        }
+    }
+
+    private fun showToast(message: String){
+        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
     }
 
     private fun populateRecyclerView(articles: List<Article>) {
         try {
-            if (articles.isEmpty()){
+            if (articles.isEmpty()) {
                 showBadStateLayout()
-            }else{
+            } else {
                 val articleArrayList: ArrayList<Article> = ArrayList()
                 for (i in articles.indices) {
                     val article = articles[i]
@@ -217,11 +264,9 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
 
     override fun saveBookmark(article: Article) {
         viewModel.saveBookmark(article)
-        AestheticDialog.showRainbow(
-            requireActivity(),
+        showSuccessDialog(
             "Success",
-            "Bookmark saved",
-            AestheticDialog.SUCCESS
+            "Bookmark saved"
         )
     }
 
@@ -238,4 +283,5 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     override fun shareNews(article: Article) {
         openSharingIntent(article)
     }
+
 }
