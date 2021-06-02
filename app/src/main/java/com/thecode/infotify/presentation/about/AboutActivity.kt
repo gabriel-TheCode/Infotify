@@ -38,10 +38,12 @@ class AboutActivity : AppCompatActivity() {
 
         binding = ActivityAboutBinding.inflate(layoutInflater)
         val view = binding.root
-        setContentView(view)
 
         initViews()
         setUpListeners()
+
+        setContentView(view)
+
     }
 
 

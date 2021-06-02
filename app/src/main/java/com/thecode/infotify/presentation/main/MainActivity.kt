@@ -47,12 +47,13 @@ class MainActivity : AppCompatActivity() {
     private fun initViews() {
         viewPager = binding.viewPager
         bnlv = binding.bottomNavigationBar
-        // bnlv.setBadgeValue(0, "9+")
+        bnlv.setBadgeValue(0, "9+")
         bnlv.setNavigationChangeListener { _, position ->
             viewPager.setCurrentItem(
                 position,
                 true
             )
+            bnlv.setBadgeValue(0, null)
         }
         pagerAdapter = BottomNavPagerAdapter(this)
     }

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.aestheticdialogs.DialogStyle
 import com.thecode.aestheticdialogs.DialogType
+import com.thecode.infotify.R
 import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.presentation.newsdetails.NewsDetailsActivity
 import com.thecode.infotify.utils.CustomProgressBar
@@ -88,36 +89,47 @@ open class BaseFragment : Fragment() {
                 error: WebResourceError?
             ) {
                 failedLoading = true
-                if (progressBar.dialog.isShowing) {
-                    progressBar.dialog.dismiss()
-                }
+                dismissDialog()
                 showErrorDialog(
-                    "Web Error",
-                    "Sorry, the link of the article is not reachable"
+                    getString(R.string.web_error),
+                    getString(R.string.link_not_reachable)
                 )
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 if (!failedLoading) {
-                    progressBar.dialog.dismiss()
+                    dismissDialog()
                     val alertDialog: AlertDialog = AlertDialog.Builder(requireContext()).create()
                     alertDialog.setTitle(title)
                     alertDialog.setView(newsView)
                     alertDialog.setButton(
                         AlertDialog.BUTTON_NEUTRAL, "OK"
-                    ) { dialog, _ -> dialog.dismiss() }
+                    ) { _, _ -> dismissDialog() }
                     alertDialog.show()
                 } else {
-                    progressBar.dialog.dismiss()
+                    dismissDialog()
                 }
             }
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                progressBar.show(requireContext(), "Loading...")
+                progressBar.show(requireContext(), getString(R.string.please_wait))
             }
         }
         newsView.loadUrl(url)
         newsView.isClickable = false
         newsView.isEnabled = false
+    }
+
+    private fun dismissDialog() {
+        try {
+            if (progressBar.dialog.isShowing) {
+                progressBar.dialog.dismiss()
+            }
+        } catch (ex: Exception) {
+            showErrorDialog(
+                getString(R.string.web_error),
+                getString(R.string.link_not_reachable)
+            )
+        }
     }
 }

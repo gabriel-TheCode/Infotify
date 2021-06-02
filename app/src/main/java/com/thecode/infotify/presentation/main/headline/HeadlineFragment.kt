@@ -162,7 +162,6 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     private fun initRecyclerView() {
         recyclerAdapter = NewsRecyclerViewAdapter(newsOnClickListener)
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        // recyclerView.adapter = recyclerAdapter
         recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
     }
 
@@ -253,8 +252,8 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     override fun saveBookmark(article: Article) {
         viewModel.saveBookmark(article)
         showSuccessDialog(
-            "Success",
-            "Bookmark saved"
+            getString(R.string.success),
+            getString(R.string.bookmark_saved)
         )
     }
 

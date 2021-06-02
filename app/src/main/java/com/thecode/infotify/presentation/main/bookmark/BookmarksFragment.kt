@@ -136,7 +136,7 @@ class BookmarksFragment : BaseFragment(), BookmarkOnClickListener {
 
     override fun deleteBookmark(article: Article) {
         viewModel.deleteBookmark(article.url)
-        showSuccessDialog("Success", "Bookmark deleted successfully")
+        showSuccessDialog(getString(R.string.success), getString(R.string.bookmark_deleted))
     }
 
     override fun openNews(article: Article) {

@@ -11,7 +11,6 @@
         tools:context=".presentation.about.AboutActivity"
         android:background="?attr/primaryBackgroundColor">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="250dp"
@@ -29,13 +28,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="About"
+                android:text="@string/about"
                 android:fontFamily="@font/oleoscript_bold"
                 android:textSize="26sp"
                 android:textColor="?attr/primaryBackgroundColor"
                 android:layout_marginVertical="30dp"/>
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -92,7 +90,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_toEndOf="@id/thumbnail"
                             android:textColor="?attr/primaryDescriptionColor"
-                            android:text="Android Developer"
+                            android:text="@string/android_developer"
                             android:textSize="14sp"
                             android:maxLines="1"
                             android:ellipsize="end"/>
@@ -102,7 +100,6 @@
                         android:layout_width="match_parent"
                         android:background="?attr/primaryDescriptionColor"
                         android:layout_height="0.5dp"/>
-
 
                     <TextView
                         android:layout_width="match_parent"
@@ -169,24 +166,21 @@
 
                     </RelativeLayout>
 
-
                     <View
                         android:layout_width="match_parent"
                         android:background="?attr/primaryDescriptionColor"
                         android:layout_height="0.5dp"/>
 
-
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Credits"
+                        android:text="@string/credits"
                         android:textSize="16sp"
                         android:paddingStart="20dp"
                         android:paddingEnd="20dp"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
                         android:textColor="?attr/primaryDescriptionColor"/>
-
 
                     <RelativeLayout
                         android:id="@+id/layout_source_code"
@@ -203,7 +197,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Source code"
+                            android:text="@string/source_code"
                             android:textColor="?attr/primaryTitleColor"
                             android:layout_centerVertical="true"/>
 
@@ -214,7 +208,6 @@
                             android:layout_alignParentEnd="true"/>
 
                     </RelativeLayout>
-
 
                     <RelativeLayout
                         android:id="@+id/layout_licenses"
@@ -231,7 +224,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Open-source Licenses"
+                            android:text="@string/open_source_licenses"
                             android:textColor="?attr/primaryTitleColor"
                             android:layout_centerVertical="true"/>
 
@@ -242,7 +235,6 @@
                             android:layout_alignParentEnd="true"/>
 
                     </RelativeLayout>
-
 
                     <RelativeLayout
                         android:id="@+id/layout_playstore"
@@ -259,7 +251,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Note the app"
+                            android:text="@string/note_the_app"
                             android:textColor="?attr/primaryTitleColor"
                             android:layout_centerVertical="true"/>
 
@@ -285,7 +277,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Version"
+                            android:text="@string/version"
                             android:textColor="?attr/primaryTitleColor"
                             android:layout_centerVertical="true"/>
 
@@ -301,9 +293,8 @@
                     </RelativeLayout>
 
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
-
-
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -313,9 +304,7 @@
                     android:text="@string/custom_copyright"
                     android:textColor="?attr/primaryTitleColor"/>
 
-
         </LinearLayout>
-
 
     </FrameLayout>
 

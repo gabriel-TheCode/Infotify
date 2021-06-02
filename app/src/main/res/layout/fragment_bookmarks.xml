@@ -64,7 +64,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="No bookmarks"
+                android:text="@string/no_bookmarks"
                 android:textColor="?attr/primaryTitleColor"
                 android:textSize="18sp"
                 android:fontFamily="@font/sf_medium"/>
@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="?attr/primaryDescriptionColor"
-                android:text="Save a bookmark and it will show up here"
+                android:text="@string/empty_bookmark_text"
                 android:textSize="16sp"/>
 
         </LinearLayout>

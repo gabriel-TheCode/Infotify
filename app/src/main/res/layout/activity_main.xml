@@ -32,7 +32,7 @@
 
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/home"
-            app:bt_title="Home"
+            app:bt_title="@string/home"
             app:bt_titleSize="10sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
 
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/search"
-            app:bt_title="Search"
+            app:bt_title="@string/search"
             app:bt_titleSize="10sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
 
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/bookmark"
-            app:bt_title="Bookmarks"
+            app:bt_title="@string/bookmarks"
             app:bt_titleSize="10sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
