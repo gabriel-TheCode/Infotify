@@ -50,7 +50,7 @@ class NewsObjectResponse {
         var cnbc: String? = null,
 
         @SerializedName("name")
-        var name: String,
+        var name: String? = null,
 
         @SerializedName("description")
         var description: String? = null,

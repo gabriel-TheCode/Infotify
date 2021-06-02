@@ -18,13 +18,7 @@ class SourceMapper @Inject constructor() :
     private fun mapFromSourceItems(source: SourceObjectResponse.Result.Source): SourceItem {
         return SourceItem(
             source.id,
-            source.cnbc,
-            source.name,
-            source.description,
-            source.url,
-            source.category,
-            source.language,
-            source.country
+            source.name.toString()
         )
     }
 

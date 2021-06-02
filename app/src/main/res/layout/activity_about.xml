@@ -310,7 +310,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|center"
                     android:layout_margin="30dp"
-                    android:text="Made with ❤ by Gabriel The Code"
+                    android:text="@string/custom_copyright"
                     android:textColor="?attr/primaryTitleColor"/>
 
 

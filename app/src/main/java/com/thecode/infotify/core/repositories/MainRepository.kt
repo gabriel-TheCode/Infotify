@@ -17,4 +17,5 @@ class MainRepository @Inject constructor(
     fun clearAppData() {
         localDataSource.clearAppData()
     }
+
 }

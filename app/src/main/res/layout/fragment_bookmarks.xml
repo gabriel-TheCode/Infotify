@@ -29,7 +29,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
-                    android:text="Bookmarks"
+                    android:text="@string/bookmarks"
                     android:fontFamily="@font/oleoscript_bold"
                     android:textColor="?attr/primaryBackgroundColor"
                     android:textSize="22sp"

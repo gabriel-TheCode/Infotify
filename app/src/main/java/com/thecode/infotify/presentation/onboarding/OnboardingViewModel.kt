@@ -29,7 +29,6 @@ class OnboardingViewModel @Inject constructor(
         }
     }
 
-
     fun setOnboardingCompleted() {
         setOnboardingCompleted.invoke()
     }

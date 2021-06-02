@@ -22,4 +22,5 @@ class MainViewModel @Inject constructor(
     fun saveBookmark(article: Article) {
         viewModelScope.launch { saveBookmark.invoke(article) }
     }
+
 }

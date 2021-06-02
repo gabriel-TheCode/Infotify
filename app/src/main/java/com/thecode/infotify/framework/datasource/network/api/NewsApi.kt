@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface NewsApi {
-    // Top Headlines
+    //region Top Headlines
     @GET("v2/top-headlines")
     fun getTopHeadlinesByCountry(
         @Query("country") country: String
@@ -39,7 +39,9 @@ interface NewsApi {
         @Query("category") category: String
     ): Response<NewsObjectResponse>
 
-    // Everything
+    //endregion
+
+    //region Everything
     @GET("v2/everything")
     fun getAllNewsByQuery(
         @Query("q") query: String
@@ -51,6 +53,8 @@ interface NewsApi {
         @Query("language") language: String,
         @Query("sortBy") sortBy: String
     ): NewsObjectResponse
+
+    //endregion
 
     //region Sources
     @GET("v2/sources")

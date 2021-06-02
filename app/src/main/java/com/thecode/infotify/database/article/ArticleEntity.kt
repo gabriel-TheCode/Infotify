@@ -13,7 +13,7 @@ data class ArticleEntity(
 
     @TypeConverters(SourceConverter::class)
     @SerializedName("source")
-    var source: SourceEntity? = null,
+    var source: SourceEntity,
 
     @SerializedName("author")
     var author: String? = null,

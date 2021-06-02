@@ -44,7 +44,7 @@ class BookmarkRecyclerViewAdapter(private val listener: BookmarkOnClickListener)
         val news = newsList[position]
         holder.tvNewsTitle.text = news.title
         holder.tvNewsDate.text = news.publishedAt?.split("T")?.get(0) ?: ""
-        holder.tvPublisherName.text = news.source.name ?: "Infotify News"
+        holder.tvPublisherName.text = news.source.name
 
         Glide.with(holder.itemView.context).load(news.urlToImage)
             .placeholder(R.drawable.placeholder)

@@ -33,14 +33,10 @@ class OnboardingActivity : BaseActivity() {
         setContentView(view)
 
         initViews()
-        setUpListener()
+        setUpListeners()
         setUpPager()
+        setUpObserver()
 
-        viewModel.state.observe(this, {
-            when (it) {
-                is OnBoardingState.COMPLET -> onBoardingAdapter.setItem(it.list)
-            }
-        })
         viewModel.getOnBoardingSlide()
     }
 
@@ -53,7 +49,7 @@ class OnboardingActivity : BaseActivity() {
         pageIndicator = binding.pageIndicator
     }
 
-    private fun setUpListener() {
+    private fun setUpListeners() {
 
         btnNext.setOnClickListener {
             if (getNextItem() > getAdapterSize()) {
@@ -83,6 +79,14 @@ class OnboardingActivity : BaseActivity() {
                 } else {
                     btnNext.text = getText(R.string.next)
                 }
+            }
+        })
+    }
+
+    private fun setUpObserver() {
+        viewModel.state.observe(this, {
+            when (it) {
+                is OnBoardingState.COMPLET -> onBoardingAdapter.setItem(it.list)
             }
         })
     }

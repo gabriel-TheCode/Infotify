@@ -20,7 +20,7 @@
             android:id="@+id/text_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Close"
+            android:text="@string/close"
             android:textColor="@color/colorPrimary"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
@@ -51,7 +51,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Please select options to customize your search"
+            android:text="@string/search_description"
             android:textColor="?attr/primaryTitleColor"
             android:layout_margin="20dp"
             android:textSize="14sp"

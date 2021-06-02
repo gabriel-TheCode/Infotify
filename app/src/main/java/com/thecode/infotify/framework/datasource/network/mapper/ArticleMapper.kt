@@ -26,13 +26,7 @@ ArticleMapper @Inject constructor() :
     private fun sourceItemToEntity(source: SourceItem): SourceEntity {
         return SourceEntity(
             source.id.toString(),
-            source.cnbc,
-            source.name,
-            source.description,
-            source.url,
-            source.category,
-            source.language,
-            source.country
+            source.name
         )
     }
 

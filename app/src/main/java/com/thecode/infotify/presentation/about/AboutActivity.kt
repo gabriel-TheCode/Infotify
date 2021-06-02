@@ -41,11 +41,11 @@ class AboutActivity : AppCompatActivity() {
         setContentView(view)
 
         initViews()
-        setupListeners()
+        setUpListeners()
     }
 
 
-    private fun initViews(){
+    private fun initViews() {
         txtVersion = binding.textVersion
         imgBack = binding.imgBack
         layoutGithub = binding.layoutGithub
@@ -57,7 +57,7 @@ class AboutActivity : AppCompatActivity() {
         txtVersion.text = versionName
     }
 
-    private fun setupListeners(){
+    private fun setUpListeners() {
         layoutTwitter.setOnClickListener {
             var intent: Intent
             try {
