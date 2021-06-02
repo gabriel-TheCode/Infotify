@@ -28,7 +28,7 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             _searchState.value.let { _ ->
                 getSearchNews.getSearchNews(query, language, category).onEach {
-                     _searchState.value = it
+                    _searchState.value = it
                 }.launchIn(viewModelScope)
             }
         }

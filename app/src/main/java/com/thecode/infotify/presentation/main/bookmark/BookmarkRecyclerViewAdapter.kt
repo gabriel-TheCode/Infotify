@@ -27,7 +27,7 @@ class BookmarkRecyclerViewAdapter(private val listener: BookmarkOnClickListener)
     RecyclerView.Adapter<BookmarkRecyclerViewAdapter.NewsViewHolder>() {
 
     private lateinit var binding: AdapterNewsLandscapeBinding
-    var newsList: List<Article> = listOf()
+    private var newsList: ArrayList<Article> = ArrayList()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {

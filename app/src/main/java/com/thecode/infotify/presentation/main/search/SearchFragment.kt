@@ -26,32 +26,28 @@ import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.databinding.BottomSheetSearchBinding
 import com.thecode.infotify.databinding.FragmentSearchBinding
-import com.thecode.infotify.databinding.LayoutBadStateBinding
 import com.thecode.infotify.presentation.main.NewsOnClickListener
 import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import com.thecode.infotify.utils.AppConstants
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
-import org.json.JSONException
 
 /**
  * A simple [Fragment] subclass.
  */
 
 @AndroidEntryPoint
-class SearchFragment : BaseFragment(), NewsOnClickListener{
+class SearchFragment : BaseFragment(), NewsOnClickListener {
     private val viewModel: SearchViewModel by viewModels()
 
     // Listener
     private var newsOnClickListener: NewsOnClickListener = this
 
     private var _binding: FragmentSearchBinding? = null
-    private var _bindingLayoutBadState: LayoutBadStateBinding? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
 
     private val binding get() = _binding!!
-    private val bindingLayoutBadState get() = _bindingLayoutBadState!!
     private lateinit var recyclerView: RecyclerView
     lateinit var recyclerAdapter: NewsRecyclerViewAdapter
     lateinit var refreshLayout: SwipeRefreshLayout
@@ -72,21 +68,12 @@ class SearchFragment : BaseFragment(), NewsOnClickListener{
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        _bindingLayoutBadState = LayoutBadStateBinding.inflate(inflater, container, false)
 
         val view = binding.root
 
         subscribeObserver()
         initViews()
         initRecyclerView()
-
-        imgSearchOptions.setOnClickListener {
-            showBottomSheetSearch()
-        }
-
-        btnRetry.setOnClickListener {
-            fetchApiNews(query, language, sortBy)
-        }
 
         fetchApiNews(query, language, sortBy)
 
@@ -185,7 +172,7 @@ class SearchFragment : BaseFragment(), NewsOnClickListener{
     private fun showInternetConnectionErrorLayout() {
         if (recyclerAdapter.itemCount > 0) {
             showErrorDialog(
-                getString(R.string.error),
+                getString(R.string.network_error),
                 getString(R.string.check_internet)
             )
         } else {
@@ -209,7 +196,7 @@ class SearchFragment : BaseFragment(), NewsOnClickListener{
     }
 
     private fun hideBadStateLayout() {
-            layoutBadState.isVisible = false
+        layoutBadState.isVisible = false
     }
 
     private fun subscribeObserver() {
@@ -226,27 +213,18 @@ class SearchFragment : BaseFragment(), NewsOnClickListener{
                 is DataState.Error -> {
                     hideLoadingProgress()
                     showInternetConnectionErrorLayout()
-                    Toast.makeText(
-                        context,
-                        getString(R.string.internet_connection_error),
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
             }
         })
     }
 
     private fun populateRecyclerView(articles: List<Article>) {
-        try {
-            val articleArrayList: ArrayList<Article> = ArrayList()
-            for (i in articles.indices) {
-                val article = articles[i]
-                articleArrayList.add(article)
-                recyclerAdapter.setArticleListItems(articleArrayList)
-                recyclerView.scheduleLayoutAnimation()
-            }
-        } catch (e: JSONException) {
-            e.printStackTrace()
+        val articleArrayList: ArrayList<Article> = ArrayList()
+        for (i in articles.indices) {
+            val article = articles[i]
+            articleArrayList.add(article)
+            recyclerAdapter.setArticleListItems(articleArrayList)
+            recyclerView.scheduleLayoutAnimation()
         }
     }
 
@@ -286,6 +264,14 @@ class SearchFragment : BaseFragment(), NewsOnClickListener{
             fetchApiNews(query, language, sortBy)
         }
 
+        imgSearchOptions.setOnClickListener {
+            showBottomSheetSearch()
+        }
+
+        btnRetry.setOnClickListener {
+            fetchApiNews(query, language, sortBy)
+        }
+
         // perform set on query text listener event
         searchView.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
@@ -307,10 +293,8 @@ class SearchFragment : BaseFragment(), NewsOnClickListener{
         recyclerView = binding.recyclerViewNewsEverything
         recyclerAdapter = NewsRecyclerViewAdapter(newsOnClickListener)
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        // recyclerView.adapter = recyclerAdapter
         recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
     }
-
 
 
     override fun saveBookmark(article: Article) {

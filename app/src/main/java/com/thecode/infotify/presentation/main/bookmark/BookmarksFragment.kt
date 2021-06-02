@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.thecode.aestheticdialogs.AestheticDialog
 import com.thecode.infotify.R
 import com.thecode.infotify.base.BaseFragment
 import com.thecode.infotify.core.domain.Article
@@ -21,7 +20,6 @@ import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.databinding.FragmentBookmarksBinding
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
-import org.json.JSONException
 
 
 @AndroidEntryPoint
@@ -119,24 +117,20 @@ class BookmarksFragment : BaseFragment(), BookmarkOnClickListener {
     }
 
     private fun populateRecyclerView(articles: List<Article>) {
-        try {
-            if (articles.isEmpty()){
-                showEmptyStateLayout()
-            }else{
-                val articleArrayList: ArrayList<Article> = ArrayList()
-                for (i in articles.indices) {
-                    val article = articles[i]
-                    articleArrayList.add(article)
-                    recyclerAdapter.setArticleListItems(articleArrayList)
-                }
-                hideEmptyStateLayout()
-                hideLoadingProgress()
-                recyclerView.scheduleLayoutAnimation()
-            }
-
-        } catch (e: JSONException) {
-            e.printStackTrace()
+        if (articles.isEmpty()) {
             showEmptyStateLayout()
+            recyclerView.adapter = null
+            recyclerAdapter.notifyDataSetChanged()
+        } else {
+            val articleArrayList: ArrayList<Article> = ArrayList()
+            for (i in articles.indices) {
+                val article = articles[i]
+                articleArrayList.add(article)
+                recyclerAdapter.setArticleListItems(articleArrayList)
+            }
+            hideEmptyStateLayout()
+            hideLoadingProgress()
+            recyclerView.scheduleLayoutAnimation()
         }
     }
 

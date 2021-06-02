@@ -78,7 +78,6 @@ class HomeFragment : BaseFragment() {
     }
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val childFragment: Fragment = HeadlineFragment()
@@ -103,6 +102,11 @@ class HomeFragment : BaseFragment() {
             R.id.about -> {
                 val intent = Intent(activity, AboutActivity::class.java)
                 startActivity(intent)
+                requireActivity().overridePendingTransition(
+                    R.anim.enter_from_left,
+                    R.anim.exit_from_right
+                )
+
             }
         }
         return false

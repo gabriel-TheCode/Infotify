@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,9 +12,12 @@
         android:id="@+id/image_onboarding"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:layout_centerHorizontal="true"
         android:layout_margin="30dp"
         android:scaleType="centerCrop"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/text_onboarding_title"
+        app:layout_constraintTop_toTopOf="parent"
         app:lottie_rawRes="@raw/lottie_earth"
         app:lottie_loop="true"
         app:lottie_autoPlay="true" />
@@ -24,13 +28,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/image_onboarding"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginHorizontal="30dp"
         android:text="@string/title_onboarding_1"
         android:textSize="19sp"
         android:gravity="center"
         android:textStyle="bold"
-        android:textColor="@color/dark_blue"/>
+        android:textColor="@color/dark_blue"
+        app:layout_constraintBottom_toTopOf="@+id/text_onboarding_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_onboarding"/>
 
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -40,8 +46,13 @@
         android:layout_below="@id/text_onboarding_title"
         android:text="@string/description_onboarding_1"
         android:textSize="14sp"
-        android:layout_margin="30dp"
+        android:layout_marginVertical="20dp"
+        android:layout_marginHorizontal="30dp"
         android:textColor="@color/dark_blue"
-        android:gravity="center"/>
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_onboarding_title"/>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

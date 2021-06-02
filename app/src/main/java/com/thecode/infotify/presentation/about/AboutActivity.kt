@@ -1,10 +1,10 @@
 package com.thecode.infotify.presentation.about
 
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -24,6 +24,8 @@ class AboutActivity : AppCompatActivity() {
     private lateinit var layoutSourceCode: RelativeLayout
     private lateinit var layoutPlaystore: RelativeLayout
     private lateinit var txtVersion: TextView
+    private lateinit var imgBack: ImageView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +40,14 @@ class AboutActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        initViews()
+        setupListeners()
+    }
+
+
+    private fun initViews(){
         txtVersion = binding.textVersion
+        imgBack = binding.imgBack
         layoutGithub = binding.layoutGithub
         layoutTwitter = binding.layoutTwitter
         layoutSourceCode = binding.layoutSourceCode
@@ -46,6 +55,9 @@ class AboutActivity : AppCompatActivity() {
 
         val versionName: String = com.thecode.infotify.BuildConfig.VERSION_NAME
         txtVersion.text = versionName
+    }
+
+    private fun setupListeners(){
         layoutTwitter.setOnClickListener {
             var intent: Intent
             try {
@@ -95,8 +107,12 @@ class AboutActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.imgBack.setOnClickListener {
+        imgBack.setOnClickListener {
             finish()
+            this.overridePendingTransition(
+                R.anim.enter_from_left,
+                R.anim.exit_from_right
+            )
         }
     }
 }

@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorInt
@@ -22,7 +21,6 @@ import com.thecode.infotify.base.BaseFragment
 import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.databinding.FragmentHeadlineBinding
-import com.thecode.infotify.databinding.LayoutBadStateBinding
 import com.thecode.infotify.presentation.main.NewsOnClickListener
 import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import com.thecode.infotify.utils.AppConstants
@@ -30,7 +28,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 import nl.bryanderidder.themedtogglebuttongroup.ThemedButton
 import nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
-import org.json.JSONException
 
 
 @AndroidEntryPoint
@@ -43,10 +40,8 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     private var newsOnClickListener: NewsOnClickListener = this
 
     // View Binding
-    private var _bindingHeadline: FragmentHeadlineBinding? = null
-    private var _bindingLayoutBadState: LayoutBadStateBinding? = null
-    private val binding get() = _bindingHeadline!!
-    private val bindingLayoutBadState get() = _bindingLayoutBadState!!
+    private var _binding: FragmentHeadlineBinding? = null
+    private val binding get() = _binding!!
 
     private var category: String = "General"
 
@@ -71,8 +66,7 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _bindingHeadline = FragmentHeadlineBinding.inflate(inflater, container, false)
-        _bindingLayoutBadState = LayoutBadStateBinding.inflate(inflater, container, false)
+        _binding = FragmentHeadlineBinding.inflate(inflater, container, false)
 
         val view = binding.root
 
@@ -93,8 +87,7 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _bindingHeadline = null
-        _bindingLayoutBadState = null
+        _binding = null
     }
 
     private fun fetchApiNews() {
@@ -239,26 +232,21 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
         }
     }
 
-    private fun showToast(message: String){
+    private fun showToast(message: String) {
         Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
     }
 
     private fun populateRecyclerView(articles: List<Article>) {
-        try {
-            if (articles.isEmpty()) {
-                showBadStateLayout()
-            } else {
-                val articleArrayList: ArrayList<Article> = ArrayList()
-                for (i in articles.indices) {
-                    val article = articles[i]
-                    articleArrayList.add(article)
-                    recyclerAdapter.setArticleListItems(articleArrayList)
-                    recyclerView.scheduleLayoutAnimation()
-                }
+        if (articles.isEmpty()) {
+            showBadStateLayout()
+        } else {
+            val articleArrayList: ArrayList<Article> = ArrayList()
+            for (i in articles.indices) {
+                val article = articles[i]
+                articleArrayList.add(article)
+                recyclerAdapter.setArticleListItems(articleArrayList)
+                recyclerView.scheduleLayoutAnimation()
             }
-
-        } catch (e: JSONException) {
-            e.printStackTrace()
         }
     }
 

@@ -23,7 +23,7 @@ open class BaseFragment : Fragment() {
         AestheticDialog.Builder(requireActivity(), DialogStyle.RAINBOW, DialogType.ERROR)
             .setTitle(title)
             .setMessage(description)
-            .setDuration(3000)
+            .setDuration(2000)
             .show()
     }
 
@@ -31,7 +31,7 @@ open class BaseFragment : Fragment() {
         AestheticDialog.Builder(requireActivity(), DialogStyle.RAINBOW, DialogType.SUCCESS)
             .setTitle(title)
             .setMessage(description)
-            .setDuration(3000)
+            .setDuration(2000)
             .show()
     }
 
@@ -92,7 +92,7 @@ open class BaseFragment : Fragment() {
                     progressBar.dialog.dismiss()
                 }
                 showErrorDialog(
-                    "ERROR",
+                    "Web Error",
                     "Sorry, the link of the article is not reachable"
                 )
             }
