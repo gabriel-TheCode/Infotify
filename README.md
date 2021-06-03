@@ -48,10 +48,10 @@ Made 100% in Kotlin 😁
     <th>4. Search</th>
   </tr>
   <tr>
-    <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/4.jpg"/></td>
-    <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/1.jpg"/></td>
-    <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/2.jpg"/></td>
-    <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/3.jpg"/></td>
+    <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/4.png"/></td>
+    <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/1.png"/></td>
+    <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/2.png"/></td>
+    <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/3.png"/></td>
   </tr>
    </table>
 
@@ -65,10 +65,10 @@ Made 100% in Kotlin 😁
     <th>8. Search</th>
   </tr>
   <tr>
-     <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/9.jpg"/></td>
-      <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/6.jpg"/></td>
-       <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/8.jpg"/></td>
-       <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/7.jpg"/></td>
+     <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/9.png"/></td>
+      <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/6.png"/></td>
+       <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/8.png"/></td>
+       <td><img src="https://github.com/gabriel-TheCode/AndroidLibrariesAssets/raw/master/Infotify/7.png"/></td>
   </tr>
   </table>
 
@@ -98,6 +98,7 @@ Made 100% in Kotlin 😁
 - [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) : [Android LifeCycle](https://developer.android.com/topic/libraries/architecture), [LiveData](https://developer.android.com/topic/libraries/architecture/livedata), [Room](https://developer.android.com/jetpack/androidx/releases/room), [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
 - [Kotlin Flows](https://developer.android.com/kotlin/flow)
 - [View Binding](https://developer.android.com/topic/libraries/view-binding)
+- [Dagger-Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
 - [ViewPager2](https://developer.android.com/jetpack/androidx/releases/viewpager2)
 - [Glide](https://github.com/bumptech/glide)
 
