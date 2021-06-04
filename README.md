@@ -95,7 +95,7 @@ Made 100% in Kotlin 😁
 - [UI Inspiration](https://dribbble.com/shots/5495387-News-App-Dark-and-Light-Theme)
 - [Kotlin](https://kotlinlang.org/)
 - [AndroidX libraries](https://developer.android.com/jetpack/androidx)
-- [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) : [Android LifeCycle](https://developer.android.com/topic/libraries/architecture), [LiveData](https://developer.android.com/topic/libraries/architecture/livedata), [Room](https://developer.android.com/jetpack/androidx/releases/room), [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
+- [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) : [Lifecycle](https://developer.android.com/topic/libraries/architecture/lifecycle), [LiveData](https://developer.android.com/topic/libraries/architecture/livedata), [Room](https://developer.android.com/jetpack/androidx/releases/room), [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
 - [Kotlin Flows](https://developer.android.com/kotlin/flow)
 - [View Binding](https://developer.android.com/topic/libraries/view-binding)
 - [Dagger-Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
