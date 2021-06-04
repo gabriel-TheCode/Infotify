@@ -26,7 +26,6 @@ class AboutActivity : AppCompatActivity() {
     private lateinit var txtVersion: TextView
     private lateinit var imgBack: ImageView
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -43,9 +42,7 @@ class AboutActivity : AppCompatActivity() {
         setUpListeners()
 
         setContentView(view)
-
     }
-
 
     private fun initViews() {
         txtVersion = binding.textVersion

@@ -1,41 +1,42 @@
 package com.thecode.infotify.core.local
 
-import com.thecode.infotify.application.InfotifySharedPref
+import com.thecode.infotify.application.InfotifyDataStore
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 interface InfotifyLocalDataSource {
 
-    fun isOnboardingCompleted(): Boolean
+    fun isOnboardingCompleted(): Flow<Boolean>
 
-    fun setOnboardingCompleted()
+    suspend fun setOnboardingCompleted()
 
-    fun isNightModeEnabled(): Boolean
+    fun isNightModeEnabled(): Flow<Boolean>
 
-    fun setNightModeEnabled(state: Boolean)
+    suspend fun setNightModeEnabled(state: Boolean)
 
-    fun clearAppData()
+    suspend fun clearAppData()
 }
 
 class InfotifyLocalDataSourceImpl @Inject constructor(
-    private val sharedPref: InfotifySharedPref
+    private val dataStore: InfotifyDataStore
 ) : InfotifyLocalDataSource {
-    override fun isOnboardingCompleted(): Boolean {
-        return sharedPref.isOnboardingCompleted()
+    override fun isOnboardingCompleted(): Flow<Boolean> {
+        return dataStore.isOnboardingCompleted()
     }
 
-    override fun setOnboardingCompleted() {
-        sharedPref.setOnboardingCompleted()
+    override suspend fun setOnboardingCompleted() {
+        dataStore.setOnboardingCompleted()
     }
 
-    override fun isNightModeEnabled(): Boolean {
-        return sharedPref.isNightModeEnabled()
+    override fun isNightModeEnabled(): Flow<Boolean> {
+        return dataStore.isNightModeEnabled()
     }
 
-    override fun setNightModeEnabled(state: Boolean) {
-        sharedPref.setNightModeEnabled(state)
+    override suspend fun setNightModeEnabled(state: Boolean) {
+        dataStore.setNightModeEnabled(state)
     }
 
-    override fun clearAppData() {
-        sharedPref.clearSession()
+    override suspend fun clearAppData() {
+        dataStore.clearSession()
     }
 }

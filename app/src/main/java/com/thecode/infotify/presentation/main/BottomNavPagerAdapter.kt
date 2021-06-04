@@ -7,7 +7,6 @@ import com.thecode.infotify.presentation.main.bookmark.BookmarksFragment
 import com.thecode.infotify.presentation.main.home.HomeFragment
 import com.thecode.infotify.presentation.main.search.SearchFragment
 
-
 class BottomNavPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
     override fun createFragment(position: Int): Fragment {

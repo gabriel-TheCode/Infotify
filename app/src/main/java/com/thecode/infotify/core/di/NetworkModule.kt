@@ -3,7 +3,7 @@ package com.thecode.infotify.core.di
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.thecode.infotify.BuildConfig
-import com.thecode.infotify.application.InfotifySharedPref
+import com.thecode.infotify.application.InfotifyDataStore
 import com.thecode.infotify.core.remote.InfotifyRemoteDataSourceImpl
 import com.thecode.infotify.framework.datasource.NewsApiRemoteService
 import com.thecode.infotify.framework.datasource.NewsApiRemoteServiceImpl
@@ -40,7 +40,7 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(gson: Gson): Retrofit.Builder {
         return Retrofit.Builder()
-            //.baseUrl(BuildConfig.BASE_URL)
+            // .baseUrl(BuildConfig.BASE_URL)
             .baseUrl(AppConstants.NEWSAPI_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(getOkHttpService())
@@ -66,13 +66,13 @@ object NetworkModule {
     @Provides
     fun provideRemoteDataSource(
         whoRemoteService: NewsApiRemoteService,
-        sharedPref: InfotifySharedPref,
+        dataStore: InfotifyDataStore,
         newsMapper: NewsMapper,
         sourceMapper: SourceMapper,
     ): InfotifyRemoteDataSourceImpl {
         return InfotifyRemoteDataSourceImpl(
             whoRemoteService,
-            sharedPref,
+            dataStore,
             newsMapper,
             sourceMapper,
         )
@@ -102,8 +102,5 @@ object NetworkModule {
             val newRequest = request.newBuilder().url(newUrl).build()
             return chain.proceed(newRequest)
         }
-
     }
-
-
 }

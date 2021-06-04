@@ -6,7 +6,7 @@ import javax.inject.Inject
 class ResetAppPreferences @Inject constructor(
     private val repository: MainRepository
 ) {
-    operator fun invoke() {
+    suspend operator fun invoke() {
         repository.clearAppData()
     }
 }

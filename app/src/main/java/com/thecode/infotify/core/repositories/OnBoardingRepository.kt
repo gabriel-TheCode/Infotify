@@ -3,17 +3,18 @@ package com.thecode.infotify.core.repositories
 import com.thecode.infotify.R
 import com.thecode.infotify.core.domain.OnBoardingPart
 import com.thecode.infotify.core.local.InfotifyLocalDataSourceImpl
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class OnBoardingRepository @Inject constructor(
     private val localDataSource: InfotifyLocalDataSourceImpl
 ) {
 
-    fun setOnboardingCompleted() {
+    suspend fun setOnboardingCompleted() {
         localDataSource.setOnboardingCompleted()
     }
 
-    fun isOnboardingCompleted(): Boolean {
+    fun isOnboardingCompleted(): Flow<Boolean> {
         return localDataSource.isOnboardingCompleted()
     }
 

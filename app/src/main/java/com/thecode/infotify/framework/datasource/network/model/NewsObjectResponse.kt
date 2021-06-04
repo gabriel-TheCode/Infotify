@@ -13,7 +13,6 @@ class NewsObjectResponse {
     @SerializedName("articles")
     val articles: List<Result> = listOf()
 
-
     inner class Result(
 
         @SerializedName("source")
@@ -41,7 +40,6 @@ class NewsObjectResponse {
         var content: String? = null
     )
 
-
     inner class SourceItem(
         @SerializedName("id")
         var id: String,
@@ -67,5 +65,4 @@ class NewsObjectResponse {
         @SerializedName("country")
         var country: String? = null
     )
-
 }

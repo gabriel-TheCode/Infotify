@@ -19,7 +19,6 @@ class NewsMapper @Inject constructor() :
         )
     }
 
-
     private fun mapFromNewsItems(article: NewsObjectResponse.Result): Article {
         return Article(
             SourceItem(

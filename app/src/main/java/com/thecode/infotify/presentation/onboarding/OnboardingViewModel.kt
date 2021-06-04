@@ -17,7 +17,6 @@ class OnboardingViewModel @Inject constructor(
     private val getOnBoardingParts: GetOnBoardingParts
 ) : ViewModel() {
 
-
     private val _state = MutableLiveData<OnBoardingState>()
     val state: LiveData<OnBoardingState>
         get() = _state
@@ -30,6 +29,8 @@ class OnboardingViewModel @Inject constructor(
     }
 
     fun setOnboardingCompleted() {
-        setOnboardingCompleted.invoke()
+        viewModelScope.launch {
+            setOnboardingCompleted.invoke()
+        }
     }
 }

@@ -33,5 +33,4 @@ ArticleMapper @Inject constructor() :
     override fun mapToDomain(entity: ArticleEntity): Article {
         TODO("Not yet implemented")
     }
-
 }
