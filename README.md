@@ -96,12 +96,12 @@ Made 100% in Kotlin 😁
 - [Kotlin](https://kotlinlang.org/)
 - [AndroidX libraries](https://developer.android.com/jetpack/androidx)
 - [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) : [Lifecycle](https://developer.android.com/topic/libraries/architecture/lifecycle), [LiveData](https://developer.android.com/topic/libraries/architecture/livedata), [Room](https://developer.android.com/jetpack/androidx/releases/room), [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
+- [DataStore](https://developer.android.com/topic/libraries/architecture/datastore)
 - [Kotlin Flows](https://developer.android.com/kotlin/flow)
 - [View Binding](https://developer.android.com/topic/libraries/view-binding)
 - [Dagger-Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
 - [ViewPager2](https://developer.android.com/jetpack/androidx/releases/viewpager2)
 - [Glide](https://github.com/bumptech/glide)
-
 - [Retrofit2](https://github.com/square/retrofit)
 - [Android Test Support Library](https://developer.android.com/training/testing/index.html)
 - [Lottie](https://github.com/airbnb/lottie-android)
