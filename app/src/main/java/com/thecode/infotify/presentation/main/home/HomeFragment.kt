@@ -21,7 +21,6 @@ import com.thecode.infotify.presentation.about.AboutActivity
 import com.thecode.infotify.presentation.main.headline.HeadlineFragment
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class HomeFragment : BaseFragment() {
 
@@ -77,14 +76,12 @@ class HomeFragment : BaseFragment() {
         _binding = null
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val childFragment: Fragment = HeadlineFragment()
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
         transaction.replace(R.id.child_fragment, childFragment).commit()
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.home_menu, menu)
@@ -106,7 +103,6 @@ class HomeFragment : BaseFragment() {
                     R.anim.enter_from_left,
                     R.anim.exit_from_right
                 )
-
             }
         }
         return false

@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity() {
         setTheme(style)
     }
 
-
     private fun initViews() {
         viewPager = binding.viewPager
         bnlv = binding.bottomNavigationBar

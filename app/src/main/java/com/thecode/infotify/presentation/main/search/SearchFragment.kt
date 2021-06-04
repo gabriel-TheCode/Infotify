@@ -200,22 +200,25 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
     }
 
     private fun subscribeObserver() {
-        viewModel.searchState.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is DataState.Success -> {
-                    hideBadStateLayout()
-                    hideLoadingProgress()
-                    populateRecyclerView(it.data.articles)
-                }
-                is DataState.Loading -> {
-                    showLoadingProgress()
-                }
-                is DataState.Error -> {
-                    hideLoadingProgress()
-                    showInternetConnectionErrorLayout()
+        viewModel.searchState.observe(
+            viewLifecycleOwner,
+            Observer {
+                when (it) {
+                    is DataState.Success -> {
+                        hideBadStateLayout()
+                        hideLoadingProgress()
+                        populateRecyclerView(it.data.articles)
+                    }
+                    is DataState.Loading -> {
+                        showLoadingProgress()
+                    }
+                    is DataState.Error -> {
+                        hideLoadingProgress()
+                        showInternetConnectionErrorLayout()
+                    }
                 }
             }
-        })
+        )
     }
 
     private fun populateRecyclerView(articles: List<Article>) {
@@ -274,18 +277,18 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
 
         // perform set on query text listener event
         searchView.setOnQueryTextListener(object :
-            SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(q: String): Boolean {
-                query = q
-                fetchApiNews(query, language, sortBy)
-                return false
-            }
+                SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(q: String): Boolean {
+                    query = q
+                    fetchApiNews(query, language, sortBy)
+                    return false
+                }
 
-            override fun onQueryTextChange(newText: String): Boolean {
-                // do something when text changes
-                return false
-            }
-        })
+                override fun onQueryTextChange(newText: String): Boolean {
+                    // do something when text changes
+                    return false
+                }
+            })
     }
 
     private fun initRecyclerView() {
@@ -295,7 +298,6 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
     }
-
 
     override fun saveBookmark(article: Article) {
         viewModel.saveBookmark(article)
@@ -313,6 +315,4 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
     override fun shareNews(article: Article) {
         openSharingIntent(article)
     }
-
-
 }

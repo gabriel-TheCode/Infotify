@@ -21,7 +21,6 @@ import com.thecode.infotify.databinding.FragmentBookmarksBinding
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 
-
 @AndroidEntryPoint
 class BookmarksFragment : BaseFragment(), BookmarkOnClickListener {
 
@@ -55,7 +54,6 @@ class BookmarksFragment : BaseFragment(), BookmarkOnClickListener {
 
         return view
     }
-
 
     private fun initRecyclerView() {
         recyclerView = binding.recyclerViewNewsBookmark
@@ -100,20 +98,23 @@ class BookmarksFragment : BaseFragment(), BookmarkOnClickListener {
     }
 
     private fun subscribeObserver() {
-        viewModel.articles.observe(viewLifecycleOwner, {
-            when (it) {
-                is DataState.Success -> {
-                    populateRecyclerView(it.data)
-                }
-                is DataState.Loading -> {
-                    showLoadingProgress()
-                }
-                is DataState.Error -> {
-                    hideLoadingProgress()
-                    showEmptyStateLayout()
+        viewModel.articles.observe(
+            viewLifecycleOwner,
+            {
+                when (it) {
+                    is DataState.Success -> {
+                        populateRecyclerView(it.data)
+                    }
+                    is DataState.Loading -> {
+                        showLoadingProgress()
+                    }
+                    is DataState.Error -> {
+                        hideLoadingProgress()
+                        showEmptyStateLayout()
+                    }
                 }
             }
-        })
+        )
     }
 
     private fun populateRecyclerView(articles: List<Article>) {

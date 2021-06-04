@@ -51,7 +51,7 @@ open class BaseFragment : Fragment() {
 
         val i = Intent(context, NewsDetailsActivity::class.java)
 
-        //ADD DATA TO OUR INTENT
+        // ADD DATA TO OUR INTENT
         i.putExtra("title", article.title)
         i.putExtra("description", article.description)
         i.putExtra("imageUrl", article.urlToImage)
@@ -60,10 +60,8 @@ open class BaseFragment : Fragment() {
         i.putExtra("content", article.content)
         i.putExtra("url", article.url)
 
-        //START DETAIL ACTIVITY
+        // START DETAIL ACTIVITY
         requireActivity().startActivity(i)
-
-
     }
 
     fun loadWebviewDialog(article: Article) {

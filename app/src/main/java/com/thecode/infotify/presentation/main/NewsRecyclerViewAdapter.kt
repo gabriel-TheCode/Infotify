@@ -1,6 +1,5 @@
 package com.thecode.infotify.presentation.main
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -30,7 +29,6 @@ class NewsRecyclerViewAdapter(private val listener: NewsOnClickListener) :
     private lateinit var binding: AdapterNewsBinding
     var newsList: List<Article> = listOf()
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         binding = AdapterNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NewsViewHolder(binding)
@@ -45,7 +43,7 @@ class NewsRecyclerViewAdapter(private val listener: NewsOnClickListener) :
         holder.tvNewsTitle.text = news.title
         holder.tvNewsdescription.text = news.description
         holder.tvNewsDate.text = news.publishedAt?.split("T")?.get(0) ?: ""
-        holder.tvPublisherName.text = news.source.name ?: "Infotify News"
+        holder.tvPublisherName.text = news.source.name
 
         Glide.with(holder.itemView.context).load(news.urlToImage)
             .placeholder(R.drawable.placeholder)
@@ -88,5 +86,4 @@ class NewsRecyclerViewAdapter(private val listener: NewsOnClickListener) :
         val btnShare: ImageView = binding.btnShare
         val tvNewsDate: TextView = binding.textChipDate
     }
-
 }

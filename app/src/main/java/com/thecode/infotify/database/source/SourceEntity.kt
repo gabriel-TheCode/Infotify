@@ -13,4 +13,4 @@ data class SourceEntity(
     @SerializedName("name")
     var name: String? = null,
 
-    )
+)

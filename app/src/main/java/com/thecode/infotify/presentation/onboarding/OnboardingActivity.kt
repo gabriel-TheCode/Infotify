@@ -84,11 +84,14 @@ class OnboardingActivity : BaseActivity() {
     }
 
     private fun setUpObserver() {
-        viewModel.state.observe(this, {
-            when (it) {
-                is OnBoardingState.COMPLET -> onBoardingAdapter.setItem(it.list)
+        viewModel.state.observe(
+            this,
+            {
+                when (it) {
+                    is OnBoardingState.COMPLET -> onBoardingAdapter.setItem(it.list)
+                }
             }
-        })
+        )
     }
 
     private fun launchMainScreen() {
@@ -110,5 +113,4 @@ class OnboardingActivity : BaseActivity() {
     private fun getAdapterSize(): Int {
         return onBoardingAdapter.itemCount - 1
     }
-
 }

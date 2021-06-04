@@ -6,7 +6,7 @@ import javax.inject.Inject
 class SetOnboardingCompleted @Inject constructor(
     private val repository: OnBoardingRepository
 ) {
-    operator fun invoke() {
+    suspend operator fun invoke() {
         return repository.setOnboardingCompleted()
     }
 }

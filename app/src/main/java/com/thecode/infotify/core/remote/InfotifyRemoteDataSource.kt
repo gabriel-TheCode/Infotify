@@ -1,6 +1,6 @@
 package com.thecode.infotify.core.remote
 
-import com.thecode.infotify.application.InfotifySharedPref
+import com.thecode.infotify.application.InfotifyDataStore
 import com.thecode.infotify.core.domain.News
 import com.thecode.infotify.framework.datasource.NewsApiRemoteService
 import com.thecode.infotify.framework.datasource.network.mapper.NewsMapper
@@ -18,7 +18,7 @@ interface InfotifyRemoteDataSource {
 
 class InfotifyRemoteDataSourceImpl @Inject constructor(
     private val apiService: NewsApiRemoteService,
-    private val sharedPref: InfotifySharedPref,
+    private val dataStore: InfotifyDataStore,
     private val newsMapper: NewsMapper,
     private val sourceMapper: SourceMapper
 

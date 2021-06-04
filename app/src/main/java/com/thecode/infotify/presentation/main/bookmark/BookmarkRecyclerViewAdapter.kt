@@ -1,6 +1,5 @@
 package com.thecode.infotify.presentation.main.bookmark
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -12,7 +11,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.thecode.infotify.R
 import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.databinding.AdapterNewsLandscapeBinding
-
 
 interface BookmarkOnClickListener {
 
@@ -28,7 +26,6 @@ class BookmarkRecyclerViewAdapter(private val listener: BookmarkOnClickListener)
 
     private lateinit var binding: AdapterNewsLandscapeBinding
     private var newsList: ArrayList<Article> = ArrayList()
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         binding =
@@ -82,5 +79,4 @@ class BookmarkRecyclerViewAdapter(private val listener: BookmarkOnClickListener)
         val btnDelete: ImageView = binding.btnDelete
         val tvNewsDate: TextView = binding.textChipDate
     }
-
 }

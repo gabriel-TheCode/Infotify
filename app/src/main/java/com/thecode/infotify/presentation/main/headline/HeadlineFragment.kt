@@ -29,7 +29,6 @@ import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 import nl.bryanderidder.themedtogglebuttongroup.ThemedButton
 import nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
 
-
 @AndroidEntryPoint
 class HeadlineFragment : BaseFragment(), NewsOnClickListener {
 
@@ -59,7 +58,6 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     private lateinit var btnSport: ThemedButton
     private lateinit var btnTV: ThemedButton
     private lateinit var btnTech: ThemedButton
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -128,27 +126,30 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     }
 
     private fun subscribeObserver() {
-        viewModel.headlineState.observe(viewLifecycleOwner, {
-            when (it) {
-                is DataState.Success -> {
-                    hideBadStateLayout()
-                    hideLoadingProgress()
-                    populateRecyclerView(it.data.articles)
-                }
-                is DataState.Loading -> {
-                    showLoadingProgress()
-                }
-                is DataState.Error -> {
-                    hideLoadingProgress()
-                    showInternetConnectionErrorLayout()
-                    Toast.makeText(
-                        context,
-                        getString(R.string.internet_connection_error),
-                        Toast.LENGTH_SHORT
-                    ).show()
+        viewModel.headlineState.observe(
+            viewLifecycleOwner,
+            {
+                when (it) {
+                    is DataState.Success -> {
+                        hideBadStateLayout()
+                        hideLoadingProgress()
+                        populateRecyclerView(it.data.articles)
+                    }
+                    is DataState.Loading -> {
+                        showLoadingProgress()
+                    }
+                    is DataState.Error -> {
+                        hideLoadingProgress()
+                        showInternetConnectionErrorLayout()
+                        Toast.makeText(
+                            context,
+                            getString(R.string.internet_connection_error),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
-        })
+        )
     }
 
     private fun hideLoadingProgress() {
@@ -257,18 +258,15 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
         )
     }
 
-
     override fun deleteBookmark(article: Article) {
         TODO("Not yet implemented")
     }
 
     override fun openNews(article: Article) {
         loadWebviewDialog(article)
-
     }
 
     override fun shareNews(article: Article) {
         openSharingIntent(article)
     }
-
 }

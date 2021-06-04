@@ -1,7 +1,7 @@
 package com.thecode.infotify.core.di
 
 import android.content.Context
-import com.thecode.infotify.application.InfotifySharedPref
+import com.thecode.infotify.application.InfotifyDataStore
 import com.thecode.infotify.core.local.InfotifyLocalDataSource
 import com.thecode.infotify.core.local.InfotifyLocalDataSourceImpl
 import com.thecode.infotify.database.AppDatabase
@@ -24,7 +24,7 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideInfotifyLocalDataSource(sharePref: InfotifySharedPref): InfotifyLocalDataSource {
-        return InfotifyLocalDataSourceImpl(sharePref)
+    fun provideInfotifyDataStore(dataStore: InfotifyDataStore): InfotifyLocalDataSource {
+        return InfotifyLocalDataSourceImpl(dataStore)
     }
 }

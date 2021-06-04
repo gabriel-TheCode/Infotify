@@ -12,7 +12,8 @@ class SourceMapper @Inject constructor() :
             entity.status,
             entity.sources.map {
                 mapFromSourceItems(it.source)
-            })
+            }
+        )
     }
 
     private fun mapFromSourceItems(source: SourceObjectResponse.Result.Source): SourceItem {

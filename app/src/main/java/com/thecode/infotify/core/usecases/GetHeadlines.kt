@@ -28,6 +28,5 @@ class GetHeadlines @Inject constructor(
         } catch (e: Exception) {
             emit(DataState.Error(Exception(e.message)))
         }
-
     }.flowOn(Dispatchers.IO)
 }
