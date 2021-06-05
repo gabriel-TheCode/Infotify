@@ -31,6 +31,8 @@ import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import com.thecode.infotify.utils.AppConstants
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * A simple [Fragment] subclass.
@@ -103,7 +105,7 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinnerLang.adapter = adapter
-            val spinnerPosition = adapter.getPosition(language.toUpperCase())
+            val spinnerPosition = adapter.getPosition(language.toUpperCase(Locale.ROOT))
             spinnerLang.setSelection(spinnerPosition)
         }
 

@@ -9,6 +9,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.mikepenz.aboutlibraries.LibsBuilder
 import com.thecode.infotify.R
 import com.thecode.infotify.databinding.ActivityAboutBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +24,7 @@ class AboutActivity : AppCompatActivity() {
     private lateinit var layoutTwitter: RelativeLayout
     private lateinit var layoutSourceCode: RelativeLayout
     private lateinit var layoutPlaystore: RelativeLayout
+    private lateinit var layoutOpenSource: RelativeLayout
     private lateinit var txtVersion: TextView
     private lateinit var imgBack: ImageView
 
@@ -51,6 +53,7 @@ class AboutActivity : AppCompatActivity() {
         layoutTwitter = binding.layoutTwitter
         layoutSourceCode = binding.layoutSourceCode
         layoutPlaystore = binding.layoutPlaystore
+        layoutOpenSource = binding.layoutLicenses
 
         val versionName: String = com.thecode.infotify.BuildConfig.VERSION_NAME
         txtVersion.text = versionName
@@ -104,6 +107,17 @@ class AboutActivity : AppCompatActivity() {
             val intent =
                 Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/gabriel-TheCode/Infotify"))
             startActivity(intent)
+        }
+
+        layoutOpenSource.setOnClickListener {
+            LibsBuilder()
+                .withAboutIconShown(true)
+                .withAboutAppName(resources.getString(R.string.app_name))
+                .withAboutVersionShown(true)
+                .withLicenseShown(true)
+                .withVersionShown(true)
+                .withAutoDetect(true)
+                .start(this)
         }
 
         imgBack.setOnClickListener {
