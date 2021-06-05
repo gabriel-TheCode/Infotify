@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Light application theme. -->
-    <style name="AppTheme.Base.Light" parent="Theme.AppCompat.Light.NoActionBar"> <!-- Material Components ? -->
+    <style name="AppTheme.Base.Light" parent="@style/Theme.MaterialComponents.Light.NoActionBar"> <!-- Material Components ? -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -20,7 +20,7 @@
     </style>
 
     <!-- Night application theme. -->
-    <style name="AppTheme.Base.Night" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="AppTheme.Base.Night" parent="@style/Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimaryNight</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkNight</item>
         <item name="colorAccent">@color/colorAccentNight</item>
