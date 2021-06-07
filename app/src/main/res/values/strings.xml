@@ -44,6 +44,8 @@
     <string name="success">Success</string>
     <string name="bookmark_saved">Bookmark saved</string>
     <string name="bookmark_deleted">Bookmark deleted successfully</string>
+    <string name="validate">Validate</string>
+    <string name="language_description">Select the language of the newsfeed</string>
 
 
     <string-array name="languages">

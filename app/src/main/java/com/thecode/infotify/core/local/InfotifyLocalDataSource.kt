@@ -14,6 +14,10 @@ interface InfotifyLocalDataSource {
 
     suspend fun setNightModeEnabled(state: Boolean)
 
+    fun getUserLanguagePreference(): Flow<String>
+
+    suspend fun setUserLanguagePreference(lang: String)
+
     suspend fun clearAppData()
 }
 
@@ -34,6 +38,14 @@ class InfotifyLocalDataSourceImpl @Inject constructor(
 
     override suspend fun setNightModeEnabled(state: Boolean) {
         dataStore.setNightModeEnabled(state)
+    }
+
+    override fun getUserLanguagePreference(): Flow<String> {
+        return dataStore.getUserLanguagePreference()
+    }
+
+    override suspend fun setUserLanguagePreference(lang: String) {
+        dataStore.setUserLanguagePreference(lang)
     }
 
     override suspend fun clearAppData() {

@@ -23,7 +23,6 @@ import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.databinding.FragmentHeadlineBinding
 import com.thecode.infotify.presentation.main.NewsOnClickListener
 import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
-import com.thecode.infotify.utils.AppConstants
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 import nl.bryanderidder.themedtogglebuttongroup.ThemedButton
@@ -43,6 +42,7 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     private val binding get() = _binding!!
 
     private var category: String = "General"
+    private var lang: String = ""
 
     // Views
     lateinit var recyclerView: RecyclerView
@@ -68,17 +68,14 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
 
         val view = binding.root
 
-        subscribeObserver()
-        initViews()
 
+        subscribeObservers()
+
+
+        initViews()
         initRecyclerView()
 
-        btnRetry.setOnClickListener {
-            fetchApiNews()
-        }
-
         fetchApiNews()
-        recyclerView.scheduleLayoutAnimation()
 
         return view
     }
@@ -90,9 +87,10 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
 
     private fun fetchApiNews() {
         viewModel.getHeadlines(
-            AppConstants.DEFAULT_LANG,
+            viewModel.getLanguage(),
             category
         )
+        recyclerView.scheduleLayoutAnimation()
     }
 
     private fun showInternetConnectionErrorLayout() {
@@ -125,7 +123,7 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
         layoutBadState.isVisible = false
     }
 
-    private fun subscribeObserver() {
+    private fun subscribeObservers() {
         viewModel.headlineState.observe(
             viewLifecycleOwner,
             {
@@ -179,6 +177,9 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
         btnSport = binding.btnSports
         btnTV = binding.btnEntertainment
         btnTech = binding.btnTechnology
+
+
+        btnRetry.setOnClickListener { fetchApiNews() }
 
         refreshLayout.setColorSchemeResources(
             R.color.colorPrimary,
