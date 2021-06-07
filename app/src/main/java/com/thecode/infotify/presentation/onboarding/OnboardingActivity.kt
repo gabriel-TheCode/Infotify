@@ -11,6 +11,7 @@ import com.thecode.infotify.R
 import com.thecode.infotify.base.BaseActivity
 import com.thecode.infotify.core.domain.OnBoardingState
 import com.thecode.infotify.databinding.ActivityOnboardingBinding
+import com.thecode.infotify.presentation.language.LanguageActivity
 import com.thecode.infotify.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -96,7 +97,7 @@ class OnboardingActivity : BaseActivity() {
 
     private fun launchMainScreen() {
         viewModel.setOnboardingCompleted()
-        val intent = Intent(applicationContext, MainActivity::class.java)
+        val intent = Intent(applicationContext, LanguageActivity::class.java)
         overridePendingTransition(R.anim.enter_from_left, R.anim.exit_from_right)
         startSingleTopActivity(intent)
         finishAffinity()

@@ -44,6 +44,8 @@
     <string name="success">Succes</string>
     <string name="bookmark_saved">Signet enregistré</string>
     <string name="bookmark_deleted">Signet supprimé</string>
+    <string name="validate">Valider</string>
+    <string name="language_description">Sélectionnez la langue du fil d\'actualités</string>
 
 
     <string-array name="languages">

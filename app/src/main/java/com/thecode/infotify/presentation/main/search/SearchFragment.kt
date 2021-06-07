@@ -14,7 +14,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -204,7 +203,7 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
     private fun subscribeObserver() {
         viewModel.searchState.observe(
             viewLifecycleOwner,
-            Observer {
+            {
                 when (it) {
                     is DataState.Success -> {
                         hideBadStateLayout()
@@ -279,18 +278,18 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
 
         // perform set on query text listener event
         searchView.setOnQueryTextListener(object :
-                SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(q: String): Boolean {
-                    query = q
-                    fetchApiNews(query, language, sortBy)
-                    return false
-                }
+            SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(q: String): Boolean {
+                query = q
+                fetchApiNews(query, language, sortBy)
+                return false
+            }
 
-                override fun onQueryTextChange(newText: String): Boolean {
-                    // do something when text changes
-                    return false
-                }
-            })
+            override fun onQueryTextChange(newText: String): Boolean {
+                // do something when text changes
+                return false
+            }
+        })
     }
 
     private fun initRecyclerView() {
