@@ -12,7 +12,6 @@ import com.thecode.infotify.base.BaseActivity
 import com.thecode.infotify.core.domain.OnBoardingState
 import com.thecode.infotify.databinding.ActivityOnboardingBinding
 import com.thecode.infotify.presentation.language.LanguageActivity
-import com.thecode.infotify.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.core.domain.News
-import com.thecode.infotify.core.usecases.GetLanguagePreference
 import com.thecode.infotify.core.usecases.GetSearchNews
 import com.thecode.infotify.core.usecases.SaveBookmark
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,8 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val getSearchNews: GetSearchNews,
-    private val saveBookmark: SaveBookmark,
-    private val getLanguagePreference: GetLanguagePreference
+    private val saveBookmark: SaveBookmark
 ) : ViewModel() {
     private val _searchState = MutableLiveData<DataState<News>>()
     val searchState: LiveData<DataState<News>>
