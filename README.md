@@ -8,7 +8,6 @@ Infotify is a newsfeed app that allows you to read, and share the information yo
 
 This Android application using MVVM, Clean Architecture, Android Architecture Components.
 
-
 Made 100% in Kotlin 😁
 
  <a href="https://play.google.com/store/apps/details?id=com.thecode.infotify">

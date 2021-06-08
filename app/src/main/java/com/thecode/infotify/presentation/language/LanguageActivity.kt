@@ -1,9 +1,7 @@
 package com.thecode.infotify.presentation.language
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Selection.setSelection
 import android.view.Gravity
 import android.view.View
 import android.view.animation.Animation
@@ -13,11 +11,9 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import com.thecode.infotify.R
 import com.thecode.infotify.base.BaseActivity
 import com.thecode.infotify.databinding.ActivityLanguageBinding
-import com.thecode.infotify.databinding.ActivityOnboardingBinding
 import com.thecode.infotify.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,14 +42,15 @@ class LanguageActivity : BaseActivity(), Animation.AnimationListener {
 
         languageViewModel.getCurrentLanguages()
 
-        btnContinue.setOnClickListener {
-            onClickNext()
-        }
     }
 
     private fun initViews(){
         btnContinue = binding.continueButton
         spinner = binding.preferredLanguageSpinner
+
+        btnContinue.setOnClickListener {
+            onClickNext()
+        }
     }
 
     private fun displayLanguages(languages: List<String>) {
