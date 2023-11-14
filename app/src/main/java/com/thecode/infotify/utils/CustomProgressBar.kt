@@ -8,6 +8,7 @@ import com.thecode.infotify.R
 import com.thecode.infotify.databinding.ProgressBarBinding
 
 class CustomProgressBar {
+
     lateinit var binding: ProgressBarBinding
     lateinit var dialog: Dialog
         private set

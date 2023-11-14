@@ -29,8 +29,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
-                    android:text="Bookmarks"
-                    fontPath="fonts/OleoScript-Bold.ttf"
+                    android:text="@string/bookmarks"
+                    android:fontFamily="@font/oleoscript_bold"
                     android:textColor="?attr/primaryBackgroundColor"
                     android:textSize="22sp"
                     android:textStyle="bold" />
@@ -46,6 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <LinearLayout
             android:id="@+id/layout_bookmark_empty"
             android:layout_width="match_parent"
@@ -59,16 +60,20 @@
                 android:layout_height="250dp"
                 android:layout_gravity="center"
                 android:src="@drawable/list_is_empty" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="No bookmarks"
+                android:text="@string/no_bookmarks"
+                android:textColor="?attr/primaryTitleColor"
                 android:textSize="18sp"
-                fontPath="fonts/SF-Medium.otf"/>
+                android:fontFamily="@font/sf_medium"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Save a bookmark and it will show up here"
+                android:textColor="?attr/primaryDescriptionColor"
+                android:text="@string/empty_bookmark_text"
                 android:textSize="16sp"/>
 
         </LinearLayout>
