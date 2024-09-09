@@ -12,7 +12,6 @@ import android.widget.Spinner
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +24,9 @@ import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.databinding.BottomSheetSearchBinding
 import com.thecode.infotify.databinding.FragmentSearchBinding
 import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
-import com.thecode.infotify.utils.AppConstants
+import com.thecode.infotify.utils.AppConstants.DEFAULT_LANG
+import com.thecode.infotify.utils.AppConstants.DEFAULT_QUERY
+import com.thecode.infotify.utils.AppConstants.DEFAULT_SORT
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 import java.util.Locale
@@ -53,15 +54,13 @@ class SearchFragment : BaseFragment() {
         // Inflate the layout for this fragment
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
 
-        val view = binding.root
-
         subscribeObserver()
         initViews()
         initRecyclerView()
 
         fetchApiNews(query, language, sortBy)
 
-        return view
+        return binding.root
     }
 
     override fun onDestroyView() {
@@ -76,8 +75,6 @@ class SearchFragment : BaseFragment() {
     private fun showBottomSheetSearch() {
         val binding: BottomSheetSearchBinding = BottomSheetSearchBinding.inflate(layoutInflater)
         val view = binding.root
-        val textClose = binding.textClose
-        val btnValidateSignature = binding.btnApply
         val spinnerLang: Spinner = binding.spinnerLang
         ArrayAdapter.createFromResource(
             view.context,
@@ -145,8 +142,8 @@ class SearchFragment : BaseFragment() {
             BottomSheetBehavior.from(view.parent as View)
         mBehavior.peekHeight = maxHeight
         dialog.show()
-        textClose.setOnClickListener { dialog.dismiss() }
-        btnValidateSignature.setOnClickListener {
+        binding.textClose.setOnClickListener { dialog.dismiss() }
+        binding.btnApply.setOnClickListener {
             dialog.dismiss()
             fetchApiNews(query, language, sortBy)
         }
@@ -229,9 +226,9 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun initViews() {
-        query = "news"
-        sortBy = "PublishedAt"
-        language = AppConstants.DEFAULT_LANG
+        query = DEFAULT_QUERY
+        sortBy = DEFAULT_SORT
+        language = DEFAULT_LANG
 
         binding.apply {
             refreshLayout.setColorSchemeResources(
@@ -277,7 +274,6 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun initRecyclerView() {
-
         recyclerView = binding.recyclerViewNewsEverything
         recyclerAdapter = NewsRecyclerViewAdapter(
             onSaveBookmark = {
@@ -296,7 +292,7 @@ class SearchFragment : BaseFragment() {
 
     fun saveBookmark(article: Article) {
         viewModel.saveBookmark(article)
-        showSuccessDialog("Success", "Bookmark saved")
+        showSuccessDialog(getString(R.string.success), getString(R.string.bookmark_saved))
     }
 
     fun openNews(article: Article) {

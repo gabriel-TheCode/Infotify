@@ -130,7 +130,7 @@ class HeadlineFragment : BaseFragment() {
     private fun initRecyclerView() {
         recyclerAdapter = NewsRecyclerViewAdapter(
             onSaveBookmark = {
-                viewModel.saveBookmark(it)
+                saveBookmark(it)
             },
             onOpenNews = {
                 openNews(it)
