@@ -24,7 +24,7 @@ open class BaseFragment : Fragment() {
         AestheticDialog.Builder(requireActivity(), DialogStyle.RAINBOW, DialogType.ERROR)
             .setTitle(title)
             .setMessage(description)
-            .setDuration(2000)
+            .setDuration(1000)
             .show()
     }
 
@@ -32,7 +32,7 @@ open class BaseFragment : Fragment() {
         AestheticDialog.Builder(requireActivity(), DialogStyle.RAINBOW, DialogType.SUCCESS)
             .setTitle(title)
             .setMessage(description)
-            .setDuration(2000)
+            .setDuration(1000)
             .show()
     }
 

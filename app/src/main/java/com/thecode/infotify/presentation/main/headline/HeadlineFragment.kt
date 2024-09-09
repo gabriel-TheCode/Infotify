@@ -6,7 +6,6 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -16,25 +15,21 @@ import com.thecode.infotify.base.BaseFragment
 import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.databinding.FragmentHeadlineBinding
-import com.thecode.infotify.presentation.main.NewsOnClickListener
 import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 
 @AndroidEntryPoint
-class HeadlineFragment : BaseFragment(), NewsOnClickListener {
+class HeadlineFragment : BaseFragment() {
 
     // ViewModel
     private val viewModel: HeadlineViewModel by viewModels()
-
-    // Listener
-    private var newsOnClickListener: NewsOnClickListener = this
 
     // View Binding
     private var _binding: FragmentHeadlineBinding? = null
     private val binding get() = _binding!!
 
-    private var category: String = getString(R.string.general_category)
+    private var category: String = "General"
 
     // Views
     lateinit var recyclerAdapter: NewsRecyclerViewAdapter
@@ -133,7 +128,17 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     }
 
     private fun initRecyclerView() {
-        recyclerAdapter = NewsRecyclerViewAdapter(newsOnClickListener)
+        recyclerAdapter = NewsRecyclerViewAdapter(
+            onSaveBookmark = {
+                viewModel.saveBookmark(it)
+            },
+            onOpenNews = {
+                openNews(it)
+            },
+            onShareNews = {
+                shareNews(it)
+            }
+        )
         binding.recyclerViewNews.layoutManager = LinearLayoutManager(activity)
         binding.recyclerViewNews.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
     }
@@ -187,11 +192,6 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
                 }
             }
         }
-
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
     }
 
     private fun populateRecyclerView(articles: List<Article>) {
@@ -203,7 +203,7 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
         }
     }
 
-    override fun saveBookmark(article: Article) {
+    fun saveBookmark(article: Article) {
         viewModel.saveBookmark(article)
         showSuccessDialog(
             getString(R.string.success),
@@ -211,15 +211,11 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
         )
     }
 
-    override fun deleteBookmark(article: Article) {
-        TODO("Not yet implemented")
-    }
-
-    override fun openNews(article: Article) {
+    fun openNews(article: Article) {
         loadWebviewDialog(article)
     }
 
-    override fun shareNews(article: Article) {
+    fun shareNews(article: Article) {
         openSharingIntent(article)
     }
 }

@@ -8,18 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ImageView
 import android.widget.Spinner
-import android.widget.TextView
 import androidx.annotation.ColorInt
-import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.thecode.infotify.R
@@ -28,38 +24,23 @@ import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.databinding.BottomSheetSearchBinding
 import com.thecode.infotify.databinding.FragmentSearchBinding
-import com.thecode.infotify.presentation.main.NewsOnClickListener
 import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import com.thecode.infotify.utils.AppConstants
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 import java.util.Locale
 
-/**
- * A simple [Fragment] subclass.
- */
 
 @AndroidEntryPoint
-class SearchFragment : BaseFragment(), NewsOnClickListener {
+class SearchFragment : BaseFragment() {
     private val viewModel: SearchViewModel by viewModels()
 
-    // Listener
-    private var newsOnClickListener: NewsOnClickListener = this
-
     private var _binding: FragmentSearchBinding? = null
-    // This property is only valid between onCreateView and
-    // onDestroyView.
 
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
     lateinit var recyclerAdapter: NewsRecyclerViewAdapter
-    lateinit var refreshLayout: SwipeRefreshLayout
-    private lateinit var searchView: SearchView
-    lateinit var btnRetry: AppCompatButton
-    lateinit var layoutBadState: View
-    lateinit var textState: TextView
-    lateinit var imgState: ImageView
-    private lateinit var imgSearchOptions: ImageView
+
     lateinit var query: String
     lateinit var sortBy: String
     lateinit var language: String
@@ -178,9 +159,11 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
                 getString(R.string.check_internet)
             )
         } else {
-            layoutBadState.isVisible = true
-            textState.text = getString(R.string.internet_connection_error)
-            btnRetry.isVisible = true
+            binding.apply {
+                included.layoutBadState.isVisible = true
+                included.textState.text = getString(R.string.internet_connection_error)
+                included.btnRetry.isVisible = true
+            }
         }
     }
 
@@ -191,14 +174,16 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
                 getString(R.string.service_unavailable)
             )
         } else {
-            layoutBadState.isVisible = true
-            textState.text = getString(R.string.no_result_found)
-            btnRetry.isVisible = true
+            binding.apply {
+                included.layoutBadState.isVisible = true
+                included.textState.text = getString(R.string.no_result_found)
+                included.btnRetry.isVisible = true
+            }
         }
     }
 
     private fun hideBadStateLayout() {
-        layoutBadState.isVisible = false
+        binding.included.layoutBadState.isVisible = false
     }
 
     private fun subscribeObserver() {
@@ -236,87 +221,89 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
     }
 
     private fun hideLoadingProgress() {
-        refreshLayout.isRefreshing = false
+        binding.refreshLayout.isRefreshing = false
     }
 
     private fun showLoadingProgress() {
-        refreshLayout.isRefreshing = true
+        binding.refreshLayout.isRefreshing = true
     }
 
     private fun initViews() {
         query = "news"
         sortBy = "PublishedAt"
         language = AppConstants.DEFAULT_LANG
-        searchView = binding.searchview
-        btnRetry = binding.included.btnRetry
-        layoutBadState = binding.included.layoutBadState
-        imgState = binding.included.imgState
-        textState = binding.included.textState
-        imgSearchOptions = binding.imageSettings
-        refreshLayout = binding.refreshLayout
 
-        refreshLayout.setColorSchemeResources(
-            R.color.colorPrimary,
-            R.color.colorPrimary,
-            R.color.colorPrimaryDark,
-            R.color.colorPrimaryDark
-        )
+        binding.apply {
+            refreshLayout.setColorSchemeResources(
+                R.color.colorPrimary,
+                R.color.colorPrimary,
+                R.color.colorPrimaryDark,
+                R.color.colorPrimaryDark
+            )
 
-        val typedValue = TypedValue()
-        val theme: Resources.Theme = requireContext().theme
-        theme.resolveAttribute(R.attr.primaryCardBackgroundColor, typedValue, true)
-        @ColorInt val color = typedValue.data
-        refreshLayout.setProgressBackgroundColorSchemeColor(color)
-        refreshLayout.setOnRefreshListener {
-            fetchApiNews(query, language, sortBy)
-        }
-
-        imgSearchOptions.setOnClickListener {
-            showBottomSheetSearch()
-        }
-
-        btnRetry.setOnClickListener {
-            fetchApiNews(query, language, sortBy)
-        }
-
-        // perform set on query text listener event
-        searchView.setOnQueryTextListener(object :
-            SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(q: String): Boolean {
-                query = q
+            val typedValue = TypedValue()
+            val theme: Resources.Theme = requireContext().theme
+            theme.resolveAttribute(R.attr.primaryCardBackgroundColor, typedValue, true)
+            @ColorInt val color = typedValue.data
+            refreshLayout.setProgressBackgroundColorSchemeColor(color)
+            refreshLayout.setOnRefreshListener {
                 fetchApiNews(query, language, sortBy)
-                return false
             }
 
-            override fun onQueryTextChange(newText: String): Boolean {
-                // do something when text changes
-                return false
+            imageSettings.setOnClickListener {
+                showBottomSheetSearch()
             }
-        })
+
+            included.btnRetry.setOnClickListener {
+                fetchApiNews(query, language, sortBy)
+            }
+
+            // perform set on query text listener event
+            searchview.setOnQueryTextListener(object :
+                SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(q: String): Boolean {
+                    query = q
+                    fetchApiNews(query, language, sortBy)
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    // do something when text changes
+                    return false
+                }
+            })
+        }
+
     }
 
     private fun initRecyclerView() {
 
         recyclerView = binding.recyclerViewNewsEverything
-        recyclerAdapter = NewsRecyclerViewAdapter(newsOnClickListener)
+        recyclerAdapter = NewsRecyclerViewAdapter(
+            onSaveBookmark = {
+                viewModel.saveBookmark(it)
+            },
+            onOpenNews = {
+                openNews(it)
+            },
+            onShareNews = {
+                shareNews(it)
+            }
+        )
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
     }
 
-    override fun saveBookmark(article: Article) {
+    fun saveBookmark(article: Article) {
         viewModel.saveBookmark(article)
         showSuccessDialog("Success", "Bookmark saved")
     }
 
-    override fun deleteBookmark(article: Article) {
-        TODO("Not yet implemented")
-    }
-
-    override fun openNews(article: Article) {
+    fun openNews(article: Article) {
         loadWebviewDialog(article)
     }
 
-    override fun shareNews(article: Article) {
+    fun shareNews(article: Article) {
         openSharingIntent(article)
     }
 }
