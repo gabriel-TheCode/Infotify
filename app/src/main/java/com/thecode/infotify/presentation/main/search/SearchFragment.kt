@@ -2,12 +2,15 @@ package com.thecode.infotify.presentation.main.search
 
 import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.SearchView
@@ -30,8 +33,7 @@ import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import com.thecode.infotify.utils.AppConstants
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Locale
 
 /**
  * A simple [Fragment] subclass.
@@ -209,9 +211,11 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
                         hideLoadingProgress()
                         populateRecyclerView(it.data.articles)
                     }
+
                     is DataState.Loading -> {
                         showLoadingProgress()
                     }
+
                     is DataState.Error -> {
                         hideLoadingProgress()
                         showInternetConnectionErrorLayout()

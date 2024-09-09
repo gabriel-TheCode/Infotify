@@ -9,10 +9,8 @@ import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.core.domain.News
 import com.thecode.infotify.core.usecases.GetHeadlines
-import com.thecode.infotify.core.usecases.GetLanguagePreference
 import com.thecode.infotify.core.usecases.SaveBookmark
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch

@@ -53,10 +53,11 @@ class SplashActivity : AppCompatActivity() {
                     pivotX = 0f
                     pivotY = 0f
                 }
-                val springAnim = SpringAnimation(binding.splashLayout, DynamicAnimation.ROTATION).apply {
-                    springForce.dampingRatio = SpringForce.DAMPING_RATIO_HIGH_BOUNCY
-                    springForce.stiffness = SpringForce.STIFFNESS_VERY_LOW
-                }
+                val springAnim =
+                    SpringAnimation(binding.splashLayout, DynamicAnimation.ROTATION).apply {
+                        springForce.dampingRatio = SpringForce.DAMPING_RATIO_HIGH_BOUNCY
+                        springForce.stiffness = SpringForce.STIFFNESS_VERY_LOW
+                    }
 
                 springAnim.spring = springForce
                 springAnim.setStartValue(80f)

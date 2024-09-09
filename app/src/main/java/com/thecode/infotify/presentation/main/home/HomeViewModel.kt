@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.thecode.infotify.core.usecases.IsNightModeEnabled
 import com.thecode.infotify.core.usecases.SetNightModeEnabled
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

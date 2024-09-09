@@ -44,7 +44,7 @@ class LanguageActivity : BaseActivity(), Animation.AnimationListener {
 
     }
 
-    private fun initViews(){
+    private fun initViews() {
         btnContinue = binding.continueButton
         spinner = binding.preferredLanguageSpinner
 

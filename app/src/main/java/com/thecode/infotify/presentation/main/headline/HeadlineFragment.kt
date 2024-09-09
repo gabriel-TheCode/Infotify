@@ -6,16 +6,11 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorInt
-import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.thecode.infotify.R
 import com.thecode.infotify.base.BaseFragment
 import com.thecode.infotify.core.domain.Article
@@ -25,8 +20,6 @@ import com.thecode.infotify.presentation.main.NewsOnClickListener
 import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
-import nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-import nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
 
 @AndroidEntryPoint
 class HeadlineFragment : BaseFragment(), NewsOnClickListener {
