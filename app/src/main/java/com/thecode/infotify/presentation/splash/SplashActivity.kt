@@ -29,10 +29,19 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivitySplashBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
 
-        val splashLayout = binding.splashLayout
+        setContentView(binding.root)
+
+        viewModel.state.observe(this, { isOnboardingCompleted ->
+            if (isOnboardingCompleted == true) {
+                intent = Intent(applicationContext, MainActivity::class.java)
+            } else {
+                intent = Intent(applicationContext, OnboardingActivity::class.java)
+            }
+            finish()
+            startActivity(intent)
+            overridePendingTransition(0, 0)
+        })
 
         @Suppress("DEPRECATION")
         Handler().postDelayed(
@@ -40,12 +49,15 @@ class SplashActivity : AppCompatActivity() {
                 // do stuff
                 // Like your Background calls and all
                 springForce = SpringForce(0f)
-                splashLayout.pivotX = 0f
-                splashLayout.pivotY = 0f
-                val springAnim = SpringAnimation(splashLayout, DynamicAnimation.ROTATION).apply {
+                binding.splashLayout.apply {
+                    pivotX = 0f
+                    pivotY = 0f
+                }
+                val springAnim = SpringAnimation(binding.splashLayout, DynamicAnimation.ROTATION).apply {
                     springForce.dampingRatio = SpringForce.DAMPING_RATIO_HIGH_BOUNCY
                     springForce.stiffness = SpringForce.STIFFNESS_VERY_LOW
                 }
+
                 springAnim.spring = springForce
                 springAnim.setStartValue(80f)
                 springAnim.addEndListener { _, _, _, _ ->
@@ -62,39 +74,28 @@ class SplashActivity : AppCompatActivity() {
                     }
                     val height = displayMetrics.heightPixels.toFloat()
                     val width = displayMetrics.widthPixels
-                    splashLayout.animate()
-                        .setStartDelay(1)
+                    binding.splashLayout.animate()
                         .translationXBy(width.toFloat() / 2)
                         .translationYBy(height)
                         .setListener(object : Animator.AnimatorListener {
-                            override fun onAnimationRepeat(p0: Animator?) {
-                            }
 
                             @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-                            override fun onAnimationEnd(p0: Animator?) {
-                                val intent: Intent = if (viewModel.isOnboardingCompleted()) {
-                                    Intent(applicationContext, MainActivity::class.java)
-                                } else {
-                                    Intent(applicationContext, OnboardingActivity::class.java)
-                                }
-                                finish()
-                                startActivity(intent)
-
-                                overridePendingTransition(0, 0)
+                            override fun onAnimationEnd(p0: Animator) {
+                                viewModel.getOnboardingStatus()
                             }
 
-                            override fun onAnimationCancel(p0: Animator?) {
-                            }
+                            override fun onAnimationCancel(p0: Animator) = Unit
 
-                            override fun onAnimationStart(p0: Animator?) {
-                            }
+                            override fun onAnimationStart(p0: Animator) = Unit
+
+                            override fun onAnimationRepeat(p0: Animator) = Unit
                         })
                         .setInterpolator(DecelerateInterpolator(1f))
                         .start()
                 }
                 springAnim.start()
             },
-            4000
+            2500
         )
     }
 }

@@ -41,23 +41,10 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     private var _binding: FragmentHeadlineBinding? = null
     private val binding get() = _binding!!
 
-    private var category: String = "General"
-    private var lang: String = ""
+    private var category: String = getString(R.string.general_category)
 
     // Views
-    lateinit var recyclerView: RecyclerView
     lateinit var recyclerAdapter: NewsRecyclerViewAdapter
-    lateinit var refreshLayout: SwipeRefreshLayout
-    lateinit var btnRetry: AppCompatButton
-    lateinit var layoutBadState: View
-    lateinit var textState: TextView
-    lateinit var imgState: ImageView
-    private lateinit var themedButtonGroup: ThemedToggleButtonGroup
-    private lateinit var btnGeneral: ThemedButton
-    private lateinit var btnScience: ThemedButton
-    private lateinit var btnSport: ThemedButton
-    private lateinit var btnTV: ThemedButton
-    private lateinit var btnTech: ThemedButton
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,18 +53,12 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     ): View {
         _binding = FragmentHeadlineBinding.inflate(inflater, container, false)
 
-        val view = binding.root
-
-
         subscribeObservers()
-
-
         initViews()
         initRecyclerView()
-
         fetchApiNews()
 
-        return view
+        return binding.root
     }
 
     override fun onDestroyView() {
@@ -87,10 +68,9 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
 
     private fun fetchApiNews() {
         viewModel.getHeadlines(
-            viewModel.getLanguage(),
-            category
+            category.lowercase()
         )
-        recyclerView.scheduleLayoutAnimation()
+        binding.recyclerViewNews.scheduleLayoutAnimation()
     }
 
     private fun showInternetConnectionErrorLayout() {
@@ -100,9 +80,11 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
                 getString(R.string.check_internet)
             )
         } else {
-            layoutBadState.isVisible = true
-            textState.text = getString(R.string.internet_connection_error)
-            btnRetry.isVisible = true
+            binding.included.apply {
+                layoutBadState.isVisible = true
+                textState.text = getString(R.string.internet_connection_error)
+                btnRetry.isVisible = true
+            }
         }
     }
 
@@ -113,14 +95,16 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
                 getString(R.string.service_unavailable)
             )
         } else {
-            layoutBadState.isVisible = true
-            textState.text = getString(R.string.no_result_found)
-            btnRetry.isVisible = true
+            binding.included.apply {
+                layoutBadState.isVisible = true
+                textState.text = getString(R.string.no_result_found)
+                btnRetry.isVisible = true
+            }
         }
     }
 
     private fun hideBadStateLayout() {
-        layoutBadState.isVisible = false
+        binding.included.layoutBadState.isVisible = false
     }
 
     private fun subscribeObservers() {
@@ -133,17 +117,14 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
                         hideLoadingProgress()
                         populateRecyclerView(it.data.articles)
                     }
+
                     is DataState.Loading -> {
                         showLoadingProgress()
                     }
+
                     is DataState.Error -> {
                         hideLoadingProgress()
                         showInternetConnectionErrorLayout()
-                        Toast.makeText(
-                            context,
-                            getString(R.string.internet_connection_error),
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
                 }
             }
@@ -151,86 +132,69 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     }
 
     private fun hideLoadingProgress() {
-        refreshLayout.isRefreshing = false
+        binding.refreshLayout.isRefreshing = false
     }
 
     private fun showLoadingProgress() {
-        refreshLayout.isRefreshing = true
+        binding.refreshLayout.isRefreshing = true
     }
 
     private fun initRecyclerView() {
         recyclerAdapter = NewsRecyclerViewAdapter(newsOnClickListener)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
+        binding.recyclerViewNews.layoutManager = LinearLayoutManager(activity)
+        binding.recyclerViewNews.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
     }
 
     private fun initViews() {
-        refreshLayout = binding.refreshLayout
-        recyclerView = binding.recyclerViewNews
-        btnRetry = binding.included.btnRetry
-        layoutBadState = binding.included.layoutBadState
-        imgState = binding.included.imgState
-        textState = binding.included.textState
-        themedButtonGroup = binding.themedButtonGroup
-        btnGeneral = binding.btnGeneral
-        btnScience = binding.btnScience
-        btnSport = binding.btnSports
-        btnTV = binding.btnEntertainment
-        btnTech = binding.btnTechnology
+        binding.apply {
+            included.btnRetry.setOnClickListener { fetchApiNews() }
+            refreshLayout.setColorSchemeResources(
+                R.color.colorPrimary,
+                R.color.colorPrimary,
+                R.color.colorPrimaryDark,
+                R.color.colorPrimaryDark
+            )
+            val typedValue = TypedValue()
+            val theme: Resources.Theme = requireContext().theme
+            theme.resolveAttribute(R.attr.primaryCardBackgroundColor, typedValue, true)
+            @ColorInt val color = typedValue.data
+            refreshLayout.setProgressBackgroundColorSchemeColor(color)
+            refreshLayout.setOnRefreshListener {
+                fetchApiNews()
+            }
 
+            themedButtonGroup.selectButton(btnGeneral)
 
-        btnRetry.setOnClickListener { fetchApiNews() }
+            themedButtonGroup.setOnSelectListener {
+                when (it) {
+                    btnGeneral -> {
+                        category = getString(R.string.general_category)
+                        fetchApiNews()
+                    }
 
-        refreshLayout.setColorSchemeResources(
-            R.color.colorPrimary,
-            R.color.colorPrimary,
-            R.color.colorPrimaryDark,
-            R.color.colorPrimaryDark
-        )
-        val typedValue = TypedValue()
-        val theme: Resources.Theme = requireContext().theme
-        theme.resolveAttribute(R.attr.primaryCardBackgroundColor, typedValue, true)
-        @ColorInt val color = typedValue.data
-        refreshLayout.setProgressBackgroundColorSchemeColor(color)
-        refreshLayout.setOnRefreshListener {
-            fetchApiNews()
-        }
+                    btnScience -> {
+                        category = getString(R.string.science_category)
+                        fetchApiNews()
+                    }
 
-        themedButtonGroup.selectButton(btnGeneral)
+                    btnEntertainment -> {
+                        category = getString(R.string.entertainment_category)
+                        fetchApiNews()
+                    }
 
-        themedButtonGroup.setOnSelectListener {
-            when (it) {
-                btnGeneral -> {
-                    category = "General"
-                    showToast(category)
-                    fetchApiNews()
-                }
+                    btnTechnology -> {
+                        category = getString(R.string.technology_category)
+                        fetchApiNews()
+                    }
 
-                btnScience -> {
-                    category = "Science"
-                    showToast(category)
-                    fetchApiNews()
-                }
-
-                btnTV -> {
-                    category = "Entertainment"
-                    showToast(category)
-                    fetchApiNews()
-                }
-
-                btnTech -> {
-                    category = "Technology"
-                    showToast(category)
-                    fetchApiNews()
-                }
-
-                btnSport -> {
-                    category = "Sports"
-                    showToast(category)
-                    fetchApiNews()
+                    btnSports -> {
+                        category = getString(R.string.sports_category)
+                        fetchApiNews()
+                    }
                 }
             }
         }
+
     }
 
     private fun showToast(message: String) {
@@ -241,13 +205,8 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
         if (articles.isEmpty()) {
             showBadStateLayout()
         } else {
-            val articleArrayList: ArrayList<Article> = ArrayList()
-            for (i in articles.indices) {
-                val article = articles[i]
-                articleArrayList.add(article)
-                recyclerAdapter.setArticleListItems(articleArrayList)
-                recyclerView.scheduleLayoutAnimation()
-            }
+            recyclerAdapter.setArticleListItems(articles)
+            binding.recyclerViewNews.scheduleLayoutAnimation()
         }
     }
 
@@ -271,3 +230,4 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
         openSharingIntent(article)
     }
 }
+

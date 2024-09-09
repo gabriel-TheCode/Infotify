@@ -69,7 +69,7 @@ class NewsRecyclerViewAdapter(private val listener: NewsOnClickListener) :
         }
     }
 
-    fun setArticleListItems(newsList: ArrayList<Article>) {
+    fun setArticleListItems(newsList: List<Article>) {
         this.newsList = emptyList()
         this.newsList = newsList
         notifyDataSetChanged()

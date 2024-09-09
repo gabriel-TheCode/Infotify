@@ -25,7 +25,7 @@ data class ArticleEntity(
     var description: String? = null,
 
     @SerializedName("url")
-    @NonNull @PrimaryKey var url: String,
+    @PrimaryKey var url: String,
 
     @SerializedName("urlToImage")
     var urlToImage: String? = null,

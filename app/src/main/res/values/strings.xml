@@ -46,6 +46,11 @@
     <string name="bookmark_deleted">Bookmark deleted successfully</string>
     <string name="validate">Validate</string>
     <string name="language_description">Select the language of the newsfeed</string>
+    <string name="general_category">General</string>
+    <string name="science_category">Science</string>
+    <string name="entertainment_category">Entertainment</string>
+    <string name="technology_category">Technology</string>
+    <string name="sports_category">Sports</string>
 
 
     <string-array name="languages">

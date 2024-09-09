@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.Flow
 interface ArticlesDao {
 
     @Query("select * from article where url = :primaryId")
-    fun findByPrimaryId(primaryId: String?): ArticleEntity?
+    fun findByPrimaryId(primaryId: String): ArticleEntity?
 
     @Query("DELETE FROM article WHERE url = :primaryId")
-    suspend fun deleteByPrimaryId(primaryId: String?): Int
+    suspend fun deleteByPrimaryId(primaryId: String): Int
 
     @Query("SELECT * FROM article")
     fun getAllArticles(): Flow<List<ArticleEntity>>
@@ -19,23 +19,23 @@ interface ArticlesDao {
     fun clear()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(articleEntity: ArticleEntity?): Long
+    suspend fun insert(articleEntity: ArticleEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg articleEntities: ArticleEntity?): LongArray?
+    fun insert(vararg articleEntities: ArticleEntity): LongArray?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(articleEntityList: List<ArticleEntity?>?): LongArray?
+    fun insert(articleEntityList: List<ArticleEntity>): LongArray?
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun update(articleEntity: ArticleEntity?): Int
+    fun update(articleEntity: ArticleEntity): Int
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun update(vararg articleEntities: ArticleEntity?): Int
+    fun update(vararg articleEntities: ArticleEntity): Int
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun update(articleEntityList: List<ArticleEntity?>?): Int
+    fun update(articleEntityList: List<ArticleEntity>): Int
 
     @Delete
-    fun delete(articleEntity: ArticleEntity?): Int
+    fun delete(articleEntity: ArticleEntity): Int
 }

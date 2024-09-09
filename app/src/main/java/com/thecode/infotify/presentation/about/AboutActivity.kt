@@ -20,14 +20,6 @@ class AboutActivity : AppCompatActivity() {
     private val viewModel: AboutViewModel by viewModels()
     private lateinit var binding: ActivityAboutBinding
 
-    private lateinit var layoutGithub: RelativeLayout
-    private lateinit var layoutTwitter: RelativeLayout
-    private lateinit var layoutSourceCode: RelativeLayout
-    private lateinit var layoutPlaystore: RelativeLayout
-    private lateinit var layoutOpenSource: RelativeLayout
-    private lateinit var txtVersion: TextView
-    private lateinit var imgBack: ImageView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,94 +30,90 @@ class AboutActivity : AppCompatActivity() {
         }
 
         binding = ActivityAboutBinding.inflate(layoutInflater)
-        val view = binding.root
 
         initViews()
         setUpListeners()
-
-        setContentView(view)
+        setContentView(binding.root)
     }
 
     private fun initViews() {
-        txtVersion = binding.textVersion
-        imgBack = binding.imgBack
-        layoutGithub = binding.layoutGithub
-        layoutTwitter = binding.layoutTwitter
-        layoutSourceCode = binding.layoutSourceCode
-        layoutPlaystore = binding.layoutPlaystore
-        layoutOpenSource = binding.layoutLicenses
-
         val versionName: String = com.thecode.infotify.BuildConfig.VERSION_NAME
-        txtVersion.text = versionName
+        binding.textVersion.text = versionName
     }
 
     private fun setUpListeners() {
-        layoutTwitter.setOnClickListener {
-            var intent: Intent
-            try {
-                // get the Twitter app if possible
-                application.packageManager.getPackageInfo("com.twitter.android", 0)
-                intent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("twitter://user?screen_name=gabriel_thecode")
-                )
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            } catch (e: Exception) {
-                // no Twitter app, revert to browser
-                intent =
-                    Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/gabriel_thecode"))
+        binding.apply {
+            layoutTwitter.setOnClickListener {
+                var intent: Intent
+                try {
+                    // get the Twitter app if possible
+                    application.packageManager.getPackageInfo("com.twitter.android", 0)
+                    intent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("twitter://user?screen_name=gabriel_thecode")
+                    )
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                } catch (e: Exception) {
+                    // no Twitter app, revert to browser
+                    intent =
+                        Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/gabriel_thecode"))
+                }
+                startActivity(intent)
             }
-            startActivity(intent)
-        }
 
-        layoutPlaystore.setOnClickListener {
-            val appPackageName = packageName
+            layoutPlaystore.setOnClickListener {
+                val appPackageName = packageName
 
-            try {
-                startActivity(
+                try {
+                    startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("market://details?id=$appPackageName")
+                        )
+                    )
+                } catch (anfe: ActivityNotFoundException) {
+                    startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                        )
+                    )
+                }
+            }
+
+            layoutGithub.setOnClickListener {
+                val intent =
+                    Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/gabriel-TheCode"))
+                startActivity(intent)
+            }
+
+            layoutSourceCode.setOnClickListener {
+                val intent =
                     Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse("market://details?id=$appPackageName")
+                        Uri.parse("https://github.com/gabriel-TheCode/Infotify")
                     )
-                )
-            } catch (anfe: ActivityNotFoundException) {
-                startActivity(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
-                    )
+                startActivity(intent)
+            }
+
+            layoutLicenses.setOnClickListener {
+                LibsBuilder()
+                    .withAboutIconShown(true)
+                    .withAboutAppName(resources.getString(R.string.app_name))
+                    .withAboutVersionShown(true)
+                    .withLicenseShown(true)
+                    .withVersionShown(true)
+                    .withAutoDetect(true)
+                    .start(this@AboutActivity)
+            }
+
+            imgBack.setOnClickListener {
+                finish()
+                this@AboutActivity.overridePendingTransition(
+                    R.anim.enter_from_left,
+                    R.anim.exit_from_right
                 )
             }
-        }
-
-        layoutGithub.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/gabriel-TheCode"))
-            startActivity(intent)
-        }
-
-        layoutSourceCode.setOnClickListener {
-            val intent =
-                Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/gabriel-TheCode/Infotify"))
-            startActivity(intent)
-        }
-
-        layoutOpenSource.setOnClickListener {
-            LibsBuilder()
-                .withAboutIconShown(true)
-                .withAboutAppName(resources.getString(R.string.app_name))
-                .withAboutVersionShown(true)
-                .withLicenseShown(true)
-                .withVersionShown(true)
-                .withAutoDetect(true)
-                .start(this)
-        }
-
-        imgBack.setOnClickListener {
-            finish()
-            this.overridePendingTransition(
-                R.anim.enter_from_left,
-                R.anim.exit_from_right
-            )
         }
     }
 }

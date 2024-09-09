@@ -1,6 +1,7 @@
 package com.thecode.infotify.presentation.onboarding
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.viewModels
@@ -12,6 +13,7 @@ import com.thecode.infotify.base.BaseActivity
 import com.thecode.infotify.core.domain.OnBoardingState
 import com.thecode.infotify.databinding.ActivityOnboardingBinding
 import com.thecode.infotify.presentation.language.LanguageActivity
+import com.thecode.infotify.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -85,19 +87,26 @@ class OnboardingActivity : BaseActivity() {
 
     private fun setUpObserver() {
         viewModel.state.observe(
-            this,
-            {
-                when (it) {
-                    is OnBoardingState.COMPLET -> onBoardingAdapter.setItem(it.list)
-                }
+            this
+        ) {
+            when (it) {
+                is OnBoardingState.Complete -> onBoardingAdapter.setItem(it.list)
             }
-        )
+        }
     }
 
     private fun launchMainScreen() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            overrideActivityTransition(
+                OVERRIDE_TRANSITION_OPEN,
+                R.anim.enter_from_left,
+                R.anim.exit_from_right
+            )
+        } else {
+            overridePendingTransition(R.anim.enter_from_left, R.anim.exit_from_right)
+        }
         viewModel.setOnboardingCompleted()
-        val intent = Intent(applicationContext, LanguageActivity::class.java)
-        overridePendingTransition(R.anim.enter_from_left, R.anim.exit_from_right)
+        val intent = Intent(applicationContext, MainActivity::class.java)
         startSingleTopActivity(intent)
         finishAffinity()
     }

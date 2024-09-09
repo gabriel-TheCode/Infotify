@@ -87,7 +87,6 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
     }
 
     private fun fetchApiNews(query: String, language: String, sortBy: String) {
-        Log.d("Search", "$query - $language - $sortBy")
         viewModel.getSearchNews(query, language, sortBy)
     }
 
@@ -104,7 +103,7 @@ class SearchFragment : BaseFragment(), NewsOnClickListener {
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinnerLang.adapter = adapter
-            val spinnerPosition = adapter.getPosition(language.toUpperCase(Locale.ROOT))
+            val spinnerPosition = adapter.getPosition(language.uppercase(Locale.ROOT))
             spinnerLang.setSelection(spinnerPosition)
         }
 

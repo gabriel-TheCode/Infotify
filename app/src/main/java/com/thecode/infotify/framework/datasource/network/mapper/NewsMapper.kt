@@ -31,7 +31,7 @@ class NewsMapper @Inject constructor() :
             article.url,
             article.urlToImage,
             article.publishedAt,
-            article.content
+            article.content,
         )
     }
 

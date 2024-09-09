@@ -1,5 +1,6 @@
 package com.thecode.infotify.presentation.main.search
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,6 +26,7 @@ class SearchViewModel @Inject constructor(
         get() = _searchState
 
     fun getSearchNews(query: String, language: String, category: String) {
+        Log.d("Search", "$query - $language - $category")
         viewModelScope.launch {
             _searchState.value.let { _ ->
                 getSearchNews.getSearchNews(query, language, category).onEach {

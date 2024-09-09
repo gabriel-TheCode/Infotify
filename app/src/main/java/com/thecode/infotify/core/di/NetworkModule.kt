@@ -65,16 +65,12 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideRemoteDataSource(
-        whoRemoteService: NewsApiRemoteService,
-        dataStore: InfotifyDataStore,
-        newsMapper: NewsMapper,
-        sourceMapper: SourceMapper,
+        apiService: NewsApiRemoteService,
+        newsMapper: NewsMapper
     ): InfotifyRemoteDataSourceImpl {
         return InfotifyRemoteDataSourceImpl(
-            whoRemoteService,
-            dataStore,
-            newsMapper,
-            sourceMapper,
+            apiService,
+            newsMapper
         )
     }
 

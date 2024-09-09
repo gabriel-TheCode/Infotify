@@ -9,22 +9,6 @@ import retrofit2.http.Query
 interface NewsApi {
     //region Top Headlines
     @GET("v2/top-headlines")
-    fun getTopHeadlinesByCountry(
-        @Query("country") country: String
-    ): Response<NewsObjectResponse>
-
-    @GET("v2/top-headlines")
-    suspend fun getTopHeadlinesByLanguage(
-        @Query("language") language: String
-    ): NewsObjectResponse
-
-    @GET("v2/top-headlines")
-    suspend fun getTopHeadlinesByLanguageAndCategory(
-        @Query("country") language: String,
-        @Query("category") category: String
-    ): NewsObjectResponse
-
-    @GET("v2/top-headlines")
     fun getTopHeadlinesByQuery(
         @Query("q") query: String
     ): Response<NewsObjectResponse>
@@ -37,7 +21,7 @@ interface NewsApi {
     @GET("v2/top-headlines")
     fun getTopHeadlinesByCategory(
         @Query("category") category: String
-    ): Response<NewsObjectResponse>
+    ): NewsObjectResponse
 
     //endregion
 

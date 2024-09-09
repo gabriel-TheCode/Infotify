@@ -11,33 +11,23 @@ interface InfotifyRemoteDataSource {
 
     suspend fun fetchNews(query: String, language: String, sortBy: String): News
 
-    suspend fun fetchTopHeadlinesByLanguage(language: String): News
-
-    suspend fun fetchTopHeadlinesByLanguageAndCategory(language: String, category: String): News
+    suspend fun fetchTopHeadlinesByCategory(category: String): News
 }
 
 class InfotifyRemoteDataSourceImpl @Inject constructor(
     private val apiService: NewsApiRemoteService,
-    private val dataStore: InfotifyDataStore,
-    private val newsMapper: NewsMapper,
-    private val sourceMapper: SourceMapper
+    private val newsMapper: NewsMapper
 
 ) : InfotifyRemoteDataSource {
     override suspend fun fetchNews(query: String, language: String, sortBy: String): News {
         return newsMapper.mapToDomain(apiService.getAllNews(query, language, sortBy))
     }
 
-    override suspend fun fetchTopHeadlinesByLanguage(language: String): News {
-        return newsMapper.mapToDomain(apiService.getTopHeadlinesByLanguage(language))
-    }
-
-    override suspend fun fetchTopHeadlinesByLanguageAndCategory(
-        language: String,
+    override suspend fun fetchTopHeadlinesByCategory(
         category: String
     ): News {
         return newsMapper.mapToDomain(
-            apiService.getTopHeadlinesByLanguageAndCategory(
-                language,
+            apiService.getTopHeadlinesByCategory(
                 category
             )
         )

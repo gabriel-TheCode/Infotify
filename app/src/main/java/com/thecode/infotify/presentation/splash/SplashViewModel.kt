@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thecode.infotify.core.usecases.IsOnboardingCompleted
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,7 +17,7 @@ class SplashViewModel @Inject constructor(
     val state: LiveData<Boolean>
         get() = _state
 
-    fun isOnboardingCompleted(): Boolean {
+    fun getOnboardingStatus() {
         viewModelScope.launch {
             _state.value.let { _ ->
                 isOnboardingCompleted.invoke().collect {
@@ -26,6 +25,5 @@ class SplashViewModel @Inject constructor(
                 }
             }
         }
-        return _state.value == true
     }
 }

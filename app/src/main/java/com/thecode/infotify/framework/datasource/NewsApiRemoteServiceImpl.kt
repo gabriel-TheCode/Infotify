@@ -9,18 +9,9 @@ interface NewsApiRemoteService {
     //region NEWS
     suspend fun getAllNews(query: String, language: String, sortBy: String): NewsObjectResponse
 
-    suspend fun getTopHeadlinesByLanguage(language: String): NewsObjectResponse
-
-    suspend fun getTopHeadlinesByLanguageAndCategory(
-        language: String,
-        category: String
-    ): NewsObjectResponse
-
-    suspend fun getTopHeadlinesByCountry(country: String): Response<NewsObjectResponse>
-
     suspend fun getTopHeadlinesBySources(sources: String): Response<NewsObjectResponse>
 
-    suspend fun getTopHeadlinesByCategory(category: String): Response<NewsObjectResponse>
+    suspend fun getTopHeadlinesByCategory(category: String): NewsObjectResponse
 
     suspend fun getAllNewsByQuery(query: String): Response<NewsObjectResponse>
     //endregion
@@ -36,25 +27,6 @@ class NewsApiRemoteServiceImpl constructor(
     private val newsApi: NewsApi
 ) : NewsApiRemoteService {
 
-    override suspend fun getTopHeadlinesByLanguage(
-        language: String
-    ): NewsObjectResponse {
-        return newsApi.getTopHeadlinesByLanguage(language)
-    }
-
-    override suspend fun getTopHeadlinesByLanguageAndCategory(
-        language: String,
-        category: String
-    ): NewsObjectResponse {
-        return newsApi.getTopHeadlinesByLanguageAndCategory(language, category)
-    }
-
-    override suspend fun getTopHeadlinesByCountry(
-        country: String
-    ): Response<NewsObjectResponse> {
-        return newsApi.getTopHeadlinesByCountry(country)
-    }
-
     override suspend fun getTopHeadlinesBySources(
         sources: String
     ): Response<NewsObjectResponse> {
@@ -63,7 +35,7 @@ class NewsApiRemoteServiceImpl constructor(
 
     override suspend fun getTopHeadlinesByCategory(
         category: String
-    ): Response<NewsObjectResponse> {
+    ): NewsObjectResponse {
         return newsApi.getTopHeadlinesByCategory(category)
     }
 

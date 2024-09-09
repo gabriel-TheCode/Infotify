@@ -1,5 +1,6 @@
 package com.thecode.infotify.presentation.main.headline
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,22 +21,17 @@ import javax.inject.Inject
 @HiltViewModel
 class HeadlineViewModel @Inject constructor(
     private val getHeadlines: GetHeadlines,
-    private val saveBookmark: SaveBookmark,
-    private val getLanguagePreference: GetLanguagePreference
+    private val saveBookmark: SaveBookmark
 ) : ViewModel() {
     private val _headlineState = MutableLiveData<DataState<News>>()
     val headlineState: LiveData<DataState<News>>
         get() = _headlineState
 
-    private val _languageState = MutableLiveData<String>()
-    val languageState: LiveData<String>
-        get() = _languageState
-
-    fun getHeadlines(language: String, category: String) {
-
+    fun getHeadlines(category: String) {
+        Log.d("Headlines", "Category : $category")
         viewModelScope.launch {
             _headlineState.value.let { _ ->
-                getHeadlines.getHeadlines(language, category).onEach {
+                getHeadlines.getHeadlines(category).onEach {
                     _headlineState.value = it
                 }.launchIn(viewModelScope)
             }
@@ -46,17 +42,5 @@ class HeadlineViewModel @Inject constructor(
         viewModelScope.launch {
             saveBookmark.invoke(article)
         }
-    }
-
-
-    fun getLanguage(): String {
-        viewModelScope.launch {
-            _languageState.value.let { _ ->
-                getLanguagePreference.invoke().collect {
-                    _languageState.value = it
-                }
-            }
-        }
-        return _languageState.value ?: "fr"
     }
 }
