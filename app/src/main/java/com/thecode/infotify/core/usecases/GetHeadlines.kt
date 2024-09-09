@@ -12,7 +12,7 @@ import javax.inject.Inject
 class GetHeadlines @Inject constructor(
     private val repository: NewsRepository
 ) {
-    suspend fun getHeadlines(category: String): Flow<DataState<News>> = flow {
+    suspend operator fun invoke(category: String): Flow<DataState<News>> = flow {
         emit(DataState.Loading)
         try {
             val data = repository.fetchHeadlinesByCategory(category)
@@ -23,10 +23,10 @@ class GetHeadlines @Inject constructor(
                     emit(DataState.Success(data))
                 }
             } else {
-                emit(DataState.Error(Exception("API error")))
+                emit(DataState.Error(Exception("API error: ${data.status}")))
             }
         } catch (e: Exception) {
-            emit(DataState.Error(Exception(e.message)))
+            emit(DataState.Error(e))
         }
     }.flowOn(Dispatchers.IO)
 }

@@ -11,8 +11,6 @@ import com.thecode.infotify.core.domain.News
 import com.thecode.infotify.core.usecases.GetHeadlines
 import com.thecode.infotify.core.usecases.SaveBookmark
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,10 +26,8 @@ class HeadlineViewModel @Inject constructor(
     fun getHeadlines(category: String) {
         Log.d("Headlines", "Category : $category")
         viewModelScope.launch {
-            _headlineState.value.let { _ ->
-                getHeadlines.getHeadlines(category).onEach {
-                    _headlineState.value = it
-                }.launchIn(viewModelScope)
+            getHeadlines.invoke(category).collect {
+                _headlineState.value = it
             }
         }
     }

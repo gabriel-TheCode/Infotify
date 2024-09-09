@@ -44,7 +44,7 @@ class HeadlineFragment : BaseFragment() {
         subscribeObservers()
         initViews()
         initRecyclerView()
-        fetchApiNews()
+        fetchNews()
 
         return binding.root
     }
@@ -54,7 +54,7 @@ class HeadlineFragment : BaseFragment() {
         _binding = null
     }
 
-    private fun fetchApiNews() {
+    private fun fetchNews() {
         viewModel.getHeadlines(
             category.lowercase()
         )
@@ -145,7 +145,7 @@ class HeadlineFragment : BaseFragment() {
 
     private fun initViews() {
         binding.apply {
-            included.btnRetry.setOnClickListener { fetchApiNews() }
+            included.btnRetry.setOnClickListener { fetchNews() }
             refreshLayout.setColorSchemeResources(
                 R.color.colorPrimary,
                 R.color.colorPrimary,
@@ -158,7 +158,7 @@ class HeadlineFragment : BaseFragment() {
             @ColorInt val color = typedValue.data
             refreshLayout.setProgressBackgroundColorSchemeColor(color)
             refreshLayout.setOnRefreshListener {
-                fetchApiNews()
+                fetchNews()
             }
 
             themedButtonGroup.selectButton(btnGeneral)
@@ -167,29 +167,25 @@ class HeadlineFragment : BaseFragment() {
                 when (it) {
                     btnGeneral -> {
                         category = getString(R.string.general_category)
-                        fetchApiNews()
                     }
 
                     btnScience -> {
                         category = getString(R.string.science_category)
-                        fetchApiNews()
                     }
 
                     btnEntertainment -> {
                         category = getString(R.string.entertainment_category)
-                        fetchApiNews()
                     }
 
                     btnTechnology -> {
                         category = getString(R.string.technology_category)
-                        fetchApiNews()
                     }
 
                     btnSports -> {
                         category = getString(R.string.sports_category)
-                        fetchApiNews()
                     }
                 }
+                fetchNews()
             }
         }
     }
