@@ -1,7 +1,6 @@
 package com.thecode.infotify.presentation.onboarding
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.viewModels
@@ -95,15 +94,6 @@ class OnboardingActivity : BaseActivity() {
     }
 
     private fun launchMainScreen() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            overrideActivityTransition(
-                OVERRIDE_TRANSITION_OPEN,
-                R.anim.enter_from_left,
-                R.anim.exit_from_right
-            )
-        } else {
-            overridePendingTransition(R.anim.enter_from_left, R.anim.exit_from_right)
-        }
         viewModel.setOnboardingCompleted()
         val intent = Intent(applicationContext, MainActivity::class.java)
         startSingleTopActivity(intent)

@@ -51,13 +51,11 @@ class SearchFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
 
         subscribeObserver()
         initViews()
         initRecyclerView()
-
         fetchApiNews(query, language, sortBy)
 
         return binding.root
@@ -164,21 +162,6 @@ class SearchFragment : BaseFragment() {
         }
     }
 
-    private fun showNoResultErrorLayout() {
-        if (recyclerAdapter.itemCount > 0) {
-            showErrorDialog(
-                getString(R.string.error),
-                getString(R.string.service_unavailable)
-            )
-        } else {
-            binding.apply {
-                included.layoutBadState.isVisible = true
-                included.textState.text = getString(R.string.no_result_found)
-                included.btnRetry.isVisible = true
-            }
-        }
-    }
-
     private fun hideBadStateLayout() {
         binding.included.layoutBadState.isVisible = false
     }
@@ -208,13 +191,8 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun populateRecyclerView(articles: List<Article>) {
-        val articleArrayList: ArrayList<Article> = ArrayList()
-        for (i in articles.indices) {
-            val article = articles[i]
-            articleArrayList.add(article)
-            recyclerAdapter.setArticleListItems(articleArrayList)
-            recyclerView.scheduleLayoutAnimation()
-        }
+        recyclerAdapter.setArticleListItems(articles)
+        recyclerView.scheduleLayoutAnimation()
     }
 
     private fun hideLoadingProgress() {
@@ -255,7 +233,6 @@ class SearchFragment : BaseFragment() {
                 fetchApiNews(query, language, sortBy)
             }
 
-            // perform set on query text listener event
             searchview.setOnQueryTextListener(object :
                 SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(q: String): Boolean {
@@ -265,7 +242,6 @@ class SearchFragment : BaseFragment() {
                 }
 
                 override fun onQueryTextChange(newText: String): Boolean {
-                    // do something when text changes
                     return false
                 }
             })
@@ -277,7 +253,7 @@ class SearchFragment : BaseFragment() {
         recyclerView = binding.recyclerViewNewsEverything
         recyclerAdapter = NewsRecyclerViewAdapter(
             onSaveBookmark = {
-                viewModel.saveBookmark(it)
+                saveBookmark(it)
             },
             onOpenNews = {
                 openNews(it)

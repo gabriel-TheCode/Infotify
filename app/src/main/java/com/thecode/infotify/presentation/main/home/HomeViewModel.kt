@@ -24,15 +24,11 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch { setNightModeEnabled(state) }
     }
 
-    fun isNightModeActivated(): Boolean {
+    fun fetchNightMode() {
         viewModelScope.launch {
-            _state.value.let { _ ->
                 isNightModeEnabled.invoke().collect {
                     _state.value = it
                 }
             }
-        }
-
-        return _state.value == true
     }
 }
