@@ -1,6 +1,8 @@
 package com.thecode.infotify.presentation.main.search
 
+import android.content.Intent
 import android.content.res.Resources
+import android.net.Uri
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -260,6 +262,9 @@ class SearchFragment : BaseFragment() {
             },
             onShareNews = {
                 shareNews(it)
+            },
+            onOpenNewsInBrowser = {
+                openNewsInBrowser(it)
             }
         )
         recyclerView.layoutManager = LinearLayoutManager(activity)
@@ -273,6 +278,10 @@ class SearchFragment : BaseFragment() {
 
     fun openNews(article: Article) {
         loadWebviewDialog(article)
+    }
+
+    fun openNewsInBrowser(url: String) {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
 
     fun shareNews(article: Article) {

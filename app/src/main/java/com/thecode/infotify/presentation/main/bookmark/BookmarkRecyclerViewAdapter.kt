@@ -13,6 +13,7 @@ import com.thecode.infotify.databinding.AdapterNewsLandscapeBinding
 class BookmarkRecyclerViewAdapter(
     private val onDeleteBookmark: (Article) -> Unit,
     private val onOpenNews: (Article) -> Unit,
+    private val onOpenNewsInBrowser: (String) -> Unit,
     private val onShareNews: (Article) -> Unit
 ) :
     RecyclerView.Adapter<BookmarkRecyclerViewAdapter.NewsViewHolder>() {
@@ -40,13 +41,20 @@ class BookmarkRecyclerViewAdapter(
             btnShare.setOnClickListener {
                 onShareNews(news)
             }
+
             btnDelete.setOnClickListener {
                 onDeleteBookmark(news)
                 newsList.removeAt(position)
                 notifyItemRemoved(position)
             }
+
             container.setOnClickListener {
                 onOpenNews(news)
+            }
+
+            container.setOnLongClickListener {
+                onOpenNewsInBrowser(news.url)
+                return@setOnLongClickListener true
             }
 
             Glide.with(itemView.context).load(news.urlToImage)

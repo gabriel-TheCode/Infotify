@@ -1,6 +1,8 @@
 package com.thecode.infotify.presentation.main.headline
 
+import android.content.Intent
 import android.content.res.Resources
+import android.net.Uri
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -18,6 +20,7 @@ import com.thecode.infotify.databinding.FragmentHeadlineBinding
 import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
+
 
 @AndroidEntryPoint
 class HeadlineFragment : BaseFragment() {
@@ -137,6 +140,9 @@ class HeadlineFragment : BaseFragment() {
             },
             onShareNews = {
                 shareNews(it)
+            },
+            onOpenNewsInBrowser = {
+                openNewsInBrowser(it)
             }
         )
         binding.recyclerViewNews.layoutManager = LinearLayoutManager(activity)
@@ -209,6 +215,10 @@ class HeadlineFragment : BaseFragment() {
 
     fun openNews(article: Article) {
         loadWebviewDialog(article)
+    }
+
+    fun openNewsInBrowser(url: String) {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
 
     fun shareNews(article: Article) {

@@ -2,7 +2,7 @@ package com.thecode.infotify.core.domain
 
 data class News(
     val status: String,
-    val totalResults: String,
+    val totalResults: Int,
     val articles: List<Article>
 )
 

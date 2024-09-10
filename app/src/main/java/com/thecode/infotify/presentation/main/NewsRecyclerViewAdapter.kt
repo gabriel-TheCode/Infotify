@@ -16,6 +16,7 @@ import com.thecode.infotify.databinding.AdapterNewsBinding
 class NewsRecyclerViewAdapter(
     private val onSaveBookmark: (Article) -> Unit,
     private val onOpenNews: (Article) -> Unit,
+    private val onOpenNewsInBrowser: (String) -> Unit,
     private val onShareNews: (Article) -> Unit
 ) :
     RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder>() {
@@ -50,7 +51,7 @@ class NewsRecyclerViewAdapter(
         }
 
         holder.container.setOnLongClickListener {
-            onSaveBookmark(news)
+            onOpenNewsInBrowser(news.url)
             return@setOnLongClickListener true
         }
 

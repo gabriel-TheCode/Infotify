@@ -14,19 +14,16 @@ class GetHeadlines @Inject constructor(
 ) {
     suspend operator fun invoke(category: String): Flow<DataState<News>> = flow {
         emit(DataState.Loading)
-        try {
-            val data = repository.fetchHeadlinesByCategory(category)
-            if (data.status == "ok") {
-                if (data.articles.isEmpty()) {
-                    emit(DataState.Error(Exception("No result found")))
-                } else {
-                    emit(DataState.Success(data))
-                }
+        val data = repository.fetchHeadlinesByCategory(category)
+        if (data.status == "ok") {
+            if (data.articles.isEmpty()) {
+                emit(DataState.Error(Exception("No result found")))
             } else {
-                emit(DataState.Error(Exception("API error: ${data.status}")))
+                emit(DataState.Success(data))
             }
-        } catch (e: Exception) {
-            emit(DataState.Error(e))
+        } else {
+            emit(DataState.Error(Exception("API error: ${data.status}")))
         }
+
     }.flowOn(Dispatchers.IO)
 }

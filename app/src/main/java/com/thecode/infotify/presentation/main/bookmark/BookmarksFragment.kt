@@ -1,6 +1,8 @@
 package com.thecode.infotify.presentation.main.bookmark
 
+import android.content.Intent
 import android.content.res.Resources
+import android.net.Uri
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -58,6 +60,9 @@ class BookmarksFragment : BaseFragment() {
             },
             onShareNews = {
                 shareNews(it)
+            },
+            onOpenNewsInBrowser = {
+                openNewsInBrowser(it)
             }
         )
         recyclerView.layoutManager = LinearLayoutManager(activity)
@@ -136,6 +141,10 @@ class BookmarksFragment : BaseFragment() {
 
     fun openNews(article: Article) {
         loadWebviewDialog(article)
+    }
+
+    fun openNewsInBrowser(url: String) {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
 
     fun shareNews(article: Article) {

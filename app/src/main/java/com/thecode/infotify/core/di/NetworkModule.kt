@@ -40,7 +40,6 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(gson: Gson): Retrofit.Builder {
         return Retrofit.Builder()
-            // .baseUrl(BuildConfig.BASE_URL)
             .baseUrl(AppConstants.NEWSAPI_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(getOkHttpService())

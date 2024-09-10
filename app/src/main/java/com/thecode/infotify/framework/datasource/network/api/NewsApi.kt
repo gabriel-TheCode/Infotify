@@ -9,17 +9,17 @@ import retrofit2.http.Query
 interface NewsApi {
     //region Top Headlines
     @GET("v2/top-headlines")
-    fun getTopHeadlinesByQuery(
+    suspend fun getTopHeadlinesByQuery(
         @Query("q") query: String
     ): Response<NewsObjectResponse>
 
     @GET("v2/top-headlines")
-    fun getTopHeadlinesBySources(
+    suspend fun getTopHeadlinesBySources(
         @Query("sources") sources: String
     ): Response<NewsObjectResponse>
 
     @GET("v2/top-headlines")
-    fun getTopHeadlinesByCategory(
+    suspend fun getTopHeadlinesByCategory(
         @Query("category") category: String
     ): NewsObjectResponse
 
@@ -27,7 +27,7 @@ interface NewsApi {
 
     //region Everything
     @GET("v2/everything")
-    fun getAllNewsByQuery(
+    suspend fun getAllNewsByQuery(
         @Query("q") query: String
     ): Response<NewsObjectResponse>
 
@@ -42,10 +42,10 @@ interface NewsApi {
 
     //region Sources
     @GET("v2/sources")
-    fun getSources(): Response<SourceObjectResponse>
+    suspend fun getSources(): Response<SourceObjectResponse>
 
     @GET("v2/sources")
-    fun getSourcesByLang(
+    suspend fun getSourcesByLang(
         @Query("language") language: String
     ): Response<SourceObjectResponse>
 
