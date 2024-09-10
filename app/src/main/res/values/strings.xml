@@ -39,7 +39,7 @@
     <string name="android_developer">Android Developer</string>
     <string name="home">Home</string>
     <string name="search">Search</string>
-    <string name="link_not_reachable">Sorry, the link of the article is not reachable</string>
+    <string name="link_not_reachable">Sorry, the link of the article is not reachable in app. Long click to open the link in browser</string>
     <string name="web_error">Web Error</string>
     <string name="success">Success</string>
     <string name="bookmark_saved">Bookmark saved</string>
@@ -51,6 +51,10 @@
     <string name="entertainment_category">Entertainment</string>
     <string name="technology_category">Technology</string>
     <string name="sports_category">Sports</string>
+    <string name="sport_toggle">Sport</string>
+    <string name="tech_toggle">Tech</string>
+    <string name="tv_toggle">TV</string>
+    <string name="all_toggle">All</string>
 
 
     <string-array name="languages">
