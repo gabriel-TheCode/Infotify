@@ -1,6 +1,5 @@
 package com.thecode.infotify.database.article
 
-import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters

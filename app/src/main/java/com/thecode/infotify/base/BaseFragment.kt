@@ -13,7 +13,6 @@ import com.thecode.aestheticdialogs.DialogStyle
 import com.thecode.aestheticdialogs.DialogType
 import com.thecode.infotify.R
 import com.thecode.infotify.core.domain.Article
-import com.thecode.infotify.presentation.newsdetails.NewsDetailsActivity
 import com.thecode.infotify.utils.CustomProgressBar
 
 open class BaseFragment : Fragment() {

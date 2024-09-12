@@ -3,13 +3,11 @@ package com.thecode.infotify.core.di
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.thecode.infotify.BuildConfig
-import com.thecode.infotify.application.InfotifyDataStore
 import com.thecode.infotify.core.remote.InfotifyRemoteDataSourceImpl
 import com.thecode.infotify.framework.datasource.NewsApiRemoteService
 import com.thecode.infotify.framework.datasource.NewsApiRemoteServiceImpl
 import com.thecode.infotify.framework.datasource.network.api.NewsApi
 import com.thecode.infotify.framework.datasource.network.mapper.NewsMapper
-import com.thecode.infotify.framework.datasource.network.mapper.SourceMapper
 import com.thecode.infotify.utils.AppConstants
 import com.thecode.infotify.utils.AppConstants.REQUEST_TIMEOUT
 import dagger.Module

@@ -55,6 +55,7 @@
     <string name="tech_toggle">Tech</string>
     <string name="tv_toggle">TV</string>
     <string name="all_toggle">All</string>
+    <string name="about_description">A newsfeed app built in Kotlin to demonstrate the usage of MVVM with Clean Architecture and Android Architecture Components.</string>
 
 
     <string-array name="languages">

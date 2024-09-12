@@ -2,7 +2,6 @@ package com.thecode.infotify.presentation.main
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
 import com.thecode.infotify.R
 import com.thecode.infotify.databinding.ActivityMainBinding
@@ -21,20 +20,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         if (viewModel.isNightModeActivated()) {
-            setAppTheme(R.style.AppTheme_Base_Night)
+            setTheme(R.style.AppTheme_Base_Night)
         } else {
-            setAppTheme(R.style.AppTheme_Base_Light)
+            setTheme(R.style.AppTheme_Base_Light)
         }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-
         initViews()
         setUpPager()
         setContentView(binding.root)
-    }
-
-    private fun setAppTheme(@StyleRes style: Int) {
-        setTheme(style)
     }
 
     private fun initViews() {

@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import com.mikepenz.aboutlibraries.LibsBuilder
 import com.thecode.infotify.R
 import com.thecode.infotify.databinding.ActivityAboutBinding
@@ -21,28 +20,18 @@ class AboutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (viewModel.isNightModeActivated()) {
+            setTheme(R.style.AppTheme_Base_Night)
+        } else {
+            setTheme(R.style.AppTheme_Base_Light)
+        }
 
         binding = ActivityAboutBinding.inflate(layoutInflater)
-
-        observeNightMode()
 
         initViews()
         setUpListeners()
         setContentView(binding.root)
     }
-
-    private fun observeNightMode() {
-        viewModel.state.observe(this) { isNightMode ->
-            val nightMode = if (isNightMode) {
-                AppCompatDelegate.MODE_NIGHT_YES
-            } else {
-                AppCompatDelegate.MODE_NIGHT_NO
-            }
-
-            AppCompatDelegate.setDefaultNightMode(nightMode)
-        }
-    }
-
 
     private fun initViews() {
         val versionName: String = com.thecode.infotify.BuildConfig.VERSION_NAME
@@ -111,6 +100,7 @@ class AboutActivity : AppCompatActivity() {
                     .withAboutVersionShown(true)
                     .withLicenseShown(true)
                     .withVersionShown(true)
+                    .withAboutDescription(resources.getString(R.string.about_description))
                     .start(this@AboutActivity)
             }
 

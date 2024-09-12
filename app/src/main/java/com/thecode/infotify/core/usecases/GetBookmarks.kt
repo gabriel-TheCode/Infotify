@@ -6,7 +6,6 @@ import com.thecode.infotify.core.repositories.NewsRepository
 import com.thecode.infotify.framework.datasource.network.mapper.NewsMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject

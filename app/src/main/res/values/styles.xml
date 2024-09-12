@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Light application theme. -->
-    <style name="AppTheme.Base.Light" parent="@style/Theme.MaterialComponents.Light.NoActionBar"> <!-- Material Components ? -->
+    <style name="AppTheme.Base.Light" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
