@@ -13,7 +13,6 @@ import com.thecode.aestheticdialogs.DialogStyle
 import com.thecode.aestheticdialogs.DialogType
 import com.thecode.infotify.R
 import com.thecode.infotify.core.domain.Article
-import com.thecode.infotify.presentation.newsdetails.NewsDetailsActivity
 import com.thecode.infotify.utils.CustomProgressBar
 
 open class BaseFragment : Fragment() {
@@ -24,7 +23,7 @@ open class BaseFragment : Fragment() {
         AestheticDialog.Builder(requireActivity(), DialogStyle.RAINBOW, DialogType.ERROR)
             .setTitle(title)
             .setMessage(description)
-            .setDuration(2000)
+            .setDuration(1500)
             .show()
     }
 
@@ -32,7 +31,7 @@ open class BaseFragment : Fragment() {
         AestheticDialog.Builder(requireActivity(), DialogStyle.RAINBOW, DialogType.SUCCESS)
             .setTitle(title)
             .setMessage(description)
-            .setDuration(2000)
+            .setDuration(1000)
             .show()
     }
 
@@ -45,23 +44,6 @@ open class BaseFragment : Fragment() {
         )
         sendIntent.type = "text/plain"
         requireActivity().startActivity(sendIntent)
-    }
-
-    fun openDetailsActivity(article: Article) {
-
-        val i = Intent(context, NewsDetailsActivity::class.java)
-
-        // ADD DATA TO OUR INTENT
-        i.putExtra("title", article.title)
-        i.putExtra("description", article.description)
-        i.putExtra("imageUrl", article.urlToImage)
-        i.putExtra("source", article.source.name)
-        i.putExtra("date", article.publishedAt)
-        i.putExtra("content", article.content)
-        i.putExtra("url", article.url)
-
-        // START DETAIL ACTIVITY
-        requireActivity().startActivity(i)
     }
 
     fun loadWebviewDialog(article: Article) {

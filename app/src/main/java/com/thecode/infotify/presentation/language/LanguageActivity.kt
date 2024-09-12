@@ -44,7 +44,7 @@ class LanguageActivity : BaseActivity(), Animation.AnimationListener {
 
     }
 
-    private fun initViews(){
+    private fun initViews() {
         btnContinue = binding.continueButton
         spinner = binding.preferredLanguageSpinner
 
@@ -92,7 +92,6 @@ class LanguageActivity : BaseActivity(), Animation.AnimationListener {
 
     private fun onClickNext() {
         val intent = Intent(applicationContext, MainActivity::class.java)
-        overridePendingTransition(R.anim.enter_from_left, R.anim.exit_from_right)
         startSingleTopActivity(intent)
         finish()
     }

@@ -10,13 +10,13 @@
         android:gravity="center_vertical"
         android:background="@color/transparent_orange">
 
-        <com.wang.avi.AVLoadingIndicatorView
+       <!-- <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/progress_bar"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
             app:indicatorName="BallSpinFadeLoaderIndicator"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"/>-->
 
         <TextView
             android:id="@+id/title"

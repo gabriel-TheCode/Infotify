@@ -7,6 +7,6 @@ class SetOnboardingCompleted @Inject constructor(
     private val repository: OnBoardingRepository
 ) {
     suspend operator fun invoke() {
-        return repository.setOnboardingCompleted()
+        repository.setOnboardingCompleted()
     }
 }

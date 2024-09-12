@@ -3,11 +3,10 @@ package com.thecode.infotify.presentation.about
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.thecode.infotify.core.usecases.IsNightModeEnabled
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,14 +19,10 @@ class AboutViewModel @Inject constructor(
         get() = _state
 
     fun isNightModeActivated(): Boolean {
-        viewModelScope.launch {
-            _state.value.let { _ ->
-                isNightModeEnabled.invoke().collect {
-                    _state.value = it
-                }
-            }
+        runBlocking {
+            _state.value = isNightModeEnabled.invoke().first()
         }
 
-        return _state.value == true
+        return _state.value ?: false
     }
 }

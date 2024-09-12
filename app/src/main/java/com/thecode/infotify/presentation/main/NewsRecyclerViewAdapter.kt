@@ -12,18 +12,13 @@ import com.thecode.infotify.R
 import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.databinding.AdapterNewsBinding
 
-interface NewsOnClickListener {
 
-    fun saveBookmark(article: Article)
-
-    fun deleteBookmark(article: Article)
-
-    fun openNews(article: Article)
-
-    fun shareNews(article: Article)
-}
-
-class NewsRecyclerViewAdapter(private val listener: NewsOnClickListener) :
+class NewsRecyclerViewAdapter(
+    private val onSaveBookmark: (Article) -> Unit,
+    private val onOpenNews: (Article) -> Unit,
+    private val onOpenNewsInBrowser: (String) -> Unit,
+    private val onShareNews: (Article) -> Unit
+) :
     RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder>() {
 
     private lateinit var binding: AdapterNewsBinding
@@ -52,24 +47,24 @@ class NewsRecyclerViewAdapter(private val listener: NewsOnClickListener) :
             .into(holder.image)
 
         holder.btnShare.setOnClickListener {
-            listener.shareNews(news)
+            onShareNews(news)
         }
 
         holder.container.setOnLongClickListener {
-            listener.saveBookmark(news)
+            onOpenNewsInBrowser(news.url)
             return@setOnLongClickListener true
         }
 
         holder.btnBookmark.setOnClickListener {
-            listener.saveBookmark(news)
+            onSaveBookmark(news)
         }
 
         holder.container.setOnClickListener {
-            listener.openNews(news)
+            onOpenNews(news)
         }
     }
 
-    fun setArticleListItems(newsList: ArrayList<Article>) {
+    fun setArticleListItems(newsList: List<Article>) {
         this.newsList = emptyList()
         this.newsList = newsList
         notifyDataSetChanged()

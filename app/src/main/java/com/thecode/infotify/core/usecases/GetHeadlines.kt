@@ -12,21 +12,18 @@ import javax.inject.Inject
 class GetHeadlines @Inject constructor(
     private val repository: NewsRepository
 ) {
-    suspend fun getHeadlines(language: String, category: String): Flow<DataState<News>> = flow {
+    suspend operator fun invoke(category: String): Flow<DataState<News>> = flow {
         emit(DataState.Loading)
-        try {
-            val data = repository.fetchHeadlinesByLangAndCat(language, category)
-            if (data.status == "ok") {
-                if (data.articles.isEmpty()) {
-                    emit(DataState.Error(Exception("No result found")))
-                } else {
-                    emit(DataState.Success(data))
-                }
+        val data = repository.fetchHeadlinesByCategory(category)
+        if (data.status == "ok") {
+            if (data.articles.isEmpty()) {
+                emit(DataState.Error(Exception("No result found")))
             } else {
-                emit(DataState.Error(Exception("API error")))
+                emit(DataState.Success(data))
             }
-        } catch (e: Exception) {
-            emit(DataState.Error(Exception(e.message)))
+        } else {
+            emit(DataState.Error(Exception("API error: ${data.status}")))
         }
+
     }.flowOn(Dispatchers.IO)
 }

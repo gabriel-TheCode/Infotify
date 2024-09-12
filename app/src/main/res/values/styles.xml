@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Light application theme. -->
-    <style name="AppTheme.Base.Light" parent="@style/Theme.MaterialComponents.Light.NoActionBar"> <!-- Material Components ? -->
+    <style name="AppTheme.Base.Light" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -62,13 +62,6 @@
     </style>
 
 
-    <style name="AppTheme.Base.Light.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
-    </style>
-
-
     <style name="NewDialog" parent="Theme.AppCompat.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowBackground">@color/transparent_orange</item>
@@ -80,10 +73,6 @@
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

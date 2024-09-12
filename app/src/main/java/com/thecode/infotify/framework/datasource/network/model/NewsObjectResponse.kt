@@ -2,67 +2,60 @@ package com.thecode.infotify.framework.datasource.network.model
 
 import com.google.gson.annotations.SerializedName
 
-class NewsObjectResponse {
-
+data class NewsObjectResponse(
     @SerializedName("status")
-    var status: String? = null
+    val status: String? = null,
 
     @SerializedName("totalResults")
-    var totalResults: String? = null
+    val totalResults: Int,
 
     @SerializedName("articles")
     val articles: List<Result> = listOf()
-
-    inner class Result(
+) {
+    data class Result(
 
         @SerializedName("source")
         val source: SourceItem,
 
         @SerializedName("author")
-        var author: String? = null,
+        val author: String? = null,
 
         @SerializedName("title")
-        var title: String? = null,
+        val title: String? = null,
 
         @SerializedName("description")
-        var description: String? = null,
+        val description: String? = null,
 
         @SerializedName("url")
-        var url: String,
+        val url: String,
 
         @SerializedName("urlToImage")
-        var urlToImage: String? = null,
+        val urlToImage: String? = null,
 
         @SerializedName("publishedAt")
-        var publishedAt: String? = null,
+        val publishedAt: String? = null,
 
         @SerializedName("content")
-        var content: String? = null
+        val content: String? = null
     )
 
-    inner class SourceItem(
+    data class SourceItem(
         @SerializedName("id")
-        var id: String,
-
-        @SerializedName("cnbc")
-        var cnbc: String? = null,
+        val id: String,
 
         @SerializedName("name")
-        var name: String? = null,
+        val name: String? = null,
 
         @SerializedName("description")
-        var description: String? = null,
+        val description: String? = null,
 
         @SerializedName("url")
-        var url: String? = null,
+        val url: String? = null,
 
         @SerializedName("category")
-        var category: String? = null,
+        val category: String? = null,
 
         @SerializedName("language")
-        var language: String? = null,
-
-        @SerializedName("country")
-        var country: String? = null
+        val language: String? = null,
     )
 }

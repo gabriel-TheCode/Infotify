@@ -1,63 +1,41 @@
 package com.thecode.infotify.presentation.main.headline
 
+import android.content.Intent
 import android.content.res.Resources
+import android.net.Uri
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.ColorInt
-import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.thecode.infotify.R
 import com.thecode.infotify.base.BaseFragment
 import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.databinding.FragmentHeadlineBinding
-import com.thecode.infotify.presentation.main.NewsOnClickListener
 import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
-import nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-import nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
+
 
 @AndroidEntryPoint
-class HeadlineFragment : BaseFragment(), NewsOnClickListener {
+class HeadlineFragment : BaseFragment() {
 
     // ViewModel
     private val viewModel: HeadlineViewModel by viewModels()
-
-    // Listener
-    private var newsOnClickListener: NewsOnClickListener = this
 
     // View Binding
     private var _binding: FragmentHeadlineBinding? = null
     private val binding get() = _binding!!
 
     private var category: String = "General"
-    private var lang: String = ""
 
     // Views
-    lateinit var recyclerView: RecyclerView
     lateinit var recyclerAdapter: NewsRecyclerViewAdapter
-    lateinit var refreshLayout: SwipeRefreshLayout
-    lateinit var btnRetry: AppCompatButton
-    lateinit var layoutBadState: View
-    lateinit var textState: TextView
-    lateinit var imgState: ImageView
-    private lateinit var themedButtonGroup: ThemedToggleButtonGroup
-    private lateinit var btnGeneral: ThemedButton
-    private lateinit var btnScience: ThemedButton
-    private lateinit var btnSport: ThemedButton
-    private lateinit var btnTV: ThemedButton
-    private lateinit var btnTech: ThemedButton
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,18 +44,12 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     ): View {
         _binding = FragmentHeadlineBinding.inflate(inflater, container, false)
 
-        val view = binding.root
-
-
         subscribeObservers()
-
-
         initViews()
         initRecyclerView()
+        fetchNews()
 
-        fetchApiNews()
-
-        return view
+        return binding.root
     }
 
     override fun onDestroyView() {
@@ -85,12 +57,11 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
         _binding = null
     }
 
-    private fun fetchApiNews() {
+    private fun fetchNews() {
         viewModel.getHeadlines(
-            viewModel.getLanguage(),
-            category
+            category.lowercase()
         )
-        recyclerView.scheduleLayoutAnimation()
+        binding.recyclerViewNews.scheduleLayoutAnimation()
     }
 
     private fun showInternetConnectionErrorLayout() {
@@ -100,9 +71,11 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
                 getString(R.string.check_internet)
             )
         } else {
-            layoutBadState.isVisible = true
-            textState.text = getString(R.string.internet_connection_error)
-            btnRetry.isVisible = true
+            binding.included.apply {
+                layoutBadState.isVisible = true
+                textState.text = getString(R.string.internet_connection_error)
+                btnRetry.isVisible = true
+            }
         }
     }
 
@@ -113,14 +86,16 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
                 getString(R.string.service_unavailable)
             )
         } else {
-            layoutBadState.isVisible = true
-            textState.text = getString(R.string.no_result_found)
-            btnRetry.isVisible = true
+            binding.included.apply {
+                layoutBadState.isVisible = true
+                textState.text = getString(R.string.no_result_found)
+                btnRetry.isVisible = true
+            }
         }
     }
 
     private fun hideBadStateLayout() {
-        layoutBadState.isVisible = false
+        binding.included.layoutBadState.isVisible = false
     }
 
     private fun subscribeObservers() {
@@ -133,17 +108,14 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
                         hideLoadingProgress()
                         populateRecyclerView(it.data.articles)
                     }
+
                     is DataState.Loading -> {
                         showLoadingProgress()
                     }
+
                     is DataState.Error -> {
                         hideLoadingProgress()
                         showInternetConnectionErrorLayout()
-                        Toast.makeText(
-                            context,
-                            getString(R.string.internet_connection_error),
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
                 }
             }
@@ -151,107 +123,89 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
     }
 
     private fun hideLoadingProgress() {
-        refreshLayout.isRefreshing = false
+        binding.refreshLayout.isRefreshing = false
     }
 
     private fun showLoadingProgress() {
-        refreshLayout.isRefreshing = true
+        binding.refreshLayout.isRefreshing = true
     }
 
     private fun initRecyclerView() {
-        recyclerAdapter = NewsRecyclerViewAdapter(newsOnClickListener)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
+        recyclerAdapter = NewsRecyclerViewAdapter(
+            onSaveBookmark = {
+                saveBookmark(it)
+            },
+            onOpenNews = {
+                openNews(it)
+            },
+            onShareNews = {
+                shareNews(it)
+            },
+            onOpenNewsInBrowser = {
+                openNewsInBrowser(it)
+            }
+        )
+        binding.recyclerViewNews.layoutManager = LinearLayoutManager(activity)
+        binding.recyclerViewNews.adapter = SlideInBottomAnimationAdapter(recyclerAdapter)
     }
 
     private fun initViews() {
-        refreshLayout = binding.refreshLayout
-        recyclerView = binding.recyclerViewNews
-        btnRetry = binding.included.btnRetry
-        layoutBadState = binding.included.layoutBadState
-        imgState = binding.included.imgState
-        textState = binding.included.textState
-        themedButtonGroup = binding.themedButtonGroup
-        btnGeneral = binding.btnGeneral
-        btnScience = binding.btnScience
-        btnSport = binding.btnSports
-        btnTV = binding.btnEntertainment
-        btnTech = binding.btnTechnology
+        binding.apply {
+            included.btnRetry.setOnClickListener { fetchNews() }
+            refreshLayout.setColorSchemeResources(
+                R.color.colorPrimary,
+                R.color.colorPrimary,
+                R.color.colorPrimaryDark,
+                R.color.colorPrimaryDark
+            )
+            val typedValue = TypedValue()
+            val theme: Resources.Theme = requireContext().theme
+            theme.resolveAttribute(R.attr.primaryCardBackgroundColor, typedValue, true)
+            @ColorInt val color = typedValue.data
+            refreshLayout.setProgressBackgroundColorSchemeColor(color)
+            refreshLayout.setOnRefreshListener {
+                fetchNews()
+            }
 
+            themedButtonGroup.selectButton(btnGeneral)
 
-        btnRetry.setOnClickListener { fetchApiNews() }
+            themedButtonGroup.setOnSelectListener {
+                when (it) {
+                    btnGeneral -> {
+                        category = getString(R.string.general_category)
+                    }
 
-        refreshLayout.setColorSchemeResources(
-            R.color.colorPrimary,
-            R.color.colorPrimary,
-            R.color.colorPrimaryDark,
-            R.color.colorPrimaryDark
-        )
-        val typedValue = TypedValue()
-        val theme: Resources.Theme = requireContext().theme
-        theme.resolveAttribute(R.attr.primaryCardBackgroundColor, typedValue, true)
-        @ColorInt val color = typedValue.data
-        refreshLayout.setProgressBackgroundColorSchemeColor(color)
-        refreshLayout.setOnRefreshListener {
-            fetchApiNews()
-        }
+                    btnScience -> {
+                        category = getString(R.string.science_category)
+                    }
 
-        themedButtonGroup.selectButton(btnGeneral)
+                    btnEntertainment -> {
+                        category = getString(R.string.entertainment_category)
+                    }
 
-        themedButtonGroup.setOnSelectListener {
-            when (it) {
-                btnGeneral -> {
-                    category = "General"
-                    showToast(category)
-                    fetchApiNews()
+                    btnTechnology -> {
+                        category = getString(R.string.technology_category)
+                    }
+
+                    btnSports -> {
+                        category = getString(R.string.sports_category)
+                    }
                 }
-
-                btnScience -> {
-                    category = "Science"
-                    showToast(category)
-                    fetchApiNews()
-                }
-
-                btnTV -> {
-                    category = "Entertainment"
-                    showToast(category)
-                    fetchApiNews()
-                }
-
-                btnTech -> {
-                    category = "Technology"
-                    showToast(category)
-                    fetchApiNews()
-                }
-
-                btnSport -> {
-                    category = "Sports"
-                    showToast(category)
-                    fetchApiNews()
-                }
+                fetchNews()
             }
         }
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
     }
 
     private fun populateRecyclerView(articles: List<Article>) {
         if (articles.isEmpty()) {
             showBadStateLayout()
         } else {
-            val articleArrayList: ArrayList<Article> = ArrayList()
-            for (i in articles.indices) {
-                val article = articles[i]
-                articleArrayList.add(article)
-                recyclerAdapter.setArticleListItems(articleArrayList)
-                recyclerView.scheduleLayoutAnimation()
-            }
+            recyclerAdapter.setArticleListItems(articles)
+            binding.recyclerViewNews.scheduleLayoutAnimation()
         }
     }
 
-    override fun saveBookmark(article: Article) {
+    fun saveBookmark(article: Article) {
         viewModel.saveBookmark(article)
         showSuccessDialog(
             getString(R.string.success),
@@ -259,15 +213,16 @@ class HeadlineFragment : BaseFragment(), NewsOnClickListener {
         )
     }
 
-    override fun deleteBookmark(article: Article) {
-        TODO("Not yet implemented")
-    }
-
-    override fun openNews(article: Article) {
+    fun openNews(article: Article) {
         loadWebviewDialog(article)
     }
 
-    override fun shareNews(article: Article) {
+    fun openNewsInBrowser(url: String) {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    }
+
+    fun shareNews(article: Article) {
         openSharingIntent(article)
     }
 }
+

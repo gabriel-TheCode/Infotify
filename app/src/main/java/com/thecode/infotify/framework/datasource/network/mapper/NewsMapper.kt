@@ -12,7 +12,7 @@ class NewsMapper @Inject constructor() :
     override fun mapToDomain(entity: NewsObjectResponse): News {
         return News(
             entity.status.toString(),
-            entity.totalResults.toString(),
+            entity.totalResults,
             entity.articles.map {
                 mapFromNewsItems(it)
             }
@@ -31,7 +31,7 @@ class NewsMapper @Inject constructor() :
             article.url,
             article.urlToImage,
             article.publishedAt,
-            article.content
+            article.content,
         )
     }
 

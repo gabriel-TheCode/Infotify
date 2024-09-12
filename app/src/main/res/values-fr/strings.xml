@@ -14,7 +14,7 @@
     <string name="title_onboarding_1">Bienvenue sur Infotify News App !</string>
     <string name="description_onboarding_1">Une application de flux d\'actualités qui vous permet de lire et de partager les informations dont vous avez besoin pour rester à l\'avant-garde des tendances du monde entier.</string>
     <string name="title_onboarding_2">Rapide, simple et intuitif</string>
-    <string name="description_onboarding_2">Informations et actualités en plusieurs langues, en temps réel et selon vos critères. Rien de plus. Commencez à l\'utiliser maintenant !</string>
+    <string name="description_onboarding_2">Informations et actualités en plusieurs langues, en temps réel et selon vos critères. Rien de plus. Commencez à l\'utiliser maintenant!</string>
     <string name="title_onboarding_3">Meilleur qu\'un journal papier</string>
     <string name="description_onboarding_3">Recevez des articles de tous les principaux journaux du monde en un seul clic et enregistrez vos actualités préférées en tant que signets. Allons-y!</string>
     <string name="retry">Reessayer</string>
@@ -39,7 +39,7 @@
     <string name="android_developer">Développeur Android</string>
     <string name="home">Acceuil</string>
     <string name="search">Rechercher</string>
-    <string name="link_not_reachable">Désolé, le lien de l\'article n\'est pas accessible</string>
+    <string name="link_not_reachable">Désolé, le lien de l\'article n\'est pas accessible dans l\'application</string>
     <string name="web_error">Erreur de formattage</string>
     <string name="success">Succes</string>
     <string name="bookmark_saved">Signet enregistré</string>

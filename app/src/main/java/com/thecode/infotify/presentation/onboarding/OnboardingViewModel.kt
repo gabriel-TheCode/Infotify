@@ -24,7 +24,7 @@ class OnboardingViewModel @Inject constructor(
     fun getOnBoardingSlide() {
         viewModelScope.launch {
             val list = getOnBoardingParts()
-            _state.value = OnBoardingState.COMPLET(list)
+            _state.value = OnBoardingState.Complete(list)
         }
     }
 

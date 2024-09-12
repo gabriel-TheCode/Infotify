@@ -19,8 +19,8 @@ class NewsRepository @Inject constructor(
         return networkDataSource.fetchNews(query, language, sortBy)
     }
 
-    suspend fun fetchHeadlinesByLangAndCat(language: String, category: String): News {
-        return networkDataSource.fetchTopHeadlinesByLanguageAndCategory(language, category)
+    suspend fun fetchHeadlinesByCategory(category: String): News {
+        return networkDataSource.fetchTopHeadlinesByCategory(category)
     }
 
     fun getBookmarks(): Flow<List<ArticleEntity>> {
