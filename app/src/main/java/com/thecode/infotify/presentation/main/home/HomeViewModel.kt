@@ -16,9 +16,9 @@ class HomeViewModel @Inject constructor(
     private val setNightModeEnabled: SetNightModeEnabled
 ) : ViewModel() {
 
-    private val _state = MutableLiveData<Boolean>()
-    val state: LiveData<Boolean>
-        get() = _state
+    private val _isNightModeState = MutableLiveData<Boolean>()
+    val isNightModeState: LiveData<Boolean>
+        get() = _isNightModeState
 
     fun setNightMode(state: Boolean) {
         viewModelScope.launch { setNightModeEnabled(state) }
@@ -26,9 +26,9 @@ class HomeViewModel @Inject constructor(
 
     fun fetchNightMode() {
         viewModelScope.launch {
-                isNightModeEnabled.invoke().collect {
-                    _state.value = it
-                }
+            isNightModeEnabled.invoke().collect {
+                _isNightModeState.value = it
             }
+        }
     }
 }

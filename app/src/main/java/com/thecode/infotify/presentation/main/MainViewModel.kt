@@ -1,6 +1,5 @@
 package com.thecode.infotify.presentation.main
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,20 +16,16 @@ class MainViewModel @Inject constructor(
     private val saveBookmark: SaveBookmark
 ) : ViewModel() {
 
-    private val _state = MutableLiveData<Boolean>()
-    val state: LiveData<Boolean>
-        get() = _state
+    private val _isNightModeState = MutableLiveData<Boolean>()
 
     fun isNightModeActivated(): Boolean {
         viewModelScope.launch {
-            _state.value.let { _ ->
-                isNightModeEnabled.invoke().collect {
-                    _state.value = it
-                }
+            isNightModeEnabled.invoke().collect {
+                _isNightModeState.value = it
             }
         }
 
-        return _state.value == true
+        return _isNightModeState.value ?: false
     }
 
     fun saveBookmark(article: Article) {

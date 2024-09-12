@@ -79,7 +79,7 @@ class HomeFragment : BaseFragment() {
 
     private fun observeNightMode() {
         // Observing night mode state from ViewModel
-        viewModel.state.observe(viewLifecycleOwner) { isNightMode ->
+        viewModel.isNightModeState.observe(viewLifecycleOwner) { isNightMode ->
             val nightMode = if (isNightMode) {
                 AppCompatDelegate.MODE_NIGHT_YES
             } else {
