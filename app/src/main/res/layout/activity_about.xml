@@ -21,17 +21,18 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_baseline_arrow_white_24"
+                app:tint="?attr/primaryTitleColor"
                 android:layout_margin="30dp"
                 android:clickable="true"
                 android:focusable="true"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/about"
                 android:fontFamily="@font/oleoscript_bold"
                 android:textSize="26sp"
-                android:textColor="?attr/primaryBackgroundColor"
+                android:textColor="?attr/primaryTitleColor"
                 android:layout_marginVertical="30dp"/>
         </LinearLayout>
 

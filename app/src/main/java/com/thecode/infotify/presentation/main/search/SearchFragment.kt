@@ -1,5 +1,6 @@
 package com.thecode.infotify.presentation.main.search
 
+import android.R.layout
 import android.content.Intent
 import android.content.res.Resources
 import android.net.Uri
@@ -20,6 +21,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.thecode.infotify.R
+import com.thecode.infotify.R.color.colorPrimary
+import com.thecode.infotify.R.color.colorPrimaryDark
 import com.thecode.infotify.base.BaseFragment
 import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.domain.DataState
@@ -42,11 +45,11 @@ class SearchFragment : BaseFragment() {
 
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
-    lateinit var recyclerAdapter: NewsRecyclerViewAdapter
+    private lateinit var recyclerAdapter: NewsRecyclerViewAdapter
 
-    lateinit var query: String
-    lateinit var sortBy: String
-    lateinit var language: String
+    private lateinit var query: String
+    private lateinit var sortBy: String
+    private lateinit var language: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,9 +82,9 @@ class SearchFragment : BaseFragment() {
         ArrayAdapter.createFromResource(
             view.context,
             R.array.languages,
-            android.R.layout.simple_spinner_item
+            layout.simple_spinner_item
         ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            adapter.setDropDownViewResource(layout.simple_spinner_dropdown_item)
             spinnerLang.adapter = adapter
             val spinnerPosition = adapter.getPosition(language.uppercase(Locale.ROOT))
             spinnerLang.setSelection(spinnerPosition)
@@ -99,18 +102,16 @@ class SearchFragment : BaseFragment() {
                 language = languages[position]
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // write code to perform some action
-            }
+            override fun onNothingSelected(parent: AdapterView<*>) = Unit
         }
 
         val spinnerSort: Spinner = binding.spinnerSortby
         ArrayAdapter.createFromResource(
             view.context,
             R.array.options_values,
-            android.R.layout.simple_spinner_item
+            layout.simple_spinner_item
         ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            adapter.setDropDownViewResource(layout.simple_spinner_dropdown_item)
             spinnerSort.adapter = adapter
             val spinnerPosition = adapter.getPosition(sortBy)
             spinnerSort.setSelection(spinnerPosition)
@@ -128,9 +129,7 @@ class SearchFragment : BaseFragment() {
                 sortBy = sorts[position]
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // write code to perform some action
-            }
+            override fun onNothingSelected(parent: AdapterView<*>) = Unit
         }
 
         val dialog = BottomSheetDialog(view.context)
@@ -156,10 +155,10 @@ class SearchFragment : BaseFragment() {
                 getString(R.string.check_internet)
             )
         } else {
-            binding.apply {
-                included.layoutBadState.isVisible = true
-                included.textState.text = getString(R.string.internet_connection_error)
-                included.btnRetry.isVisible = true
+            binding.included.apply {
+                layoutBadState.isVisible = true
+                textState.text = getString(R.string.internet_connection_error)
+                btnRetry.isVisible = true
             }
         }
     }
@@ -170,26 +169,25 @@ class SearchFragment : BaseFragment() {
 
     private fun subscribeObserver() {
         viewModel.searchState.observe(
-            viewLifecycleOwner,
-            {
-                when (it) {
-                    is DataState.Success -> {
-                        hideBadStateLayout()
-                        hideLoadingProgress()
-                        populateRecyclerView(it.data.articles)
-                    }
+            viewLifecycleOwner
+        ) {
+            when (it) {
+                is DataState.Success -> {
+                    hideBadStateLayout()
+                    hideLoadingProgress()
+                    populateRecyclerView(it.data.articles)
+                }
 
-                    is DataState.Loading -> {
-                        showLoadingProgress()
-                    }
+                is DataState.Loading -> {
+                    showLoadingProgress()
+                }
 
-                    is DataState.Error -> {
-                        hideLoadingProgress()
-                        showInternetConnectionErrorLayout()
-                    }
+                is DataState.Error -> {
+                    hideLoadingProgress()
+                    showInternetConnectionErrorLayout()
                 }
             }
-        )
+        }
     }
 
     private fun populateRecyclerView(articles: List<Article>) {
@@ -212,10 +210,10 @@ class SearchFragment : BaseFragment() {
 
         binding.apply {
             refreshLayout.setColorSchemeResources(
-                R.color.colorPrimary,
-                R.color.colorPrimary,
-                R.color.colorPrimaryDark,
-                R.color.colorPrimaryDark
+                colorPrimary,
+                colorPrimary,
+                colorPrimaryDark,
+                colorPrimaryDark
             )
 
             val typedValue = TypedValue()

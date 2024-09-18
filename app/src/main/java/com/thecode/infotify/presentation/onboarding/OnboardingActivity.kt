@@ -2,85 +2,72 @@ package com.thecode.infotify.presentation.onboarding
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.thecode.infotify.R
-import com.thecode.infotify.base.BaseActivity
 import com.thecode.infotify.core.domain.OnBoardingState
 import com.thecode.infotify.databinding.ActivityOnboardingBinding
 import com.thecode.infotify.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class OnboardingActivity : BaseActivity() {
+class OnboardingActivity : AppCompatActivity() {
 
     private val viewModel: OnboardingViewModel by viewModels()
     private val onBoardingAdapter = OnBoardingAdapter()
     private lateinit var binding: ActivityOnboardingBinding
 
-    private lateinit var mViewPager: ViewPager2
-    private lateinit var btnBack: Button
-    private lateinit var btnNext: Button
-    private lateinit var pageIndicator: TabLayout
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
 
-        initViews()
         setUpListeners()
         setUpPager()
         setUpObserver()
-
         viewModel.getOnBoardingSlide()
-    }
 
-    private fun initViews() {
-        mViewPager = binding.viewPager
-        mViewPager.offscreenPageLimit = 1
-
-        btnBack = binding.btnPreviousStep
-        btnNext = binding.btnNextStep
-        pageIndicator = binding.pageIndicator
+        setContentView(binding.root)
     }
 
     private fun setUpListeners() {
-
-        btnNext.setOnClickListener {
-            if (getNextItem() > getAdapterSize()) {
-                launchMainScreen()
-            } else {
-                mViewPager.setCurrentItem(getNextItem(), true)
+        binding.apply {
+            btnNextStep.setOnClickListener {
+                if (getNextItem() > getAdapterSize()) {
+                    viewModel.setOnboardingCompleted()
+                    launchMainScreen()
+                } else {
+                    viewPager.setCurrentItem(getNextItem(), true)
+                }
             }
-        }
 
-        btnBack.setOnClickListener {
-            if (getNextItem() == 1) {
-                finish()
-            } else {
-                mViewPager.setCurrentItem(getPreviousItem(), true)
+            btnPreviousStep.setOnClickListener {
+                if (getNextItem() == 1) {
+                    finish()
+                } else {
+                    viewPager.setCurrentItem(getPreviousItem(), true)
+                }
             }
         }
     }
 
     private fun setUpPager() {
-        mViewPager.adapter = onBoardingAdapter
-        TabLayoutMediator(pageIndicator, mViewPager) { _, _ -> }.attach()
-        mViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                if (position == 2) {
-                    btnNext.text = getText(R.string.finish)
-                } else {
-                    btnNext.text = getText(R.string.next)
+        binding.apply {
+            viewPager.offscreenPageLimit = 1
+            viewPager.adapter = onBoardingAdapter
+            TabLayoutMediator(pageIndicator, viewPager) { _, _ -> }.attach()
+            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    if (position == 2) {
+                        btnNextStep.text = getText(R.string.finish)
+                    } else {
+                        btnNextStep.text = getText(R.string.next)
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
     private fun setUpObserver() {
@@ -94,18 +81,18 @@ class OnboardingActivity : BaseActivity() {
     }
 
     private fun launchMainScreen() {
-        viewModel.setOnboardingCompleted()
         val intent = Intent(applicationContext, MainActivity::class.java)
-        startSingleTopActivity(intent)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
         finishAffinity()
     }
 
     private fun getNextItem(): Int {
-        return mViewPager.currentItem + 1
+        return binding.viewPager.currentItem + 1
     }
 
     private fun getPreviousItem(): Int {
-        return mViewPager.currentItem - 1
+        return binding.viewPager.currentItem - 1
     }
 
     private fun getAdapterSize(): Int {

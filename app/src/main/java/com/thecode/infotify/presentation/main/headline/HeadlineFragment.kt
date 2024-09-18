@@ -13,6 +13,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.thecode.infotify.R
+import com.thecode.infotify.R.color.colorPrimary
+import com.thecode.infotify.R.color.colorPrimaryDark
 import com.thecode.infotify.base.BaseFragment
 import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.core.domain.DataState
@@ -25,17 +27,13 @@ import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 @AndroidEntryPoint
 class HeadlineFragment : BaseFragment() {
 
-    // ViewModel
     private val viewModel: HeadlineViewModel by viewModels()
 
-    // View Binding
     private var _binding: FragmentHeadlineBinding? = null
     private val binding get() = _binding!!
 
     private var category: String = "General"
-
-    // Views
-    lateinit var recyclerAdapter: NewsRecyclerViewAdapter
+    private lateinit var recyclerAdapter: NewsRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -100,26 +98,25 @@ class HeadlineFragment : BaseFragment() {
 
     private fun subscribeObservers() {
         viewModel.headlineState.observe(
-            viewLifecycleOwner,
-            {
-                when (it) {
-                    is DataState.Success -> {
-                        hideBadStateLayout()
-                        hideLoadingProgress()
-                        populateRecyclerView(it.data.articles)
-                    }
+            viewLifecycleOwner
+        ) {
+            when (it) {
+                is DataState.Success -> {
+                    hideBadStateLayout()
+                    hideLoadingProgress()
+                    populateRecyclerView(it.data.articles)
+                }
 
-                    is DataState.Loading -> {
-                        showLoadingProgress()
-                    }
+                is DataState.Loading -> {
+                    showLoadingProgress()
+                }
 
-                    is DataState.Error -> {
-                        hideLoadingProgress()
-                        showInternetConnectionErrorLayout()
-                    }
+                is DataState.Error -> {
+                    hideLoadingProgress()
+                    showInternetConnectionErrorLayout()
                 }
             }
-        )
+        }
     }
 
     private fun hideLoadingProgress() {
@@ -153,10 +150,10 @@ class HeadlineFragment : BaseFragment() {
         binding.apply {
             included.btnRetry.setOnClickListener { fetchNews() }
             refreshLayout.setColorSchemeResources(
-                R.color.colorPrimary,
-                R.color.colorPrimary,
-                R.color.colorPrimaryDark,
-                R.color.colorPrimaryDark
+                colorPrimary,
+                colorPrimary,
+                colorPrimaryDark,
+                colorPrimaryDark
             )
             val typedValue = TypedValue()
             val theme: Resources.Theme = requireContext().theme
@@ -213,15 +210,15 @@ class HeadlineFragment : BaseFragment() {
         )
     }
 
-    fun openNews(article: Article) {
+    private fun openNews(article: Article) {
         loadWebviewDialog(article)
     }
 
-    fun openNewsInBrowser(url: String) {
+    private fun openNewsInBrowser(url: String) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
 
-    fun shareNews(article: Article) {
+    private fun shareNews(article: Article) {
         openSharingIntent(article)
     }
 }

@@ -22,7 +22,7 @@ class NewsRecyclerViewAdapter(
     RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder>() {
 
     private lateinit var binding: AdapterNewsBinding
-    var newsList: List<Article> = listOf()
+    private var newsList: List<Article> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         binding = AdapterNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -34,34 +34,37 @@ class NewsRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        val news = newsList[position]
-        holder.tvNewsTitle.text = news.title
-        holder.tvNewsdescription.text = news.description
-        holder.tvNewsDate.text = news.publishedAt?.split("T")?.get(0) ?: ""
-        holder.tvPublisherName.text = news.source.name
+        holder.apply {
+            val news = newsList[position]
+            tvNewsTitle.text = news.title
+            tvNewsDescription.text = news.description
+            tvNewsDate.text = news.publishedAt?.split("T")?.get(0) ?: ""
+            tvPublisherName.text = news.source.name
 
-        Glide.with(holder.itemView.context).load(news.urlToImage)
-            .placeholder(R.drawable.placeholder)
-            .error(R.drawable.placeholder)
-            .apply(RequestOptions().centerCrop())
-            .into(holder.image)
+            Glide.with(holder.itemView.context).load(news.urlToImage)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
+                .apply(RequestOptions().centerCrop())
+                .into(holder.image)
 
-        holder.btnShare.setOnClickListener {
-            onShareNews(news)
+            btnShare.setOnClickListener {
+                onShareNews(news)
+            }
+
+            container.setOnLongClickListener {
+                onOpenNewsInBrowser(news.url)
+                return@setOnLongClickListener true
+            }
+
+            btnBookmark.setOnClickListener {
+                onSaveBookmark(news)
+            }
+
+            container.setOnClickListener {
+                onOpenNews(news)
+            }
         }
 
-        holder.container.setOnLongClickListener {
-            onOpenNewsInBrowser(news.url)
-            return@setOnLongClickListener true
-        }
-
-        holder.btnBookmark.setOnClickListener {
-            onSaveBookmark(news)
-        }
-
-        holder.container.setOnClickListener {
-            onOpenNews(news)
-        }
     }
 
     fun setArticleListItems(newsList: List<Article>) {
@@ -74,7 +77,7 @@ class NewsRecyclerViewAdapter(
 
         val container: FrameLayout = binding.frameNews
         val tvNewsTitle: TextView = binding.textTitle
-        val tvNewsdescription: TextView = binding.textDescription
+        val tvNewsDescription: TextView = binding.textDescription
         val tvPublisherName: TextView = binding.textNamePublisher
         val image: ImageView = binding.imageNews
         val btnBookmark: ImageView = binding.btnBookmark

@@ -39,7 +39,7 @@
     <string name="android_developer">Android Developer</string>
     <string name="home">Home</string>
     <string name="search">Search</string>
-    <string name="link_not_reachable">Sorry, the link of the article is not reachable in app. Long click to open the link in browser</string>
+    <string name="link_not_reachable">Sorry, the link is unreachable through the app. Long click to open in browser</string>
     <string name="web_error">Web Error</string>
     <string name="success">Success</string>
     <string name="bookmark_saved">Bookmark saved</string>

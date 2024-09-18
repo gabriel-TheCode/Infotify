@@ -39,7 +39,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/app_name"
                     android:fontFamily="@font/oleoscript_bold"
-                    android:textColor="?attr/primaryBackgroundColor"
+                    android:textColor="?attr/primaryTitleColor"
                     android:layout_marginStart="20dp"
                     android:textSize="22sp"
                     android:textStyle="bold"/>

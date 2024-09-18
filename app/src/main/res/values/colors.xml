@@ -4,7 +4,7 @@
     <color name="colorPrimary">@color/md_orange_600</color>
     <color name="colorPrimaryDark">@color/md_orange_900</color>
     <color name="colorAccent">@color/md_blue_A200</color>
-    <color name="primaryTitleColor">#D9000000</color>
+    <color name="primaryTitleColor">#2A2A2A</color>
     <color name="primaryDescriptionColor">#8C000000</color>
     <color name="primaryDateColor">#afb5CA</color>
     <color name="primaryBackgroundColor">#F5F7FB</color>
