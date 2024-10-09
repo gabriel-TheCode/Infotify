@@ -8,7 +8,6 @@ import android.os.Handler
 import android.util.DisplayMetrics
 import android.view.animation.DecelerateInterpolator
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
@@ -77,7 +76,6 @@ class SplashActivity : AppCompatActivity() {
                         .translationYBy(height)
                         .setListener(object : Animator.AnimatorListener {
 
-                            @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
                             override fun onAnimationEnd(p0: Animator) {
                                 viewModel.getOnboardingStatus()
                             }

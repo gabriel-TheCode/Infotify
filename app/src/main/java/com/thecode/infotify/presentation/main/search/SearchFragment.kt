@@ -24,10 +24,10 @@ import com.thecode.infotify.R
 import com.thecode.infotify.R.color.colorPrimary
 import com.thecode.infotify.R.color.colorPrimaryDark
 import com.thecode.infotify.base.BaseFragment
-import com.thecode.infotify.core.domain.Article
-import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.databinding.BottomSheetSearchBinding
 import com.thecode.infotify.databinding.FragmentSearchBinding
+import com.thecode.infotify.domain.model.Article
+import com.thecode.infotify.domain.model.DataState
 import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import com.thecode.infotify.utils.AppConstants.DEFAULT_LANG
 import com.thecode.infotify.utils.AppConstants.DEFAULT_QUERY
@@ -274,15 +274,15 @@ class SearchFragment : BaseFragment() {
         showSuccessDialog(getString(R.string.success), getString(R.string.bookmark_saved))
     }
 
-    fun openNews(article: Article) {
+    private fun openNews(article: Article) {
         loadWebviewDialog(article)
     }
 
-    fun openNewsInBrowser(url: String) {
+    private fun openNewsInBrowser(url: String) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
 
-    fun shareNews(article: Article) {
+    private fun shareNews(article: Article) {
         openSharingIntent(article)
     }
 }

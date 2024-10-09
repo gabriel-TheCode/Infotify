@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_bottom_sheet_search"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@drawable/bottom_sheet_background"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     app:behavior_hideable="false"
     app:behavior_peekHeight="600dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
@@ -20,23 +19,21 @@
             android:id="@+id/text_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/close"
-            android:textColor="@color/colorPrimary"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
-            />
+            android:text="@string/close"
+            android:textColor="@color/colorPrimary" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/search_filter"
-            android:fontFamily="@font/sf_medium"
-            android:textColor="@color/colorPrimary"
-            android:layout_margin="10dp"
-            android:textSize="16sp"
             android:layout_centerInParent="true"
-            />
+            android:layout_margin="10dp"
+            android:fontFamily="@font/sf_medium"
+            android:text="@string/search_filter"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
@@ -51,23 +48,23 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_marginBottom="30dp"
             android:text="@string/search_description"
             android:textColor="?attr/primaryTitleColor"
-            android:layout_margin="20dp"
-            android:textSize="14sp"
-            android:layout_marginBottom="30dp"/>
+            android:textSize="14sp" />
 
 
         <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="6dp"
-        app:cardBackgroundColor="?attr/primaryCardBackgroundColor">
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            app:cardBackgroundColor="?attr/primaryCardBackgroundColor"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="6dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -76,35 +73,35 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:text="@string/language"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="20dp"
-                    android:textColor="?attr/primaryDescriptionColor"/>
+                    android:text="@string/language"
+                    android:textColor="?attr/primaryDescriptionColor"
+                    android:textSize="16sp" />
 
 
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/spinner_lang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="20dp" />
             </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginBottom="40dp"
+            app:cardBackgroundColor="?attr/primaryCardBackgroundColor"
             app:cardCornerRadius="15dp"
-            app:cardElevation="6dp"
-            app:cardBackgroundColor="?attr/primaryCardBackgroundColor">
+            app:cardElevation="6dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -113,21 +110,21 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="20dp"
+                    android:text="@string/sort_by"
                     android:textColor="?attr/primaryDescriptionColor"
-                    android:text="@string/sort_by"/>
+                    android:textSize="16sp" />
 
 
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/spinner_sortby"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="20dp"/>
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp" />
             </RelativeLayout>
 
 
@@ -138,14 +135,13 @@
             android:id="@+id/btn_apply"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="@string/apply"
-            android:fontFamily="@font/sf_medium"
-            android:textColor="@color/md_white_1000"
             android:layout_margin="20dp"
-            android:background="@drawable/btn_default_selector"/>
+            android:background="@drawable/btn_default_selector"
+            android:fontFamily="@font/sf_medium"
+            android:text="@string/apply"
+            android:textColor="@color/md_white_1000" />
 
     </LinearLayout>
-
 
 
 </LinearLayout>

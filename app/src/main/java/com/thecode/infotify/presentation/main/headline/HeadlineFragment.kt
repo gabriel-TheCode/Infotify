@@ -16,9 +16,9 @@ import com.thecode.infotify.R
 import com.thecode.infotify.R.color.colorPrimary
 import com.thecode.infotify.R.color.colorPrimaryDark
 import com.thecode.infotify.base.BaseFragment
-import com.thecode.infotify.core.domain.Article
-import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.databinding.FragmentHeadlineBinding
+import com.thecode.infotify.domain.model.Article
+import com.thecode.infotify.domain.model.DataState
 import com.thecode.infotify.presentation.main.NewsRecyclerViewAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter

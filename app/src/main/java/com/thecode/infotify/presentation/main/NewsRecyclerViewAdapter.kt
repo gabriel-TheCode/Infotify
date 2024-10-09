@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.thecode.infotify.R
-import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.databinding.AdapterNewsBinding
+import com.thecode.infotify.domain.model.Article
 
 
 class NewsRecyclerViewAdapter(
@@ -18,8 +18,7 @@ class NewsRecyclerViewAdapter(
     private val onOpenNews: (Article) -> Unit,
     private val onOpenNewsInBrowser: (String) -> Unit,
     private val onShareNews: (Article) -> Unit
-) :
-    RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder>() {
+) : RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder>() {
 
     private lateinit var binding: AdapterNewsBinding
     private var newsList: List<Article> = listOf()

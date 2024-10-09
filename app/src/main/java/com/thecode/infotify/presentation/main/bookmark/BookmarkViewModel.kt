@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thecode.infotify.core.domain.Article
-import com.thecode.infotify.core.domain.DataState
-import com.thecode.infotify.core.usecases.DeleteBookmark
-import com.thecode.infotify.core.usecases.GetBookmarks
+import com.thecode.infotify.domain.model.Article
+import com.thecode.infotify.domain.model.DataState
+import com.thecode.infotify.domain.usecases.DeleteBookmark
+import com.thecode.infotify.domain.usecases.GetBookmarks
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

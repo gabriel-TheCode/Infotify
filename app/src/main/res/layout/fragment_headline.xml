@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.main.headline.HeadlineFragment"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".presentation.main.headline.HeadlineFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresh_layout"
@@ -17,7 +17,7 @@
             android:id="@+id/recycler_view_news"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layoutAnimation="@anim/layout_animation_fall_down"/>
+            android:layoutAnimation="@anim/layout_animation_fall_down" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
@@ -33,16 +33,16 @@
             android:layout_height="match_parent"
             app:layout_flexGrow="1"
             app:toggle_backgroundColor="?attr/primaryCardBackgroundColor"
-            app:toggle_selectedBackgroundColor="#5e6fed"
+            app:toggle_btnCornerRadius="8dp"
             app:toggle_icon="@drawable/ic_baseline_list_alt_gray_24"
             app:toggle_iconGravity="center"
             app:toggle_iconPadding="24dp"
             app:toggle_iconPaddingBottom="34dp"
-            app:toggle_textPaddingBottom="8dp"
+            app:toggle_selectedBackgroundColor="#5e6fed"
             app:toggle_text="@string/all_toggle"
-            app:toggle_textSize="13sp"
             app:toggle_textGravity="bottom|center"
-            app:toggle_btnCornerRadius="8dp"/>
+            app:toggle_textPaddingBottom="8dp"
+            app:toggle_textSize="13sp" />
 
         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
             android:id="@+id/btnScience"
@@ -50,16 +50,16 @@
             android:layout_height="match_parent"
             app:layout_flexGrow="1"
             app:toggle_backgroundColor="?attr/primaryCardBackgroundColor"
-            app:toggle_selectedBackgroundColor="#5e6fed"
+            app:toggle_btnCornerRadius="8dp"
             app:toggle_icon="@drawable/ic_baseline_science_gray_24"
             app:toggle_iconGravity="center"
             app:toggle_iconPadding="24dp"
             app:toggle_iconPaddingBottom="34dp"
-            app:toggle_textPaddingBottom="8dp"
+            app:toggle_selectedBackgroundColor="#5e6fed"
             app:toggle_text="Sci"
-            app:toggle_textSize="13sp"
             app:toggle_textGravity="bottom|center"
-            app:toggle_btnCornerRadius="8dp"/>
+            app:toggle_textPaddingBottom="8dp"
+            app:toggle_textSize="13sp" />
 
         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
             android:id="@+id/btnSports"
@@ -67,16 +67,16 @@
             android:layout_height="match_parent"
             app:layout_flexGrow="1"
             app:toggle_backgroundColor="?attr/primaryCardBackgroundColor"
-            app:toggle_selectedBackgroundColor="#5e6fed"
+            app:toggle_btnCornerRadius="8dp"
             app:toggle_icon="@drawable/ic_baseline_sports_baseball_gray_24"
             app:toggle_iconGravity="center"
             app:toggle_iconPadding="24dp"
             app:toggle_iconPaddingBottom="34dp"
-            app:toggle_textPaddingBottom="8dp"
+            app:toggle_selectedBackgroundColor="#5e6fed"
             app:toggle_text="@string/sport_toggle"
-            app:toggle_textSize="13sp"
             app:toggle_textGravity="bottom|center"
-            app:toggle_btnCornerRadius="8dp"/>
+            app:toggle_textPaddingBottom="8dp"
+            app:toggle_textSize="13sp" />
 
         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
             android:id="@+id/btnTechnology"
@@ -84,16 +84,16 @@
             android:layout_height="70dp"
             app:layout_flexGrow="1"
             app:toggle_backgroundColor="?attr/primaryCardBackgroundColor"
-            app:toggle_selectedBackgroundColor="#5e6fed"
+            app:toggle_btnCornerRadius="8dp"
             app:toggle_icon="@drawable/ic_baseline_phonelink_gray_24"
             app:toggle_iconGravity="center"
             app:toggle_iconPadding="24dp"
             app:toggle_iconPaddingBottom="34dp"
-            app:toggle_textPaddingBottom="8dp"
+            app:toggle_selectedBackgroundColor="#5e6fed"
             app:toggle_text="@string/tech_toggle"
-            app:toggle_textSize="13sp"
             app:toggle_textGravity="bottom|center"
-            app:toggle_btnCornerRadius="8dp"/>
+            app:toggle_textPaddingBottom="8dp"
+            app:toggle_textSize="13sp" />
 
         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
             android:id="@+id/btnEntertainment"
@@ -101,21 +101,21 @@
             android:layout_height="match_parent"
             app:layout_flexGrow="1"
             app:toggle_backgroundColor="?attr/primaryCardBackgroundColor"
-            app:toggle_selectedBackgroundColor="#5e6fed"
+            app:toggle_btnCornerRadius="8dp"
             app:toggle_icon="@drawable/ic_baseline_theater_comedy_gray_24"
             app:toggle_iconGravity="center"
             app:toggle_iconPadding="24dp"
             app:toggle_iconPaddingBottom="34dp"
-            app:toggle_textPaddingBottom="8dp"
+            app:toggle_selectedBackgroundColor="#5e6fed"
             app:toggle_text="@string/tv_toggle"
-            app:toggle_textSize="13sp"
             app:toggle_textGravity="bottom|center"
-            app:toggle_btnCornerRadius="8dp"/>
+            app:toggle_textPaddingBottom="8dp"
+            app:toggle_textSize="13sp" />
 
     </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
 
     <include
         android:id="@+id/included"
-        layout="@layout/layout_bad_state"/>
+        layout="@layout/layout_bad_state" />
 
 </RelativeLayout>

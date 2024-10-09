@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thecode.infotify.core.usecases.IsNightModeEnabled
-import com.thecode.infotify.core.usecases.SetNightModeEnabled
+import com.thecode.infotify.domain.usecases.IsNightModeEnabled
+import com.thecode.infotify.domain.usecases.SetNightModeEnabled
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

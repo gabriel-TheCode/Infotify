@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.thecode.infotify.R
-import com.thecode.infotify.core.domain.OnBoardingState
 import com.thecode.infotify.databinding.ActivityOnboardingBinding
+import com.thecode.infotify.domain.model.OnBoardingState
 import com.thecode.infotify.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -3,5 +3,5 @@
     <solid android:color="?attr/primaryCardBackgroundColor" />
     <corners
         android:topLeftRadius="20dp"
-        android:topRightRadius="20dp"/>
+        android:topRightRadius="20dp" />
 </shape>

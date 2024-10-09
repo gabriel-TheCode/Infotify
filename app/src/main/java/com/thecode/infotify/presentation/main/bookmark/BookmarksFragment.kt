@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.thecode.infotify.R
 import com.thecode.infotify.base.BaseFragment
-import com.thecode.infotify.core.domain.Article
-import com.thecode.infotify.core.domain.DataState
 import com.thecode.infotify.databinding.FragmentBookmarksBinding
+import com.thecode.infotify.domain.model.Article
+import com.thecode.infotify.domain.model.DataState
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 
@@ -132,22 +132,22 @@ class BookmarksFragment : BaseFragment() {
             recyclerView.adapter = null
             recyclerAdapter.notifyDataSetChanged()
         } else {
-            recyclerAdapter.setArticleListItems(ArrayList(articles))
+            recyclerAdapter.setArticleListItems(articles)
             hideEmptyStateLayout()
             hideLoadingProgress()
             recyclerView.scheduleLayoutAnimation()
         }
     }
 
-    fun openNews(article: Article) {
+    private fun openNews(article: Article) {
         loadWebviewDialog(article)
     }
 
-    fun openNewsInBrowser(url: String) {
+    private fun openNewsInBrowser(url: String) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
 
-    fun shareNews(article: Article) {
+    private fun shareNews(article: Article) {
         openSharingIntent(article)
     }
 
