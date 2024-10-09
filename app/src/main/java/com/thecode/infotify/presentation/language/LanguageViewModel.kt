@@ -3,9 +3,9 @@ package com.thecode.infotify.presentation.language
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thecode.infotify.core.usecases.GetLanguages
-import com.thecode.infotify.core.usecases.GetLanguagesApiCodes
-import com.thecode.infotify.core.usecases.SaveLanguagePreference
+import com.thecode.infotify.domain.usecases.GetLanguages
+import com.thecode.infotify.domain.usecases.GetLanguagesApiCodes
+import com.thecode.infotify.domain.usecases.SaveLanguagePreference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/primaryBackgroundColor"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="?attr/primaryBackgroundColor">
 
-    <FrameLayout xmlns:tools="http://schemas.android.com/tools"
+    <FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".presentation.about.AboutActivity"
-        android:background="?attr/primaryBackgroundColor">
+        android:background="?attr/primaryBackgroundColor"
+        tools:context=".presentation.about.AboutActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,34 +20,36 @@
                 android:id="@+id/img_back"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_baseline_arrow_white_24"
                 android:layout_margin="30dp"
                 android:clickable="true"
-                android:focusable="true"/>
+                android:focusable="true"
+                android:src="@drawable/ic_baseline_arrow_white_24"
+                app:tint="?attr/primaryTitleColor" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/about"
+                android:layout_marginVertical="30dp"
                 android:fontFamily="@font/oleoscript_bold"
-                android:textSize="26sp"
-                android:textColor="?attr/primaryBackgroundColor"
-                android:layout_marginVertical="30dp"/>
+                android:text="@string/about"
+                android:textColor="?attr/primaryTitleColor"
+                android:textSize="26sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
                 android:layout_marginTop="80dp"
+                android:layout_marginEnd="30dp"
+                app:cardBackgroundColor="?attr/primaryCardBackgroundColor"
                 app:cardCornerRadius="10dp"
-                app:cardElevation="8dp"
-                app:cardBackgroundColor="?attr/primaryCardBackgroundColor">
+                app:cardElevation="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -57,27 +59,27 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
-                        android:gravity="center_vertical"
-                        android:layout_margin="10dp">
+                        android:layout_margin="10dp"
+                        android:gravity="center_vertical">
 
                         <ImageView
                             android:id="@+id/thumbnail"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:src="@drawable/coder"
-                            android:background="@drawable/circle_image_background"
                             android:layout_marginStart="16dp"
+                            android:layout_marginEnd="@dimen/activity_padding_horizontal"
+                            android:background="@drawable/circle_image_background"
                             android:padding="1dp"
-                            android:layout_marginEnd="@dimen/activity_padding_horizontal"/>
+                            android:src="@drawable/coder" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/text_name"
+                            fontPath="fonts/SF-Medium.otf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@id/thumbnail"
                             android:ellipsize="end"
                             android:maxLines="1"
-                            fontPath="fonts/SF-Medium.otf"
                             android:text="Gabriel TEKOMBO"
                             android:textColor="?attr/primaryTitleColor"
                             android:textSize="17dp" />
@@ -89,53 +91,53 @@
                             android:layout_below="@id/text_name"
                             android:layout_marginTop="5dp"
                             android:layout_toEndOf="@id/thumbnail"
-                            android:textColor="?attr/primaryDescriptionColor"
-                            android:text="@string/android_developer"
-                            android:textSize="14sp"
+                            android:ellipsize="end"
                             android:maxLines="1"
-                            android:ellipsize="end"/>
+                            android:text="@string/android_developer"
+                            android:textColor="?attr/primaryDescriptionColor"
+                            android:textSize="14sp" />
                     </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
-                        android:background="?attr/primaryDescriptionColor"
-                        android:layout_height="0.5dp"/>
+                        android:layout_height="0.5dp"
+                        android:background="?attr/primaryDescriptionColor" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Social"
-                        android:textSize="16sp"
                         android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
                         android:paddingTop="10dp"
+                        android:paddingEnd="20dp"
                         android:paddingBottom="10dp"
-                        android:textColor="?attr/primaryDescriptionColor"/>
+                        android:text="Social"
+                        android:textColor="?attr/primaryDescriptionColor"
+                        android:textSize="16sp" />
 
                     <RelativeLayout
                         android:id="@+id/layout_twitter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
-                        android:paddingTop="20dp"
-                        android:paddingBottom="20dp"
+                        android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:background="?attr/selectableItemBackground">
+                        android:paddingStart="20dp"
+                        android:paddingTop="20dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="20dp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:text="Twitter"
-                            android:textColor="?attr/primaryTitleColor"
-                            android:layout_centerVertical="true"/>
+                            android:textColor="?attr/primaryTitleColor" />
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/ic_chevron_right_24dp"
-                            android:layout_alignParentEnd="true"/>
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/ic_chevron_right_24dp" />
 
                     </RelativeLayout>
 
@@ -143,69 +145,69 @@
                         android:id="@+id/layout_github"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
-                        android:paddingTop="20dp"
-                        android:paddingBottom="20dp"
+                        android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:background="?attr/selectableItemBackground">
+                        android:paddingStart="20dp"
+                        android:paddingTop="20dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="20dp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:text="Github"
-                            android:textColor="?attr/primaryTitleColor"
-                            android:layout_centerVertical="true"/>
+                            android:textColor="?attr/primaryTitleColor" />
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/ic_chevron_right_24dp"
-                            android:layout_alignParentEnd="true"/>
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/ic_chevron_right_24dp" />
 
                     </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
-                        android:background="?attr/primaryDescriptionColor"
-                        android:layout_height="0.5dp"/>
+                        android:layout_height="0.5dp"
+                        android:background="?attr/primaryDescriptionColor" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/credits"
-                        android:textSize="16sp"
                         android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
                         android:paddingTop="10dp"
+                        android:paddingEnd="20dp"
                         android:paddingBottom="10dp"
-                        android:textColor="?attr/primaryDescriptionColor"/>
+                        android:text="@string/credits"
+                        android:textColor="?attr/primaryDescriptionColor"
+                        android:textSize="16sp" />
 
                     <RelativeLayout
                         android:id="@+id/layout_source_code"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
-                        android:paddingTop="20dp"
-                        android:paddingBottom="20dp"
+                        android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:background="?attr/selectableItemBackground">
+                        android:paddingStart="20dp"
+                        android:paddingTop="20dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="20dp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:text="@string/source_code"
-                            android:textColor="?attr/primaryTitleColor"
-                            android:layout_centerVertical="true"/>
+                            android:textColor="?attr/primaryTitleColor" />
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/ic_chevron_right_24dp"
-                            android:layout_alignParentEnd="true"/>
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/ic_chevron_right_24dp" />
 
                     </RelativeLayout>
 
@@ -213,26 +215,26 @@
                         android:id="@+id/layout_licenses"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
-                        android:paddingTop="20dp"
-                        android:paddingBottom="20dp"
+                        android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:background="?attr/selectableItemBackground">
+                        android:paddingStart="20dp"
+                        android:paddingTop="20dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="20dp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:text="@string/open_source_licenses"
-                            android:textColor="?attr/primaryTitleColor"
-                            android:layout_centerVertical="true"/>
+                            android:textColor="?attr/primaryTitleColor" />
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/ic_chevron_right_24dp"
-                            android:layout_alignParentEnd="true"/>
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/ic_chevron_right_24dp" />
 
                     </RelativeLayout>
 
@@ -240,55 +242,55 @@
                         android:id="@+id/layout_playstore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
-                        android:paddingTop="20dp"
-                        android:paddingBottom="20dp"
+                        android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:background="?attr/selectableItemBackground">
+                        android:paddingStart="20dp"
+                        android:paddingTop="20dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="20dp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:text="@string/note_the_app"
-                            android:textColor="?attr/primaryTitleColor"
-                            android:layout_centerVertical="true"/>
+                            android:textColor="?attr/primaryTitleColor" />
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/ic_chevron_right_24dp"
-                            android:layout_alignParentEnd="true"/>
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/ic_chevron_right_24dp" />
 
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
-                        android:paddingTop="20dp"
-                        android:paddingBottom="20dp"
+                        android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:background="?attr/selectableItemBackground">
+                        android:paddingStart="20dp"
+                        android:paddingTop="20dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="20dp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:text="@string/version"
-                            android:textColor="?attr/primaryTitleColor"
-                            android:layout_centerVertical="true"/>
+                            android:textColor="?attr/primaryTitleColor" />
 
                         <TextView
                             android:id="@+id/text_version"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="?attr/primaryDescriptionColor"
+                            android:layout_alignParentEnd="true"
                             android:src="@drawable/ic_chevron_right_24dp"
-                            android:layout_alignParentEnd="true"/>
+                            android:text=""
+                            android:textColor="?attr/primaryDescriptionColor" />
 
                     </RelativeLayout>
 
@@ -296,13 +298,13 @@
 
             </androidx.cardview.widget.CardView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|center"
-                    android:layout_margin="30dp"
-                    android:text="@string/custom_copyright"
-                    android:textColor="?attr/primaryTitleColor"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_margin="30dp"
+                android:text="@string/custom_copyright"
+                android:textColor="?attr/primaryTitleColor" />
 
         </LinearLayout>
 

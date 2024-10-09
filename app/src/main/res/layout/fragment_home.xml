@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_home"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="4dp"
         android:background="@drawable/bg_gradient_appbar"
+        android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -37,19 +36,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="@string/app_name"
-                    android:fontFamily="@font/oleoscript_bold"
-                    android:textColor="?attr/primaryBackgroundColor"
                     android:layout_marginStart="20dp"
+                    android:fontFamily="@font/oleoscript_bold"
+                    android:text="@string/app_name"
+                    android:textColor="?attr/primaryTitleColor"
                     android:textSize="22sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <com.mahfa.dnswitch.DayNightSwitch
                     android:id="@+id/day_night_switch"
                     android:layout_width="46dp"
                     android:layout_height="25dp"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginEnd="50dp" />
 
             </RelativeLayout>
@@ -63,6 +62,6 @@
         android:id="@+id/child_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

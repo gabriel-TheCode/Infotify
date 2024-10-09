@@ -42,10 +42,10 @@
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@id/icon_info"
                     android:ellipsize="end"
+                    android:fontFamily="@font/sf_regular"
                     android:maxLines="1"
-                    android:textColor="?attr/primaryDescriptionColor"
                     android:text="BBC News"
-                    android:fontFamily="@font/sf_regular"/>
+                    android:textColor="?attr/primaryDescriptionColor" />
 
             </RelativeLayout>
 
@@ -61,7 +61,6 @@
 
             <TextView
                 android:id="@+id/text_title"
-                android:fontFamily="@font/sf_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/layout_info"
@@ -69,10 +68,11 @@
                 android:layout_marginBottom="5dp"
                 android:layout_toStartOf="@id/image_news"
                 android:ellipsize="end"
+                android:fontFamily="@font/sf_medium"
                 android:maxLines="2"
                 android:text="@string/lorem_ipsum"
-                android:textSize="14sp"
                 android:textColor="?attr/primaryTitleColor"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -83,9 +83,9 @@
                 android:layout_marginStart="10dp"
                 android:layout_toStartOf="@id/image_news"
                 android:ellipsize="end"
+                android:fontFamily="@font/sf_regular"
                 android:maxLines="2"
                 android:text="@string/lorem_ipsum"
-                android:fontFamily="@font/sf_regular"
                 android:textColor="?attr/primaryDescriptionColor"
                 android:textSize="12sp" />
 
@@ -117,9 +117,9 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/rounded_background_chip"
+                android:fontFamily="@font/sf_regular"
                 android:gravity="center"
                 android:text="20.05.2020"
-                android:fontFamily="@font/sf_regular"
                 android:textColor="?attr/primaryDateColor"
                 android:textSize="12sp" />
 
@@ -134,7 +134,7 @@
                     android:layout_height="26dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="20dp"
-                    android:src="@drawable/ic_baseline_post_add_gray_24"/>
+                    android:src="@drawable/ic_baseline_post_add_gray_24" />
 
                 <ImageView
                     android:id="@+id/btnShare"

@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.thecode.infotify.R
-import com.thecode.infotify.core.domain.Article
 import com.thecode.infotify.databinding.AdapterNewsLandscapeBinding
+import com.thecode.infotify.domain.model.Article
 
 
 class BookmarkRecyclerViewAdapter(
@@ -65,8 +65,8 @@ class BookmarkRecyclerViewAdapter(
         }
     }
 
-    fun setArticleListItems(newsList: ArrayList<Article>) {
-        this.newsList = newsList
+    fun setArticleListItems(newsList: List<Article>) {
+        this.newsList = ArrayList(newsList)
         notifyDataSetChanged()
     }
 

@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.thecode.infotify.core.domain.OnBoardingPart
 import com.thecode.infotify.databinding.FragmentOnboardingBinding
+import com.thecode.infotify.domain.model.OnBoardingPart
 
 class OnBoardingAdapter : RecyclerView.Adapter<OnBoardingAdapter.BaseViewHolder<*>>() {
 
@@ -37,9 +37,11 @@ class OnBoardingAdapter : RecyclerView.Adapter<OnBoardingAdapter.BaseViewHolder<
     inner class OnBoardingPagerViewHolder(itemView: View) :
         BaseViewHolder<OnBoardingPart>(itemView) {
         override fun bind(item: OnBoardingPart) {
-            binding.imageOnboarding.setAnimation(item.image)
-            binding.textOnboardingTitle.setText(item.title)
-            binding.textOnboardingDescription.setText(item.description)
+            binding.apply {
+                imageOnboarding.setAnimation(item.image)
+                textOnboardingTitle.setText(item.title)
+                textOnboardingDescription.setText(item.description)
+            }
         }
     }
 

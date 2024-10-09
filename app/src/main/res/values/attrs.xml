@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="primaryTitleColor" format="color"/>
-    <attr name="primaryDescriptionColor" format="color"/>
-    <attr name="primaryDateColor" format="color"/>
-    <attr name="primaryBackgroundColor" format="color"/>
-    <attr name="primaryCardBackgroundColor" format="color"/>
-    <attr name="primaryChipBackgroundColor" format="color"/>
-    <attr name="primarySearchBackgroundColor" format="color"/>
+    <attr name="primaryTitleColor" format="color" />
+    <attr name="primaryDescriptionColor" format="color" />
+    <attr name="primaryDateColor" format="color" />
+    <attr name="primaryBackgroundColor" format="color" />
+    <attr name="primaryCardBackgroundColor" format="color" />
+    <attr name="primaryChipBackgroundColor" format="color" />
+    <attr name="primarySearchBackgroundColor" format="color" />
 </resources>

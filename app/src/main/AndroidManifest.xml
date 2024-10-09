@@ -14,10 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Base.Light">
         <activity android:name=".presentation.language.LanguageActivity" />
-        <activity android:name=".presentation.about.AboutActivity"/>
+        <activity android:name=".presentation.about.AboutActivity" />
         <activity android:name=".presentation.newsdetails.NewsDetailsActivity" />
-        <activity
-            android:name=".presentation.main.MainActivity" />
+        <activity android:name=".presentation.main.MainActivity" />
         <activity android:name=".presentation.onboarding.OnboardingActivity" />
         <activity
             android:name=".presentation.splash.SplashActivity"

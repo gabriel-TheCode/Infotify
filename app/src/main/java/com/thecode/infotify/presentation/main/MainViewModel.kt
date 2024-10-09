@@ -3,9 +3,9 @@ package com.thecode.infotify.presentation.main
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thecode.infotify.core.domain.Article
-import com.thecode.infotify.core.usecases.IsNightModeEnabled
-import com.thecode.infotify.core.usecases.SaveBookmark
+import com.thecode.infotify.domain.model.Article
+import com.thecode.infotify.domain.usecases.IsNightModeEnabled
+import com.thecode.infotify.domain.usecases.SaveBookmark
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

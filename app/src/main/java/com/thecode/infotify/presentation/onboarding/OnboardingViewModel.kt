@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thecode.infotify.core.domain.OnBoardingState
-import com.thecode.infotify.core.usecases.GetOnBoardingParts
-import com.thecode.infotify.core.usecases.SetOnboardingCompleted
+import com.thecode.infotify.domain.model.OnBoardingState
+import com.thecode.infotify.domain.usecases.GetOnBoardingParts
+import com.thecode.infotify.domain.usecases.SetOnboardingCompleted
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

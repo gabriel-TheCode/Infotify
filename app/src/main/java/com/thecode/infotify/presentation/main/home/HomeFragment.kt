@@ -15,7 +15,6 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import com.mahfa.dnswitch.DayNightSwitch
 import com.mahfa.dnswitch.DayNightSwitchAnimListener
 import com.thecode.infotify.R
 import com.thecode.infotify.base.BaseFragment
@@ -31,8 +30,6 @@ class HomeFragment : BaseFragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var dayNightSwitch: DayNightSwitch
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,18 +42,19 @@ class HomeFragment : BaseFragment() {
 
         viewModel.fetchNightMode()
 
-        dayNightSwitch = binding.dayNightSwitch
-        dayNightSwitch.setDuration(450)
-        dayNightSwitch.setAnimListener(object : DayNightSwitchAnimListener {
-            override fun onAnimValueChanged(value: Float) = Unit
+        binding.dayNightSwitch.apply {
+            setDuration(450)
+            setAnimListener(object : DayNightSwitchAnimListener {
+                override fun onAnimValueChanged(value: Float) = Unit
 
-            override fun onAnimStart() = Unit
+                override fun onAnimStart() = Unit
 
-            override fun onAnimEnd() {
-                val isNightMode = dayNightSwitch.isNight
-                viewModel.setNightMode(isNightMode)
-            }
-        })
+                override fun onAnimEnd() {
+                    val isNightMode = isNight
+                    viewModel.setNightMode(isNightMode)
+                }
+            })
+        }
 
         initOptionsMenu()
         observeNightMode()
@@ -90,7 +88,7 @@ class HomeFragment : BaseFragment() {
             AppCompatDelegate.setDefaultNightMode(nightMode)
 
             // Sync the switch with the current night mode state
-            dayNightSwitch.setIsNight(isNightMode)
+            binding.dayNightSwitch.setIsNight(isNightMode)
         }
     }
 

@@ -8,47 +8,37 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.Spinner
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.thecode.infotify.R
-import com.thecode.infotify.base.BaseActivity
 import com.thecode.infotify.databinding.ActivityLanguageBinding
 import com.thecode.infotify.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LanguageActivity : BaseActivity(), Animation.AnimationListener {
+class LanguageActivity : AppCompatActivity(), Animation.AnimationListener {
 
     private lateinit var binding: ActivityLanguageBinding
     private val languageViewModel: LanguageViewModel by viewModels()
     private lateinit var languagesAdapter: ArrayAdapter<String>
     private lateinit var animFadeIn: Animation
 
-    private lateinit var btnContinue: Button
-    private lateinit var spinner: Spinner
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLanguageBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
         initViews()
         setUpAnimation()
         setUpAdapter()
 
-        languageViewModel.languages.observe(this, { displayLanguages(it) })
-
+        languageViewModel.languages.observe(this) { displayLanguages(it) }
         languageViewModel.getCurrentLanguages()
 
     }
 
     private fun initViews() {
-        btnContinue = binding.continueButton
-        spinner = binding.preferredLanguageSpinner
-
-        btnContinue.setOnClickListener {
+        binding.continueButton.setOnClickListener {
             onClickNext()
         }
     }
@@ -62,7 +52,7 @@ class LanguageActivity : BaseActivity(), Animation.AnimationListener {
         languagesAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item)
         languagesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        spinner.apply {
+        binding.preferredLanguageSpinner.apply {
             adapter = languagesAdapter
             setSelection(0, false)
             gravity = Gravity.CENTER
@@ -92,7 +82,8 @@ class LanguageActivity : BaseActivity(), Animation.AnimationListener {
 
     private fun onClickNext() {
         val intent = Intent(applicationContext, MainActivity::class.java)
-        startSingleTopActivity(intent)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
         finish()
     }
 

@@ -5,11 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thecode.infotify.core.domain.Article
-import com.thecode.infotify.core.domain.DataState
-import com.thecode.infotify.core.domain.News
-import com.thecode.infotify.core.usecases.GetHeadlines
-import com.thecode.infotify.core.usecases.SaveBookmark
+import com.thecode.infotify.domain.model.Article
+import com.thecode.infotify.domain.model.DataState
+import com.thecode.infotify.domain.model.News
+import com.thecode.infotify.domain.usecases.GetHeadlines
+import com.thecode.infotify.domain.usecases.SaveBookmark
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

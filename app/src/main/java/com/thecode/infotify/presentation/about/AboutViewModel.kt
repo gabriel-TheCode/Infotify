@@ -3,7 +3,7 @@ package com.thecode.infotify.presentation.about
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.thecode.infotify.core.usecases.IsNightModeEnabled
+import com.thecode.infotify.domain.usecases.IsNightModeEnabled
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
