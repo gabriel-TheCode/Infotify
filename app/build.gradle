@@ -5,7 +5,6 @@ apply plugin: 'org.jetbrains.kotlin.plugin.compose'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 apply from: '../ktlint.gradle'
-apply plugin: 'com.mikepenz.aboutlibraries.plugin'
 
 // The NewsData.io key is read from local.properties, which is gitignored.
 // It is never hardcoded here. CI writes the value from a repository secret.
@@ -109,11 +108,9 @@ dependencies {
     //DATA STORE
     implementation 'androidx.datastore:datastore-preferences:1.1.1'
 
-    // UI
-    // Removed with the Compose migration: AestheticDialogs, DayNightSwitch,
-    // recyclerview-animators, themed-toggle-button-group, bubblenavigation.aar.
-    implementation 'com.airbnb.android:lottie-compose:6.4.1'
-    implementation 'com.mikepenz:aboutlibraries-compose-m3:11.2.3'
+    // UI libraries removed with the Compose migration: AestheticDialogs, DayNightSwitch,
+    // recyclerview-animators, themed-toggle-button-group, bubblenavigation.aar, Lottie,
+    // aboutlibraries, Glide, and androidx.paging (pagination is a plain nextPage cursor).
 
     // GSON
     implementation "com.google.code.gson:gson:2.10.1"
@@ -133,10 +130,6 @@ dependencies {
 
     // CUSTOM TABS — replaces the in-dialog WebView for article reading
     implementation 'androidx.browser:browser:1.8.0'
-
-    // PAGING — cursor pagination over NewsData.io nextPage tokens
-    implementation 'androidx.paging:paging-runtime-ktx:3.3.5'
-    implementation 'androidx.paging:paging-compose:3.3.5'
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
 
