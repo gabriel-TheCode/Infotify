@@ -1,93 +1,83 @@
 <resources>
-    <string name="app_name">Infotify</string>
-    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
-    <string name="please_wait">Loading…</string>
-    <string name="selected_language">Selected language</string>
-    <string name="search_filter">Search filter</string>
-    <string name="language">Language</string>
-    <string name="sort_by">Sort By</string>
-    <string name="apply">Apply</string>
-    <string name="search_hint">Search…</string>
-    <string name="next">next</string>
-    <string name="back">back</string>
-    <string name="finish">finish</string>
-    <string name="title_onboarding_1">Welcome to Infotify News App !</string>
-    <string name="description_onboarding_1">A newsfeed app that allows you to read, and share the information you need to stay ahead of the trends in the entire world.</string>
-    <string name="title_onboarding_2">Fast, simple and intuitive</string>
-    <string name="description_onboarding_2">Information and news in several languages, in real time and according to your criteria. Nothing more. Start use it now!</string>
-    <string name="title_onboarding_3">Better than a newspaper</string>
-    <string name="description_onboarding_3">Receive articles from all the major newspapers around the world with a single click and save your favorites news as bookmarks. Let\'s Go!</string>
-    <string name="retry">retry</string>
-    <string name="internet_connection_error">This content is not available without internet connection</string>
-    <string name="no_result_found">No result found</string>
-    <string name="service_unavailable">The remote service is unavailable. Retry later</string>
-    <string name="check_internet">Please check your internet connection</string>
-    <string name="error">Error</string>
-    <string name="network_error">Network Error</string>
-    <string name="search_description">Please select options to customize your search</string>
-    <string name="close">Close</string>
-    <string name="custom_copyright">Made with ❤ by Gabriel The Code</string>
-    <string name="bookmarks">Bookmarks</string>
-    <string name="empty_bookmark_text">Save a bookmark and it will show up here</string>
-    <string name="no_bookmarks">No bookmarks</string>
-    <string name="about">About</string>
-    <string name="source_code">Source code</string>
-    <string name="open_source_licenses">Open-source Licenses</string>
-    <string name="note_the_app">Note the app</string>
-    <string name="version">Version</string>
-    <string name="credits">Credits</string>
-    <string name="android_developer">Android Developer</string>
-    <string name="home">Home</string>
-    <string name="search">Search</string>
-    <string name="link_not_reachable">Sorry, the link is unreachable through the app. Long click to open in browser</string>
-    <string name="web_error">Web Error</string>
-    <string name="success">Success</string>
-    <string name="bookmark_saved">Bookmark saved</string>
-    <string name="bookmark_deleted">Bookmark deleted successfully</string>
-    <string name="validate">Validate</string>
-    <string name="language_description">Select the language of the newsfeed</string>
-    <string name="general_category">General</string>
-    <string name="science_category">Science</string>
-    <string name="entertainment_category">Entertainment</string>
-    <string name="technology_category">Technology</string>
-    <string name="sports_category">Sports</string>
-    <string name="sport_toggle">Sport</string>
-    <string name="tech_toggle">Tech</string>
-    <string name="tv_toggle">TV</string>
-    <string name="all_toggle">All</string>
-    <string name="about_description">A newsfeed app built in Kotlin to demonstrate the usage of MVVM with Clean Architecture and Android Architecture Components.</string>
+    <!-- Brand name: identical in every locale -->
+    <string name="app_name" translatable="false">Infotify</string>
 
+    <!-- Navigation -->
+    <string name="nav_feed">Headlines</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_bookmarks">Saved</string>
+    <string name="nav_settings">Settings</string>
 
-    <string-array name="languages">
-        <item>DE</item>
-        <item>EN</item>
-        <item>ES</item>
-        <item>FR</item>
-        <item>IT</item>
-        <item>NL</item>
-        <item>RU</item>
-    </string-array>
+    <!-- Categories -->
+    <string name="category_top">Top stories</string>
+    <string name="category_world">World</string>
+    <string name="category_business">Business</string>
+    <string name="category_technology">Technology</string>
+    <string name="category_science">Science</string>
+    <string name="category_health">Health</string>
+    <string name="category_sports">Sport</string>
+    <string name="category_entertainment">Culture</string>
+    <string name="category_environment">Environment</string>
+    <string name="category_politics">Politics</string>
 
-    <string-array name="languages_values" translatable="false">
-        <item>de</item>
-        <item>en</item>
-        <item>es</item>
-        <item>fr</item>
-        <item>it</item>
-        <item>nl</item>
-        <item>ru</item>
-    </string-array>
+    <!-- Actions -->
+    <string name="action_retry">Try again</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_share">Share</string>
+    <string name="action_undo">Undo</string>
+    <string name="action_bookmark">Save article</string>
+    <string name="action_remove_bookmark">Remove from saved</string>
+    <string name="action_clear_search">Clear search</string>
 
-    <string-array name="options">
-        <item>Published At</item>
-        <item>Popularity</item>
-        <item>Relevance</item>
-    </string-array>
+    <!-- Relative time -->
+    <string name="time_just_now">now</string>
+    <string name="time_minutes">%1$d min</string>
+    <string name="time_hours">%1$d h</string>
+    <string name="time_yesterday">yesterday</string>
+    <string name="time_days">%1$d d</string>
+    <string name="time_weeks">%1$d w</string>
 
-    <string-array name="options_values" translatable="false">
-        <item>PubishedAt</item>
-        <item>Popularity</item>
-        <item>Relevancy</item>
-    </string-array>
+    <!-- Errors: each names its own cause, so the message always matches what happened -->
+    <string name="error_offline_title">You are offline</string>
+    <string name="error_offline_message">Check your connection and try again.</string>
+    <string name="error_quota_title">Daily limit reached</string>
+    <string name="error_quota_message">Infotify has used its news quota for today. Fresh
+        headlines return tomorrow.</string>
+    <string name="error_credentials_title">News unavailable</string>
+    <string name="error_credentials_message">Infotify cannot reach its news provider. This is
+        a problem on our side, not yours.</string>
+    <string name="error_generic_title">Something went wrong</string>
+    <string name="error_generic_message">The news service did not answer. Try again in a
+        moment.</string>
 
+    <!-- Empty states -->
+    <string name="empty_feed_title">Nothing here yet</string>
+    <string name="empty_feed_message">No stories published in this category right now.</string>
+    <string name="empty_bookmarks_title">No saved articles</string>
+    <string name="empty_bookmarks_message">Tap the bookmark icon on any story to keep it
+        here, ready to read offline.</string>
+
+    <!-- Search -->
+    <string name="search_placeholder">Search the news</string>
+    <string name="search_idle_title">Search the news</string>
+    <string name="search_idle_message">Type a topic, a place or a name to find stories from
+        thousands of publishers.</string>
+    <string name="search_empty_title">No results</string>
+    <string name="search_empty_message">Nothing matched “%1$s”. Try a different wording.</string>
+
+    <!-- Snackbars -->
+    <string name="snackbar_bookmark_added">Saved</string>
+    <string name="snackbar_bookmark_removed">Removed</string>
+    <string name="snackbar_refresh_failed">Could not refresh</string>
+
+    <!-- Settings -->
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_language">News language</string>
+    <string name="settings_version">Infotify %1$s</string>
+    <string name="theme_system">Follow system</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+
+    <!-- Sharing -->
+    <string name="share_article_text">%1$s\n\n%2$s\n\nvia Infotify</string>
 </resources>

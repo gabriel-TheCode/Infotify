@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <shape>
-            <gradient android:angle="90" android:endColor="@color/colorPrimary" android:startColor="@color/colorPrimaryDark" android:type="linear" />
-        </shape>
-    </item>
-</selector>
+<!-- Solid brand ember. A flat ground keeps the mark legible under every launcher mask. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#D8500B"
+        android:pathData="M0,0 h108 v108 h-108 z" />
+</vector>

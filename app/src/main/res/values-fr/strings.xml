@@ -1,82 +1,82 @@
 <resources>
-    <string name="app_name">Infotify</string>
-    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
-    <string name="please_wait">Chargement…</string>
-    <string name="selected_language">Langue choisie</string>
-    <string name="search_filter">Filtre de recherche</string>
-    <string name="language">Langage</string>
-    <string name="sort_by">Classer par</string>
-    <string name="apply">Appliquer</string>
-    <string name="search_hint">Rechercher…</string>
-    <string name="next">Suivant</string>
-    <string name="back">Precedent</string>
-    <string name="finish">Terminer</string>
-    <string name="title_onboarding_1">Bienvenue sur Infotify News App !</string>
-    <string name="description_onboarding_1">Une application de flux d\'actualités qui vous permet de lire et de partager les informations dont vous avez besoin pour rester à l\'avant-garde des tendances du monde entier.</string>
-    <string name="title_onboarding_2">Rapide, simple et intuitif</string>
-    <string name="description_onboarding_2">Informations et actualités en plusieurs langues, en temps réel et selon vos critères. Rien de plus. Commencez à l\'utiliser maintenant!</string>
-    <string name="title_onboarding_3">Meilleur qu\'un journal papier</string>
-    <string name="description_onboarding_3">Recevez des articles de tous les principaux journaux du monde en un seul clic et enregistrez vos actualités préférées en tant que signets. Allons-y!</string>
-    <string name="retry">Reessayer</string>
-    <string name="internet_connection_error">Ce contenu n\'est pas disponible sans connexion Internet</string>
-    <string name="no_result_found">Aucun resultat trouvé</string>
-    <string name="service_unavailable">Le service à distance n\'est pas disponible. Réessayer plus tard</string>
-    <string name="check_internet">S\'il vous plait, vérifiez votre connexion internet</string>
-    <string name="error">Erreur</string>
-    <string name="network_error">Erreur réseau</string>
-    <string name="search_description">Veuillez sélectionner des options pour personnaliser votre recherche</string>
-    <string name="close">Fermer</string>
-    <string name="custom_copyright">Made with ❤ by Gabriel The Code</string>
-    <string name="bookmarks">Signets</string>
-    <string name="empty_bookmark_text">Enregistrez un signet et il apparaîtra ici</string>
-    <string name="no_bookmarks">Aucun signet</string>
-    <string name="about">À propos</string>
-    <string name="source_code">Code source</string>
-    <string name="open_source_licenses">Licences Open-source</string>
-    <string name="note_the_app">Notez l\'application</string>
-    <string name="version">Version</string>
-    <string name="credits">Credits</string>
-    <string name="android_developer">Développeur Android</string>
-    <string name="home">Acceuil</string>
-    <string name="search">Rechercher</string>
-    <string name="link_not_reachable">Faites un long clic pour ouvrir l\'article dans le navigateur.</string>
-    <string name="web_error">Lien inaccessible</string>
-    <string name="success">Succes</string>
-    <string name="bookmark_saved">Signet enregistré</string>
-    <string name="bookmark_deleted">Signet supprimé</string>
-    <string name="validate">Valider</string>
-    <string name="language_description">Sélectionnez la langue du fil d\'actualités</string>
+    <!-- Navigation -->
+    <string name="nav_feed">À la une</string>
+    <string name="nav_search">Recherche</string>
+    <string name="nav_bookmarks">Enregistrés</string>
+    <string name="nav_settings">Réglages</string>
 
-    <string-array name="languages">
-        <item>DE</item>
-        <item>EN</item>
-        <item>ES</item>
-        <item>FR</item>
-        <item>IT</item>
-        <item>NL</item>
-        <item>RU</item>
-    </string-array>
+    <!-- Categories -->
+    <string name="category_top">À la une</string>
+    <string name="category_world">Monde</string>
+    <string name="category_business">Économie</string>
+    <string name="category_technology">Technologie</string>
+    <string name="category_science">Sciences</string>
+    <string name="category_health">Santé</string>
+    <string name="category_sports">Sport</string>
+    <string name="category_entertainment">Culture</string>
+    <string name="category_environment">Environnement</string>
+    <string name="category_politics">Politique</string>
 
-    <string-array name="languages_values" translatable="false">
-        <item>de</item>
-        <item>en</item>
-        <item>es</item>
-        <item>fr</item>
-        <item>it</item>
-        <item>nl</item>
-        <item>ru</item>
-    </string-array>
+    <!-- Actions -->
+    <string name="action_retry">Réessayer</string>
+    <string name="action_refresh">Actualiser</string>
+    <string name="action_share">Partager</string>
+    <string name="action_undo">Annuler</string>
+    <string name="action_bookmark">Enregistrer l\'article</string>
+    <string name="action_remove_bookmark">Retirer des enregistrés</string>
+    <string name="action_clear_search">Effacer la recherche</string>
 
-    <string-array name="options">
-        <item>Published At</item>
-        <item>Popularity</item>
-        <item>Relevance</item>
-    </string-array>
+    <!-- Relative time -->
+    <string name="time_just_now">à l\'instant</string>
+    <string name="time_minutes">%1$d min</string>
+    <string name="time_hours">%1$d h</string>
+    <string name="time_yesterday">hier</string>
+    <string name="time_days">%1$d j</string>
+    <string name="time_weeks">%1$d sem.</string>
 
-    <string-array name="options_values" translatable="false">
-        <item>PubishedAt</item>
-        <item>Popularity</item>
-        <item>Relevancy</item>
-    </string-array>
+    <!-- Errors -->
+    <string name="error_offline_title">Vous êtes hors ligne</string>
+    <string name="error_offline_message">Vérifiez votre connexion, puis réessayez.</string>
+    <string name="error_quota_title">Limite quotidienne atteinte</string>
+    <string name="error_quota_message">Infotify a épuisé son quota d\'actualités pour
+        aujourd\'hui. De nouveaux titres seront disponibles demain.</string>
+    <string name="error_credentials_title">Actualités indisponibles</string>
+    <string name="error_credentials_message">Infotify n\'arrive pas à joindre son fournisseur
+        d\'actualités. Le problème vient de notre côté.</string>
+    <string name="error_generic_title">Une erreur est survenue</string>
+    <string name="error_generic_message">Le service d\'actualités n\'a pas répondu. Réessayez
+        dans un instant.</string>
 
+    <!-- Empty states -->
+    <string name="empty_feed_title">Rien pour le moment</string>
+    <string name="empty_feed_message">Aucun article publié dans cette catégorie
+        actuellement.</string>
+    <string name="empty_bookmarks_title">Aucun article enregistré</string>
+    <string name="empty_bookmarks_message">Touchez l\'icône signet sur un article pour le
+        garder ici, prêt à lire hors ligne.</string>
+
+    <!-- Search -->
+    <string name="search_placeholder">Rechercher dans l\'actualité</string>
+    <string name="search_idle_title">Rechercher dans l\'actualité</string>
+    <string name="search_idle_message">Saisissez un sujet, un lieu ou un nom pour trouver des
+        articles issus de milliers de sources.</string>
+    <string name="search_empty_title">Aucun résultat</string>
+    <string name="search_empty_message">Rien ne correspond à « %1$s ». Essayez une autre
+        formulation.</string>
+
+    <!-- Snackbars -->
+    <string name="snackbar_bookmark_added">Enregistré</string>
+    <string name="snackbar_bookmark_removed">Retiré</string>
+    <string name="snackbar_refresh_failed">Actualisation impossible</string>
+
+    <!-- Settings -->
+    <string name="settings_appearance">Apparence</string>
+    <string name="settings_language">Langue des actualités</string>
+    <string name="settings_version">Infotify %1$s</string>
+    <string name="theme_system">Suivre le système</string>
+    <string name="theme_light">Clair</string>
+    <string name="theme_dark">Sombre</string>
+
+    <!-- Sharing -->
+    <string name="share_article_text">%1$s\n\n%2$s\n\nvia Infotify</string>
 </resources>

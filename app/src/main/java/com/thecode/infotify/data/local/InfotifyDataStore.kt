@@ -7,63 +7,46 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.thecode.infotify.domain.model.ThemeMode
+import com.thecode.infotify.utils.AppConstants.DEFAULT_LANGUAGE
 import com.thecode.infotify.utils.AppConstants.PREFERENCE_NAME
 import com.thecode.infotify.utils.extensions.getValueFlow
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
+import javax.inject.Singleton
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(PREFERENCE_NAME)
 
+@Singleton
 class InfotifyDataStore @Inject constructor(@ApplicationContext context: Context) {
-
-    companion object {
-        private const val NIGHT_MODE = "NIGHT_MODE"
-        private const val IS_ONBOARDING_COMPLETED = "IS_ONBOARDING_COMPLETED"
-        private const val USER_LANGUAGE = "USER_LANGUAGE"
-    }
 
     private val dataStore = context.dataStore
 
-    suspend fun setNightModeEnabled(state: Boolean) {
-        val dataStoreKey = booleanPreferencesKey(NIGHT_MODE)
-        dataStore.edit { preferences ->
-            preferences[dataStoreKey] = state
-        }
+    fun themeMode(): Flow<ThemeMode> =
+        dataStore.getValueFlow(THEME_MODE, ThemeMode.Default.name).map(ThemeMode::fromName)
+
+    suspend fun setThemeMode(mode: ThemeMode) {
+        dataStore.edit { it[THEME_MODE] = mode.name }
     }
 
-    suspend fun setUserLanguagePreference(lang: String) {
-        val dataStoreKey = stringPreferencesKey(USER_LANGUAGE)
-        dataStore.edit { preferences ->
-            preferences[dataStoreKey] = lang
-        }
+    fun languageCode(): Flow<String> = dataStore.getValueFlow(LANGUAGE, DEFAULT_LANGUAGE)
+
+    suspend fun setLanguageCode(code: String) {
+        dataStore.edit { it[LANGUAGE] = code }
     }
 
-    fun isNightModeEnabled(): Flow<Boolean> {
-        val dataStoreKey = booleanPreferencesKey(NIGHT_MODE)
-        return dataStore.getValueFlow(dataStoreKey, false)
-    }
+    fun isOnboardingCompleted(): Flow<Boolean> =
+        dataStore.getValueFlow(ONBOARDING_COMPLETED, false)
 
     suspend fun setOnboardingCompleted() {
-        val dataStoreKey = booleanPreferencesKey(IS_ONBOARDING_COMPLETED)
-        dataStore.edit { preferences ->
-            preferences[dataStoreKey] = true
-        }
+        dataStore.edit { it[ONBOARDING_COMPLETED] = true }
     }
 
-    fun isOnboardingCompleted(): Flow<Boolean> {
-        val dataStoreKey = booleanPreferencesKey(IS_ONBOARDING_COMPLETED)
-        return dataStore.getValueFlow(dataStoreKey, false)
-    }
-
-    fun getUserLanguagePreference(): Flow<String> {
-        val dataStoreKey = stringPreferencesKey(USER_LANGUAGE)
-        return dataStore.getValueFlow(dataStoreKey, "en")
-    }
-
-    suspend fun clearSession() {
-        dataStore.edit { preferences ->
-            preferences.clear()
-        }
+    private companion object {
+        val THEME_MODE = stringPreferencesKey("THEME_MODE")
+        val LANGUAGE = stringPreferencesKey("USER_LANGUAGE")
+        val ONBOARDING_COMPLETED = booleanPreferencesKey("IS_ONBOARDING_COMPLETED")
     }
 }

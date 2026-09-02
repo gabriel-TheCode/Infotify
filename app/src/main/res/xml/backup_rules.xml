@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Allowlist, not a denylist: only bookmarks and preferences are backed up.
+    The HTTP cache needs no exclusion because nothing under `file` is included wholesale.
+    Previously allowBackup was on with no rules at all.
+-->
+<full-backup-content>
+    <include domain="database" path="infotify.db" />
+    <include domain="file" path="datastore" />
+</full-backup-content>

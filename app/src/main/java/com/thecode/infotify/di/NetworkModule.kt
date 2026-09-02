@@ -1,26 +1,23 @@
 package com.thecode.infotify.di
 
+import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.thecode.infotify.BuildConfig
-import com.thecode.infotify.data.remote.NewsApiRemoteService
-import com.thecode.infotify.data.remote.NewsApiRemoteServiceImpl
-import com.thecode.infotify.data.remote.api.NewsApi
-import com.thecode.infotify.data.remote.datasource.InfotifyRemoteDataSourceImpl
-import com.thecode.infotify.data.remote.mapper.NewsMapper
+import com.thecode.infotify.data.remote.ApiKeyInterceptor
+import com.thecode.infotify.data.remote.newsdata.NewsDataApi
 import com.thecode.infotify.utils.AppConstants
-import com.thecode.infotify.utils.AppConstants.REQUEST_TIMEOUT
+import com.thecode.infotify.utils.AppConstants.REQUEST_TIMEOUT_SECONDS
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
+import okhttp3.Cache
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -30,70 +27,59 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideGsonBuilder(): Gson {
-        return GsonBuilder().create()
-    }
+    fun provideGson(): Gson = GsonBuilder().create()
 
     @Singleton
     @Provides
-    fun provideRetrofit(gson: Gson): Retrofit.Builder {
-        return Retrofit.Builder()
-            .baseUrl(AppConstants.NEWSAPI_URL)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .client(getOkHttpService())
-    }
+    fun provideApiKeyInterceptor(): ApiKeyInterceptor =
+        ApiKeyInterceptor(BuildConfig.NEWSDATA_API_KEY)
 
+    /**
+     * A 10 MB disk cache with a 10-minute freshness window. The free plan allows 200
+     * credits a day, so serving repeat requests from disk is what makes the quota hold.
+     */
     @Singleton
     @Provides
-    fun provideWhoService(retrofit: Retrofit.Builder): NewsApi {
-        return retrofit
-            .build()
-            .create(NewsApi::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideInfotifyRemoteService(
-        api: NewsApi
-    ): NewsApiRemoteService {
-        return NewsApiRemoteServiceImpl(api)
-    }
-
-    @Singleton
-    @Provides
-    fun provideRemoteDataSource(
-        apiService: NewsApiRemoteService,
-        newsMapper: NewsMapper
-    ): InfotifyRemoteDataSourceImpl {
-        return InfotifyRemoteDataSourceImpl(
-            apiService,
-            newsMapper
-        )
-    }
-
-    private fun getOkHttpService(): OkHttpClient {
-        val httpClient: OkHttpClient.Builder = OkHttpClient.Builder()
-            .connectTimeout(REQUEST_TIMEOUT.toLong(), TimeUnit.SECONDS)
-            .readTimeout(REQUEST_TIMEOUT.toLong(), TimeUnit.SECONDS)
-            .writeTimeout(REQUEST_TIMEOUT.toLong(), TimeUnit.SECONDS)
-        if (BuildConfig.DEBUG) {
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-            httpClient.addInterceptor(interceptor)
+    fun provideOkHttpClient(
+        @ApplicationContext context: Context,
+        apiKeyInterceptor: ApiKeyInterceptor
+    ): OkHttpClient = OkHttpClient.Builder()
+        .cache(Cache(context.cacheDir.resolve("http_cache"), HTTP_CACHE_BYTES))
+        .connectTimeout(REQUEST_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+        .readTimeout(REQUEST_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+        .writeTimeout(REQUEST_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+        .addInterceptor(apiKeyInterceptor)
+        .addNetworkInterceptor { chain ->
+            chain.proceed(chain.request())
+                .newBuilder()
+                .header("Cache-Control", "public, max-age=$CACHE_MAX_AGE_SECONDS")
+                .removeHeader("Pragma")
+                .build()
         }
-        httpClient.addInterceptor(BasicAuthInterceptor())
-
-        return httpClient.build()
-    }
-
-    class BasicAuthInterceptor : Interceptor {
-        @Throws(IOException::class)
-        override fun intercept(chain: Interceptor.Chain): Response {
-            val request = chain.request()
-            val newUrl =
-                request.url.newBuilder().addQueryParameter("apiKey", BuildConfig.API_KEY).build()
-            val newRequest = request.newBuilder().url(newUrl).build()
-            return chain.proceed(newRequest)
+        .apply {
+            if (BuildConfig.DEBUG) {
+                addInterceptor(
+                    HttpLoggingInterceptor().apply {
+                        level = HttpLoggingInterceptor.Level.BASIC
+                    }
+                )
+            }
         }
-    }
+        .build()
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(gson: Gson, client: OkHttpClient): Retrofit = Retrofit.Builder()
+        .baseUrl(AppConstants.NEWSDATA_BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .client(client)
+        .build()
+
+    @Singleton
+    @Provides
+    fun provideNewsDataApi(retrofit: Retrofit): NewsDataApi =
+        retrofit.create(NewsDataApi::class.java)
+
+    private const val HTTP_CACHE_BYTES = 10L * 1024 * 1024
+    private const val CACHE_MAX_AGE_SECONDS = 600
 }

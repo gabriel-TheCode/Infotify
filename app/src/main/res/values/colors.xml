@@ -1,54 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--Light Color-->
-    <color name="colorPrimary">@color/md_orange_600</color>
-    <color name="colorPrimaryDark">@color/md_orange_900</color>
-    <color name="colorAccent">@color/md_blue_A200</color>
-    <color name="primaryTitleColor">#2A2A2A</color>
-    <color name="primaryDescriptionColor">#8C000000</color>
-    <color name="primaryDateColor">#afb5CA</color>
-    <color name="primaryBackgroundColor">#F5F7FB</color>
-    <color name="primaryCardBackgroundColor">@color/md_white_1000</color>
-    <color name="primaryChipBackgroundColor">#eeeeee</color>
-    <color name="primarySearchBackgroundColor">#F5F7FB</color>
-
-    <!--Night Color-->
-    <color name="colorPrimaryNight">#212121</color>
-    <color name="colorPrimaryDarkNight">#000000</color>
-    <color name="colorAccentNight">#f44336</color>
-    <color name="primaryTitleColorNight">#FFFFFF</color>
-    <color name="primaryDescriptionColorNight">#B3FFFFFF</color>
-    <color name="primaryDateColorNight">#B3FFFFFF</color>
-    <color name="primaryBackgroundColorNight">#303030</color>
-    <color name="primaryCardBackgroundColorNight">#424242</color>
-    <color name="primaryChipBackgroundColorNight">@color/md_grey_700</color>
-    <color name="primarySearchBackgroundColorNight">#303030</color>
-
-
-    <color name="transparent_orange">#90FB8C00</color>
-    <color name="transparent_dark">#80000000</color>
-
-    <!--red-->
-    <color name="md_red_400">#EF5350</color>
-
-    <!--blue-->
-    <color name="md_blue_A200">#448AFF</color>
-
-    <!--orange-->
-    <color name="md_orange_300">#FFB74D</color>
-    <color name="md_orange_600">#FB8C00</color>
-    <color name="md_orange_800">#EF6C00</color>
-    <color name="md_orange_900">#E65100</color>
-
-    <!--grey-->
-    <color name="md_grey_100">#F5F5F5</color>
-    <color name="md_grey_200">#EEEEEE</color>
-    <color name="md_grey_300">#E0E0E0</color>
-    <color name="md_grey_400">#BDBDBD</color>
-    <color name="md_grey_700">#616161</color>
-    <color name="md_white_1000">#ffffff</color>
-    <color name="darker_gray">#C0C0C0</color>
-    <color name="light_gray">#F5F6F9</color>
-    <color name="dark_blue">#405467</color>
-
+    <!--
+        Compose owns the app palette (designsystem/theme/Color.kt).
+        Only values the platform reads outside Compose live here.
+    -->
+    <color name="brand_ember">#D8500B</color>
+    <color name="splash_background">#FBF8F5</color>
+    <color name="splash_background_night">#141312</color>
 </resources>

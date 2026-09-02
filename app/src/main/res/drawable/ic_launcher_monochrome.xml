@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Monochrome layer for Android 13+ themed icons. Same silhouette as the foreground,
+    with the tapering trace dropped: at themed-icon sizes a 45%-alpha shape reads as
+    dirt rather than as motion.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M48.5,48 h11 a3,3 0 0 1 3,3 v25 a3,3 0 0 1 -3,3 h-11 a3,3 0 0 1 -3,-3 v-25 a3,3 0 0 1 3,-3 z" />
+
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M62,30 m-9,0 a9,9 0 1 0 18,0 a9,9 0 1 0 -18,0 z" />
+</vector>
