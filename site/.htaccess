@@ -33,4 +33,18 @@ DirectoryIndex index.html
     Require all denied
 </FilesMatch>
 
+# Caching.
+#
+# HTML is never cached: a stale page kept serving old image filenames and made a fixed
+# deployment look unchanged. Assets are versioned in their filename instead, so they can
+# be cached hard and a new version simply has a new name.
+<IfModule mod_headers.c>
+    <FilesMatch "\.(html)$">
+        Header set Cache-Control "no-cache, must-revalidate"
+    </FilesMatch>
+    <FilesMatch "\.(png|svg|ico|css|woff2)$">
+        Header set Cache-Control "public, max-age=31536000"
+    </FilesMatch>
+</IfModule>
+
 ErrorDocument 404 /index.html
