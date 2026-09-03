@@ -2,10 +2,12 @@ package com.thecode.infotify.data
 
 import com.thecode.infotify.core.result.AppError
 import com.thecode.infotify.core.result.Outcome
-import com.thecode.infotify.data.remote.newsdata.NewsDataApi
-import com.thecode.infotify.data.remote.newsdata.NewsDataMapper
+import com.thecode.infotify.data.remote.infotify.FeedMapper
+import com.thecode.infotify.data.remote.infotify.InfotifyApi
 import com.thecode.infotify.data.repository.NewsRepositoryImpl
-import com.thecode.infotify.domain.model.Category
+import com.thecode.infotify.domain.model.Interests
+import com.thecode.infotify.domain.model.Region
+import com.thecode.infotify.domain.model.Topic
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
@@ -41,11 +43,11 @@ class NewsRepositoryImplTest {
             .baseUrl(server.url("/"))
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(NewsDataApi::class.java)
+            .create(InfotifyApi::class.java)
 
         repository = NewsRepositoryImpl(
             api = api,
-            mapper = NewsDataMapper(),
+            mapper = FeedMapper(),
             ioDispatcher = StandardTestDispatcher(scheduler)
         )
     }
@@ -57,7 +59,7 @@ class NewsRepositoryImplTest {
     fun `maps a successful response to articles`() = runTest(scheduler) {
         server.enqueue(MockResponse().setBody(SUCCESS_BODY))
 
-        val outcome = repository.latest(Category.Top, "en")
+        val outcome = repository.latest(Topic.Top, "en")
 
         assertTrue(outcome is Outcome.Success)
         val page = (outcome as Outcome.Success).data
@@ -65,25 +67,51 @@ class NewsRepositoryImplTest {
         assertEquals("cursor-1", page.nextCursor)
     }
 
+    /**
+     * The economic heart of the feature: five interests must travel in ONE request. If this
+     * ever became one request per interest, the shared daily quota would be gone in minutes.
+     */
     @Test
-    fun `429 becomes QuotaExceeded, so the UI can say retrying will not help`() = runTest(scheduler) {
-        server.enqueue(MockResponse().setResponseCode(429))
+    fun `for you sends every interest in a single request`() = runTest(scheduler) {
+        server.enqueue(MockResponse().setBody(SUCCESS_BODY))
 
-        assertEquals(
-            Outcome.Failure(AppError.QuotaExceeded),
-            repository.latest(Category.Top, "en")
+        repository.forYou(
+            interests = Interests(
+                topics = setOf(Topic.Technology, Topic.Science, Topic.Health),
+                region = Region.Africa
+            ),
+            languageCode = "fr"
         )
+
+        assertEquals(1, server.requestCount)
+        val path = server.takeRequest().path.orEmpty()
+        assertTrue(path.contains("technology"))
+        assertTrue(path.contains("science"))
+        assertTrue(path.contains("health"))
+        assertTrue(path.contains("country=ng"))
+        assertTrue(path.contains("language=fr"))
     }
 
     @Test
-    fun `401 becomes InvalidCredentials`() = runTest(scheduler) {
-        server.enqueue(MockResponse().setResponseCode(401))
+    fun `for you with no interests falls back to the editor feed`() = runTest(scheduler) {
+        server.enqueue(MockResponse().setBody(SUCCESS_BODY))
 
-        assertEquals(
-            Outcome.Failure(AppError.InvalidCredentials),
-            repository.latest(Category.Top, "en")
-        )
+        repository.forYou(Interests.None, "en")
+
+        val path = server.takeRequest().path.orEmpty()
+        assertTrue(path.contains("categories=top"))
     }
+
+    @Test
+    fun `429 becomes QuotaExceeded, so the UI can say retrying will not help`() =
+        runTest(scheduler) {
+            server.enqueue(MockResponse().setResponseCode(429))
+
+            assertEquals(
+                Outcome.Failure(AppError.QuotaExceeded),
+                repository.latest(Topic.Top, "en")
+            )
+        }
 
     @Test
     fun `500 keeps its status code for logging`() = runTest(scheduler) {
@@ -91,7 +119,7 @@ class NewsRepositoryImplTest {
 
         assertEquals(
             Outcome.Failure(AppError.Server(500)),
-            repository.latest(Category.Top, "en")
+            repository.latest(Topic.Top, "en")
         )
     }
 
@@ -101,53 +129,48 @@ class NewsRepositoryImplTest {
 
         assertEquals(
             Outcome.Failure(AppError.NoConnection),
-            repository.latest(Category.Top, "en")
+            repository.latest(Topic.Top, "en")
         )
     }
 
     @Test
-    fun `malformed json is reported as unexpected, never thrown`() = runTest(scheduler) {
+    fun `malformed json is reported as unexpected, never as offline`() = runTest(scheduler) {
         server.enqueue(MockResponse().setBody("{ this is not json"))
 
-        val outcome = repository.latest(Category.Top, "en")
+        val outcome = repository.latest(Topic.Top, "en")
 
         assertTrue(outcome is Outcome.Failure)
         assertTrue((outcome as Outcome.Failure).error is AppError.Unexpected)
     }
 
     @Test
-    fun `search sends the query and no category`() = runTest(scheduler) {
+    fun `search sends the query and no categories`() = runTest(scheduler) {
         server.enqueue(MockResponse().setBody(SUCCESS_BODY))
 
         repository.search("climat", "fr")
 
         val path = server.takeRequest().path.orEmpty()
         assertTrue(path.contains("q=climat"))
-        assertTrue(path.contains("language=fr"))
-        assertTrue(!path.contains("category="))
+        assertTrue(!path.contains("categories="))
     }
 
     private companion object {
         val SUCCESS_BODY = """
             {
-              "status": "success",
-              "totalResults": 1,
-              "results": [
+              "articles": [
                 {
-                  "article_id": "a1",
-                  "link": "https://example.org/story",
+                  "id": "a1",
                   "title": "A headline",
                   "description": "A description",
-                  "pubDate": "2026-09-02 05:41:00",
-                  "image_url": "https://example.org/i.jpg",
-                  "category": ["top"],
-                  "source_id": "example",
-                  "source_name": "Example Times",
-                  "source_icon": null,
-                  "duplicate": false
+                  "url": "https://example.org/story",
+                  "imageUrl": null,
+                  "publishedAt": "2026-09-02T05:41:00Z",
+                  "source": { "id": "example", "name": "Example Times", "iconUrl": null },
+                  "categories": ["top"]
                 }
               ],
-              "nextPage": "cursor-1"
+              "nextCursor": "cursor-1",
+              "cachedAt": "2026-09-02T06:00:00Z"
             }
         """.trimIndent()
     }

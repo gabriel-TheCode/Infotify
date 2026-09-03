@@ -4,11 +4,13 @@ import com.google.gson.JsonParseException
 import com.google.gson.stream.MalformedJsonException
 import com.thecode.infotify.core.result.AppError
 import com.thecode.infotify.core.result.Outcome
-import com.thecode.infotify.data.remote.newsdata.NewsDataApi
-import com.thecode.infotify.data.remote.newsdata.NewsDataMapper
+import com.thecode.infotify.data.remote.infotify.FeedMapper
+import com.thecode.infotify.data.remote.infotify.FeedResponse
+import com.thecode.infotify.data.remote.infotify.InfotifyApi
 import com.thecode.infotify.di.IoDispatcher
 import com.thecode.infotify.domain.model.ArticlePage
-import com.thecode.infotify.domain.model.Category
+import com.thecode.infotify.domain.model.Interests
+import com.thecode.infotify.domain.model.Topic
 import com.thecode.infotify.domain.repository.NewsRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -17,19 +19,37 @@ import java.io.IOException
 import javax.inject.Inject
 
 class NewsRepositoryImpl @Inject constructor(
-    private val api: NewsDataApi,
-    private val mapper: NewsDataMapper,
+    private val api: InfotifyApi,
+    private val mapper: FeedMapper,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : NewsRepository {
 
     override suspend fun latest(
-        category: Category,
+        topic: Topic,
         languageCode: String,
         cursor: String?
     ): Outcome<ArticlePage> = request {
-        api.latest(
+        api.feed(
             language = languageCode,
-            category = category.apiValue,
+            categories = topic.apiValue,
+            cursor = cursor
+        )
+    }
+
+    override suspend fun forYou(
+        interests: Interests,
+        languageCode: String,
+        cursor: String?
+    ): Outcome<ArticlePage> = request {
+        api.feed(
+            language = languageCode,
+            // No interests selected is not an error: it falls back to the editor's feed,
+            // so "For you" is never a dead end for someone who skipped onboarding.
+            categories = interests.topics
+                .takeIf { it.isNotEmpty() }
+                ?.joinToString(",") { it.apiValue }
+                ?: Topic.Default.apiValue,
+            country = interests.region?.query,
             cursor = cursor
         )
     }
@@ -39,7 +59,7 @@ class NewsRepositoryImpl @Inject constructor(
         languageCode: String,
         cursor: String?
     ): Outcome<ArticlePage> = request {
-        api.latest(
+        api.feed(
             language = languageCode,
             query = query,
             cursor = cursor
@@ -51,7 +71,7 @@ class NewsRepositoryImpl @Inject constructor(
      * Nothing above this line ever sees an [HttpException] or an [IOException].
      */
     private suspend inline fun request(
-        crossinline block: suspend () -> com.thecode.infotify.data.remote.newsdata.NewsDataResponse
+        crossinline block: suspend () -> FeedResponse
     ): Outcome<ArticlePage> = withContext(ioDispatcher) {
         try {
             Outcome.Success(mapper.toDomain(block()))
@@ -66,6 +86,8 @@ class NewsRepositoryImpl @Inject constructor(
         } catch (e: HttpException) {
             Outcome.Failure(
                 when (e.code()) {
+                    // The proxy forwards upstream quota exhaustion as 429, so the app can
+                    // say "come back tomorrow" instead of "check your connection".
                     HTTP_TOO_MANY_REQUESTS -> AppError.QuotaExceeded
                     HTTP_UNAUTHORIZED, HTTP_FORBIDDEN -> AppError.InvalidCredentials
                     else -> AppError.Server(e.code())

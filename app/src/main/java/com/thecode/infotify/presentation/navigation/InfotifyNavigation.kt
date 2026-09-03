@@ -34,6 +34,20 @@ sealed interface Route {
 
     @Serializable
     data object Onboarding : Route
+
+    /** Sub-pages of Settings, reachable from the feed banner too. */
+    @Serializable
+    data object Interests : Route
+
+    @Serializable
+    data object About : Route
+
+    @Serializable
+    data object Language : Route
+
+    /** The tabbed shell, entered once onboarding is behind us. */
+    @Serializable
+    data object Main : Route
 }
 
 /**

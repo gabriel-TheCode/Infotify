@@ -6,17 +6,21 @@ import com.thecode.infotify.core.result.Outcome
 import com.thecode.infotify.domain.model.Article
 import com.thecode.infotify.domain.model.ArticlePage
 import com.thecode.infotify.domain.model.ArticleSource
-import com.thecode.infotify.domain.model.Category
+import com.thecode.infotify.domain.model.Interests
+import com.thecode.infotify.domain.model.Topic
 import com.thecode.infotify.domain.repository.BookmarkRepository
 import com.thecode.infotify.domain.repository.NewsRepository
 import com.thecode.infotify.domain.repository.PreferencesRepository
 import com.thecode.infotify.domain.model.ThemeMode
+import com.thecode.infotify.domain.usecase.GetForYouNews
 import com.thecode.infotify.domain.usecase.GetLatestNews
+import com.thecode.infotify.domain.usecase.ObserveInterests
 import com.thecode.infotify.domain.usecase.ObserveBookmarkedUrls
 import com.thecode.infotify.domain.usecase.ObserveLanguage
 import com.thecode.infotify.domain.usecase.ToggleBookmark
 import com.thecode.infotify.presentation.feed.FeedEffect
 import com.thecode.infotify.presentation.feed.FeedIntent
+import com.thecode.infotify.presentation.feed.FeedMode
 import com.thecode.infotify.presentation.feed.FeedUiState
 import com.thecode.infotify.presentation.feed.FeedViewModel
 import kotlinx.coroutines.Dispatchers
@@ -98,17 +102,33 @@ class FeedViewModelTest {
     }
 
     @Test
-    fun `selecting a category reloads and clears the previous articles`() = runTest {
+    fun `selecting a topic reloads and clears the previous articles`() = runTest {
         news.result = Outcome.Success(ArticlePage(listOf(article("a")), nextCursor = null))
         val viewModel = createViewModel()
         advanceUntilIdle()
 
+        viewModel.onIntent(FeedIntent.SelectMode(FeedMode.Explore))
         news.result = Outcome.Success(ArticlePage(listOf(article("b")), nextCursor = null))
-        viewModel.onIntent(FeedIntent.SelectCategory(Category.Science))
+        viewModel.onIntent(FeedIntent.SelectTopic(Topic.Science))
         advanceUntilIdle()
 
-        assertEquals(Category.Science, viewModel.uiState.value.category)
+        assertEquals(Topic.Science, viewModel.uiState.value.topic)
         assertEquals(listOf("https://b"), viewModel.uiState.value.articles.map { it.url })
+    }
+
+    /** The bug this rework was for: the feed must follow the language preference. */
+    @Test
+    fun `changing the language reloads the feed`() = runTest {
+        news.result = Outcome.Success(ArticlePage(listOf(article("a")), nextCursor = null))
+        val viewModel = createViewModel()
+        advanceUntilIdle()
+        val before = news.requestCount
+
+        preferences.language.value = "fr"
+        advanceUntilIdle()
+
+        assertTrue(news.requestCount > before)
+        assertEquals("fr", news.lastLanguage)
     }
 
     @Test
@@ -158,7 +178,9 @@ class FeedViewModelTest {
 
     private fun createViewModel() = FeedViewModel(
         getLatestNews = GetLatestNews(news),
+        getForYouNews = GetForYouNews(news),
         observeLanguage = ObserveLanguage(preferences),
+        observeInterests = ObserveInterests(preferences),
         observeBookmarkedUrls = ObserveBookmarkedUrls(bookmarks),
         toggleBookmark = ToggleBookmark(bookmarks)
     )
@@ -177,8 +199,24 @@ class FeedViewModelTest {
 
 private class FakeNewsRepository : NewsRepository {
     var result: Outcome<ArticlePage> = Outcome.Success(ArticlePage(emptyList(), null))
+    var requestCount = 0
+    var lastLanguage: String? = null
 
-    override suspend fun latest(category: Category, languageCode: String, cursor: String?) = result
+    override suspend fun latest(topic: Topic, languageCode: String, cursor: String?): Outcome<ArticlePage> {
+        requestCount++
+        lastLanguage = languageCode
+        return result
+    }
+
+    override suspend fun forYou(
+        interests: Interests,
+        languageCode: String,
+        cursor: String?
+    ): Outcome<ArticlePage> {
+        requestCount++
+        lastLanguage = languageCode
+        return result
+    }
 
     override suspend fun search(query: String, languageCode: String, cursor: String?) = result
 }
@@ -200,10 +238,20 @@ private class FakeBookmarkRepository : BookmarkRepository {
 }
 
 private class FakePreferencesRepository : PreferencesRepository {
+    val language = kotlinx.coroutines.flow.MutableStateFlow("en")
+    val interests = kotlinx.coroutines.flow.MutableStateFlow(Interests.None)
+
     override fun themeMode(): Flow<ThemeMode> = flowOf(ThemeMode.System)
     override suspend fun setThemeMode(mode: ThemeMode) = Unit
-    override fun languageCode(): Flow<String> = flowOf("en")
-    override suspend fun setLanguageCode(code: String) = Unit
+    override fun languageCode(): Flow<String> = language
+    override suspend fun setLanguageCode(code: String) { language.value = code }
+    override fun interests(): Flow<Interests> = interests
+    override suspend fun setInterests(interests: Interests) { this.interests.value = interests }
+    override fun dailyBriefingEnabled(): Flow<Boolean> = flowOf(false)
+    override suspend fun setDailyBriefingEnabled(enabled: Boolean) = Unit
+    override fun briefingTime(): Flow<java.time.LocalTime> =
+        flowOf(java.time.LocalTime.of(7, 30))
+    override suspend fun setBriefingTime(time: java.time.LocalTime) = Unit
     override fun isOnboardingCompleted(): Flow<Boolean> = flowOf(true)
     override suspend fun setOnboardingCompleted() = Unit
 }

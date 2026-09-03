@@ -33,6 +33,7 @@ import com.thecode.infotify.R
 import com.thecode.infotify.designsystem.theme.InfotifyTheme
 import com.thecode.infotify.domain.model.Article
 import com.thecode.infotify.domain.model.ArticleSource
+import com.thecode.infotify.domain.model.Topic
 import java.time.Instant
 
 /**
@@ -264,5 +265,5 @@ internal val PreviewArticle = Article(
     imageUrl = null,
     publishedAt = Instant.now().minusSeconds(3_600),
     source = ArticleSource(id = "lemonde", name = "Le Monde", iconUrl = null),
-    categories = emptyList()
+    categories = emptyList<Topic>()
 )

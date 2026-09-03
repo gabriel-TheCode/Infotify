@@ -9,16 +9,6 @@
     <string name="nav_settings">Settings</string>
 
     <!-- Categories -->
-    <string name="category_top">Top stories</string>
-    <string name="category_world">World</string>
-    <string name="category_business">Business</string>
-    <string name="category_technology">Technology</string>
-    <string name="category_science">Science</string>
-    <string name="category_health">Health</string>
-    <string name="category_sports">Sport</string>
-    <string name="category_entertainment">Culture</string>
-    <string name="category_environment">Environment</string>
-    <string name="category_politics">Politics</string>
 
     <!-- Actions -->
     <string name="action_retry">Try again</string>
@@ -80,4 +70,94 @@
 
     <!-- Sharing -->
     <string name="share_article_text">%1$s\n\n%2$s\n\nvia Infotify</string>
+
+    <!-- Topics -->
+    <string name="topic_top">Top stories</string>
+    <string name="topic_world">World</string>
+    <string name="topic_politics">Politics</string>
+    <string name="topic_business">Business</string>
+    <string name="topic_technology">Technology</string>
+    <string name="topic_science">Science</string>
+    <string name="topic_health">Health</string>
+    <string name="topic_sports">Sport</string>
+    <string name="topic_entertainment">Culture</string>
+    <string name="topic_environment">Environment</string>
+    <string name="topic_education">Education</string>
+    <string name="topic_crime">Justice</string>
+    <string name="topic_food">Food</string>
+    <string name="topic_tourism">Travel</string>
+    <string name="topic_lifestyle">Lifestyle</string>
+
+    <!-- Regions -->
+    <string name="region_africa">Africa</string>
+    <string name="region_europe">Europe</string>
+    <string name="region_americas">Americas</string>
+    <string name="region_asia_pacific">Asia-Pacific</string>
+
+    <!-- Interests -->
+    <string name="interests_topics_title">Subjects</string>
+    <string name="interests_counter">%1$d of %2$d</string>
+    <string name="interests_region_title">Region</string>
+    <string name="interests_region_subtitle">Optional. Adds coverage from that part of the world.</string>
+    <string name="interests_state_selected">selected</string>
+    <string name="interests_state_unselected">not selected</string>
+    <string name="interests_title">Your interests</string>
+
+    <!-- Feed -->
+    <string name="feed_for_you">For you</string>
+    <string name="feed_explore">Explore</string>
+    <string name="feed_personalise_title">Make this feed yours</string>
+    <string name="feed_personalise_body">Pick a few subjects and we will lead with them.</string>
+    <string name="feed_personalise_action">Choose</string>
+    <string name="feed_discover_title">Something else</string>
+    <string name="feed_discover_body">A subject you do not follow — %1$s.</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">The news that matters to you</string>
+    <string name="onboarding_welcome_body">Headlines from thousands of publishers, in the subjects you choose. No account, no noise.</string>
+    <string name="onboarding_interests_title">What interests you?</string>
+    <string name="onboarding_interests_body">Pick up to five subjects. You can change them at any time.</string>
+    <string name="onboarding_notifications_title">One briefing a day</string>
+    <string name="onboarding_notifications_body">A single notification, at a time you choose, only when there is something new in your subjects.</string>
+    <string name="onboarding_notifications_preview_title">3 new stories in Technology</string>
+    <string name="onboarding_notifications_preview_body">Europe agrees on a common chip strategy</string>
+    <string name="onboarding_action_start">Get started</string>
+    <string name="onboarding_action_continue">Continue</string>
+    <string name="onboarding_action_enable">Turn on</string>
+    <string name="onboarding_action_skip">Skip</string>
+
+    <!-- About -->
+    <string name="about_title">About</string>
+    <string name="about_tagline">Infotify brings together headlines from thousands of publishers and puts the subjects you care about first.</string>
+    <string name="about_published_by">Designed and published by</string>
+    <string name="about_publisher_name" translatable="false">Nativia Solutions</string>
+    <string name="about_publisher_description">A product studio building mobile software with care for craft and for the people who use it.</string>
+    <string name="about_publisher_link">nativia.co</string>
+    <string name="about_legal_section">Legal</string>
+    <string name="about_privacy">Privacy policy</string>
+    <string name="about_terms">Terms of use</string>
+    <string name="about_sources_note">Articles are published by their respective outlets. Infotify links to them and never reproduces their full text.</string>
+
+    <!-- Settings sections -->
+    <string name="settings_section_content">Content</string>
+    <string name="settings_section_notifications">Notifications</string>
+    <string name="settings_section_appearance">Appearance</string>
+    <string name="settings_section_data">Data</string>
+    <string name="settings_section_about">About</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_daily_briefing">Daily briefing</string>
+    <string name="settings_daily_briefing_description">One notification a day, and only when there is something new in your subjects.</string>
+    <string name="settings_clear_cache">Clear cached articles</string>
+    <string name="settings_interests_none">Not set</string>
+
+    <!-- Daily briefing notification -->
+    <string name="briefing_channel_name">Daily briefing</string>
+    <string name="briefing_channel_description">A single summary each day, at your chosen time.</string>
+    <string name="briefing_title_single">New in your subjects</string>
+
+    <plurals name="briefing_title">
+        <item quantity="one">A new story, and %1$d more</item>
+        <item quantity="other">New stories in your subjects, and %1$d more</item>
+    </plurals>
+    <string name="action_back">Back</string>
 </resources>

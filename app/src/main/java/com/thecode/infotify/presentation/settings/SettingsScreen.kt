@@ -3,121 +3,283 @@ package com.thecode.infotify.presentation.settings
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
+import androidx.compose.material.icons.outlined.DarkMode
+import androidx.compose.material.icons.outlined.DeleteSweep
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Interests
+import androidx.compose.material.icons.outlined.Language
+import androidx.compose.material.icons.outlined.NotificationsNone
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.RadioButton
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.thecode.infotify.BuildConfig
 import com.thecode.infotify.R
 import com.thecode.infotify.designsystem.theme.InfotifyTheme
+import com.thecode.infotify.domain.model.Interests as UserInterests
 import com.thecode.infotify.domain.model.Language
 import com.thecode.infotify.domain.model.ThemeMode
+import com.thecode.infotify.presentation.interests.labelRes as topicLabelRes
 
+/**
+ * Settings, organised the way a settings screen should be.
+ *
+ * Three rules hold throughout, and they are what the previous flat list of radio buttons
+ * got wrong: every row shows its current value, so you know where you stand without
+ * opening it; a choice of three or fewer never takes three rows; and any long choice —
+ * language, interests — goes to its own page instead of unrolling here.
+ */
 @Composable
 fun SettingsScreen(
     uiState: SettingsUiState,
     onThemeModeSelected: (ThemeMode) -> Unit,
-    onLanguageSelected: (Language) -> Unit,
+    onOpenInterests: () -> Unit,
+    onOpenLanguage: () -> Unit,
+    onOpenAbout: () -> Unit,
+    onToggleDailyBriefing: (Boolean) -> Unit,
+    onClearCache: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+            .padding(horizontal = 16.dp)
     ) {
-        SettingsSection(title = stringResource(R.string.settings_appearance)) {
-            Column(modifier = Modifier.selectableGroup()) {
-                ThemeMode.entries.forEach { mode ->
-                    OptionRow(
-                        label = stringResource(mode.labelRes),
-                        selected = mode == uiState.themeMode,
-                        onClick = { onThemeModeSelected(mode) }
+        Section(stringResource(R.string.settings_section_content)) {
+            NavigationRow(
+                icon = Icons.Outlined.Interests,
+                title = stringResource(R.string.interests_title),
+                value = uiState.interests.summary(),
+                onClick = onOpenInterests
+            )
+            RowDivider()
+            NavigationRow(
+                icon = Icons.Outlined.Language,
+                title = stringResource(R.string.settings_language),
+                value = uiState.language.label,
+                onClick = onOpenLanguage
+            )
+        }
+
+        Section(stringResource(R.string.settings_section_notifications)) {
+            SwitchRow(
+                icon = Icons.Outlined.NotificationsNone,
+                title = stringResource(R.string.settings_daily_briefing),
+                description = stringResource(R.string.settings_daily_briefing_description),
+                checked = uiState.dailyBriefingEnabled,
+                onCheckedChange = onToggleDailyBriefing
+            )
+        }
+
+        Section(stringResource(R.string.settings_section_appearance)) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Outlined.DarkMode,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(20.dp)
                     )
+                    Text(
+                        text = stringResource(R.string.settings_theme),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.padding(start = 14.dp)
+                    )
+                }
+                // Three options fit on one row. The old screen spent three full rows and a
+                // radio group on exactly this choice.
+                SingleChoiceSegmentedButtonRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 14.dp)
+                ) {
+                    ThemeMode.entries.forEachIndexed { index, mode ->
+                        SegmentedButton(
+                            selected = mode == uiState.themeMode,
+                            onClick = { onThemeModeSelected(mode) },
+                            shape = SegmentedButtonDefaults.itemShape(
+                                index = index,
+                                count = ThemeMode.entries.size
+                            )
+                        ) {
+                            Text(
+                                text = stringResource(mode.labelRes),
+                                style = MaterialTheme.typography.labelLarge
+                            )
+                        }
+                    }
                 }
             }
         }
 
-        SettingsSection(title = stringResource(R.string.settings_language)) {
-            Column(modifier = Modifier.selectableGroup()) {
-                Language.entries.forEach { language ->
-                    OptionRow(
-                        label = language.label,
-                        selected = language == uiState.language,
-                        onClick = { onLanguageSelected(language) }
-                    )
-                }
-            }
+        Section(stringResource(R.string.settings_section_data)) {
+            NavigationRow(
+                icon = Icons.Outlined.DeleteSweep,
+                title = stringResource(R.string.settings_clear_cache),
+                value = uiState.cacheSize,
+                onClick = onClearCache,
+                showChevron = false
+            )
         }
 
-        Text(
-            text = stringResource(R.string.settings_version, BuildConfig.VERSION_NAME),
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(vertical = 16.dp)
-        )
+        Section(stringResource(R.string.settings_section_about)) {
+            NavigationRow(
+                icon = Icons.Outlined.Info,
+                title = stringResource(R.string.about_title),
+                value = stringResource(R.string.about_publisher_name),
+                onClick = onOpenAbout
+            )
+        }
+
+        Spacer(Modifier.height(32.dp))
     }
 }
 
 @Composable
-private fun SettingsSection(
-    title: String,
-    content: @Composable () -> Unit
-) {
+private fun Section(title: String, content: @Composable () -> Unit) {
     Column {
         Text(
             text = title.uppercase(),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(start = 4.dp, top = 12.dp, bottom = 8.dp)
+            modifier = Modifier.padding(start = 4.dp, top = 24.dp, bottom = 8.dp)
         )
         Surface(
             shape = MaterialTheme.shapes.medium,
             color = MaterialTheme.colorScheme.surface,
             modifier = Modifier.fillMaxWidth()
         ) {
-            content()
+            Column { content() }
         }
     }
 }
 
-/** Selection is handled on the row, not the radio, so the whole row is one 48dp target. */
 @Composable
-private fun OptionRow(
-    label: String,
-    selected: Boolean,
-    onClick: () -> Unit
+private fun RowDivider() = HorizontalDivider(
+    color = MaterialTheme.colorScheme.outlineVariant,
+    modifier = Modifier.padding(start = 50.dp)
+)
+
+/** A row that shows its current value: you know where you stand without opening it. */
+@Composable
+private fun NavigationRow(
+    icon: ImageVector,
+    title: String,
+    value: String,
+    onClick: () -> Unit,
+    showChevron: Boolean = true
+) {
+    Surface(onClick = onClick, color = MaterialTheme.colorScheme.surface) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 14.dp)
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(20.dp)
+            )
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 14.dp)
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = value,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            if (showChevron) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun SwitchRow(
+    icon: ImageVector,
+    title: String,
+    description: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .selectable(selected = selected, onClick = onClick, role = Role.RadioButton)
-            .padding(horizontal = 12.dp, vertical = 14.dp)
+            .padding(horizontal = 16.dp, vertical = 14.dp)
     ) {
-        RadioButton(selected = selected, onClick = null)
-        Text(
-            text = label,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.padding(start = 8.dp)
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.size(20.dp)
         )
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(start = 14.dp, end = 12.dp)
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Text(
+                text = description,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+        Switch(checked = checked, onCheckedChange = onCheckedChange)
     }
+}
+
+/** "Technologie, Sciences +2" — the value, not the count. */
+@Composable
+private fun UserInterests.summary(): String {
+    if (isEmpty) return stringResource(R.string.settings_interests_none)
+    val names = topics.take(2).map { stringResource(it.topicLabelRes) }
+    val remaining = topics.size - names.size + if (region != null) 1 else 0
+    val head = names.joinToString(", ")
+    return if (remaining > 0) "$head +$remaining" else head
 }
 
 val ThemeMode.labelRes: Int
@@ -131,8 +293,12 @@ val ThemeMode.labelRes: Int
 @Composable
 private fun SettingsScreenPreview() = InfotifyTheme {
     SettingsScreen(
-        uiState = SettingsUiState(),
+        uiState = SettingsUiState(language = Language.French),
         onThemeModeSelected = {},
-        onLanguageSelected = {}
+        onOpenInterests = {},
+        onOpenLanguage = {},
+        onOpenAbout = {},
+        onToggleDailyBriefing = {},
+        onClearCache = {}
     )
 }

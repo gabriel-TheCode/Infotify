@@ -2,7 +2,7 @@ package com.thecode.infotify.data.local.bookmark
 
 import com.thecode.infotify.domain.model.Article
 import com.thecode.infotify.domain.model.ArticleSource
-import com.thecode.infotify.domain.model.Category
+import com.thecode.infotify.domain.model.Topic
 import java.time.Instant
 import java.time.format.DateTimeParseException
 import javax.inject.Inject
@@ -38,7 +38,7 @@ class BookmarkMapper @Inject constructor() {
         categories = entity.categories
             .split(SEPARATOR)
             .filter { it.isNotBlank() }
-            .mapNotNull(Category::fromApiValue)
+            .mapNotNull(Topic::fromApiValue)
     )
 
     /** Rows migrated from the NewsAPI era may carry an unparseable date; never crash on one. */

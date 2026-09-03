@@ -4,8 +4,7 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.thecode.infotify.BuildConfig
-import com.thecode.infotify.data.remote.ApiKeyInterceptor
-import com.thecode.infotify.data.remote.newsdata.NewsDataApi
+import com.thecode.infotify.data.remote.infotify.InfotifyApi
 import com.thecode.infotify.utils.AppConstants
 import com.thecode.infotify.utils.AppConstants.REQUEST_TIMEOUT_SECONDS
 import dagger.Module
@@ -29,26 +28,20 @@ object NetworkModule {
     @Provides
     fun provideGson(): Gson = GsonBuilder().create()
 
-    @Singleton
-    @Provides
-    fun provideApiKeyInterceptor(): ApiKeyInterceptor =
-        ApiKeyInterceptor(BuildConfig.NEWSDATA_API_KEY)
-
     /**
-     * A 10 MB disk cache with a 10-minute freshness window. The free plan allows 200
-     * credits a day, so serving repeat requests from disk is what makes the quota hold.
+     * A local disk cache on top of the server-side one. The proxy already collapses many
+     * users into one upstream credit; this avoids re-fetching on every rotation and tab
+     * switch on a single device.
      */
     @Singleton
     @Provides
     fun provideOkHttpClient(
-        @ApplicationContext context: Context,
-        apiKeyInterceptor: ApiKeyInterceptor
+        @ApplicationContext context: Context
     ): OkHttpClient = OkHttpClient.Builder()
         .cache(Cache(context.cacheDir.resolve("http_cache"), HTTP_CACHE_BYTES))
         .connectTimeout(REQUEST_TIMEOUT_SECONDS, TimeUnit.SECONDS)
         .readTimeout(REQUEST_TIMEOUT_SECONDS, TimeUnit.SECONDS)
         .writeTimeout(REQUEST_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-        .addInterceptor(apiKeyInterceptor)
         .addNetworkInterceptor { chain ->
             chain.proceed(chain.request())
                 .newBuilder()
@@ -70,16 +63,16 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideRetrofit(gson: Gson, client: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl(AppConstants.NEWSDATA_BASE_URL)
+        .baseUrl(AppConstants.INFOTIFY_BASE_URL)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .client(client)
         .build()
 
     @Singleton
     @Provides
-    fun provideNewsDataApi(retrofit: Retrofit): NewsDataApi =
-        retrofit.create(NewsDataApi::class.java)
+    fun provideInfotifyApi(retrofit: Retrofit): InfotifyApi =
+        retrofit.create(InfotifyApi::class.java)
 
     private const val HTTP_CACHE_BYTES = 10L * 1024 * 1024
-    private const val CACHE_MAX_AGE_SECONDS = 600
+    private const val CACHE_MAX_AGE_SECONDS = 300
 }

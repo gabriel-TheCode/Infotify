@@ -3,6 +3,7 @@ package com.thecode.infotify.presentation.feed
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import com.thecode.infotify.core.result.AppError
 import com.thecode.infotify.designsystem.component.ArticleCard
 import com.thecode.infotify.designsystem.component.ArticleListSkeleton
-import com.thecode.infotify.designsystem.component.CategoryChipRow
+import com.thecode.infotify.designsystem.component.TopicChipRow
 import com.thecode.infotify.designsystem.component.EmptyFeedPanel
 import com.thecode.infotify.designsystem.component.ErrorPanel
 import com.thecode.infotify.designsystem.component.FeaturedArticleCard
@@ -65,11 +66,28 @@ fun FeedScreen(
     }
 
     Column(modifier = modifier.fillMaxSize()) {
-        CategoryChipRow(
-            selected = uiState.category,
-            onSelect = { onIntent(FeedIntent.SelectCategory(it)) },
-            modifier = Modifier.padding(vertical = 8.dp)
+        FeedModeTabs(
+            mode = uiState.mode,
+            onSelect = { onIntent(FeedIntent.SelectMode(it)) },
+            modifier = Modifier.padding(top = 4.dp, bottom = 4.dp)
         )
+
+        // Explore keeps every subject one tap away, so personalisation never closes the
+        // door on the rest of the news.
+        if (uiState.mode == FeedMode.Explore) {
+            TopicChipRow(
+                selected = uiState.topic,
+                onSelect = { onIntent(FeedIntent.SelectTopic(it)) },
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+        }
+
+        if (uiState.showsInterestsPrompt) {
+            PersonaliseBanner(
+                onClick = { onIntent(FeedIntent.OpenInterests) },
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+        }
 
         PullToRefreshBox(
             isRefreshing = uiState.isRefreshing,
@@ -168,4 +186,87 @@ private fun FeedScreenPreview() = InfotifyTheme {
         uiState = FeedUiState(phase = FeedUiState.Phase.Loading),
         onIntent = {}
     )
+}
+
+/**
+ * "For you" against "Explore".
+ *
+ * Two tabs rather than a single algorithmic feed: the personalised view answers "what
+ * matters to me", and the other half of the screen guarantees the rest of the news stays
+ * one tap away.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun FeedModeTabs(
+    mode: FeedMode,
+    onSelect: (FeedMode) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    androidx.compose.material3.PrimaryTabRow(
+        selectedTabIndex = mode.ordinal,
+        modifier = modifier,
+        containerColor = androidx.compose.ui.graphics.Color.Transparent,
+        divider = {}
+    ) {
+        FeedMode.entries.forEach { entry ->
+            androidx.compose.material3.Tab(
+                selected = entry == mode,
+                onClick = { onSelect(entry) },
+                text = {
+                    androidx.compose.material3.Text(
+                        text = androidx.compose.ui.res.stringResource(
+                            when (entry) {
+                                FeedMode.ForYou -> com.thecode.infotify.R.string.feed_for_you
+                                FeedMode.Explore -> com.thecode.infotify.R.string.feed_explore
+                            }
+                        ),
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                }
+            )
+        }
+    }
+}
+
+/**
+ * Shown only when no interests are set. Non-blocking by design: the app works perfectly
+ * without personalisation, it is simply better with it.
+ */
+@Composable
+private fun PersonaliseBanner(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    androidx.compose.material3.Surface(
+        onClick = onClick,
+        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.primaryContainer,
+        modifier = modifier.fillMaxWidth()
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp)
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                androidx.compose.material3.Text(
+                    text = androidx.compose.ui.res.stringResource(
+                        com.thecode.infotify.R.string.feed_personalise_title
+                    ),
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+                androidx.compose.material3.Text(
+                    text = androidx.compose.ui.res.stringResource(
+                        com.thecode.infotify.R.string.feed_personalise_body
+                    ),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.85f)
+                )
+            }
+            androidx.compose.material3.TextButton(onClick = onClick) {
+                androidx.compose.material3.Text(
+                    androidx.compose.ui.res.stringResource(
+                        com.thecode.infotify.R.string.feed_personalise_action
+                    )
+                )
+            }
+        }
+    }
 }

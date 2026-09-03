@@ -6,28 +6,22 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 apply from: '../ktlint.gradle'
 
-// The NewsData.io key is read from local.properties, which is gitignored.
-// It is never hardcoded here. CI writes the value from a repository secret.
-def localProperties = new Properties()
-def localPropertiesFile = rootProject.file('local.properties')
-if (localPropertiesFile.exists()) {
-    localPropertiesFile.withInputStream { localProperties.load(it) }
-}
-def newsDataApiKey = localProperties.getProperty('NEWSDATA_API_KEY')
-        ?: System.getenv('NEWSDATA_API_KEY')
-        ?: ''
+// No API key here, and none in the APK: the app talks to infotify.nativia.co, which
+// holds the provider key server-side.
 
 android {
     namespace "com.thecode.infotify"
     compileSdk 35
     defaultConfig {
         applicationId "com.thecode.infotify"
-        minSdkVersion 24
+        // 26, not 24: the typographic identity depends on variable-font axes, which
+        // Android only honours from API 26. It also makes java.time native, so the
+        // desugaring library is no longer needed.
+        minSdkVersion 26
         targetSdkVersion 35
         versionCode 1100
         versionName "1.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "NEWSDATA_API_KEY", "\"${newsDataApiKey}\"")
     }
     buildTypes {
         release {
@@ -42,8 +36,6 @@ android {
     }
 
     compileOptions {
-        // java.time is used across the domain layer; desugaring backports it below API 26.
-        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
@@ -128,10 +120,12 @@ dependencies {
     implementation "androidx.room:room-runtime:2.6.1"
     kapt "androidx.room:room-compiler:2.6.1"
 
+    // WORKMANAGER — schedules the daily briefing
+    implementation 'androidx.work:work-runtime-ktx:2.10.0'
+    implementation 'androidx.hilt:hilt-work:1.2.0'
+
     // CUSTOM TABS — replaces the in-dialog WebView for article reading
     implementation 'androidx.browser:browser:1.8.0'
-
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0'

@@ -17,7 +17,7 @@ data class Article(
     val imageUrl: String?,
     val publishedAt: Instant,
     val source: ArticleSource,
-    val categories: List<Category>
+    val categories: List<Topic>
 )
 
 data class ArticleSource(

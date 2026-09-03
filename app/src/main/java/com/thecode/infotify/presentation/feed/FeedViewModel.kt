@@ -4,26 +4,39 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thecode.infotify.core.result.AppError
 import com.thecode.infotify.core.result.Outcome
-import com.thecode.infotify.domain.model.Category
+import com.thecode.infotify.domain.model.ArticlePage
+import com.thecode.infotify.domain.model.Interests
+import com.thecode.infotify.domain.model.Topic
+import com.thecode.infotify.domain.usecase.GetForYouNews
 import com.thecode.infotify.domain.usecase.GetLatestNews
 import com.thecode.infotify.domain.usecase.ObserveBookmarkedUrls
+import com.thecode.infotify.domain.usecase.ObserveInterests
 import com.thecode.infotify.domain.usecase.ObserveLanguage
 import com.thecode.infotify.domain.usecase.ToggleBookmark
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
+import kotlin.random.Random
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class FeedViewModel @Inject constructor(
     private val getLatestNews: GetLatestNews,
+    private val getForYouNews: GetForYouNews,
     private val observeLanguage: ObserveLanguage,
+    observeInterests: ObserveInterests,
     private val observeBookmarkedUrls: ObserveBookmarkedUrls,
     private val toggleBookmark: ToggleBookmark
 ) : ViewModel() {
@@ -36,24 +49,76 @@ class FeedViewModel @Inject constructor(
 
     private var nextCursor: String? = null
 
-    /**
-     * The in-flight load. Switching category cancels the previous request rather than
-     * letting both complete — the old ViewModels stacked collectors, so a stale response
-     * could overwrite a newer one.
-     */
-    private var loadJob: Job? = null
+    /** What the current feed is made of. Any change to it reloads. */
+    private data class FeedQuery(
+        val mode: FeedMode,
+        val topic: Topic,
+        val interests: Interests,
+        val language: String,
+        val refreshToken: Int
+    )
+
+    private val refreshTrigger = MutableStateFlow(0)
+    private val mode = MutableStateFlow(FeedMode.ForYou)
+    private val topic = MutableStateFlow(Topic.Default)
 
     init {
         observeBookmarks()
-        load(_uiState.value.category, isRefresh = false)
+
+        // The whole feed is derived from its inputs. Previously the language was read once
+        // with .first() at request time and never observed, so changing it in Settings did
+        // not reload the feed. flatMapLatest also cancels the in-flight request whenever an
+        // input changes, so a stale response can never overwrite a newer one.
+        viewModelScope.launch {
+            combine(
+                mode,
+                topic,
+                observeInterests(),
+                observeLanguage(),
+                refreshTrigger
+            ) { mode, topic, interests, language, token ->
+                FeedQuery(mode, topic, interests, language, token)
+            }
+                .distinctUntilChanged()
+                .flatMapLatest { query ->
+                    flow {
+                        _uiState.update {
+                            it.copy(
+                                mode = query.mode,
+                                topic = query.topic,
+                                interests = query.interests,
+                                discoveryTopic = discoveryTopic(query.interests),
+                                phase = if (it.hasContent) it.phase else FeedUiState.Phase.Loading
+                            )
+                        }
+                        emit(load(query))
+                    }
+                }
+                .collect(::applyResult)
+        }
     }
 
     fun onIntent(intent: FeedIntent) {
         when (intent) {
-            FeedIntent.Refresh -> load(_uiState.value.category, isRefresh = true)
-            FeedIntent.Retry -> load(_uiState.value.category, isRefresh = false)
+            FeedIntent.Refresh -> {
+                _uiState.update { it.copy(isRefreshing = true) }
+                refreshTrigger.update { it + 1 }
+            }
+
+            FeedIntent.Retry -> refreshTrigger.update { it + 1 }
             FeedIntent.LoadMore -> loadMore()
-            is FeedIntent.SelectCategory -> selectCategory(intent.category)
+            FeedIntent.OpenInterests -> emit(FeedEffect.NavigateToInterests)
+
+            is FeedIntent.SelectMode -> if (mode.value != intent.mode) {
+                _uiState.update { it.copy(articles = emptyList()) }
+                mode.value = intent.mode
+            }
+
+            is FeedIntent.SelectTopic -> if (topic.value != intent.topic) {
+                _uiState.update { it.copy(articles = emptyList()) }
+                topic.value = intent.topic
+            }
+
             is FeedIntent.OpenArticle -> emit(FeedEffect.OpenReader(intent.article.url))
             is FeedIntent.ShareArticle -> emit(FeedEffect.Share(intent.article))
             is FeedIntent.ToggleBookmark -> viewModelScope.launch {
@@ -64,53 +129,34 @@ class FeedViewModel @Inject constructor(
         }
     }
 
-    private fun observeBookmarks() {
-        viewModelScope.launch {
-            observeBookmarkedUrls().collect { urls ->
-                _uiState.update { it.copy(bookmarkedUrls = urls) }
-            }
-        }
-    }
-
-    private fun selectCategory(category: Category) {
-        if (category == _uiState.value.category) return
-        _uiState.update {
-            it.copy(category = category, articles = emptyList(), phase = FeedUiState.Phase.Loading)
-        }
-        load(category, isRefresh = false)
-    }
-
-    private fun load(category: Category, isRefresh: Boolean) {
-        loadJob?.cancel()
+    private suspend fun load(query: FeedQuery): Outcome<ArticlePage> {
         nextCursor = null
-        loadJob = viewModelScope.launch {
-            _uiState.update {
-                it.copy(
-                    isRefreshing = isRefresh,
-                    phase = if (isRefresh || it.hasContent) it.phase else FeedUiState.Phase.Loading
-                )
-            }
+        return when (query.mode) {
+            FeedMode.ForYou -> getForYouNews(query.interests, query.language)
+            FeedMode.Explore -> getLatestNews(query.topic, query.language)
+        }
+    }
 
-            when (val outcome = getLatestNews(category, currentLanguage())) {
-                is Outcome.Success -> {
-                    nextCursor = outcome.data.nextCursor
-                    _uiState.update {
-                        it.copy(
-                            articles = outcome.data.articles,
-                            phase = if (outcome.data.articles.isEmpty()) {
-                                FeedUiState.Phase.Empty
-                            } else {
-                                FeedUiState.Phase.Content
-                            },
-                            isRefreshing = false,
-                            canAppend = outcome.data.nextCursor != null,
-                            error = null
-                        )
-                    }
+    private fun applyResult(outcome: Outcome<ArticlePage>) {
+        when (outcome) {
+            is Outcome.Success -> {
+                nextCursor = outcome.data.nextCursor
+                _uiState.update {
+                    it.copy(
+                        articles = outcome.data.articles,
+                        phase = if (outcome.data.articles.isEmpty()) {
+                            FeedUiState.Phase.Empty
+                        } else {
+                            FeedUiState.Phase.Content
+                        },
+                        isRefreshing = false,
+                        canAppend = outcome.data.nextCursor != null,
+                        error = null
+                    )
                 }
-
-                is Outcome.Failure -> onFailure(outcome.error)
             }
+
+            is Outcome.Failure -> onFailure(outcome.error)
         }
     }
 
@@ -121,14 +167,20 @@ class FeedViewModel @Inject constructor(
 
         viewModelScope.launch {
             _uiState.update { it.copy(isAppending = true) }
-            when (val outcome = getLatestNews(state.category, currentLanguage(), cursor)) {
+            val language = currentLanguage()
+            val outcome = when (state.mode) {
+                FeedMode.ForYou -> getForYouNews(state.interests, language, cursor)
+                FeedMode.Explore -> getLatestNews(state.topic, language, cursor)
+            }
+
+            when (outcome) {
                 is Outcome.Success -> {
                     nextCursor = outcome.data.nextCursor
                     _uiState.update { current ->
                         val existing = current.articles.mapTo(mutableSetOf()) { it.url }
                         current.copy(
-                            articles = current.articles + outcome.data.articles
-                                .filterNot { it.url in existing },
+                            articles = current.articles +
+                                outcome.data.articles.filterNot { it.url in existing },
                             isAppending = false,
                             canAppend = outcome.data.nextCursor != null
                         )
@@ -136,8 +188,6 @@ class FeedViewModel @Inject constructor(
                 }
 
                 is Outcome.Failure -> {
-                    // An append failure must not wipe the page the user is reading:
-                    // surface it as a transient message and keep the content on screen.
                     _uiState.update { it.copy(isAppending = false, canAppend = false) }
                     emit(FeedEffect.ShowError(outcome.error))
                 }
@@ -159,6 +209,27 @@ class FeedViewModel @Inject constructor(
             )
         }
         if (hasContent) emit(FeedEffect.ShowError(error))
+    }
+
+    /**
+     * One unselected subject, stable for the day so it does not flicker on every reload.
+     * This is what keeps the personalised feed from hardening into a bubble — the invitation
+     * to look elsewhere sits inside the feed itself, and never nags.
+     */
+    private fun discoveryTopic(interests: Interests): Topic? {
+        if (interests.topics.isEmpty()) return null
+        val candidates = Topic.entries.filterNot { it in interests.topics || it == Topic.Top }
+        if (candidates.isEmpty()) return null
+        val seed = LocalDate.now().toEpochDay()
+        return candidates[Random(seed).nextInt(candidates.size)]
+    }
+
+    private fun observeBookmarks() {
+        viewModelScope.launch {
+            observeBookmarkedUrls().collect { urls ->
+                _uiState.update { it.copy(bookmarkedUrls = urls) }
+            }
+        }
     }
 
     private suspend fun currentLanguage(): String = observeLanguage().first()

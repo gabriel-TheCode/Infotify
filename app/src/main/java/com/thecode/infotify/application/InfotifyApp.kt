@@ -1,15 +1,22 @@
 package com.thecode.infotify.application
 
 import android.app.Application
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.ProcessLifecycleOwner
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
+/**
+ * Provides WorkManager with a Hilt-aware factory so the daily briefing worker can be
+ * constructor-injected like everything else.
+ */
 @HiltAndroidApp
-class InfotifyApp : Application(), LifecycleObserver {
+class InfotifyApp : Application(), Configuration.Provider {
 
-    override fun onCreate() {
-        super.onCreate()
-        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
-    }
+    @Inject lateinit var workerFactory: HiltWorkerFactory
+
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
 }
