@@ -19,6 +19,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -80,6 +83,11 @@ fun OnboardingScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
+            // Onboarding is the one screen outside the Scaffold, so nothing was applying
+            // system-bar insets to it. With edge-to-edge on, its action button sat under
+            // the navigation bar on short screens and the step indicator under the status
+            // bar. safeDrawing also covers the display cutout and the IME.
+            .windowInsetsPadding(WindowInsets.safeDrawing)
             .padding(horizontal = 24.dp)
     ) {
         StepIndicator(
@@ -129,7 +137,11 @@ fun OnboardingScreen(
 @Composable
 private fun WelcomeStep() {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        // Scrollable even though it is centred: on a 4.7" screen in a large font size the
+        // wordmark, headline and body no longer fit, and a centred Column simply clips.
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center
     ) {
         Wordmark(fontSize = 44)

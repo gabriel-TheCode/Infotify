@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Dark-theme splash icon.
+    
+    The light version draws the stem in ink (#16130F) on paper. On the dark splash ground
+    (#141312) that is a near-black on a near-black: only the ember dot survived, and the
+    mark read as a floating orange speck. The stem is paper here, and the dot is lifted to
+    the brighter ember the dark palette uses everywhere else.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="288dp"
+    android:height="288dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <group android:name="stem">
+        <path
+            android:fillColor="#FBF8F5"
+            android:pathData="M44,52 h14 a2.5,2.5 0 0 1 2.5,2.5 v25 a2.5,2.5 0 0 1 -2.5,2.5 h-14 a2.5,2.5 0 0 1 -2.5,-2.5 v-25 a2.5,2.5 0 0 1 2.5,-2.5 z" />
+    </group>
+
+    <group android:name="dot">
+        <path
+            android:name="dotShape"
+            android:fillColor="#FF8A3D"
+            android:pathData="M60,34 m-9.5,0 a9.5,9.5 0 1 0 19,0 a9.5,9.5 0 1 0 -19,0 z" />
+    </group>
+</vector>
