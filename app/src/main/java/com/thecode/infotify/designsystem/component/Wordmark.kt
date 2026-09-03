@@ -107,7 +107,7 @@ fun Wordmark(
  * so it tracks the type size instead of being pinned to one.
  */
 private const val DOT_RADIUS_RATIO = 0.058f
-private const val DOT_CENTER_X_RATIO = 0.565f
+private const val DOT_CENTER_X_RATIO = 0.665f
 private const val DOT_CENTER_Y_RATIO = 0.235f
 
 @Preview(showBackground = true)

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,6 +21,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,6 +34,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
 import com.thecode.infotify.R
 import com.thecode.infotify.designsystem.theme.InfotifyTheme
 import com.thecode.infotify.domain.model.Article
@@ -116,12 +122,20 @@ fun FeaturedArticleCard(
         modifier = modifier.fillMaxWidth()
     ) {
         Column {
-            ArticleThumbnail(
-                imageUrl = article.imageUrl,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(16f / 9f)
-            )
+            // No image — or an image the publisher's server refuses to serve — means no
+            // image block at all. A featured card is 16:9 tall, so a failed load would
+            // otherwise leave a large grey void that reads as broken.
+            var imageFailed by remember(article.url) { mutableStateOf(false) }
+
+            if (article.imageUrl != null && !imageFailed) {
+                ArticleThumbnail(
+                    imageUrl = article.imageUrl,
+                    onFailed = { imageFailed = true },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(16f / 9f)
+                )
+            }
             Column(modifier = Modifier.padding(16.dp)) {
                 SourceLine(article = article)
                 Text(
@@ -197,7 +211,11 @@ private fun SourceLine(article: Article, modifier: Modifier = Modifier) {
  * same shape as its neighbours and the list never jumps as images resolve.
  */
 @Composable
-private fun ArticleThumbnail(imageUrl: String?, modifier: Modifier = Modifier) {
+private fun ArticleThumbnail(
+    imageUrl: String?,
+    modifier: Modifier = Modifier,
+    onFailed: () -> Unit = {}
+) {
     Box(
         modifier = modifier.background(MaterialTheme.colorScheme.surfaceVariant),
         contentAlignment = Alignment.Center
@@ -207,7 +225,12 @@ private fun ArticleThumbnail(imageUrl: String?, modifier: Modifier = Modifier) {
                 model = imageUrl,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.matchParentSize()
+                // Publishers' image hosts fail more often than one would like: some reset
+                // the connection outright. The card has to survive that.
+                onState = { state ->
+                    if (state is AsyncImagePainter.State.Error) onFailed()
+                },
+                modifier = Modifier.fillMaxSize()
             )
         }
     }
