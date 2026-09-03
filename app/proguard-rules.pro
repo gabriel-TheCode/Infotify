@@ -1,31 +1,64 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
+# R8 rules.
 #
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# Most libraries here ship their own consumer rules (Hilt, Room, OkHttp, Coil,
+# kotlinx.serialization), so this file only covers what R8 cannot infer: types the app
+# touches reflectively.
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# ---------------------------------------------------------------------------
+# Gson DTOs
+# ---------------------------------------------------------------------------
+# The proxy payload is deserialised by field name. R8 would otherwise rename those fields
+# and every article would arrive null — silently, with no crash to point at it.
+#
+# Note this rule previously named `data.remote.newsdata`, a package deleted when the app
+# moved to its own proxy. A keep rule for a package that no longer exists protects nothing.
+-keep class com.thecode.infotify.data.remote.infotify.** { *; }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Gson needs generic signatures to resolve List<ArticleDto> and friends.
+-keepattributes Signature, InnerClasses, EnclosingMethod
+-keepattributes RuntimeVisibleAnnotations, AnnotationDefault
+-dontwarn sun.misc.**
+-keepclassmembers,allowobfuscation class * {
+    @com.google.gson.annotations.SerializedName <fields>;
+}
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# ---------------------------------------------------------------------------
+# Room entities
+# ---------------------------------------------------------------------------
+# Column names are resolved at runtime against the generated schema.
+-keep class com.thecode.infotify.data.local.bookmark.BookmarkEntity { *; }
 
-#Models
--dontwarn com.thecode.infotify.framework.datasource.remote.model.**
--dontwarn com.thecode.infotify.data.article.**
--dontwarn com.thecode.infotify.data.source.**
--dontwarn com.thecode.infotify.core.domain.**
--keep class com.thecode.infotify.framework.datasource.remote.model.** { *; }
--keep class com.thecode.infotify.data.article.** { *; }
--keep class com.thecode.infotify.data.source.** { *; }
--keep class com.thecode.infotify.core.domain.** { *; }
+# ---------------------------------------------------------------------------
+# Retrofit
+# ---------------------------------------------------------------------------
+-keepclasseswithmembers,includedescriptorclasses class * { @retrofit2.http.* <methods>; }
+-keep,allowobfuscation,allowshrinking interface retrofit2.Call
+-keep,allowobfuscation,allowshrinking class retrofit2.Response
+-keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
+# Retrofit builds the API implementation from the interface's own generic signature.
+-if interface * { @retrofit2.http.* <methods>; }
+-keep,allowobfuscation interface <1>
+
+# ---------------------------------------------------------------------------
+# kotlinx.serialization — navigation routes
+# ---------------------------------------------------------------------------
+# Typed Navigation routes are @Serializable objects; their generated serializers are
+# looked up reflectively.
+-keepclassmembers class com.thecode.infotify.presentation.navigation.** {
+    *** Companion;
+    kotlinx.serialization.KSerializer serializer(...);
+}
+-keep,includedescriptorclasses class com.thecode.infotify.presentation.navigation.**$$serializer { *; }
+
+# ---------------------------------------------------------------------------
+# WorkManager
+# ---------------------------------------------------------------------------
+# The worker is instantiated by class name from the persisted work request.
+-keep class com.thecode.infotify.notification.DailyBriefingWorker { *; }
+
+# ---------------------------------------------------------------------------
+# Noise
+# ---------------------------------------------------------------------------
+-dontwarn org.bouncycastle.**
+-dontwarn org.conscrypt.**
+-dontwarn org.openjsse.**

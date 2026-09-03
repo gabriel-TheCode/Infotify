@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Splash icon on the SplashScreen API's 288dp canvas — the same letter as the launcher
+    icon and the wordmark, on the app's paper ground rather than ink.
+
+    Two named groups so the animated version can move the dot independently of the stem.
+    This static file is the resting state: with system animations off, this is exactly
+    what the user sees, correctly composed.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="288dp"
+    android:height="288dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <group android:name="stem">
+        <path
+            android:fillColor="#16130F"
+            android:pathData="M44,52 h14 a2.5,2.5 0 0 1 2.5,2.5 v25 a2.5,2.5 0 0 1 -2.5,2.5 h-14 a2.5,2.5 0 0 1 -2.5,-2.5 v-25 a2.5,2.5 0 0 1 2.5,-2.5 z" />
+    </group>
+
+    <group android:name="dot">
+        <path
+            android:name="dotShape"
+            android:fillColor="#D8500B"
+            android:pathData="M60,34 m-9.5,0 a9.5,9.5 0 1 0 19,0 a9.5,9.5 0 1 0 -19,0 z" />
+    </group>
+</vector>

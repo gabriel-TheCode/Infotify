@@ -1,93 +1,166 @@
 <resources>
-    <string name="app_name">Infotify</string>
-    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
-    <string name="please_wait">Loading…</string>
-    <string name="selected_language">Selected language</string>
-    <string name="search_filter">Search filter</string>
-    <string name="language">Language</string>
-    <string name="sort_by">Sort By</string>
-    <string name="apply">Apply</string>
-    <string name="search_hint">Search…</string>
-    <string name="next">next</string>
-    <string name="back">back</string>
-    <string name="finish">finish</string>
-    <string name="title_onboarding_1">Welcome to Infotify News App !</string>
-    <string name="description_onboarding_1">A newsfeed app that allows you to read, and share the information you need to stay ahead of the trends in the entire world.</string>
-    <string name="title_onboarding_2">Fast, simple and intuitive</string>
-    <string name="description_onboarding_2">Information and news in several languages, in real time and according to your criteria. Nothing more. Start use it now!</string>
-    <string name="title_onboarding_3">Better than a newspaper</string>
-    <string name="description_onboarding_3">Receive articles from all the major newspapers around the world with a single click and save your favorites news as bookmarks. Let\'s Go!</string>
-    <string name="retry">retry</string>
-    <string name="internet_connection_error">This content is not available without internet connection</string>
-    <string name="no_result_found">No result found</string>
-    <string name="service_unavailable">The remote service is unavailable. Retry later</string>
-    <string name="check_internet">Please check your internet connection</string>
-    <string name="error">Error</string>
-    <string name="network_error">Network Error</string>
-    <string name="search_description">Please select options to customize your search</string>
-    <string name="close">Close</string>
-    <string name="custom_copyright">Made with ❤ by Gabriel The Code</string>
-    <string name="bookmarks">Bookmarks</string>
-    <string name="empty_bookmark_text">Save a bookmark and it will show up here</string>
-    <string name="no_bookmarks">No bookmarks</string>
-    <string name="about">About</string>
-    <string name="source_code">Source code</string>
-    <string name="open_source_licenses">Open-source Licenses</string>
-    <string name="note_the_app">Note the app</string>
-    <string name="version">Version</string>
-    <string name="credits">Credits</string>
-    <string name="android_developer">Android Developer</string>
-    <string name="home">Home</string>
-    <string name="search">Search</string>
-    <string name="link_not_reachable">Sorry, the link is unreachable through the app. Long click to open in browser</string>
-    <string name="web_error">Web Error</string>
-    <string name="success">Success</string>
-    <string name="bookmark_saved">Bookmark saved</string>
-    <string name="bookmark_deleted">Bookmark deleted successfully</string>
-    <string name="validate">Validate</string>
-    <string name="language_description">Select the language of the newsfeed</string>
-    <string name="general_category">General</string>
-    <string name="science_category">Science</string>
-    <string name="entertainment_category">Entertainment</string>
-    <string name="technology_category">Technology</string>
-    <string name="sports_category">Sports</string>
-    <string name="sport_toggle">Sport</string>
-    <string name="tech_toggle">Tech</string>
-    <string name="tv_toggle">TV</string>
-    <string name="all_toggle">All</string>
-    <string name="about_description">A newsfeed app built in Kotlin to demonstrate the usage of MVVM with Clean Architecture and Android Architecture Components.</string>
+    <!-- Brand name: identical in every locale -->
+    <string name="app_name" translatable="false">Infotify</string>
 
+    <!-- Navigation -->
+    <string name="nav_feed">Headlines</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_bookmarks">Saved</string>
+    <string name="nav_settings">Settings</string>
 
-    <string-array name="languages">
-        <item>DE</item>
-        <item>EN</item>
-        <item>ES</item>
-        <item>FR</item>
-        <item>IT</item>
-        <item>NL</item>
-        <item>RU</item>
-    </string-array>
+    <!-- Categories -->
 
-    <string-array name="languages_values" translatable="false">
-        <item>de</item>
-        <item>en</item>
-        <item>es</item>
-        <item>fr</item>
-        <item>it</item>
-        <item>nl</item>
-        <item>ru</item>
-    </string-array>
+    <!-- Actions -->
+    <string name="action_retry">Try again</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_share">Share</string>
+    <string name="action_undo">Undo</string>
+    <string name="action_bookmark">Save article</string>
+    <string name="action_remove_bookmark">Remove from saved</string>
+    <string name="action_clear_search">Clear search</string>
 
-    <string-array name="options">
-        <item>Published At</item>
-        <item>Popularity</item>
-        <item>Relevance</item>
-    </string-array>
+    <!-- Relative time -->
+    <string name="time_just_now">now</string>
+    <string name="time_minutes">%1$d min</string>
+    <string name="time_hours">%1$d h</string>
+    <string name="time_yesterday">yesterday</string>
+    <string name="time_days">%1$d d</string>
+    <string name="time_weeks">%1$d w</string>
 
-    <string-array name="options_values" translatable="false">
-        <item>PubishedAt</item>
-        <item>Popularity</item>
-        <item>Relevancy</item>
-    </string-array>
+    <!-- Errors: each names its own cause, so the message always matches what happened -->
+    <string name="error_offline_title">You are offline</string>
+    <string name="error_offline_message">Check your connection and try again.</string>
+    <string name="error_quota_title">Daily limit reached</string>
+    <string name="error_quota_message">Infotify has used its news quota for today. Fresh
+        headlines return tomorrow.</string>
+    <string name="error_credentials_title">News unavailable</string>
+    <string name="error_credentials_message">Infotify cannot reach its news provider. This is
+        a problem on our side, not yours.</string>
+    <string name="error_generic_title">Something went wrong</string>
+    <string name="error_generic_message">The news service did not answer. Try again in a
+        moment.</string>
 
+    <!-- Empty states -->
+    <string name="empty_feed_title">Nothing here yet</string>
+    <string name="empty_feed_message">No stories published in this category right now.</string>
+    <string name="empty_bookmarks_title">No saved articles</string>
+    <string name="empty_bookmarks_message">Tap the bookmark icon on any story to keep it
+        here, ready to read offline.</string>
+
+    <!-- Search -->
+    <string name="search_placeholder">Search the news</string>
+    <string name="search_idle_title">Search the news</string>
+    <string name="search_idle_message">Type a topic, a place or a name to find stories from
+        thousands of publishers.</string>
+    <string name="search_empty_title">No results</string>
+    <string name="search_empty_message">Nothing matched “%1$s”. Try a different wording.</string>
+
+    <!-- Snackbars -->
+    <string name="snackbar_bookmark_added">Saved</string>
+    <string name="snackbar_bookmark_removed">Removed</string>
+    <string name="snackbar_refresh_failed">Could not refresh</string>
+
+    <!-- Settings -->
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_language">News language</string>
+    <string name="settings_version">Infotify %1$s</string>
+    <string name="theme_system">System</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+
+    <!-- Sharing -->
+    <string name="share_article_text">%1$s\n\n%2$s\n\nvia Infotify</string>
+
+    <!-- Topics -->
+    <string name="topic_top">Top stories</string>
+    <string name="topic_world">World</string>
+    <string name="topic_politics">Politics</string>
+    <string name="topic_business">Business</string>
+    <string name="topic_technology">Technology</string>
+    <string name="topic_science">Science</string>
+    <string name="topic_health">Health</string>
+    <string name="topic_sports">Sport</string>
+    <string name="topic_entertainment">Culture</string>
+    <string name="topic_environment">Environment</string>
+    <string name="topic_education">Education</string>
+    <string name="topic_crime">Justice</string>
+    <string name="topic_food">Food</string>
+    <string name="topic_tourism">Travel</string>
+    <string name="topic_lifestyle">Lifestyle</string>
+
+    <!-- Regions -->
+    <string name="region_africa">Africa</string>
+    <string name="region_europe">Europe</string>
+    <string name="region_americas">Americas</string>
+    <string name="region_asia_pacific">Asia-Pacific</string>
+
+    <!-- Interests -->
+    <string name="interests_topics_title">Subjects</string>
+    <string name="interests_counter">%1$d of %2$d</string>
+    <string name="interests_region_title">Region</string>
+    <string name="interests_region_subtitle">Optional. Adds coverage from that part of the world.</string>
+    <string name="interests_state_selected">selected</string>
+    <string name="interests_state_unselected">not selected</string>
+    <string name="interests_title">Your interests</string>
+
+    <!-- Feed -->
+    <string name="feed_for_you">For you</string>
+    <string name="feed_explore">Explore</string>
+    <string name="feed_personalise_title">Make this feed yours</string>
+    <string name="feed_personalise_body">Pick a few subjects and we will lead with them.</string>
+    <string name="feed_personalise_action">Choose</string>
+    <string name="feed_discover_title">Something else</string>
+    <string name="feed_discover_body">A subject you do not follow — %1$s.</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">The news that matters to you</string>
+    <string name="onboarding_welcome_body">Headlines from thousands of publishers, in the subjects you choose. No account, no noise.</string>
+    <string name="onboarding_interests_title">What interests you?</string>
+    <string name="onboarding_interests_body">Pick up to five subjects. You can change them at any time.</string>
+    <string name="onboarding_notifications_title">One briefing a day</string>
+    <string name="onboarding_notifications_body">A single notification, at a time you choose, only when there is something new in your subjects.</string>
+    <string name="onboarding_notifications_preview_title">3 new stories in Technology</string>
+    <string name="onboarding_notifications_preview_body">Europe agrees on a common chip strategy</string>
+    <string name="onboarding_action_start">Get started</string>
+    <string name="onboarding_action_continue">Continue</string>
+    <string name="onboarding_action_enable">Turn on</string>
+    <string name="onboarding_action_skip">Skip</string>
+
+    <!-- About -->
+    <string name="about_title">About</string>
+    <string name="about_tagline">Infotify brings together headlines from thousands of publishers and puts the subjects you care about first.</string>
+    <string name="about_published_by">Designed and published by</string>
+    <string name="about_publisher_name" translatable="false">Nativia Solutions</string>
+    <string name="about_publisher_description">A product studio building mobile software with care for craft and for the people who use it.</string>
+    <string name="about_publisher_link">nativia.co</string>
+    <string name="about_legal_section">Legal</string>
+    <string name="about_privacy">Privacy policy</string>
+    <string name="about_sources_note">Articles are published by their respective outlets. Infotify links to them and never reproduces their full text.</string>
+
+    <!-- Settings sections -->
+    <string name="settings_section_content">Content</string>
+    <string name="settings_section_notifications">Notifications</string>
+    <string name="settings_section_appearance">Appearance</string>
+    <string name="settings_section_data">Data</string>
+    <string name="settings_section_about">About</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_daily_briefing">Daily briefing</string>
+    <string name="settings_daily_briefing_description">One notification a day, and only when there is something new in your subjects.</string>
+    <string name="settings_clear_cache">Clear cached articles</string>
+    <string name="settings_interests_none">Not set</string>
+
+    <!-- Daily briefing notification -->
+    <string name="briefing_channel_name">Daily briefing</string>
+    <string name="briefing_channel_description">A single summary each day, at your chosen time.</string>
+    <string name="briefing_title_single">New in your subjects</string>
+
+    <plurals name="briefing_title">
+        <item quantity="one">A new story, and %1$d more</item>
+        <item quantity="other">New stories in your subjects, and %1$d more</item>
+    </plurals>
+    <string name="action_back">Back</string>
+    <string name="settings_briefing_time">Delivery time</string>
+    <string name="settings_briefing_time_hint">Only sent when there is something new in your subjects.</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="action_cancel">Cancel</string>
 </resources>

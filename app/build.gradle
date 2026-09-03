@@ -1,32 +1,49 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'org.jetbrains.kotlin.plugin.serialization'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 apply from: '../ktlint.gradle'
-apply plugin: 'com.mikepenz.aboutlibraries.plugin'
 
+// No API key here, and none in the APK: the app talks to infotify.nativia.co, which
+// holds the provider key server-side.
 
 android {
     namespace "com.thecode.infotify"
     compileSdk 35
     defaultConfig {
         applicationId "com.thecode.infotify"
-        minSdkVersion 21
+        // 26, not 24: the typographic identity depends on variable-font axes, which
+        // Android only honours from API 26. It also makes java.time native, so the
+        // desugaring library is no longer needed.
+        minSdkVersion 26
         targetSdkVersion 35
         versionCode 1100
         versionName "1.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "API_KEY", "\"2756120879db444c9cfe8b8c70fcefe6\"")
     }
     buildTypes {
         release {
-            shrinkResources false
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        // A release build that can actually be installed and exercised locally.
+        //
+        // R8 breaks things silently — a missing keep rule produces null fields, not a
+        // crash — so the minified build has to be run, not merely produced. This variant
+        // is identical to release except that it is signed with the debug key, so the real
+        // release signing config is never involved in local testing.
+        releaseTest {
+            initWith release
+            signingConfig signingConfigs.debug
+            matchingFallbacks = ['release']
         }
     }
     buildFeatures {
-        viewBinding true
+        compose true
         buildConfig true
     }
 
@@ -37,22 +54,50 @@ android {
 
     kotlinOptions { jvmTarget = "11" }
 
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+// Room schemas are exported so migrations can be diffed and tested.
+kapt {
+    arguments {
+        arg("room.schemaLocation", "$projectDir/schemas")
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // COMPOSE — single source of UI. No View system, no ViewBinding, no ComposeView bridges.
+    def composeBom = platform('androidx.compose:compose-bom:2024.12.01')
+    implementation composeBom
+    androidTestImplementation composeBom
+    implementation 'androidx.compose.ui:ui'
+    implementation 'androidx.compose.ui:ui-graphics'
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    implementation 'androidx.compose.material3:material3'
+    implementation 'androidx.compose.material:material-icons-extended'
+    implementation 'androidx.activity:activity-compose:1.9.3'
+    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.8.7'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7'
+    implementation 'androidx.navigation:navigation-compose:2.8.5'
+    implementation 'androidx.hilt:hilt-navigation-compose:1.2.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3'
+    debugImplementation 'androidx.compose.ui:ui-tooling'
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
+    debugImplementation 'androidx.compose.ui:ui-test-manifest'
+
+    // SPLASH SCREEN API
+    implementation 'androidx.core:core-splashscreen:1.0.1'
+
+    // COIL — Compose-native image loading, replaces Glide
+    implementation 'io.coil-kt:coil-compose:2.7.0'
+
     implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.3.2'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
     implementation 'com.google.android.material:material:1.12.0'
-    implementation files('../bubblenavigation-1.0.7.aar')
 
     // KOTLIN
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.20"
     implementation 'androidx.core:core-ktx:1.15.0'
-    implementation "androidx.fragment:fragment-ktx:1.8.5"
 
     // COROUTINES
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0"
@@ -61,20 +106,15 @@ dependencies {
     // DI - HILT
     implementation "com.google.dagger:hilt-android:2.52"
     implementation "androidx.lifecycle:lifecycle-process:2.8.7"
-    kapt "com.google.dagger:hilt-android-compiler:2.51.1"
+    kapt "com.google.dagger:hilt-android-compiler:2.52"
     kapt "androidx.hilt:hilt-compiler:1.2.0"
 
     //DATA STORE
     implementation 'androidx.datastore:datastore-preferences:1.1.1'
 
-    // UI
-    implementation 'com.github.gabriel-TheCode:AestheticDialogs:1.3.8'
-    implementation 'com.github.Mahfa:DayNightSwitch:1.2'
-    implementation 'jp.wasabeef:recyclerview-animators:4.0.2'
-    implementation 'com.airbnb.android:lottie:6.4.1'
-    implementation 'nl.bryanderidder:themed-toggle-button-group:1.4.1'
-    implementation 'com.mikepenz:aboutlibraries:11.2.3'
-
+    // UI libraries removed with the Compose migration: AestheticDialogs, DayNightSwitch,
+    // recyclerview-animators, themed-toggle-button-group, bubblenavigation.aar, Lottie,
+    // aboutlibraries, Glide, and androidx.paging (pagination is a plain nextPage cursor).
 
     // GSON
     implementation "com.google.code.gson:gson:2.10.1"
@@ -82,12 +122,9 @@ dependencies {
     // RETROFIT
     implementation "com.squareup.retrofit2:retrofit:2.11.0"
     implementation "com.squareup.retrofit2:converter-gson:2.11.0"
-    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
-    implementation 'com.squareup.retrofit2:converter-scalars:2.11.0'
 
-    // OK HTTP
-    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
-    implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.6.0'
+    // OK HTTP — pinned to the 4.x stable line; 5.0.0-alpha.2 was a pre-release
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
     implementation "com.squareup.okhttp3:logging-interceptor:4.12.0"
 
     // ROOM
@@ -95,16 +132,19 @@ dependencies {
     implementation "androidx.room:room-runtime:2.6.1"
     kapt "androidx.room:room-compiler:2.6.1"
 
-    // GLIDE
-    implementation "com.github.bumptech.glide:glide:4.16.0"
-    implementation "com.github.bumptech.glide:annotations:4.16.0"
-    implementation("com.github.bumptech.glide:okhttp3-integration:4.16.0") {
-        exclude group: 'glide-parent'
-    }
+    // WORKMANAGER — schedules the daily briefing
+    implementation 'androidx.work:work-runtime-ktx:2.10.0'
+    implementation 'androidx.hilt:hilt-work:1.2.0'
 
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    // CUSTOM TABS — replaces the in-dialog WebView for article reading
+    implementation 'androidx.browser:browser:1.8.0'
+
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0'
+    testImplementation 'app.cash.turbine:turbine:1.2.0'
+    testImplementation 'io.mockk:mockk:1.13.13'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0'
+
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
-
 }

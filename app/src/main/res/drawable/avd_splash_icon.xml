@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The brand's one piece of proprietary motion: the dot of the "i" falls into place.
+
+    It plays WHILE the app starts, not instead of starting. If the device is fast the user
+    catches only a flash of it and lands in the feed — that is a success, not a missed
+    animation. Nothing here holds the app back; setKeepOnScreenCondition releases the
+    splash as soon as the stored theme is read.
+
+    Total 520ms: long enough to read as a deliberate gesture, short enough that it never
+    becomes a wait.
+-->
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:drawable="@drawable/ic_splash_icon">
+
+    <target android:name="dot">
+        <aapt:attr name="android:animation">
+            <set>
+                <!-- Falls from above the canvas, overshoots slightly, settles. -->
+                <objectAnimator
+                    android:propertyName="translateY"
+                    android:valueFrom="-46"
+                    android:valueTo="0"
+                    android:duration="420"
+                    android:interpolator="@android:interpolator/overshoot" />
+                <!-- Fades in over the first third only, so the dot is never a hard pop. -->
+                <objectAnimator
+                    android:propertyName="scaleX"
+                    android:valueFrom="0.7"
+                    android:valueTo="1"
+                    android:duration="420"
+                    android:interpolator="@android:interpolator/overshoot" />
+                <objectAnimator
+                    android:propertyName="scaleY"
+                    android:valueFrom="0.7"
+                    android:valueTo="1"
+                    android:duration="420"
+                    android:interpolator="@android:interpolator/overshoot" />
+            </set>
+        </aapt:attr>
+    </target>
+
+    <target android:name="dotShape">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="fillAlpha"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:duration="160"
+                android:interpolator="@android:interpolator/linear_out_slow_in" />
+        </aapt:attr>
+    </target>
+</animated-vector>

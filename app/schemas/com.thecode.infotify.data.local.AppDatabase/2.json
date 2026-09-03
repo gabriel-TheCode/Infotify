@@ -1,0 +1,94 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "f585e8705f8d2f2c407d8689f0595691",
+    "entities": [
+      {
+        "tableName": "article",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`url` TEXT NOT NULL, `id` TEXT NOT NULL, `title` TEXT NOT NULL, `description` TEXT, `imageUrl` TEXT, `publishedAt` TEXT NOT NULL, `sourceId` TEXT NOT NULL, `sourceName` TEXT NOT NULL, `sourceIconUrl` TEXT, `categories` TEXT NOT NULL, `savedAt` INTEGER NOT NULL, PRIMARY KEY(`url`))",
+        "fields": [
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "imageUrl",
+            "columnName": "imageUrl",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "publishedAt",
+            "columnName": "publishedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sourceId",
+            "columnName": "sourceId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sourceName",
+            "columnName": "sourceName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sourceIconUrl",
+            "columnName": "sourceIconUrl",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "categories",
+            "columnName": "categories",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "savedAt",
+            "columnName": "savedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "url"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f585e8705f8d2f2c407d8689f0595691')"
+    ]
+  }
+}

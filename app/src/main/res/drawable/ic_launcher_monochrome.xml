@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Themed-icon layer for Android 13+. Same silhouette, single colour: the launcher tints
+    this, so the ember/paper distinction cannot survive here. The offset gap is what keeps
+    the mark recognisable once colour is gone.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M44,52 h14 a2.5,2.5 0 0 1 2.5,2.5 v25 a2.5,2.5 0 0 1 -2.5,2.5 h-14 a2.5,2.5 0 0 1 -2.5,-2.5 v-25 a2.5,2.5 0 0 1 2.5,-2.5 z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M60,34 m-9.5,0 a9.5,9.5 0 1 0 19,0 a9.5,9.5 0 1 0 -19,0 z" />
+</vector>

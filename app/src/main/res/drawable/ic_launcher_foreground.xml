@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    The Infotify mark: the "i" of the wordmark, with its dot detached.
+
+    Geometry is taken from the Bricolage Grotesque "i" the wordmark is set in — a heavy,
+    slightly narrowed stem with near-square terminals, and a dot wider than the stem, as
+    heavy grotesques draw it. Icon and wordmark are therefore the same letter, not two
+    drawings that happen to share an idea.
+
+    Two decisions make it legible at 24dp, which the previous version was not:
+      · the gap between dot and stem is 8.5 units — large enough to survive downscaling,
+        so the detachment reads as intent rather than as a rendering artefact;
+      · the dot is offset to the right of the stem axis. The asymmetry is what makes the
+        silhouette memorable and stops it resolving into a generic info glyph.
+
+    Everything sits inside the 66dp safe circle, so no launcher mask can clip it.
+-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
-    android:viewportWidth="85"
-    android:viewportHeight="167.76">
-  <group android:scaleX="0.25637817"
-      android:scaleY="0.506"
-      android:translateX="31.603928"
-      android:translateY="41.43672">
-    <group android:translateY="130.608">
-      <path android:pathData="M37.008,-7.92Q32.544,2.88,18.288,2.88Q10.944,2.88,6.336,-2.16Q2.448,-6.624,2.448,-11.088Q2.448,-22.752,7.776,-45.504L13.104,-73.44L42.336,-76.32L33.552,-30.816Q31.104,-20.16,31.104,-16.416Q31.104,-8.208,37.008,-7.92ZM15.696,-93.456Q15.696,-99.072,20.376,-102.096Q25.056,-105.12,31.824,-105.12Q38.592,-105.12,42.696,-102.096Q46.8,-99.072,46.8,-93.456Q46.8,-87.84,42.264,-84.96Q37.728,-82.08,30.96,-82.08Q24.192,-82.08,19.944,-84.96Q15.696,-87.84,15.696,-93.456Z"
-          android:fillColor="#FFFFFF"/>
-      <path android:pathData="M40.952,28.8L69.032,-115.2L89.48,-115.2L61.976,28.8Z"
-          android:fillColor="#FFFFFF"/>
-    </group>
-  </group>
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Stem, in paper. -->
+    <path
+        android:fillColor="#FBF8F5"
+        android:pathData="M44,52 h14 a2.5,2.5 0 0 1 2.5,2.5 v25 a2.5,2.5 0 0 1 -2.5,2.5 h-14 a2.5,2.5 0 0 1 -2.5,-2.5 v-25 a2.5,2.5 0 0 1 2.5,-2.5 z" />
+
+    <!-- Detached dot, in ember: the one element that carries the brand colour. -->
+    <path
+        android:fillColor="#FF6A1F"
+        android:pathData="M60,34 m-9.5,0 a9.5,9.5 0 1 0 19,0 a9.5,9.5 0 1 0 -19,0 z" />
 </vector>

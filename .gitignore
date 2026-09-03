@@ -84,3 +84,11 @@ lint/tmp/
 *.DS_Store
 */.DS_Store
 app/.DS_Store
+
+# Build outputs must never be versioned
+app/release/
+*.aab
+*.aar
+
+.DS_Store
+**/.DS_Store
