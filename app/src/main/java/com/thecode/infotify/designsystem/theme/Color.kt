@@ -39,6 +39,31 @@ internal val OutlineDark = Color(0xFF48433E)
 internal val InkDark = Color(0xFFEDE8E3)
 internal val InkMutedDark = Color(0xFFB5AEA7)
 
+// Container tones.
+//
+// Material 3 falls back to its own purple-leaning defaults for every surfaceContainer role
+// left undefined, which is why dialogs and menus were rendering lavender against a warm
+// palette. Defining them keeps every elevated surface in the same family as the page.
+internal val SurfaceDimLight = Color(0xFFE9E4DD)
+internal val SurfaceBrightLight = Color(0xFFFFFFFF)
+internal val SurfaceContainerLowestLight = Color(0xFFFFFFFF)
+internal val SurfaceContainerLowLight = Color(0xFFFAF7F3)
+internal val SurfaceContainerLight = Color(0xFFF4F0EA)
+internal val SurfaceContainerHighLight = Color(0xFFEEE9E2)
+internal val SurfaceContainerHighestLight = Color(0xFFE8E2DA)
+internal val InverseSurfaceLight = Color(0xFF302D29)
+internal val InverseOnSurfaceLight = Color(0xFFF4F0EA)
+
+internal val SurfaceDimDark = Color(0xFF121110)
+internal val SurfaceBrightDark = Color(0xFF38352F)
+internal val SurfaceContainerLowestDark = Color(0xFF0D0C0B)
+internal val SurfaceContainerLowDark = Color(0xFF1A1918)
+internal val SurfaceContainerDark = Color(0xFF1E1D1B)
+internal val SurfaceContainerHighDark = Color(0xFF292724)
+internal val SurfaceContainerHighestDark = Color(0xFF34312D)
+internal val InverseSurfaceDark = Color(0xFFE7E2DA)
+internal val InverseOnSurfaceDark = Color(0xFF1E1D1B)
+
 // Semantic — separate from the accent on purpose
 internal val ErrorLight = Color(0xFFB3261E)
 internal val ErrorDark = Color(0xFFF2837B)

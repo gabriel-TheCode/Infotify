@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Solid brand ember. A flat ground keeps the mark legible under every launcher mask. -->
+<!--
+    Warm ink ground.
+
+    The previous icon was a white "i" on a flat ember disc, which reads as the universal
+    "information" button rather than as a brand. Inverting the ground fixes that and keeps
+    the app's own rule: ember is an accent that has to be earned, never a wash.
+-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
     <path
-        android:fillColor="#D8500B"
+        android:fillColor="#16130F"
         android:pathData="M0,0 h108 v108 h-108 z" />
 </vector>

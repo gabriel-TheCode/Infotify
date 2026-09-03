@@ -63,7 +63,7 @@
     <string name="settings_appearance">Apparence</string>
     <string name="settings_language">Langue des actualités</string>
     <string name="settings_version">Infotify %1$s</string>
-    <string name="theme_system">Suivre le système</string>
+    <string name="theme_system">Système</string>
     <string name="theme_light">Clair</string>
     <string name="theme_dark">Sombre</string>
 
@@ -159,4 +159,8 @@
         <item quantity="other">Nouveaux articles dans vos sujets, et %1$d autres</item>
     </plurals>
     <string name="action_back">Retour</string>
+    <string name="settings_briefing_time">Heure d\'envoi</string>
+    <string name="settings_briefing_time_hint">Envoyé uniquement s\'il y a du nouveau dans vos sujets.</string>
+    <string name="action_confirm">Confirmer</string>
+    <string name="action_cancel">Annuler</string>
 </resources>

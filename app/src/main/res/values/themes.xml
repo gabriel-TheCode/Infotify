@@ -6,7 +6,12 @@
     -->
     <style name="Theme.Infotify.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/splash_background</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_icon</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/avd_splash_icon</item>
+        <!--
+            Matches the drawable. The platform caps this at 1000ms; going near that cap
+            would turn a brand moment into a wait.
+        -->
+        <item name="windowSplashScreenAnimationDuration">520</item>
         <item name="postSplashScreenTheme">@style/Theme.Infotify</item>
     </style>
 

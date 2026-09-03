@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Infotify mark: the stem of an "i" whose dot has lifted away as a notification pip.
+    The Infotify mark: the "i" of the wordmark, with its dot detached.
 
-    Drawn on the standard 108dp adaptive canvas; everything sits inside the 66dp safe
-    circle so no launcher mask clips it. It reads as a single silhouette at 24dp, which
-    is what the previous newspaper glyph could not do.
+    Geometry is taken from the Bricolage Grotesque "i" the wordmark is set in — a heavy,
+    slightly narrowed stem with near-square terminals, and a dot wider than the stem, as
+    heavy grotesques draw it. Icon and wordmark are therefore the same letter, not two
+    drawings that happen to share an idea.
+
+    Two decisions make it legible at 24dp, which the previous version was not:
+      · the gap between dot and stem is 8.5 units — large enough to survive downscaling,
+        so the detachment reads as intent rather than as a rendering artefact;
+      · the dot is offset to the right of the stem axis. The asymmetry is what makes the
+        silhouette memorable and stops it resolving into a generic info glyph.
+
+    Everything sits inside the 66dp safe circle, so no launcher mask can clip it.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
@@ -12,19 +21,13 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Stem of the i -->
+    <!-- Stem, in paper. -->
     <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M48.5,48 h11 a3,3 0 0 1 3,3 v25 a3,3 0 0 1 -3,3 h-11 a3,3 0 0 1 -3,-3 v-25 a3,3 0 0 1 3,-3 z" />
+        android:fillColor="#FBF8F5"
+        android:pathData="M44,52 h14 a2.5,2.5 0 0 1 2.5,2.5 v25 a2.5,2.5 0 0 1 -2.5,2.5 h-14 a2.5,2.5 0 0 1 -2.5,-2.5 v-25 a2.5,2.5 0 0 1 2.5,-2.5 z" />
 
-    <!-- Detached dot, offset up and to the right: the notification -->
+    <!-- Detached dot, in ember: the one element that carries the brand colour. -->
     <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M62,30 m-9,0 a9,9 0 1 0 18,0 a9,9 0 1 0 -18,0 z" />
-
-    <!-- Motion trace linking stem to dot, tapering as it rises -->
-    <path
-        android:fillColor="#FFFFFF"
-        android:fillAlpha="0.45"
-        android:pathData="M46,42 l6,-4 l3,5 l-6,4 z" />
+        android:fillColor="#FF6A1F"
+        android:pathData="M60,34 m-9.5,0 a9.5,9.5 0 1 0 19,0 a9.5,9.5 0 1 0 -19,0 z" />
 </vector>

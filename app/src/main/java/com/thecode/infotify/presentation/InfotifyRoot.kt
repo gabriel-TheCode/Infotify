@@ -201,6 +201,7 @@ private fun MainScaffold(openForYou: Boolean) {
                     onOpenLanguage = { navController.navigate(Route.Language) },
                     onOpenAbout = { navController.navigate(Route.About) },
                     onToggleDailyBriefing = viewModel::onDailyBriefingChanged,
+                    onBriefingTimeSelected = viewModel::onBriefingTimeSelected,
                     onClearCache = viewModel::onClearCache
                 )
             }

@@ -64,7 +64,7 @@
     <string name="settings_appearance">Appearance</string>
     <string name="settings_language">News language</string>
     <string name="settings_version">Infotify %1$s</string>
-    <string name="theme_system">Follow system</string>
+    <string name="theme_system">System</string>
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
 
@@ -160,4 +160,8 @@
         <item quantity="other">New stories in your subjects, and %1$d more</item>
     </plurals>
     <string name="action_back">Back</string>
+    <string name="settings_briefing_time">Delivery time</string>
+    <string name="settings_briefing_time_hint">Only sent when there is something new in your subjects.</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="action_cancel">Cancel</string>
 </resources>

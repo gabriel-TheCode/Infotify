@@ -1,5 +1,10 @@
 package com.thecode.infotify.presentation.settings
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +24,7 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Interests
 import androidx.compose.material.icons.outlined.Language
 import androidx.compose.material.icons.outlined.NotificationsNone
+import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -29,10 +35,15 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.thecode.infotify.R
@@ -40,6 +51,7 @@ import com.thecode.infotify.designsystem.theme.InfotifyTheme
 import com.thecode.infotify.domain.model.Interests as UserInterests
 import com.thecode.infotify.domain.model.Language
 import com.thecode.infotify.domain.model.ThemeMode
+import java.time.LocalTime
 import com.thecode.infotify.presentation.interests.labelRes as topicLabelRes
 
 /**
@@ -58,9 +70,23 @@ fun SettingsScreen(
     onOpenLanguage: () -> Unit,
     onOpenAbout: () -> Unit,
     onToggleDailyBriefing: (Boolean) -> Unit,
+    onBriefingTimeSelected: (LocalTime) -> Unit,
     onClearCache: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var showTimePicker by remember { mutableStateOf(false) }
+
+    if (showTimePicker) {
+        BriefingTimePickerDialog(
+            initial = uiState.briefingTime,
+            onConfirm = {
+                onBriefingTimeSelected(it)
+                showTimePicker = false
+            },
+            onDismiss = { showTimePicker = false }
+        )
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -91,6 +117,24 @@ fun SettingsScreen(
                 checked = uiState.dailyBriefingEnabled,
                 onCheckedChange = onToggleDailyBriefing
             )
+
+            // The hour only exists when the briefing does. Showing a disabled time row
+            // under an off switch is clutter that explains nothing.
+            AnimatedVisibility(
+                visible = uiState.dailyBriefingEnabled,
+                enter = expandVertically() + fadeIn(),
+                exit = shrinkVertically() + fadeOut()
+            ) {
+                Column {
+                    RowDivider()
+                    NavigationRow(
+                        icon = Icons.Outlined.Schedule,
+                        title = stringResource(R.string.settings_briefing_time),
+                        value = uiState.briefingTimeLabel,
+                        onClick = { showTimePicker = true }
+                    )
+                }
+            }
         }
 
         Section(stringResource(R.string.settings_section_appearance)) {
@@ -123,11 +167,19 @@ fun SettingsScreen(
                             shape = SegmentedButtonDefaults.itemShape(
                                 index = index,
                                 count = ThemeMode.entries.size
-                            )
+                            ),
+                            // The default selected state inserts a leading checkmark, which
+                            // pushes the label sideways and wraps it onto a second line while
+                            // the unselected segments stay on one. Selection is already
+                            // obvious from the container colour, so the icon only does harm.
+                            icon = {},
+                            modifier = Modifier.weight(1f)
                         ) {
                             Text(
                                 text = stringResource(mode.labelRes),
-                                style = MaterialTheme.typography.labelLarge
+                                style = MaterialTheme.typography.labelLarge,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
                         }
                     }
@@ -299,6 +351,7 @@ private fun SettingsScreenPreview() = InfotifyTheme {
         onOpenLanguage = {},
         onOpenAbout = {},
         onToggleDailyBriefing = {},
+        onBriefingTimeSelected = {},
         onClearCache = {}
     )
 }
