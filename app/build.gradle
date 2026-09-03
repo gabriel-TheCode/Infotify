@@ -25,9 +25,21 @@ android {
     }
     buildTypes {
         release {
-            shrinkResources false
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        // A release build that can actually be installed and exercised locally.
+        //
+        // R8 breaks things silently — a missing keep rule produces null fields, not a
+        // crash — so the minified build has to be run, not merely produced. This variant
+        // is identical to release except that it is signed with the debug key, so the real
+        // release signing config is never involved in local testing.
+        releaseTest {
+            initWith release
+            signingConfig signingConfigs.debug
+            matchingFallbacks = ['release']
         }
     }
     buildFeatures {
