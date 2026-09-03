@@ -197,7 +197,7 @@ h1 {
     height: auto;
     /* Belt and braces: the ratio is declared so the space is reserved before the
        image loads, which also stops the page reflowing under the reader. */
-    aspect-ratio: 620 / 1217;
+    aspect-ratio: 620 / 1274;
 }
 
 /* --- sections ------------------------------------------------------------ */
