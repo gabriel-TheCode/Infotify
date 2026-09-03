@@ -4,7 +4,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 /**
- * Infotify's own feed endpoint, served by the proxy at infotify.nativia.co.
+ * Infotify's own feed endpoint, served by the proxy at infotify-api.nativia.co.
  *
  * The app no longer talks to NewsData.io directly, and therefore no longer carries an API
  * key: the key lives on the server. That also means the provider can change without an app

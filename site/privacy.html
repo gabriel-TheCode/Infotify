@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Privacy — Infotify</title>
+    <meta name="description" content="What Infotify stores on your phone, what its news service receives, and what it does not collect.">
+    <link rel="canonical" href="https://infotify.nativia.co/privacy">
+    <meta name="theme-color" content="#faf6f2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#131110" media="(prefers-color-scheme: dark)">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&amp;family=Schibsted+Grotesk:wght@400..700&amp;display=swap">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="masthead">
+    <div class="wrap">
+        <a class="wordmark" href="/">Infot<b>i</b>fy</a>
+        <nav aria-label="Main">
+            <a href="/privacy" aria-current="page">Privacy</a>
+            <a href="/support">Support</a>
+            <a href="https://play.google.com/store/apps/details?id=com.thecode.infotify">Get the app</a>
+        </nav>
+    </div>
+</header>
+
+<main id="main">
+    <div class="wrap">
+        <article class="prose">
+
+            <h1>Privacy</h1>
+            <p class="updated">Infotify for Android &middot; last updated 3 September 2026</p>
+
+            <p>
+                Infotify is published by Nativia Solutions. This page describes what the app
+                keeps, what its news service receives, and what neither of them collects. It
+                is written to be read rather than to be survived, and it says what actually
+                happens rather than what a policy is allowed to permit.
+            </p>
+
+            <div class="callout">
+                <p>
+                    <strong>There is no account.</strong> Infotify never asks for a name, an
+                    email address, a phone number or a sign-in, and it has nowhere to put one.
+                    Nothing you read is filed against a person.
+                </p>
+            </div>
+
+            <h2>What stays on your phone</h2>
+
+            <p>
+                All of this is stored by the app in its own storage on your device. None of
+                it is sent to us.
+            </p>
+
+            <ul>
+                <li><strong>The subjects you chose</strong>, so your feed can lead with them.</li>
+                <li><strong>Articles you saved</strong>, in a database on the phone.</li>
+                <li><strong>Recently loaded articles</strong>, cached so the app opens with something to read and works for a moment without a connection. You can clear the cache from Settings.</li>
+                <li><strong>Your settings</strong>, such as the theme.</li>
+            </ul>
+
+            <p>
+                Uninstalling Infotify, or clearing its storage from your Android settings,
+                removes all of it. There is no copy anywhere else to remove.
+            </p>
+
+            <h2>What the news service receives</h2>
+
+            <p>
+                Infotify does not talk to news providers directly. It asks our own service at
+                <code>infotify-api.nativia.co</code>, which fetches the news and passes it back.
+                That service receives:
+            </p>
+
+            <table>
+                <thead>
+                <tr>
+                    <th scope="col">What</th>
+                    <th scope="col">Why</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>The request itself &mdash; a topic or a search term, a language, a page number</td>
+                    <td>To fetch the right headlines</td>
+                </tr>
+                <tr>
+                    <td>The IP address the request came from, as every web request carries</td>
+                    <td>To stop one source of traffic from exhausting the service for everyone else</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <p>
+                These are not joined to a profile, an identifier or a history. There is no
+                identifier in the app to join them to.
+            </p>
+
+            <h3>What is written down, exactly</h3>
+
+            <p>
+                The rate limiter is the only part that keeps anything, and what it keeps is
+                a counter: one small file per address per minute, named after a SHA-1 of the
+                IP address and the timestamp to the minute. It records how many requests
+                arrived, and nothing else &mdash; no paths, no search terms, no user agents,
+                no articles. Those files are deleted within a day, on the same sweep that
+                clears the news cache.
+            </p>
+
+            <p>
+                We would rather be plain than flattering about that hash: hashing an IP
+                address is not anonymising it. There are few enough possible addresses that
+                anyone holding the file could work backwards to the original. So treat it as
+                what it is &mdash; your IP address, held for at most a day, counted and used
+                for nothing else.
+            </p>
+
+            <h3>Why the service exists at all</h3>
+
+            <p>
+                Two reasons, and both of them are yours as much as ours. It holds the news
+                provider&rsquo;s key on the server instead of inside every installed copy of
+                the app. And it caches each request for a few minutes, so a thousand people
+                asking for the same headlines are one request rather than a thousand &mdash;
+                which also means the provider upstream sees our server asking, not you.
+            </p>
+
+            <h2>Where the news comes from</h2>
+
+            <p>
+                Headlines, summaries, publication dates, publisher names and images come from
+                a third-party news aggregator, which collects them from publishers. Our
+                service makes those requests; the aggregator does not receive your IP address
+                or anything else about your device.
+            </p>
+
+            <p>
+                Opening an article takes you to the publisher&rsquo;s own page. From that
+                point you are on their website, under their privacy policy, not ours.
+            </p>
+
+            <h2>Notifications</h2>
+
+            <p>
+                If you allow notifications, Infotify can remind you about the day&rsquo;s
+                headlines. The reminder is scheduled by the app on your phone and fetches
+                through the same service as everything else. Nothing is pushed to you from
+                our servers, and turning notifications off in Android settings ends it.
+            </p>
+
+            <h2>What Infotify does not do</h2>
+
+            <ul>
+                <li>No advertising, and no advertising identifier is read.</li>
+                <li>No analytics or crash-reporting service is built into the app.</li>
+                <li>No location, contacts, photos, files, calendar or microphone.</li>
+                <li>Nothing is sold, rented or shared with anyone for their own purposes.</li>
+            </ul>
+
+            <h2>Children</h2>
+
+            <p>
+                Infotify is a general news reader and is not directed at children. It does not
+                knowingly collect information from anyone, of any age, because it does not
+                collect information about people at all.
+            </p>
+
+            <h2>Deleting your data</h2>
+
+            <p>
+                Everything the app holds is on your phone: uninstall it, or clear its storage
+                in Android settings, and it is gone. If you would like to ask us anything about
+                this, or want the service&rsquo;s operational records checked for a particular
+                address, write to
+                <a href="mailto:contact@nativia.co">contact@nativia.co</a>.
+            </p>
+
+            <h2>Changes</h2>
+
+            <p>
+                If Infotify starts doing something this page does not describe, this page
+                changes first, and the date at the top changes with it.
+            </p>
+
+            <h2>Contact</h2>
+
+            <p>
+                Nativia Solutions &mdash;
+                <a href="mailto:contact@nativia.co">contact@nativia.co</a>
+            </p>
+
+        </article>
+    </div>
+</main>
+
+<footer>
+    <div class="wrap">
+        <p>&copy; 2026 Nativia Solutions</p>
+        <nav aria-label="Footer">
+            <a href="/">Home</a>
+            <a href="/support">Support</a>
+            <a href="mailto:contact@nativia.co">contact@nativia.co</a>
+            <a href="https://github.com/gabriel-TheCode/Infotify">Source</a>
+        </nav>
+    </div>
+</footer>
+
+</body>
+</html>

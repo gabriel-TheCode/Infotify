@@ -1,6 +1,6 @@
 <?php
 /**
- * Infotify news proxy — infotify.nativia.co
+ * Infotify news proxy — infotify-api.nativia.co
  *
  * Why this exists: the NewsData.io free plan allows 200 credits per DAY for the whole
  * API key. Shipping that key inside the APK means every installed copy of the app draws
@@ -197,7 +197,7 @@ function fetchUpstream(array $query): ?array
         CURLOPT_TIMEOUT        => UPSTREAM_TIMEOUT_SECONDS,
         CURLOPT_CONNECTTIMEOUT => 5,
         CURLOPT_FOLLOWLOCATION => false,
-        CURLOPT_USERAGENT      => 'Infotify-Proxy/1.0 (+https://infotify.nativia.co)',
+        CURLOPT_USERAGENT      => 'Infotify-Proxy/1.0 (+https://infotify-api.nativia.co)',
     ]);
     $body = curl_exec($ch);
     $httpCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);

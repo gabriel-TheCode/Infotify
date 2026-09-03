@@ -1,0 +1,458 @@
+/*
+ * Infotify — infotify.nativia.co
+ *
+ * The palette is not invented: it is lifted from the app. Warm paper rather
+ * than white, one orange doing all the accenting, near-black that has a little
+ * brown in it. A site for a reading app should look like the reading app.
+ */
+
+:root {
+    --paper: #faf6f2;
+    --surface: #ffffff;
+    --ink: #171310;
+    --muted: #6b625b;
+    --ember: #dc4715;
+    --ember-soft: #fbddce;
+    --line: #e9e1d9;
+    --shadow: 0 1px 2px rgba(23, 19, 16, 0.04), 0 8px 24px -12px rgba(23, 19, 16, 0.14);
+
+    --measure: 34rem;
+    --page: 68rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --paper: #131110;
+        --surface: #1c1917;
+        --ink: #f6f1ec;
+        --muted: #a29890;
+        --ember: #ff6a38;
+        --ember-soft: #2e1c13;
+        --line: #2b2521;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px -12px rgba(0, 0, 0, 0.7);
+    }
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Schibsted Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    color: inherit;
+}
+
+/* --- shell --------------------------------------------------------------- */
+
+.wrap {
+    width: 100%;
+    max-width: var(--page);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.skip {
+    position: absolute;
+    left: -9999px;
+}
+
+.skip:focus {
+    left: 24px;
+    top: 16px;
+    z-index: 10;
+    background: var(--surface);
+    padding: 10px 16px;
+    border-radius: 10px;
+}
+
+/* --- masthead ------------------------------------------------------------ */
+
+.masthead {
+    padding: 26px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.masthead .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.wordmark {
+    font-family: "Schibsted Grotesk", sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: -0.035em;
+    text-decoration: none;
+}
+
+/* The dot over the i, in the app's orange. The one flourish on the page. */
+.wordmark b {
+    color: var(--ember);
+    font-weight: inherit;
+}
+
+.masthead nav {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    font-size: 15px;
+}
+
+.masthead nav a {
+    color: var(--muted);
+    text-decoration: none;
+}
+
+.masthead nav a:hover,
+.masthead nav a:focus-visible,
+.masthead nav a[aria-current="page"] {
+    color: var(--ink);
+}
+
+/* --- hero ---------------------------------------------------------------- */
+
+.hero {
+    padding: 84px 0 72px;
+}
+
+.hero .wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 56px;
+    align-items: center;
+}
+
+h1 {
+    font-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: clamp(2.6rem, 6vw, 4rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 0 0 20px;
+    text-wrap: balance;
+}
+
+.lede {
+    font-size: 1.2rem;
+    color: var(--muted);
+    max-width: var(--measure);
+    margin: 0 0 32px;
+}
+
+.badge {
+    display: inline-block;
+    border-radius: 10px;
+}
+
+.badge img {
+    height: 56px;
+    width: auto;
+}
+
+.under-badge {
+    margin: 14px 0 0;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+/* --- phone --------------------------------------------------------------- */
+
+.phone {
+    border-radius: 26px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    background: var(--surface);
+}
+
+.phone img {
+    width: 100%;
+}
+
+/* --- sections ------------------------------------------------------------ */
+
+section {
+    padding: 64px 0;
+    border-top: 1px solid var(--line);
+}
+
+h2 {
+    font-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.7rem, 3.4vw, 2.3rem);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    margin: 0 0 14px;
+    text-wrap: balance;
+}
+
+h3 {
+    font-family: "Schibsted Grotesk", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+}
+
+p {
+    max-width: var(--measure);
+}
+
+.eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin: 0 0 14px;
+}
+
+.split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 56px;
+    align-items: center;
+}
+
+.split.flip > *:first-child {
+    order: 2;
+}
+
+/* --- the small print about what it does ---------------------------------- */
+
+.points {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 32px 40px;
+    margin-top: 8px;
+}
+
+.points p {
+    color: var(--muted);
+    margin: 0;
+    font-size: 0.98rem;
+}
+
+/* --- topic chips, as the app draws them ---------------------------------- */
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 26px 0 0;
+    padding: 0;
+    list-style: none;
+    max-width: var(--measure);
+}
+
+.chips li {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 16px;
+    font-size: 15px;
+    color: var(--muted);
+    background: var(--surface);
+}
+
+.chips li:first-child {
+    background: var(--ember);
+    border-color: var(--ember);
+    color: #fff;
+    font-weight: 600;
+}
+
+/* --- the quiet band ------------------------------------------------------ */
+
+.band {
+    background: var(--ember-soft);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+}
+
+.band a {
+    color: inherit;
+}
+
+/* --- prose pages --------------------------------------------------------- */
+
+.prose {
+    padding: 56px 0 24px;
+    max-width: 40rem;
+}
+
+.prose h1 {
+    font-size: clamp(2.1rem, 5vw, 2.9rem);
+    margin-bottom: 8px;
+}
+
+.prose .updated {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0 0 40px;
+}
+
+.prose h2 {
+    font-size: 1.35rem;
+    margin: 42px 0 10px;
+}
+
+.prose h3 {
+    margin: 28px 0 4px;
+}
+
+.prose p,
+.prose li {
+    max-width: none;
+    color: var(--ink);
+}
+
+.prose ul {
+    padding-left: 1.15rem;
+}
+
+.prose li {
+    margin: 6px 0;
+}
+
+.prose li::marker {
+    color: var(--ember);
+}
+
+.callout {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--ember);
+    border-radius: 4px 12px 12px 4px;
+    padding: 18px 22px;
+    margin: 28px 0;
+    box-shadow: var(--shadow);
+}
+
+.callout p:last-child {
+    margin-bottom: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 22px 0;
+    font-size: 0.95rem;
+}
+
+th,
+td {
+    text-align: left;
+    vertical-align: top;
+    padding: 12px 14px 12px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+th {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 700;
+}
+
+/* --- questions ----------------------------------------------------------- */
+
+.qa {
+    border-top: 1px solid var(--line);
+    padding: 22px 0;
+}
+
+.qa:last-of-type {
+    border-bottom: 1px solid var(--line);
+}
+
+.qa h3 {
+    margin-bottom: 4px;
+}
+
+.qa p {
+    color: var(--muted);
+    margin: 0;
+}
+
+/* --- footer -------------------------------------------------------------- */
+
+footer {
+    border-top: 1px solid var(--line);
+    padding: 40px 0 56px;
+    font-size: 15px;
+    color: var(--muted);
+}
+
+footer .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+}
+
+footer a {
+    color: var(--muted);
+}
+
+footer a:hover {
+    color: var(--ink);
+}
+
+/* --- narrow -------------------------------------------------------------- */
+
+@media (max-width: 46rem) {
+    .hero {
+        padding: 52px 0 44px;
+    }
+
+    .hero .wrap,
+    .split {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 40px;
+    }
+
+    .split.flip > *:first-child {
+        order: 0;
+    }
+
+    .phone {
+        max-width: 260px;
+        margin: 0 auto;
+    }
+
+    .masthead nav {
+        gap: 16px;
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,36 @@
+# Static site for infotify.nativia.co.
+#
+# The API is NOT here. It lives on infotify-api.nativia.co with its own document root and
+# its own .htaccess, so a change to this brochure cannot affect the service the app
+# depends on. That separation is the whole point — do not add PHP routing back here.
+
+# index.php must never win the directory index again. The proxy used to live at this root,
+# and Apache's default DirectoryIndex prefers index.php over index.html.
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+    # Extensionless URLs: /privacy serves privacy.html. The Play listing and the app's
+    # About screen both point at /privacy, so that URL has to stay stable forever.
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+    RewriteRule ^(.+?)/?$ $1.html [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# Nothing server-side runs here.
+<FilesMatch "\.(php|phtml|inc)$">
+    Require all denied
+</FilesMatch>
+
+ErrorDocument 404 /index.html

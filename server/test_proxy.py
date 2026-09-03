@@ -17,7 +17,7 @@ import json
 import subprocess
 import sys
 
-BASE = sys.argv[1] if len(sys.argv) > 1 else "https://infotify.nativia.co"
+BASE = sys.argv[1] if len(sys.argv) > 1 else "https://infotify-api.nativia.co"
 TIMEOUT = 30
 
 failures = []
