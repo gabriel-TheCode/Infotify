@@ -15,9 +15,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.OpenInNew
-import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material.icons.outlined.Shield
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -79,19 +77,16 @@ fun AboutScreen(modifier: Modifier = Modifier) {
             color = MaterialTheme.colorScheme.surface,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Column {
-                LinkRow(
-                    icon = Icons.Outlined.Shield,
-                    label = stringResource(R.string.about_privacy),
-                    onClick = { context.openUrl(PRIVACY_URL) }
-                )
-                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-                LinkRow(
-                    icon = Icons.Outlined.Description,
-                    label = stringResource(R.string.about_terms),
-                    onClick = { context.openUrl(TERMS_URL) }
-                )
-            }
+            // Privacy only. There is no terms page and none planned: Infotify has no
+            // account, no purchase and no user-submitted content, so a terms document
+            // would have nothing to say. A link that cannot ever resolve is a defect,
+            // not a legal safeguard — if terms are ever written, the row comes back
+            // with them.
+            LinkRow(
+                icon = Icons.Outlined.Shield,
+                label = stringResource(R.string.about_privacy),
+                onClick = { context.openUrl(PRIVACY_URL) }
+            )
         }
 
         Text(
@@ -197,7 +192,6 @@ private fun android.content.Context.openUrl(url: String) {
 
 private const val NATIVIA_URL = "https://nativia.co"
 private const val PRIVACY_URL = "https://infotify.nativia.co/privacy"
-private const val TERMS_URL = "https://infotify.nativia.co/terms"
 
 @Preview(showBackground = true)
 @Composable
