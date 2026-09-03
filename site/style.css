@@ -55,6 +55,10 @@ body {
 
 img {
     max-width: 100%;
+    /* height: auto is not optional here: the screenshots carry width/height
+       attributes, and without it the intrinsic ratio is ignored the moment the
+       column is any width other than 620px. */
+    height: auto;
     display: block;
 }
 
@@ -190,6 +194,10 @@ h1 {
 
 .phone img {
     width: 100%;
+    height: auto;
+    /* Belt and braces: the ratio is declared so the space is reserved before the
+       image loads, which also stops the page reflowing under the reader. */
+    aspect-ratio: 620 / 1217;
 }
 
 /* --- sections ------------------------------------------------------------ */

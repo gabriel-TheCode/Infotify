@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="15.57 13.32 79.86 79.86">
+  <!--
+    The Infotify mark: the Bricolage Grotesque "i" with its dot detached, the same
+    geometry as the launcher icon, the splash icon and the wordmark. The framing matches
+    favicon-32.png exactly, so the vector and raster forms are the same picture.
+  -->
+  <rect x="15.57" y="13.32" width="79.86" height="79.86" fill="#16130F"/>
+  <rect x="44" y="52" width="14" height="30" rx="2.5" fill="#FBF8F5"/>
+  <circle cx="60" cy="34" r="9.5" fill="#FF6A1F"/>
+</svg>
