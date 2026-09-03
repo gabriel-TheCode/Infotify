@@ -34,6 +34,7 @@ import com.thecode.infotify.designsystem.component.TopicChipRow
 import com.thecode.infotify.designsystem.component.EmptyFeedPanel
 import com.thecode.infotify.designsystem.component.ErrorPanel
 import com.thecode.infotify.designsystem.component.FeaturedArticleCard
+import com.thecode.infotify.designsystem.component.OfflineBanner
 import com.thecode.infotify.designsystem.theme.InfotifyTheme
 import com.thecode.infotify.domain.model.Article
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -107,6 +108,7 @@ fun FeedScreen(
                 )
 
                 FeedUiState.Phase.Content -> FeedList(
+                    cachedAt = uiState.cachedAt,
                     articles = uiState.articles,
                     bookmarkedUrls = uiState.bookmarkedUrls,
                     isAppending = uiState.isAppending,
@@ -120,6 +122,7 @@ fun FeedScreen(
 
 @Composable
 private fun FeedList(
+    cachedAt: java.time.Instant?,
     articles: List<Article>,
     bookmarkedUrls: Set<String>,
     isAppending: Boolean,
@@ -132,6 +135,13 @@ private fun FeedList(
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 24.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
+        // Above everything, so it is read before the headlines it qualifies.
+        if (cachedAt != null) {
+            item(key = "offline-banner") {
+                OfflineBanner(cachedAt = cachedAt, modifier = Modifier.padding(top = 4.dp))
+            }
+        }
+
         // The first story carries the visual weight; the rest form a dense, scannable list.
         articles.firstOrNull()?.let { featured ->
             item(key = featured.url) {

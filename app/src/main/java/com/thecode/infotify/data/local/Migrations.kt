@@ -99,6 +99,43 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
     }
 }
 
+/**
+ * Adds the offline feed cache.
+ *
+ * Purely additive: bookmarks are untouched. The cache is disposable by nature — losing it
+ * costs a network request, not user data — but the table is created rather than the
+ * database rebuilt, because a destructive migration here would take the bookmarks with it.
+ */
+val MIGRATION_2_3 = object : Migration(2, 3) {
+
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `cached_article` (
+                `feedKey` TEXT NOT NULL,
+                `url` TEXT NOT NULL,
+                `position` INTEGER NOT NULL,
+                `id` TEXT NOT NULL,
+                `title` TEXT NOT NULL,
+                `description` TEXT,
+                `imageUrl` TEXT,
+                `publishedAt` TEXT NOT NULL,
+                `sourceId` TEXT NOT NULL,
+                `sourceName` TEXT NOT NULL,
+                `sourceIconUrl` TEXT,
+                `categories` TEXT NOT NULL,
+                `cachedAt` INTEGER NOT NULL,
+                PRIMARY KEY(`feedKey`, `url`)
+            )
+            """.trimIndent()
+        )
+        db.execSQL(
+            "CREATE INDEX IF NOT EXISTS `index_cached_article_feedKey_position` " +
+                "ON `cached_article` (`feedKey`, `position`)"
+        )
+    }
+}
+
 private data class LegacyBookmark(
     val url: String,
     val title: String,

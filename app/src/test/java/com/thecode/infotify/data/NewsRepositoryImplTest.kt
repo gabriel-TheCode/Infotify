@@ -2,6 +2,7 @@ package com.thecode.infotify.data
 
 import com.thecode.infotify.core.result.AppError
 import com.thecode.infotify.core.result.Outcome
+import com.thecode.infotify.data.local.feed.FeedCacheMapper
 import com.thecode.infotify.data.remote.infotify.FeedMapper
 import com.thecode.infotify.data.remote.infotify.InfotifyApi
 import com.thecode.infotify.data.repository.NewsRepositoryImpl
@@ -48,6 +49,8 @@ class NewsRepositoryImplTest {
         repository = NewsRepositoryImpl(
             api = api,
             mapper = FeedMapper(),
+            cacheDao = InMemoryFeedCacheDao(),
+            cacheMapper = FeedCacheMapper(),
             ioDispatcher = StandardTestDispatcher(scheduler)
         )
     }

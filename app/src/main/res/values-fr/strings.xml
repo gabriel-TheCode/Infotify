@@ -162,4 +162,5 @@
     <string name="settings_briefing_time_hint">Envoyé uniquement s\'il y a du nouveau dans vos sujets.</string>
     <string name="action_confirm">Confirmer</string>
     <string name="action_cancel">Annuler</string>
+    <string name="offline_showing_saved">Hors ligne — articles enregistrés il y a %1$s</string>
 </resources>

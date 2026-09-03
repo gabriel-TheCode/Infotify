@@ -151,7 +151,8 @@ class FeedViewModel @Inject constructor(
                         },
                         isRefreshing = false,
                         canAppend = outcome.data.nextCursor != null,
-                        error = null
+                        error = null,
+                        cachedAt = outcome.data.cachedAt
                     )
                 }
             }

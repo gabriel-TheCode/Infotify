@@ -163,4 +163,5 @@
     <string name="settings_briefing_time_hint">Only sent when there is something new in your subjects.</string>
     <string name="action_confirm">Confirm</string>
     <string name="action_cancel">Cancel</string>
+    <string name="offline_showing_saved">Offline — showing articles saved %1$s ago</string>
 </resources>

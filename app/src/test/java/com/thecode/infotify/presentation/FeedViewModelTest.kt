@@ -34,6 +34,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -148,6 +149,34 @@ class FeedViewModelTest {
             viewModel.uiState.value.articles.map { it.url }
         )
         assertTrue(!viewModel.uiState.value.canAppend)
+    }
+
+    /**
+     * Offline must be visible. Serving a remembered feed silently is the worse failure:
+     * the reader takes yesterday's headlines for today's.
+     */
+    @Test
+    fun `a cached page surfaces its age in the state`() = runTest {
+        val stamp = Instant.parse("2026-09-02T06:00:00Z")
+        news.result = Outcome.Success(
+            ArticlePage(listOf(article("a")), nextCursor = null, cachedAt = stamp)
+        )
+
+        val viewModel = createViewModel()
+        advanceUntilIdle()
+
+        assertEquals(FeedUiState.Phase.Content, viewModel.uiState.value.phase)
+        assertEquals(stamp, viewModel.uiState.value.cachedAt)
+    }
+
+    @Test
+    fun `a live page carries no cache stamp`() = runTest {
+        news.result = Outcome.Success(ArticlePage(listOf(article("a")), nextCursor = null))
+
+        val viewModel = createViewModel()
+        advanceUntilIdle()
+
+        assertNull(viewModel.uiState.value.cachedAt)
     }
 
     @Test

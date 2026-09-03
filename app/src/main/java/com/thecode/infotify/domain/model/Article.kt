@@ -29,8 +29,15 @@ data class ArticleSource(
 /**
  * One page of articles plus the cursor for the next one.
  * [nextCursor] is null when the provider has nothing more to give.
+ *
+ * [cachedAt] is set only when the page came from the device rather than the network. The
+ * UI needs to know: showing yesterday's news as though it were live is a worse failure
+ * than showing an error.
  */
 data class ArticlePage(
     val articles: List<Article>,
-    val nextCursor: String?
-)
+    val nextCursor: String?,
+    val cachedAt: java.time.Instant? = null
+) {
+    val isFromCache: Boolean get() = cachedAt != null
+}

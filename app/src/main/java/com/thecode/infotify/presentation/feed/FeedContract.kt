@@ -29,7 +29,12 @@ data class FeedUiState(
     /** A subject the user has NOT chosen, offered once per day at the end of For You. */
     val discoveryTopic: Topic? = null,
     /** Set only alongside [Phase.Error]; the panel needs the cause to word its message. */
-    val error: AppError? = null
+    val error: AppError? = null,
+    /**
+     * Non-null when the articles on screen came from the device rather than the network.
+     * The feed still renders normally — it simply says so.
+     */
+    val cachedAt: java.time.Instant? = null
 ) {
     enum class Phase { Loading, Content, Empty, Error }
 
