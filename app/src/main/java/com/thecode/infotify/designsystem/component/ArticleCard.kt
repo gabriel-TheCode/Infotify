@@ -65,16 +65,25 @@ fun ArticleCard(
         modifier = modifier.fillMaxWidth()
     ) {
         Row(modifier = Modifier.padding(12.dp)) {
-            ArticleThumbnail(
-                imageUrl = article.imageUrl,
-                modifier = Modifier
-                    .size(96.dp)
-                    .clip(MaterialTheme.shapes.small)
-            )
+            // Same rule as the featured card: an image that cannot load leaves no
+            // placeholder behind. A grey square next to a headline reads as unfinished,
+            // and publishers' image hosts fail often enough for that to be common. With
+            // it gone the headline simply takes the full width, which looks deliberate.
+            var imageFailed by remember(article.url) { mutableStateOf(false) }
+
+            if (article.imageUrl != null && !imageFailed) {
+                ArticleThumbnail(
+                    imageUrl = article.imageUrl,
+                    onFailed = { imageFailed = true },
+                    modifier = Modifier
+                        .size(96.dp)
+                        .clip(MaterialTheme.shapes.small)
+                )
+            }
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = 12.dp)
+                    .padding(start = if (article.imageUrl != null && !imageFailed) 12.dp else 0.dp)
             ) {
                 SourceLine(article = article)
                 Text(

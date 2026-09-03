@@ -1,58 +1,66 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'org.jetbrains.kotlin.plugin.serialization'
-apply plugin: 'org.jetbrains.kotlin.plugin.compose'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'dagger.hilt.android.plugin'
+// No kotlin-android plugin: AGP 9 compiles Kotlin itself (built-in Kotlin).
+// No kotlin-kapt either — it is incompatible with built-in Kotlin, so Room and Hilt both
+// run through KSP now.
+//
+// Versions live in gradle/libs.versions.toml. There are no version literals in this file.
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.hilt)
+}
+
 apply from: '../ktlint.gradle'
 
 // No API key here, and none in the APK: the app talks to infotify-api.nativia.co, which
 // holds the provider key server-side.
 
 android {
-    namespace "com.thecode.infotify"
-    compileSdk 35
+    namespace = "com.thecode.infotify"
+    compileSdk = 37
+
     defaultConfig {
-        applicationId "com.thecode.infotify"
-        // 26, not 24: the typographic identity depends on variable-font axes, which
-        // Android only honours from API 26. It also makes java.time native, so the
-        // desugaring library is no longer needed.
-        minSdkVersion 26
-        targetSdkVersion 35
-        versionCode 2000
-        versionName "2.0.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        applicationId = "com.thecode.infotify"
+        // 26, not lower: the typographic identity depends on variable-font axes, which
+        // Android only honours from API 26. It also makes java.time native, so no
+        // desugaring library is needed.
+        minSdk = 26
+        targetSdk = 37
+        versionCode = 3000
+        versionName = "3.0.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled = true
+            shrinkResources = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         // A release build that can actually be installed and exercised locally.
         //
         // R8 breaks things silently — a missing keep rule produces null fields, not a
-        // crash — so the minified build has to be run, not merely produced. This variant
-        // is identical to release except that it is signed with the debug key, so the real
-        // release signing config is never involved in local testing.
+        // crash — so the minified build has to be run, not merely produced. Identical to
+        // release except that it is signed with the debug key, so the real release
+        // signing config is never involved in local testing.
         releaseTest {
             initWith release
-            signingConfig signingConfigs.debug
+            signingConfig = signingConfigs.debug
             matchingFallbacks = ['release']
         }
     }
+
     buildFeatures {
-        compose true
-        buildConfig true
+        compose = true
+        buildConfig = true
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-
-    kotlinOptions { jvmTarget = "11" }
 
     testOptions {
         unitTests.returnDefaultValues = true
@@ -60,91 +68,78 @@ android {
 }
 
 // Room schemas are exported so migrations can be diffed and tested.
-kapt {
-    arguments {
-        arg("room.schemaLocation", "$projectDir/schemas")
-    }
+// This moved from the kapt block when annotation processing moved to KSP.
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 dependencies {
-    // COMPOSE — single source of UI. No View system, no ViewBinding, no ComposeView bridges.
-    def composeBom = platform('androidx.compose:compose-bom:2024.12.01')
-    implementation composeBom
-    androidTestImplementation composeBom
-    implementation 'androidx.compose.ui:ui'
-    implementation 'androidx.compose.ui:ui-graphics'
-    implementation 'androidx.compose.ui:ui-tooling-preview'
-    implementation 'androidx.compose.material3:material3'
-    implementation 'androidx.compose.material:material-icons-extended'
-    implementation 'androidx.activity:activity-compose:1.9.3'
-    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.8.7'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7'
-    implementation 'androidx.navigation:navigation-compose:2.8.5'
-    implementation 'androidx.hilt:hilt-navigation-compose:1.2.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3'
-    debugImplementation 'androidx.compose.ui:ui-tooling'
-    androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
-    debugImplementation 'androidx.compose.ui:ui-test-manifest'
+    // COMPOSE — the only UI toolkit here. No View system, no ViewBinding, no ComposeView.
+    // The BOM sets every Compose artifact's version, so those are declared without one.
+    implementation platform(libs.compose.bom)
+    implementation libs.compose.ui
+    implementation libs.compose.ui.graphics
+    implementation libs.compose.ui.tooling.preview
+    implementation libs.compose.material3
+    implementation libs.compose.material.icons.extended
+    implementation libs.androidx.activity.compose
+    implementation libs.androidx.lifecycle.runtime.compose
+    implementation libs.androidx.lifecycle.viewmodel.compose
+    implementation libs.androidx.navigation.compose
+    implementation libs.androidx.hilt.navigation.compose
+    implementation libs.kotlinx.serialization.json
+    debugImplementation libs.compose.ui.tooling
 
     // SPLASH SCREEN API
-    implementation 'androidx.core:core-splashscreen:1.0.1'
+    implementation libs.androidx.core.splashscreen
 
-    // COIL — Compose-native image loading, replaces Glide
-    implementation 'io.coil-kt:coil-compose:2.7.0'
+    // COIL — Compose-native image loading
+    implementation libs.coil.compose
 
-    implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'com.google.android.material:material:1.12.0'
-
-    // KOTLIN
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.20"
-    implementation 'androidx.core:core-ktx:1.15.0'
+    // ANDROIDX CORE
+    implementation libs.androidx.core.ktx
 
     // COROUTINES
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0"
+    implementation libs.kotlinx.coroutines.core
+    implementation libs.kotlinx.coroutines.android
 
-    // DI - HILT
-    implementation "com.google.dagger:hilt-android:2.52"
-    implementation "androidx.lifecycle:lifecycle-process:2.8.7"
-    kapt "com.google.dagger:hilt-android-compiler:2.52"
-    kapt "androidx.hilt:hilt-compiler:1.2.0"
+    // DI — HILT
+    implementation libs.hilt.android
+    ksp libs.hilt.compiler
+    ksp libs.androidx.hilt.compiler
 
-    //DATA STORE
-    implementation 'androidx.datastore:datastore-preferences:1.1.1'
+    // DATA STORE
+    implementation libs.androidx.datastore.preferences
 
-    // UI libraries removed with the Compose migration: AestheticDialogs, DayNightSwitch,
-    // recyclerview-animators, themed-toggle-button-group, bubblenavigation.aar, Lottie,
-    // aboutlibraries, Glide, and androidx.paging (pagination is a plain nextPage cursor).
-
-    // GSON
-    implementation "com.google.code.gson:gson:2.10.1"
-
-    // RETROFIT
-    implementation "com.squareup.retrofit2:retrofit:2.11.0"
-    implementation "com.squareup.retrofit2:converter-gson:2.11.0"
-
-    // OK HTTP — pinned to the 4.x stable line; 5.0.0-alpha.2 was a pre-release
-    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
-    implementation "com.squareup.okhttp3:logging-interceptor:4.12.0"
+    // NETWORK
+    implementation libs.gson
+    implementation libs.retrofit
+    implementation libs.retrofit.converter.gson
+    implementation libs.okhttp
+    implementation libs.okhttp.logging.interceptor
 
     // ROOM
-    implementation "androidx.room:room-ktx:2.6.1"
-    implementation "androidx.room:room-runtime:2.6.1"
-    kapt "androidx.room:room-compiler:2.6.1"
+    implementation libs.androidx.room.runtime
+    implementation libs.androidx.room.ktx
+    ksp libs.androidx.room.compiler
 
     // WORKMANAGER — schedules the daily briefing
-    implementation 'androidx.work:work-runtime-ktx:2.10.0'
-    implementation 'androidx.hilt:hilt-work:1.2.0'
+    implementation libs.androidx.work.runtime.ktx
+    implementation libs.androidx.hilt.work
 
-    // CUSTOM TABS — replaces the in-dialog WebView for article reading
-    implementation 'androidx.browser:browser:1.8.0'
+    // CUSTOM TABS — the article reader
+    implementation libs.androidx.browser
 
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0'
-    testImplementation 'app.cash.turbine:turbine:1.2.0'
-    testImplementation 'io.mockk:mockk:1.13.13'
-    testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0'
+    // Removed as unused, verified against the sources rather than assumed:
+    //   appcompat and material — no View-system widget or theme remains;
+    //   lifecycle-process — ProcessLifecycleOwner went with the old Application class;
+    //   mockk — the tests use hand-written fakes;
+    //   espresso, test-ext-junit, compose ui-test — there are no androidTest sources.
+    // Also gone with the Compose migration: Glide, Lottie, ViewPager2, ViewBinding,
+    // AestheticDialogs, RecyclerView Animators, DayNight Switch, aboutlibraries, paging.
 
-    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    testImplementation libs.junit
+    testImplementation libs.kotlinx.coroutines.test
+    testImplementation libs.turbine
+    testImplementation libs.okhttp.mockwebserver
 }

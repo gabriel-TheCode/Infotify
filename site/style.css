@@ -184,20 +184,59 @@ h1 {
 
 /* --- phone --------------------------------------------------------------- */
 
+/* A device frame around the screenshot: an ink bezel with the screen inset inside it.
+   The frame is drawn entirely in CSS, so there is no chrome baked into the PNG and the
+   screenshots stay honest captures that can be replaced without redrawing anything. */
 .phone {
-    border-radius: 26px;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    box-shadow: var(--shadow);
-    background: var(--surface);
+    position: relative;
+    padding: 9px;
+    border-radius: 42px;
+    background: linear-gradient(160deg, #2A2724 0%, #16130F 45%, #0D0B09 100%);
+    /* Two shadows: a tight one for the edge of the metal, a wide soft one for the drop. */
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.07) inset,
+        0 2px 4px rgba(22, 19, 15, 0.28),
+        0 24px 48px -18px rgba(22, 19, 15, 0.55);
+}
+
+/* The speaker slot. Purely decorative, so it is hidden from assistive technology. */
+.phone::before {
+    content: "";
+    position: absolute;
+    top: 17px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 54px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(251, 248, 245, 0.16);
+    z-index: 1;
+}
+
+/* The side button, on the right edge of the frame. */
+.phone::after {
+    content: "";
+    position: absolute;
+    top: 22%;
+    right: -2px;
+    width: 2px;
+    height: 8%;
+    border-radius: 0 2px 2px 0;
+    background: linear-gradient(180deg, #3A3632, #211E1A);
 }
 
 .phone img {
+    display: block;
     width: 100%;
+    /* height: auto and nothing else. A declared aspect-ratio used to sit here to reserve
+       space before the image loaded, but a declared ratio overrides the file's own — so a
+       browser holding a screenshot of different dimensions squashed it into the declared
+       box and it looked stretched. The intrinsic ratio wins now; the width and height
+       attributes in the markup reserve the space instead. */
     height: auto;
-    /* Belt and braces: the ratio is declared so the space is reserved before the
-       image loads, which also stops the page reflowing under the reader. */
-    aspect-ratio: 620 / 1217;
+    /* Slightly tighter than the frame, which is what makes it read as a screen sitting
+       inside a bezel rather than a picture with a border. */
+    border-radius: 34px;
 }
 
 /* --- sections ------------------------------------------------------------ */

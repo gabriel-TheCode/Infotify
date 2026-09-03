@@ -1,2 +1,20 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    // Repositories are declared once, here, rather than per project. allprojects{} in the
+    // root build file is the older pattern and conflicts with this one.
+    repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'Infotify'
 include ':app'
-rootProject.name='Infotify'

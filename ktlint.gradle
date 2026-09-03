@@ -1,21 +1,29 @@
-repositories {
-    mavenCentral()
-}
+// Kotlin style checking, run on demand: ./gradlew ktlint  (or ktlintFormat to fix).
+//
+// No repositories block here: they are declared once in settings.gradle, and redeclaring
+// them per project is rejected by FAIL_ON_PROJECT_REPOS.
 configurations {
     ktlint
 }
+
 dependencies {
-    ktlint 'com.pinterest:ktlint:0.50.0'
+    // ktlint-cli, not the old com.pinterest:ktlint coordinate, which stopped at 0.50.
+    ktlint "com.pinterest.ktlint:ktlint-cli:${libs.versions.ktlint.get()}"
 }
+
 tasks.register('ktlint', JavaExec) {
-    description = "Check Kotlin code style."
+    group = 'verification'
+    description = 'Check Kotlin code style.'
     classpath = configurations.ktlint
-    main = "com.pinterest.ktlint.Main"
-    args "src/**/*.kt"
+    // mainClass, not main: the `main` property was removed in Gradle 9.
+    mainClass = 'com.pinterest.ktlint.Main'
+    args 'src/**/*.kt'
 }
+
 tasks.register('ktlintFormat', JavaExec) {
-    description = "Fix Kotlin code style deviations."
+    group = 'formatting'
+    description = 'Fix Kotlin code style deviations.'
     classpath = configurations.ktlint
-    main = "com.pinterest.ktlint.Main"
-    args "-F", "src/**/*.kt"
+    mainClass = 'com.pinterest.ktlint.Main'
+    args '-F', 'src/**/*.kt'
 }

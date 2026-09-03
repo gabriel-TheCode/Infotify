@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Status-bar icon: the Infotify mark reduced to its silhouette.
-    Android tints notification icons, so this must be a single-colour shape on transparent.
+    Android tints notification icons itself, so this is a single-colour shape on transparent
+    and carries no tint of its own. It previously referenced ?attr/colorControlNormal, which
+    came from AppCompat and stopped resolving once that dependency was dropped.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
     android:viewportWidth="24"
-    android:viewportHeight="24"
-    android:tint="?attr/colorControlNormal">
+    android:viewportHeight="24">
     <path
         android:fillColor="@android:color/white"
         android:pathData="M10.2,10 h3.6 a0.8,0.8 0 0 1 0.8,0.8 v7.4 a0.8,0.8 0 0 1 -0.8,0.8 h-3.6 a0.8,0.8 0 0 1 -0.8,-0.8 v-7.4 a0.8,0.8 0 0 1 0.8,-0.8 z" />
