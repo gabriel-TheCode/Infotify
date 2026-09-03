@@ -1,30 +1,13 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
-buildscript {
-
-    repositories {
-        google()
-        mavenCentral()
-        maven { url 'https://maven.google.com' }
-        maven { url 'https://plugins.gradle.org/m2/' }
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.9.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.20"
-        classpath "org.jetbrains.kotlin:compose-compiler-gradle-plugin:2.0.20"
-        classpath "org.jetbrains.kotlin:kotlin-serialization:2.0.20"
-        classpath "com.google.dagger:hilt-android-gradle-plugin:2.52"
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url "https://jitpack.io" }
-        maven { url 'https://maven.google.com' }
-    }
+// Top-level build file.
+//
+// Plugins are declared here without applying them, and versioned in
+// gradle/libs.versions.toml — there are no version literals in this file by design.
+plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.kotlin.compose) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.hilt) apply false
 }
 
 tasks.register('clean', Delete) {
