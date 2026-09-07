@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
 
 concurrency:
@@ -21,11 +21,6 @@ jobs:
           java-version: '17'
 
       - uses: gradle/actions/setup-gradle@v4
-
-      - name: Provide API key
-        env:
-          NEWSDATA_API_KEY: ${{ secrets.NEWSDATA_API_KEY }}
-        run: echo "NEWSDATA_API_KEY=$NEWSDATA_API_KEY" >> local.properties
 
       - name: Assemble
         run: ./gradlew assembleDebug --no-daemon
