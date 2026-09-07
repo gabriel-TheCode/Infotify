@@ -32,8 +32,9 @@ proguard/
 # Android Studio Navigation editor temp files
 .navigation/
 
-# Android Studio captures folder
-captures/
+# Android Studio captures folder — anchored, so it cannot swallow
+# playstore/captures/, which is tracked on purpose
+/captures/
 
 # IntelliJ
 *.iml
@@ -48,6 +49,8 @@ captures/
 .idea/modules.xml
 # Comment next line if keeping position of elements in Navigation Editor is relevant for you
 .idea/navEditor.xml
+# Per-developer IDE state that rewrites itself on every launch
+.idea/material_theme_project_new.xml
 
 # Keystore files
 # Uncomment the following lines if you do not want to check your keystore files in.
