@@ -11,7 +11,7 @@ Everything Google Play asks for on the store listing, plus the script that produ
 ## Regenerating
 
 ```bash
-python3 playstore/generate.py
+python3 docs/playstore/generate.py
 ```
 
 Needs Pillow. It reads the raw captures from `captures/`, the fonts from

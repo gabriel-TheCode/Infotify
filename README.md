@@ -39,13 +39,13 @@ redistribution, and reading belongs with the outlet that did the work.
 <table>
   <tr><th>Explore</th><th>Dark theme</th></tr>
   <tr>
-    <td><img src="playstore/screenshot-1-explore.png" width="260"/></td>
-    <td><img src="playstore/screenshot-7-dark.png" width="260"/></td>
+    <td><img src="docs/playstore/screenshot-1-explore.png" width="260"/></td>
+    <td><img src="docs/playstore/screenshot-7-dark.png" width="260"/></td>
   </tr>
 </table>
 
 Captures from the R8-minified build against the live API — see
-[playstore/README.md](playstore/README.md) for how they are made.
+[docs/playstore/README.md](docs/playstore/README.md) for how they are made.
 
 ## Architecture
 
