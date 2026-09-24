@@ -33,7 +33,7 @@ proguard/
 .navigation/
 
 # Android Studio captures folder — anchored, so it cannot swallow
-# playstore/captures/, which is tracked on purpose
+# docs/playstore/captures/, which is tracked on purpose
 /captures/
 
 # IntelliJ

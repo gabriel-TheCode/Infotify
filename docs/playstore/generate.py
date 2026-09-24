@@ -10,7 +10,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "captures")
 OUT = os.path.dirname(os.path.abspath(__file__))
-FONTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir,
+FONTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir,
                      "app", "src", "main", "res", "font")
 
 # Brand tokens — the same values Color.kt and site/style.css carry.
