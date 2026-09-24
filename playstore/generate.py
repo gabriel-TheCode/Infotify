@@ -116,6 +116,12 @@ def wrap(draw, text, font, max_width):
     return lines
 
 
+# One vertical rhythm for the whole carousel.
+DEVICE_TOP = 530
+BOTTOM_MARGIN = 44
+BEZEL = 13
+
+
 def screenshot_asset(capture, headline, subline, theme, out_name):
     W, H = 1080, 1920
     dark = theme == "dark"
@@ -160,10 +166,17 @@ def screenshot_asset(capture, headline, subline, theme, out_name):
     shot = Image.open(capture)
     shot = shot.crop((0, 0, shot.width, shot.height - 85))
 
-    device = phone(shot, screen_w=700)
+    # The device sits at the same y on every tile and is sized to fit above the bottom
+    # margin, rather than being a fixed width that overshoots the canvas. Both matter in the
+    # carousel: the previous layout clipped 10px off the bottom bezel, and let dy drift with
+    # the length of the caption, so no two phones lined up.
+    assert y + 40 <= DEVICE_TOP, f"{out_name}: caption runs into the device"
+    screen_w = round((H - DEVICE_TOP - BOTTOM_MARGIN - BEZEL * 2) * shot.width / shot.height)
+
+    device = phone(shot, screen_w=screen_w, bezel=BEZEL)
     shadow, pad = drop_shadow(device)
     dx = (W - device.width) // 2
-    dy = max(y + 96, H - device.height + 10)
+    dy = DEVICE_TOP
 
     canvas.alpha_composite(shadow, (dx - pad, dy - pad))
     canvas.alpha_composite(device, (dx, dy))
